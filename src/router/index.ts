@@ -45,6 +45,12 @@ const router = createRouter({
       name: 'hidden-portal',
       component: () => import('../pages/HiddenPortal.vue'),
     },
+    // 兜底：未知路径渲染 404 页，避免主区域空白
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../pages/NotFoundPage.vue'),
+    },
   ],
 })
 

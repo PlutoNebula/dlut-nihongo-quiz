@@ -5,7 +5,66 @@ import router from './router'
 
 const app = createApp(App)
 app.use(router)
+
+// 全局错误兜底：渲染/生命周期中的未捕获异常默认只打到控制台且可能白屏，
+// 这里统一捕获并给出可见提示，避免用户无感知地停在坏页面。
+app.config.errorHandler = (err, _instance, info) => {
+  console.error(`Vue 全局错误（${info}）:`, err)
+  showErrorToast('应用出现异常，建议刷新页面')
+}
+
 app.mount('#app')
+
+// 未处理的 Promise 拒绝：兜底提示而非静默失败
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('未处理的 Promise 拒绝:', event.reason)
+})
+
+function showErrorToast(message: string) {
+  if (document.getElementById('global-error-toast')) return
+
+  const style = document.createElement('style')
+  style.textContent = `
+    #global-error-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10001;
+      background: var(--bg-card, #1a1a18);
+      color: var(--text-primary, #fafaf5);
+      border: 1px solid var(--accent, #c44536);
+      padding: 10px 14px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: slide-up 0.3s ease-out;
+    }
+    #global-error-toast button {
+      background: var(--accent, #c44536);
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+    }
+  `
+  document.head.appendChild(style)
+
+  const toast = document.createElement('div')
+  toast.id = 'global-error-toast'
+  toast.setAttribute('role', 'alert')
+  toast.textContent = message
+  const btn = document.createElement('button')
+  btn.textContent = '刷新'
+  btn.addEventListener('click', () => window.location.reload())
+  toast.appendChild(btn)
+  document.body.appendChild(toast)
+}
 
 // Service Worker 注册 + 升级提示
 // 流程：发现新 SW → 等 installed → 提示用户「新版本可用」→ 用户点刷新 →
