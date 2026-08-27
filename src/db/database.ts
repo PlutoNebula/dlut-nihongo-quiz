@@ -308,12 +308,25 @@ export async function importData(json: string, options: { merge?: boolean } = {}
   }
 }
 
+/**
+ * 剥离记录中的自增主键：合并导入时让 Dexie 重新分配 id，
+ * 避免同一份备份重复导入时因主键冲突（ConstraintError）导致整个事务回滚。
+ */
+function stripAutoIncrementId<T extends { id?: number | string }>(
+  item: T,
+): Omit<T, 'id'> & { id?: undefined } {
+  const { id: _ignored, ...rest } = item
+  return { ...rest, id: undefined }
+}
+
 // 合并导入：保留现有数据，合并导入的数据
 async function doMergeImport(data: Record<string, unknown>): Promise<void> {
   await db.transaction('rw', db.tables, async () => {
-    // attempts: 追加（不去重，保留所有历史记录）
+    // attempts: 追加（不去重，保留所有历史记录；主键由 Dexie 自增重新分配）
     if (data.attempts) {
-      await db.attempts.bulkAdd(data.attempts as Attempt[])
+      await db.attempts.bulkAdd(
+        (data.attempts as Attempt[]).map((item) => stripAutoIncrementId(item)),
+      )
     }
     // questionStats: 批量读取后批量合并，大幅减少 IndexedDB 操作次数
     if (data.questionStats) {
@@ -373,9 +386,11 @@ async function doMergeImport(data: Record<string, unknown>): Promise<void> {
       }
       await db.tagStats.bulkPut(upserts)
     }
-    // sessions: 追加
+    // sessions: 追加（主键同样由自增重新分配）
     if (data.sessions) {
-      await db.sessions.bulkAdd(data.sessions as Session[])
+      await db.sessions.bulkAdd(
+        (data.sessions as Session[]).map((item) => stripAutoIncrementId(item)),
+      )
     }
     // settings: 合并，导入的设置覆盖现有
     if (data.settings) {
