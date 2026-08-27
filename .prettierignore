@@ -7,3 +7,5 @@ package-lock.json
 repomix-output.xml
 *.png
 *.yml
+# 一次性调试脚本归档目录，不参与格式检查与 CI
+scripts/debug
