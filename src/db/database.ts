@@ -277,6 +277,39 @@ export async function importData(json: string, options: { merge?: boolean } = {}
       throw new Error(`备份格式错误：${k} 应为数组`)
     }
   }
+  // ── 逐条记录形状校验 ──
+  // 顶层是数组不代表数组元素是合法记录。不校验的实测后果（merge 路径）：
+  //   attempts: [5] → 静默入库一条空记录（数据污染）
+  //   attemptCount: "5" → existing.attemptCount + "5" = "105"（字符串拼接污染统计）
+  //   settings 缺 key → 泄漏 Dexie 内部错误信息
+  // 校验失败统一抛「备份格式错误」，fail-closed，不落任何脏数据。
+  // 规则为最小完整性（关键字段类型），与 exportData 的输出完全兼容。
+  const isRecord = (v: unknown): v is Record<string, unknown> =>
+    typeof v === 'object' && v !== null && !Array.isArray(v)
+  const allNumber = (rec: Record<string, unknown>, keys: string[]) =>
+    keys.every((k) => typeof rec[k] === 'number')
+  const recordChecks: Partial<Record<(typeof tableKeys)[number], (item: unknown) => boolean>> = {
+    attempts: (it) => isRecord(it) && typeof it.questionId === 'string',
+    questionStats: (it) =>
+      isRecord(it) &&
+      typeof it.questionId === 'string' &&
+      allNumber(it, ['attemptCount', 'correctCount', 'wrongCount', 'masteryLevel']),
+    tagStats: (it) =>
+      isRecord(it) && typeof it.tag === 'string' && allNumber(it, ['attemptCount', 'correctCount', 'wrongCount']),
+    sessions: (it) => isRecord(it) && typeof it.mode === 'string' && typeof it.startedAt === 'string',
+    settings: (it) => isRecord(it) && typeof it.key === 'string' && typeof it.value === 'string',
+  }
+  for (const k of tableKeys) {
+    const arr = obj[k]
+    const check = recordChecks[k]
+    if (Array.isArray(arr) && check) {
+      arr.forEach((item, i) => {
+        if (!check(item)) {
+          throw new Error(`备份格式错误：${k} 第 ${i + 1} 条记录缺失关键字段或类型不符`)
+        }
+      })
+    }
+  }
 
   // 先创建当前数据的备份，防止导入中途失败导致数据丢失
   let backupJson: string | null = null
