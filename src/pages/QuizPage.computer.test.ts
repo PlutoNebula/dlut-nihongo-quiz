@@ -51,6 +51,7 @@ vi.mock('../composables/useHiddenSite', async () => {
 vi.mock('../components/ai/AIExplanation.vue', () => ({ default: { template: '<div />' } }))
 vi.mock('../components/ai/AIChat.vue', () => ({ default: { template: '<div />' } }))
 import QuizPage from './QuizPage.vue'
+import QuestionCard from '../components/quiz/QuestionCard.vue'
 
 const sample = (overrides: Partial<Question> = {}): Question => ({
   id: 'computer-2021-final-001',
@@ -126,6 +127,60 @@ afterEach(() => {
 })
 
 describe('computer question bank uses the existing quiz flow', () => {
+  it.each(['single', 'fill'] as const)(
+    'renders and sanitizes technical %s answers and translations',
+    async (questionType) => {
+      host = document.createElement('div')
+      document.body.append(host)
+      app = createApp(QuestionCard, {
+        question: sample({
+          questionType,
+          answerText: '$2^{16}$ <img src="x" onerror="alert(1)">',
+          translation:
+            '$2^{16}$ 字节\n\n```asm\nMOV AX, BX\nADD AX, 1\n```\n\n<script>alert(1)</script>',
+        }),
+        selectedKey: 'A',
+        submitted: true,
+        showExplanation: true,
+        mode: 'sequential',
+        questionIndex: 0,
+        totalQuestions: 1,
+        bookmarked: false,
+      })
+      app.mount(host)
+      await nextTick()
+      const result = host.querySelector('.q-result')!
+      const explanation = host.querySelector('.q-explanation')!
+      expect(result.querySelector('.katex')).not.toBeNull()
+      expect(result.querySelector('strong p, span p')).toBeNull()
+      expect(explanation.querySelector('.katex')).not.toBeNull()
+      expect(explanation.querySelector('pre code')?.textContent).toBe('MOV AX, BX\nADD AX, 1\n')
+      expect(explanation.querySelector('p pre')).toBeNull()
+      expect(host.querySelector('[onerror], script')).toBeNull()
+    },
+  )
+
+  it('keeps ordinary subject answers and translations as escaped plain text', async () => {
+    const text = '$2^{16}$ <b>literal text</b>'
+    host = document.createElement('div')
+    document.body.append(host)
+    app = createApp(QuestionCard, {
+      question: sample({ category: 'japanese2', answerText: text, translation: text }),
+      selectedKey: 'A',
+      submitted: true,
+      showExplanation: true,
+      mode: 'sequential',
+      questionIndex: 0,
+      totalQuestions: 1,
+      bookmarked: false,
+    })
+    app.mount(host)
+    await nextTick()
+    expect(host.querySelector('.q-result')?.textContent).toContain(text)
+    expect(host.querySelector('.q-explanation')?.textContent).toContain(text)
+    expect(host.querySelector('.katex, b')).toBeNull()
+  })
+
   it('submits generated answers and records attempts using ordinary scoring', async () => {
     mocks.questions = [sample()]
     await mountQuiz()

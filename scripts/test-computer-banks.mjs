@@ -95,6 +95,62 @@ test('a handwritten selection cannot silently become a standard answer', () => {
   assert.throws(() => validateSource(source, 3), /unverified answer must stay empty/)
 })
 
+test('questions must belong to a registered sheet with a matching title', () => {
+  for (const mutation of ['missing', 'unknown', 'non-string', 'wrong-title']) {
+    const source = answeredBank()
+    const q = source.questions[0]
+    if (mutation === 'missing') {
+      delete q.groupId
+      delete q.groupTitle
+    } else if (mutation === 'unknown') {
+      q.groupId = 'unknown-sheet'
+      delete q.groupTitle
+    } else if (mutation === 'non-string') {
+      source.groups.find((g) => g.id === q.groupId).id = 42
+      q.groupId = 42
+    } else {
+      q.groupTitle = '错误的题单标题'
+    }
+    assert.throws(() => validateSource(source, 3), /unknown or mismatched sheet/, mutation)
+  }
+})
+
+test('every answer provenance requires a string explanation', () => {
+  for (const provenance of ['printed', 'none', 'handwritten', 'generated']) {
+    for (const explanation of [undefined, null, 42, false, [], {}]) {
+      const source = answeredBank()
+      const q = source.questions[0]
+      q.answerProvenance = provenance
+      q.explanation = explanation
+      if (provenance === 'none' || provenance === 'handwritten') {
+        q.answerKey = ''
+        q.answerText = ''
+        q.status = 'needs_review'
+      }
+      assert.throws(
+        () => validateSource(source, 3),
+        /invalid explanation/,
+        `${provenance}: ${JSON.stringify(explanation)}`,
+      )
+    }
+  }
+})
+
+test('non-generated provenance may keep an empty explanation', () => {
+  for (const provenance of ['printed', 'none', 'handwritten']) {
+    const source = answeredBank()
+    const q = source.questions[0]
+    q.answerProvenance = provenance
+    q.explanation = ''
+    if (provenance === 'none' || provenance === 'handwritten') {
+      q.answerKey = ''
+      q.answerText = ''
+      q.status = 'needs_review'
+    }
+    assert.doesNotThrow(() => validateSource(source, 3), provenance)
+  }
+})
+
 test('missing source coverage is rejected even if question counts remain unchanged', () => {
   const source = answeredBank()
   source.coverage[0].questionIds.shift()

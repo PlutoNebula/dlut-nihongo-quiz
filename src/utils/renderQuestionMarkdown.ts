@@ -27,3 +27,8 @@ renderer.use({
 export function renderQuestionMarkdown(markdown: string): string {
   return sanitizeHtml(renderer.parse(markdown, { async: false }) as string)
 }
+
+/** Render answer text inside an inline result without adding paragraph wrappers. */
+export function renderQuestionMarkdownInline(markdown: string): string {
+  return sanitizeHtml(renderer.parseInline(markdown, { async: false }) as string)
+}

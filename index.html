@@ -117,16 +117,5 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          // 相对路径：在任意子路径部署都能正确注册并控制子树
-          var swUrl = new URL('sw.js', location.href).href
-          navigator.serviceWorker.register(swUrl).catch(function (err) {
-            console.warn('SW 注册失败:', err)
-          })
-        })
-      }
-    </script>
   </body>
 </html>

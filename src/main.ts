@@ -13,7 +13,37 @@ app.config.errorHandler = (err, _instance, info) => {
   showErrorToast('应用出现异常，建议刷新页面')
 }
 
-app.mount('#app')
+// 开发环境不使用离线缓存。旧页面可能已被之前注册的 SW 接管，
+// 注销后必须先重新加载，再挂载答题页面，避免读到旧题库或触发离开答题确认。
+async function mountApp() {
+  if (import.meta.env.DEV && 'serviceWorker' in navigator) {
+    try {
+      const scope = new URL(import.meta.env.BASE_URL, location.href).href
+      const scriptURL = new URL('sw.js', scope).href
+      const registration = await navigator.serviceWorker.getRegistration(scope)
+      const isAppWorker =
+        registration?.scope === scope &&
+        [registration.active, registration.waiting, registration.installing].some(
+          (worker) => worker?.scriptURL === scriptURL,
+        )
+      if (isAppWorker) {
+        const removed = await registration.unregister()
+        if (!removed) throw new Error('无法注销开发环境的旧 Service Worker')
+      }
+      if (
+        (!registration || isAppWorker) &&
+        navigator.serviceWorker.controller?.scriptURL === scriptURL
+      ) {
+        window.location.reload()
+        return
+      }
+    } catch (error) {
+      console.warn('开发环境 Service Worker 清理失败:', error)
+    }
+  }
+  app.mount('#app')
+}
+void mountApp()
 
 // 未处理的 Promise 拒绝：兜底提示而非静默失败
 window.addEventListener('unhandledrejection', (event) => {
@@ -70,7 +100,7 @@ function showErrorToast(message: string) {
 // 流程：发现新 SW → 等 installed → 提示用户「新版本可用」→ 用户点刷新 →
 //       postMessage SKIP_WAITING → SW 接管 → controllerchange → reload。
 // 避免静默拿到旧 SW 控制的页面，也避免不打招呼直接 reload 打断用户答题。
-if ('serviceWorker' in navigator) {
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     const swUrl = new URL('sw.js', location.href).href
     navigator.serviceWorker

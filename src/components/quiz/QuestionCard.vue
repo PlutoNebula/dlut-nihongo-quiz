@@ -9,7 +9,10 @@ import {
 } from '../../utils/multiAnswer'
 import { renderExplanation } from '../../utils/renderExplanation'
 import { renderMarkdown } from '../../utils/renderMarkdown'
-import { renderQuestionMarkdown } from '../../utils/renderQuestionMarkdown'
+import {
+  renderQuestionMarkdown,
+  renderQuestionMarkdownInline,
+} from '../../utils/renderQuestionMarkdown'
 import { useAI } from '../../composables/useAI'
 import TagBadge from '../ui/TagBadge.vue'
 import AIExplanation from '../ai/AIExplanation.vue'
@@ -49,6 +52,12 @@ const fillAnswer = ref('')
 const technicalQuestion = computed(() => props.question.category.startsWith('computer-'))
 const renderContent = (text: string) =>
   technicalQuestion.value ? renderQuestionMarkdown(text) : renderMarkdown(text)
+const renderedAnswer = computed(() =>
+  technicalQuestion.value ? renderQuestionMarkdownInline(props.question.answerText) : '',
+)
+const renderedTranslation = computed(() =>
+  technicalQuestion.value ? renderQuestionMarkdown(props.question.translation) : '',
+)
 const isFillQuestion = computed(() => props.question.questionType === 'fill')
 
 const showExplanation = ref(props.showExplanation ?? false)
@@ -420,13 +429,18 @@ const dragOpacity = computed(() => {
       <div class="result-line" :class="isCorrectOverall ? 'correct' : 'wrong'">
         <span class="result-badge">{{ isCorrectOverall ? '正确' : '错误' }}</span>
         <template v-if="isFillQuestion">
-          答案：<strong>{{ question.answerText }}</strong>
+          答案：<strong v-if="technicalQuestion" v-html="renderedAnswer" />
+          <strong v-else>{{ question.answerText }}</strong>
           <span v-if="!isCorrectOverall" class="your-answer">（你的答案：{{ fillAnswer }}）</span>
         </template>
         <template v-else>
           答案：<strong
             >{{ question.answerKey
-            }}<span v-if="question.answerText">. {{ question.answerText }}</span></strong
+            }}<template v-if="question.answerText"
+              >.
+              <span v-if="technicalQuestion" v-html="renderedAnswer" />
+              <span v-else>{{ question.answerText }}</span>
+            </template></strong
           >
         </template>
       </div>
@@ -444,7 +458,8 @@ const dragOpacity = computed(() => {
       </div>
       <div class="exp-section" v-if="question.translation">
         <h4>中文翻译</h4>
-        <p>{{ question.translation }}</p>
+        <div v-if="technicalQuestion" class="exp-text" v-html="renderedTranslation" />
+        <p v-else>{{ question.translation }}</p>
       </div>
       <div class="exp-section" v-if="question.tags.length > 0">
         <h4>{{ tagsSectionTitle }}</h4>

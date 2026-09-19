@@ -25,7 +25,12 @@ export function validateSource(bank, expectedPages) {
     check(!ids.has(q.id), `duplicate ID ${q.id}`)
     ids.add(q.id)
     check(q.category === bank.category, `${q.id}: wrong category`)
-    check(groups.get(q.groupId) === q.groupTitle, `${q.id}: unknown or mismatched sheet`)
+    check(
+      typeof q.groupId === 'string' &&
+        groups.has(q.groupId) &&
+        groups.get(q.groupId) === q.groupTitle,
+      `${q.id}: unknown or mismatched sheet`,
+    )
     check(typeof q.stem === 'string' && q.stem.trim(), `${q.id}: empty stem`)
     check(
       ['single', 'multi', 'judgement', 'fill'].includes(q.questionType),
@@ -48,16 +53,14 @@ export function validateSource(bank, expectedPages) {
       typeof q.answerKey === 'string' && typeof q.answerText === 'string',
       `${q.id}: invalid answer`,
     )
+    check(typeof q.explanation === 'string', `${q.id}: invalid explanation`)
     if (q.answerProvenance === 'none' || q.answerProvenance === 'handwritten') {
       check(q.answerKey === '' && q.answerText === '', `${q.id}: unverified answer must stay empty`)
       check(q.status === 'needs_review', `${q.id}: unverified question must need review`)
     } else {
       check(q.answerText.trim(), `${q.id}: empty answer text`)
       if (q.answerProvenance === 'generated') {
-        check(
-          typeof q.explanation === 'string' && q.explanation.trim(),
-          `${q.id}: empty explanation`,
-        )
+        check(q.explanation.trim(), `${q.id}: empty explanation`)
       }
       if (q.questionType === 'fill') {
         check(q.answerKey === '' && q.options.length === 0, `${q.id}: invalid fill answer`)
