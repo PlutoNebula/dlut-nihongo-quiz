@@ -15,6 +15,38 @@ export interface TreeNode {
 export const COURSE_TREE: TreeNode[] = [
   {
     type: 'group',
+    key: 'computer-organization',
+    label: '计算机组成（软国际）',
+    icon: '组',
+    children: [
+      {
+        type: 'leaf',
+        key: 'computer-2021-final',
+        label: '2021期末',
+        category: 'computer-2021-final',
+      },
+      {
+        type: 'leaf',
+        key: 'computer-2024-final',
+        label: '2024期末（部分试卷）',
+        category: 'computer-2024-final',
+      },
+      {
+        type: 'leaf',
+        key: 'computer-c-exam',
+        label: 'C卷（日期待核对）',
+        category: 'computer-c-exam',
+      },
+      {
+        type: 'leaf',
+        key: 'computer-midterms',
+        label: '期中三年合集',
+        category: 'computer-midterms',
+      },
+    ],
+  },
+  {
+    type: 'group',
     key: 'freshman-spring',
     label: '大一下',
     icon: '一',

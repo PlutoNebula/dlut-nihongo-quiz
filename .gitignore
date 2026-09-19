@@ -151,3 +151,4 @@ data/raw/military/_original/
 # 工程/架构审计文档与调试输出（仅本地保留，不提交）
 /docs/audit/
 scripts/debug/_*.txt
+.omx/

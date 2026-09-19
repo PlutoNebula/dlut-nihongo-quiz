@@ -9,6 +9,7 @@ import {
 } from '../../utils/multiAnswer'
 import { renderExplanation } from '../../utils/renderExplanation'
 import { renderMarkdown } from '../../utils/renderMarkdown'
+import { renderQuestionMarkdown } from '../../utils/renderQuestionMarkdown'
 import { useAI } from '../../composables/useAI'
 import TagBadge from '../ui/TagBadge.vue'
 import AIExplanation from '../ai/AIExplanation.vue'
@@ -45,6 +46,9 @@ const aiExplanationRequest = ref<AIExplanationRequest | null>(null)
 
 // 填空题相关
 const fillAnswer = ref('')
+const technicalQuestion = computed(() => props.question.category.startsWith('computer-'))
+const renderContent = (text: string) =>
+  technicalQuestion.value ? renderQuestionMarkdown(text) : renderMarkdown(text)
 const isFillQuestion = computed(() => props.question.questionType === 'fill')
 
 const showExplanation = ref(props.showExplanation ?? false)
@@ -255,7 +259,7 @@ const canSubmit = computed(() => {
   }
   return props.selectedKey.length > 0
 })
-const renderedStem = computed(() => renderMarkdown(props.question.stem))
+const renderedStem = computed(() => renderContent(props.question.stem))
 
 const isCorrectOverall = computed(() => {
   if (isFillQuestion.value) {
@@ -358,7 +362,8 @@ const dragOpacity = computed(() => {
         :disabled="submitted"
       >
         <span class="opt-key">{{ optionLabels[i] }}</span>
-        <span class="opt-text">{{ opt.text }}</span>
+        <span v-if="technicalQuestion" class="opt-text" v-html="renderContent(opt.text)" />
+        <span v-else class="opt-text">{{ opt.text }}</span>
         <span v-if="isCorrectOption(opt.key)" class="opt-icon c" aria-hidden="true">&#10003;</span>
         <span v-if="isWrongOption(opt.key)" class="opt-icon w" aria-hidden="true">&#10007;</span>
         <span v-if="isMissedOption(opt.key)" class="opt-icon m" aria-hidden="true">&middot;</span>
@@ -449,7 +454,14 @@ const dragOpacity = computed(() => {
       </div>
       <div class="exp-section">
         <h4>解析</h4>
-        <div class="exp-text" v-html="renderExplanation(question.explanation)" />
+        <div
+          class="exp-text"
+          v-html="
+            technicalQuestion
+              ? renderContent(question.explanation)
+              : renderExplanation(question.explanation)
+          "
+        />
       </div>
     </div>
 
@@ -475,6 +487,36 @@ const dragOpacity = computed(() => {
   </div>
 </template>
 <style scoped>
+.q-stem :deep(pre),
+.exp-text :deep(pre) {
+  overflow-x: auto;
+  white-space: pre;
+  padding: 12px;
+  background: var(--bg-hover);
+}
+.q-stem :deep(table),
+.exp-text :deep(table) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+.q-stem :deep(th),
+.q-stem :deep(td),
+.exp-text :deep(th),
+.exp-text :deep(td) {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+}
+.q-stem :deep(.katex-display),
+.opt-text :deep(.katex-display) {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.opt-text :deep(p) {
+  margin: 0;
+}
+
 .question-card {
   background: var(--bg-card);
   border: 1px solid var(--border);

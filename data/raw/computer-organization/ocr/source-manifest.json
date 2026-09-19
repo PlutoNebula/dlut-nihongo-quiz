@@ -1,0 +1,31 @@
+{
+  "model": "step-3.7-flash",
+  "endpoint": "https://api.stepfun.com/step_plan/v1/chat/completions",
+  "documents": [
+    {
+      "source": "2021计组期末.pdf",
+      "pages": 3,
+      "sha256": "a84fff15c040a559bd0ceb38f37ff30dfe9cde27afdd730f20696a53f17bee1e",
+      "completed_pages": 3
+    },
+    {
+      "source": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+      "pages": 4,
+      "sha256": "547efc036a08ba2c8630d44e0a552db2266bbdd6b789815f061c1e8006ebb5cf",
+      "completed_pages": 4
+    },
+    {
+      "source": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "pages": 5,
+      "sha256": "fc276e04aa598d8a17c61e4cdd727897d83e8e9f700de0294d223a5156026e35",
+      "completed_pages": 5
+    },
+    {
+      "source": "计组期中 三年合集（19 21）.pdf",
+      "pages": 19,
+      "sha256": "2fa60ff153f07706b5700ddff0b6ce0a32817b2e44bc8335260717699a9464fb",
+      "completed_pages": 19
+    }
+  ],
+  "errors": []
+}

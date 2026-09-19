@@ -1,0 +1,69 @@
+{
+  "printed_page_labels": [
+    "A-2"
+  ],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "A",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "5. Which of the following is correct about I/O conflict techniques?\nA. Chain query mode is sensitive to faulty and no priority.\nB. Counter query mode is sensitive to faulty and increases device addresses.\nC. Independent query has massive control buses.\nD. None above.\n\n6. Which does not belong to the main memory? ( )\nA. ROM\nB. DRAM\nC. Flash\nD. SRAM\n\n7. Which of the following is not the component of the system bus? (\nA. Address Bus\nB. Data Bus\nC. Signal Bus\nD. Control Bus\n\n8. Which instruction does not have an operand?\nA. Mov\nB. Call\nC. Add\nD. Ret\n\n9. In a 5-level pipeline architecture with a 32-bit fixed-length instruction system, when the address of the executing instruction is 0x9000, what is the address of the instruction being fetched? ( )\nA. 0x9004\nB. 0x9008\nC. 0x9002\nD. 0x9001\n\n10. Which description of IEEE 754 is not true? ( )\nA. There are three categories of floating points.\nB. For normalized values, exp ≠ 000···0 and exp ≠ 111···1.\nC. The Exponent value can be used for ensuring seamless distribution of data.\nD. For denormalized values, we have exp = 000...0, frac = 000...0.\n\nA-2",
+  "corrections": [
+    {
+      "location": "Q5-A",
+      "before": "Chain qucry mode",
+      "after": "Chain query mode",
+      "evidence": "图像中A选项首词清晰显示为'query'",
+      "confidence": "high"
+    },
+    {
+      "location": "Q5-B",
+      "before": "increases devicc addrcsscs",
+      "after": "increases device addresses",
+      "evidence": "图像中B选项清晰显示'device addresses'",
+      "confidence": "high"
+    },
+    {
+      "location": "Q5-C",
+      "before": "Indcpendent query",
+      "after": "Independent query",
+      "evidence": "图像中C选项首词清晰显示为'Independent'",
+      "confidence": "high"
+    },
+    {
+      "location": "Q10-A",
+      "before": "three catcgorics",
+      "after": "three categories",
+      "evidence": "图像中A选项清晰显示'categories'",
+      "confidence": "high"
+    },
+    {
+      "location": "Q10-B",
+      "before": "cxp ≠ 000···0 and cxp ≠ 111···1",
+      "after": "exp ≠ 000···0 and exp ≠ 111···1",
+      "evidence": "图像中B选项两处变量均清晰显示为'exp'",
+      "confidence": "high"
+    },
+    {
+      "location": "Q10-C",
+      "before": "cnsuring scamless",
+      "after": "ensuring seamless",
+      "evidence": "图像中C选项清晰显示'ensuring seamless'",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+  "physical_page": 2
+}

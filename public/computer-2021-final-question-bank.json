@@ -1,0 +1,2109 @@
+[
+  {
+    "id": "computer-2021-final-s01-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s01",
+    "groupTitle": "一、数据单位与数量级",
+    "numberInGroup": 1,
+    "stem": "以下の各空欄に当てはまる適切なものをA～Dの記号で答えよ。\n【マークシートに解答】\n\n$\\square=1$バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "4ビット"
+      },
+      {
+        "key": "B",
+        "text": "8ビット"
+      },
+      {
+        "key": "C",
+        "text": "32ビット"
+      },
+      {
+        "key": "D",
+        "text": "1語"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "8ビット",
+    "translation": "1字节等于多少比特",
+    "explanation": "在计算机科学中，1字节（Byte，略写为B）由8个比特（bit，略写为b）组成，这是国际标准（IEC 80000-13）及实际计算机体系结构中的定义。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "一、数据单位与数量级",
+      "position": 1,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "1"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s01-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s01",
+    "groupTitle": "一、数据单位与数量级",
+    "numberInGroup": 2,
+    "stem": "以下の各空欄に当てはまる適切なものをA～Dの記号で答えよ。\n【マークシートに解答】\n\n$10^6$バイト=$1\\square$バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "テラ"
+      },
+      {
+        "key": "B",
+        "text": "メガ"
+      },
+      {
+        "key": "C",
+        "text": "キロ"
+      },
+      {
+        "key": "D",
+        "text": "ペタ"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "メガ",
+    "translation": "$10^6$字节等于1什么字节（国际单位制词头）",
+    "explanation": "在国际单位制（SI）及计算机存储单位中，前缀\"Mega\"（メガ，兆）表示$10^6$（一百万）。因此$10^6$字节等于1兆字节（Megabyte, MB）。注：在二进制语境下有时也指$2^{20}$，但题目明确使用$10^6$。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "一、数据单位与数量级",
+      "position": 2,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "2"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s01-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s01",
+    "groupTitle": "一、数据单位与数量级",
+    "numberInGroup": 3,
+    "stem": "以下の各空欄に当てはまる適切なものをA～Dの記号で答えよ。\n【マークシートに解答】\n\n$10^9$バイト=$1\\square$バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メガ"
+      },
+      {
+        "key": "B",
+        "text": "テラ"
+      },
+      {
+        "key": "C",
+        "text": "キロ"
+      },
+      {
+        "key": "D",
+        "text": "ギガ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "ギガ",
+    "translation": "$10^9$字节等于1什么字节",
+    "explanation": "前缀\"Giga\"（ギガ，吉咖）表示$10^9$（十亿）。因此$10^9$字节等于1吉字节（Gigabyte, GB）。选项A（メガ，$10^6$）、B（テラ，$10^{12}$）、C（キロ，$10^3$）均不符合。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "一、数据单位与数量级",
+      "position": 3,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "3"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s01-q004",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s01",
+    "groupTitle": "一、数据单位与数量级",
+    "numberInGroup": 4,
+    "stem": "以下の各空欄に当てはまる適切なものをA～Dの記号で答えよ。\n【マークシートに解答】\n\n$10^{-3}$秒=$1\\square$秒",
+    "options": [
+      {
+        "key": "A",
+        "text": "ナノ"
+      },
+      {
+        "key": "B",
+        "text": "ミリ"
+      },
+      {
+        "key": "C",
+        "text": "ピコ"
+      },
+      {
+        "key": "D",
+        "text": "マイクロ"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "ミリ",
+    "translation": "$10^{-3}$秒等于1什么秒",
+    "explanation": "前缀\"milli\"（ミリ，毫）表示$10^{-3}$（千分之一）。因此$10^{-3}$秒等于1毫秒（millisecond, ms）。选项A（ナノ，$10^{-9}$）、C（ピコ，$10^{-12}$）、D（マイクロ，$10^{-6}$）均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "一、数据单位与数量级",
+      "position": 4,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "4"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s01-q005",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s01",
+    "groupTitle": "一、数据单位与数量级",
+    "numberInGroup": 5,
+    "stem": "以下の各空欄に当てはまる適切なものをA～Dの記号で答えよ。\n【マークシートに解答】\n\n$10^{-9}$秒=$1\\square$秒",
+    "options": [
+      {
+        "key": "A",
+        "text": "ナノ"
+      },
+      {
+        "key": "B",
+        "text": "ピコ"
+      },
+      {
+        "key": "C",
+        "text": "マイクロ"
+      },
+      {
+        "key": "D",
+        "text": "フェムト"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "ナノ",
+    "translation": "$10^{-9}$秒等于1什么秒",
+    "explanation": "前缀\"nano\"（ナノ，纳诺）表示$10^{-9}$（十亿分之一）。因此$10^{-9}$秒等于1纳秒（nanosecond, ns）。选项B（ピコ，$10^{-12}$）、C（マイクロ，$10^{-6}$）、D（フェムト，$10^{-15}$）均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "一、数据单位与数量级",
+      "position": 5,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "5"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s02-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s02",
+    "groupTitle": "二、数值表示与转换",
+    "numberInGroup": 1,
+    "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n符号あり2進数1010を8ビットに符号拡張せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "000001010"
+      },
+      {
+        "key": "B",
+        "text": "11111010"
+      },
+      {
+        "key": "C",
+        "text": "10101010"
+      },
+      {
+        "key": "D",
+        "text": "10100000"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "11111010",
+    "translation": "将4位有符号二进制数1010进行8位符号扩展",
+    "explanation": "原数1010为4位补码（值为-6）。符号扩展（Sign Extension）要求在左侧补充符号位（最高位1，因原数为负）直至8位。得到11111010（8位）。验证：11111010₂ = -128+64+32+16+8+2 = -6，与原数等价。选项A为9位（000001010），位数错误且为无符号扩展；选项C（10101010）为保持原低位重复而非符号扩展；选项D（10100000）无对应意义。\n\n**题目说明：**选项A显示为9位(000001010)，与题干要求的8位不符，可能是印刷错误或OCR错误；若原卷确实为9位则明显错误，若实际为00001010（8位）则属于逻辑扩展而非符号扩展。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "二、数值表示与转换",
+      "position": 6,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "6"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "选项A为000001010（9位），与题干8位要求存在疑点，保留OCR原文待核对。"
+    ],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s02-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s02",
+    "groupTitle": "二、数值表示与转换",
+    "numberInGroup": 2,
+    "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n符号あり2進数10101011を右に3ビット算術シフトせよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00010101"
+      },
+      {
+        "key": "B",
+        "text": "11111010"
+      },
+      {
+        "key": "C",
+        "text": "11110101"
+      },
+      {
+        "key": "D",
+        "text": "11011000"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "11110101",
+    "translation": "将8位有符号二进制数10101011右移3位进行算术移位",
+    "explanation": "算术右移（Arithmetic Right Shift）用于有符号数除法，需保持符号位（最高位）不变，左侧补符号位，右侧移出。原数10101011（补码，表示-85）：\n- 右移1位：11010101（-43）\n- 右移2位：11101010（-22）\n- 右移3位：11110101（-11，即-85/8向负无穷取整）\n因此结果为11110101。选项A（00010101）为逻辑右移；选项B（11111010）移位位数或方向不符；选项D（11011000）不符。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "二、数值表示与转换",
+      "position": 7,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "7"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s02-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s02",
+    "groupTitle": "二、数值表示与转换",
+    "numberInGroup": 3,
+    "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n10進数3.1415を正規化せよ。\n\n整理说明：原题未限定规格化尾数范围；本题按十进制小数形式的教材约定 $0.1 \\le m < 1$ 作答。",
+    "options": [
+      {
+        "key": "A",
+        "text": "$0.31415\\times 2^1$"
+      },
+      {
+        "key": "B",
+        "text": "$3.1415\\times 2^0$"
+      },
+      {
+        "key": "C",
+        "text": "$3.1415\\times 10^0$"
+      },
+      {
+        "key": "D",
+        "text": "$0.31415\\times 10^1$"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "$0.31415\\times 10^1$",
+    "translation": "从下列选项中选择关于十进制数3.1415规范化的正确答案（用A～D符号回答）。【填涂答题卡】",
+    "explanation": "**推导过程：**\n1. **规范化约定**：题目要求对十进制数3.1415进行规范化（正規化）。根据整理说明，按十进制小数形式的教材约定，规范化尾数（有效数字）需满足 $0.1 \\le m < 1$。\n2. **选项排除**：\n   - A、B 使用底数2（二进制），不适用于十进制数规范化，排除。\n   - C ($3.1415\\times 10^0$)：尾数3.1415 ≥ 1，不满足 $0.1 \\le m < 1$ 的约定。\n   - D ($0.31415\\times 10^1$)：尾数0.31415满足 $0.1 \\le 0.31415 < 1$，且 $0.31415 \\times 10 = 3.1415$，数值正确且形式规范。\n3. **结论**：正确答案为D。\n\n*注：若采用 $1 \\le m < 10$ 的常见十进制科学计数法约定，则C亦正确，但依题目给定的教材约定（尾数小于1），D为指定答案。*",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "二、数值表示与转换",
+      "position": 8,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "8"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s02-q004",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s02",
+    "groupTitle": "二、数值表示与转换",
+    "numberInGroup": 4,
+    "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n2進数111を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "3"
+      },
+      {
+        "key": "B",
+        "text": "7"
+      },
+      {
+        "key": "C",
+        "text": "111"
+      },
+      {
+        "key": "D",
+        "text": "50.5"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "7",
+    "translation": "将二进制数111转换为十进制。",
+    "explanation": "二进制整数$111_2$按权展开：$1 \\times 2^2 + 1 \\times 2^1 + 1 \\times 2^0 = 4 + 2 + 1 = 7$。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "二、数值表示与转换",
+      "position": 9,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "9"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s02-q005",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s02",
+    "groupTitle": "二、数值表示与转换",
+    "numberInGroup": 5,
+    "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n2進数0.111を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "0.625"
+      },
+      {
+        "key": "B",
+        "text": "0.675"
+      },
+      {
+        "key": "C",
+        "text": "0.75"
+      },
+      {
+        "key": "D",
+        "text": "0.875"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "0.875",
+    "translation": "将二进制数0.111转换为十进制。",
+    "explanation": "二进制小数$0.111_2$按权展开：$1 \\times 2^{-1} + 1 \\times 2^{-2} + 1 \\times 2^{-3} = 0.5 + 0.25 + 0.125 = 0.875$。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "二、数值表示与转换",
+      "position": 10,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "10"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s03-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s03",
+    "groupTitle": "三、MIPS 指令",
+    "numberInGroup": 1,
+    "stem": "以下の各説明に合うMIPSの命令を選択し、A～Dの記号で答えよ。\n【マークシートに解答】\n\n指定されたレジスタの値をメモリ中の指定されたアドレスに格納する。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ori"
+      },
+      {
+        "key": "B",
+        "text": "andi"
+      },
+      {
+        "key": "C",
+        "text": "lw"
+      },
+      {
+        "key": "D",
+        "text": "sw"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "sw",
+    "translation": "将指定寄存器的值存储到内存中的指定地址。",
+    "explanation": "在MIPS指令集中，sw（store word）指令的功能是将通用寄存器的值写入由基址寄存器与立即数偏移指定的内存地址。ori、andi为逻辑运算指令；lw（load word）用于从内存读取数据到寄存器。因此，存储操作对应sw。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "三、MIPS 指令",
+      "position": 11,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "11"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s03-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s03",
+    "groupTitle": "三、MIPS 指令",
+    "numberInGroup": 2,
+    "stem": "以下の各説明に合うMIPSの命令を選択し、A～Dの記号で答えよ。\n【マークシートに解答】\n\n右論理シフトを行う。",
+    "options": [
+      {
+        "key": "A",
+        "text": "sll"
+      },
+      {
+        "key": "B",
+        "text": "srl"
+      },
+      {
+        "key": "C",
+        "text": "sra"
+      },
+      {
+        "key": "D",
+        "text": "sla"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "srl",
+    "translation": "进行右逻辑移位。",
+    "explanation": "MIPS指令集中：sll（Shift Left Logical）为左逻辑移位；srl（Shift Right Logical）为右逻辑移位（空位补0）；sra（Shift Right Arithmetic）为右算术移位（空位补符号位）；sla并非标准MIPS指令（左逻辑移位通常用sll）。题目要求右逻辑移位，故选srl。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "三、MIPS 指令",
+      "position": 12,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "12"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s03-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s03",
+    "groupTitle": "三、MIPS 指令",
+    "numberInGroup": 3,
+    "stem": "以下の各説明に合うMIPSの命令を選択し、A～Dの記号で答えよ。\n【マークシートに解答】\n\n手続き呼び出しにおいて、レジスタの値をスタックに退避させるため\\$spの値を変更する際に使用する。",
+    "options": [
+      {
+        "key": "A",
+        "text": "jal"
+      },
+      {
+        "key": "B",
+        "text": "jr"
+      },
+      {
+        "key": "C",
+        "text": "sw"
+      },
+      {
+        "key": "D",
+        "text": "addi"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "addi",
+    "translation": "在过程调用中，为了将寄存器值保存到栈而改变$sp的值时使用的指令。",
+    "explanation": "在MIPS过程调用（function call）中，保存寄存器（callee-saved或临时寄存器）到栈前，需要先调整栈指针$sp以分配栈帧空间（例如：addi $sp, $sp, -16）。addi（Add Immediate）指令通过立即数运算改变$sp的值。sw指令用于将寄存器值存入内存（由$sp加偏移寻址），但它本身不改变$sp；jal用于跳转子程序并链接（改变$ra）；jr用于跳转返回。因此，改变$sp的指令是addi。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "三、MIPS 指令",
+      "position": 13,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "13"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 1,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\nプログラムがどう動くかを、プログラミング言語を使って記述したもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "アセンブリコード"
+      },
+      {
+        "key": "B",
+        "text": "ソースコード"
+      },
+      {
+        "key": "C",
+        "text": "オブジェクトコード"
+      },
+      {
+        "key": "D",
+        "text": "コンパイラ"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "ソースコード",
+    "translation": "用编程语言描述程序如何运行的东西。",
+    "explanation": "ソースコード（Source Code，源代码）是指用程序设计语言（如C、Python、Java等高级语言或汇编语言）编写的文本，描述了程序的行为和逻辑。アセンブリコード是汇编语言代码（属于源代码的一种，但通常特指低级语言）；オブジェクトコード是源代码编译后的目标代码（机器代码或中间代码）；コンパイラ是执行翻译的程序（软件），而非描述程序行为的文本本身。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 14,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "14"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 2,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\nWindows等のように、コンピュータの基本的な管理を担当するソフトウェア。",
+    "options": [
+      {
+        "key": "A",
+        "text": "アプリケーション"
+      },
+      {
+        "key": "B",
+        "text": "オペレーティングシステム"
+      },
+      {
+        "key": "C",
+        "text": "ALU"
+      },
+      {
+        "key": "D",
+        "text": "CPU"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "オペレーティングシステム",
+    "translation": "如Windows等，负责计算机基本管理的软件。",
+    "explanation": "该描述指的是操作系统（Operating System，OS）。操作系统是管理计算机硬件与软件资源的系统软件，提供进程管理、内存管理、文件系统等基本服务。选项A（应用程序）是运行在OS之上的软件；C（ALU，算术逻辑单元）和D（CPU，中央处理器）均为硬件部件，不负责系统管理。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 15,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "15"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 3,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\n1秒あたりのクロック数。",
+    "options": [
+      {
+        "key": "A",
+        "text": "MIPS"
+      },
+      {
+        "key": "B",
+        "text": "FLOPS"
+      },
+      {
+        "key": "C",
+        "text": "クロック周波数"
+      },
+      {
+        "key": "D",
+        "text": "スループット"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "クロック周波数",
+    "translation": "每秒时钟周期数。",
+    "explanation": "该描述指的是时钟频率（Clock Frequency），其定义为CPU每秒产生的时钟周期数，单位为赫兹（Hz）。选项A（MIPS）指每秒百万条指令，是性能指标；B（FLOPS）指每秒浮点运算次数；D（スループット）指吞吐量，表示单位时间内完成的工作量。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 16,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "16"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q004",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 4,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\n自由な順番でデータを読み書きでき、定期的なリフレッシュが必要な記憶装置。",
+    "options": [
+      {
+        "key": "A",
+        "text": "CD-ROM"
+      },
+      {
+        "key": "B",
+        "text": "テープ"
+      },
+      {
+        "key": "C",
+        "text": "SRAM"
+      },
+      {
+        "key": "D",
+        "text": "DRAM"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "DRAM",
+    "translation": "可以按任意顺序读写数据，且需要定期刷新的存储装置。",
+    "explanation": "该描述符合DRAM（动态随机存取存储器，Dynamic RAM）的特征。DRAM使用电容存储数据，由于电容漏电需要定期刷新（refresh）以保持数据，且支持随机访问。选项A（CD-ROM）为只读光学存储；B（テープ/磁带）为顺序访问存储；C（SRAM）虽为随机访问但不需要刷新（使用触发器存储）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 17,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "17"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q005",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 5,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\nプログラム内蔵方式の考案者とされている人物。",
+    "options": [
+      {
+        "key": "A",
+        "text": "フォン・ノイマン"
+      },
+      {
+        "key": "B",
+        "text": "ルートヴィヒ・ベートーベン"
+      },
+      {
+        "key": "C",
+        "text": "エドガー・ダイクストラ"
+      },
+      {
+        "key": "D",
+        "text": "ドナルド・クヌース"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "フォン・ノイマン",
+    "translation": "被认为是程序内藏方式（存储程序概念）的提出者。",
+    "explanation": "该描述指的是冯·诺依曼（John von Neumann），他于1945年提出了存储程序计算机体系结构（Von Neumann Architecture），即程序和数据同样存储在内存中，现代计算机均基于此设计。选项B为作曲家；C（Dijkstra）为计算机科学家，以最短路径算法和goto语句批判著称；D（Knuth）为《计算机程序设计艺术》作者。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 18,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "18"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q006",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 6,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\nメモリ領域のうち、動的変数を格納する領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "テキスト・セグメント"
+      },
+      {
+        "key": "B",
+        "text": "スタック"
+      },
+      {
+        "key": "C",
+        "text": "静的データ・セグメント"
+      },
+      {
+        "key": "D",
+        "text": "ヒープ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "ヒープ",
+    "translation": "在内存区域中，用于存储动态变量的区域。",
+    "explanation": "该描述指的是堆（Heap）内存区域。堆用于存储程序运行时动态分配的内存（如C语言的malloc、C++的new），由程序员控制释放。选项A（文本段）存储程序代码；B（栈/スタック）存储函数局部变量、返回地址等自动变量；C（静态数据段）存储全局变量和静态变量。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 19,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "19"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q007",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 7,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\n複数の入力のうち、どれか1つを選択して出力する素子。",
+    "options": [
+      {
+        "key": "A",
+        "text": "シフトレジスタ"
+      },
+      {
+        "key": "B",
+        "text": "フリップフロップ"
+      },
+      {
+        "key": "C",
+        "text": "マルチプレクサ"
+      },
+      {
+        "key": "D",
+        "text": "全加算器"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "マルチプレクサ",
+    "translation": "从多个输入中选择一个输出的器件。",
+    "explanation": "该描述指的是多路复用器（Multiplexer，MUX），它根据选择信号（Select Signal）从多个输入数据通道中选择一个输出到单一输出端。选项A（シフトレジスタ）用于数据的串行移位操作；B（フリップフロップ）是基本的时序逻辑存储单元；D（全加算器）是用于执行二进制加法的算术电路。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 20,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "20"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q008",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 8,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\n数値を特定の桁で丸めることにより発生する誤差。",
+    "options": [
+      {
+        "key": "A",
+        "text": "丸め誤差"
+      },
+      {
+        "key": "B",
+        "text": "桁落ち"
+      },
+      {
+        "key": "C",
+        "text": "情報落ち"
+      },
+      {
+        "key": "D",
+        "text": "打ち切り誤差"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "丸め誤差",
+    "translation": "数值在特定位四舍五入时产生的误差。",
+    "explanation": "『丸め誤差』（Rounding Error）指将数值按特定位数进行四舍五入时产生的误差。『桁落ち』（Catastrophic Cancellation）指两个相近数相减导致有效数字严重丢失；『情報落ち』（Cancellation/Information Loss）在浮点数运算中指大小悬殊的数相加时，对阶导致小数的有效位被丢弃；『打ち切り誤差』（Truncation Error）指将无限过程截断为有限过程（如级数求和取有限项）产生的误差。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 21,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "21"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q009",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 9,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\n浮動小数点数の演算において、有効桁数が少なくなる現象。",
+    "options": [
+      {
+        "key": "A",
+        "text": "丸め誤差"
+      },
+      {
+        "key": "B",
+        "text": "桁落ち"
+      },
+      {
+        "key": "C",
+        "text": "情報落ち"
+      },
+      {
+        "key": "D",
+        "text": "打ち切り誤差"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "桁落ち",
+    "translation": "在浮点数运算中，有效数字位数减少的现象。",
+    "explanation": "桁落ち（消去误差、catastrophic cancellation）指浮点数运算后有效数字位数显著减少，典型情况是两个数值相近的数相减，高位有效数字相互抵消，因此选B。情報落ち则通常指大小悬殊的数相加时，对阶使较小数的有效信息丢失；它与桁落ち不同。丸め誤差来自有限位数舍入；打ち切り誤差来自截断近似过程。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 22,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "22"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q010",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 10,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。【マークシートに解答】\n\nある改善を行った結果の性能向上は、改善した機能を使用する割合によって制約されるという法則。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ジップの法則"
+      },
+      {
+        "key": "B",
+        "text": "ムーアの法則"
+      },
+      {
+        "key": "C",
+        "text": "フレミングの法則"
+      },
+      {
+        "key": "D",
+        "text": "アムダールの法則"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "アムダールの法則",
+    "translation": "某项改进带来的性能提升受限于该改进功能被使用比例的定律。",
+    "explanation": "**解析**：这是阿姆达尔定律（Amdahl's Law）的定义。该定律指出，系统中某一部件（或功能）加速后，整体性能的提升受限于该部件被使用的时间比例（或比例）。公式为：\n$$Speedup = \\frac{1}{(1-f) + \\frac{f}{k}}$$\n其中 $f$ 是可改进部分的比例，$k$ 是改进后该部分的加速比。\n\n**选项分析**：\n- A ジップの法則（Zipf定律）：关于词频分布的定律，与性能无关。\n- B ムーアの法則（摩尔定律）：关于集成电路上晶体管数量每18-24个月翻倍的观察，不是性能提升约束定律。\n- C フレミングの法則（弗莱明定律）：通常指电动机的左手定则，与电磁学相关。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 23,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "23"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q011",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 11,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。\n\nパイプライン処理において、条件分岐が存在するため、命令を実行すべきかどうか判断できず、所定のクロック・サイクル内で命令を実行できないこと。",
+    "options": [
+      {
+        "key": "A",
+        "text": "データ・ハザード"
+      },
+      {
+        "key": "B",
+        "text": "構造ハザード"
+      },
+      {
+        "key": "C",
+        "text": "制御ハザード"
+      },
+      {
+        "key": "D",
+        "text": "ストール"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "制御ハザード",
+    "translation": "在流水线处理中，由于存在条件分支，无法判断是否应执行指令，从而无法在规定的时钟周期内执行该指令的现象。",
+    "explanation": "**解析**：控制冒险（Control Hazard，也称分支冒险）是由分支指令（如 beq, bne, j, jr）引起的。在流水线的取指（IF）阶段，处理器尚不知道分支指令的结果（是否跳转以及跳转目标地址），因此无法确定下一条应取的指令，导致流水线可能插入无效指令或需要清空流水线，造成在特定时钟周期内无法正确执行指令。\n\n**选项分析**：\n- A データ・ハザード（数据冒险）：由前后指令间的数据依赖引起（如 RAW, WAR, WAW）。\n- B 構造ハザード（结构冒险）：由硬件资源冲突引起（如多条指令同时需要访存）。\n- D ストール（流水线停顿）：是解决数据冒险和控制冒险的一种技术（插入气泡），不是冒险类型本身。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 24,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "24"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s04-q012",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s04",
+    "groupTitle": "四、计算机组成基本概念",
+    "numberInGroup": 12,
+    "stem": "それぞれの説明に最もあてはまる語句を選択肢から選び、A～Dの記号で答えよ。\n\nパイプライン処理において、計算結果を後続の命令ですぐに使えるようにするため、本来よりも早くパイプラインの前段に計算結果を伝えること。",
+    "options": [
+      {
+        "key": "A",
+        "text": "フォワーディング"
+      },
+      {
+        "key": "B",
+        "text": "ストール"
+      },
+      {
+        "key": "C",
+        "text": "エイリアシング"
+      },
+      {
+        "key": "D",
+        "text": "リネーミング"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "フォワーディング",
+    "translation": "在流水线处理中，为了让计算结果能被后续指令立即使用，将计算结果比原定时更早地传送到流水线前段。",
+    "explanation": "『フォワーディング』（Forwarding / Bypassing）是指将执行单元（EX）的结果直接传送给后续指令的输入，而不必等待其写回寄存器文件（WB），从而解决 RAW（Read After Write）数据冒险，避免不必要的暂停（ストール）。注意：它缓解 RAW 冒险，但不能消除所有依赖（如 load-use 冒险仍需暂停一个周期）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "四、计算机组成基本概念",
+      "position": 25,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "25"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s05-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s05",
+    "groupTitle": "五、判断题",
+    "numberInGroup": 1,
+    "stem": "以下の各文は正しいか。正しければA、誤りであればBを答えよ。【マークシートに解答】\n\n符号なし2進数に対してシフト演算を行う場合、算術シフトを行わなければならない。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "判断以下各句是否正确。正确填A，错误填B。【在答题卡作答】\n对无符号二进制数进行移位运算时，必须进行算术移位。",
+    "explanation": "该说法是**错误**的（B）。\n\n对于无符号二进制数（Unsigned Binary）进行移位运算时，应当使用**逻辑移位（Logical Shift）**：\n- 逻辑左移（SLL）：低位补0\n- 逻辑右移（SRL）：高位补0\n\n而**算术移位（Arithmetic Shift）**主要用于有符号数（Signed/Two's Complement）：\n- 算术右移（SRA）：高位补符号位（保持符号不变）\n\n因此，对无符号数进行移位时不需要进行算术移位，逻辑移位才是正确的选择。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "五、判断题",
+      "position": 26,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "26"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s05-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s05",
+    "groupTitle": "五、判断题",
+    "numberInGroup": 2,
+    "stem": "以下の各文は正しいか。正しければA、誤りであればBを答えよ。【マークシートに解答】\n\nMIPSのアセンブリコード上で、R形式の命令のオペランドは必ず3つである。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "在MIPS汇编代码中，R格式指令的操作数必定是3个。",
+    "explanation": "**解析**：该陈述是错误的。虽然大多数R型指令（如 add, sub, and, or, slt）有3个寄存器操作数（rs, rt, rd），但并非所有R型指令都如此：\n\n1. **移位指令（sll, srl, sra）**：汇编代码格式为 `sll rd, rt, shamt`，仅有2个寄存器操作数（rd, rt），第3个是立即数操作数（shamt）。\n2. **跳转寄存器指令（jr）**：格式为 `jr rs`，只有1个操作数。\n\n因此，R格式指令的操作数数量并非「必定是3个」。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "五、判断题",
+      "position": 27,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "27"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s05-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s05",
+    "groupTitle": "五、判断题",
+    "numberInGroup": 3,
+    "stem": "以下の各文は正しいか。正しければA、誤りであればBを答えよ。【マークシートに解答】\n\nコンパイラは、疑似命令を本来のアセンブリ言語の命令セットに含まれる命令に置き換える。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "判断以下各句是否正确。正确填A，错误填B。【在答题卡作答】\n编译器将伪指令替换为原本汇编语言指令集中包含的命令。",
+    "explanation": "该说法是**错误**的（B）。\n\n在MIPS体系结构中，伪指令（pseudo-instructions，如li、move等）到实际机器指令的展开（expansion）是由**汇编器（Assembler）**完成的，而非编译器（Compiler）。\n\n- 编译器（Compiler）的作用是将高级语言（如C语言）转换为汇编语言（可能包含伪指令）。\n- 汇编器（Assembler）处理汇编代码，将伪指令转换为真正的机器指令或基本汇编指令序列。\n\n因此，负责将伪指令替换为实际指令集命令的是汇编器（アセンブラ），而非编译器（コンパイラ）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "五、判断题",
+      "position": 28,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "28"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s05-q004",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s05",
+    "groupTitle": "五、判断题",
+    "numberInGroup": 4,
+    "stem": "以下の各文は正しいか。正しければA、誤りであればBを答えよ。【マークシートに解答】\n\n除算命令divを実行すると、商はLoレジスタ、余りはHiレジスタに格納される。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "除法指令div执行时，商存储在Lo寄存器，余数存储在Hi寄存器。",
+    "explanation": "在MIPS体系结构中，除法指令div执行后，商（quotient）存储在LO寄存器，余数（remainder）存储在HI寄存器。后续可通过mflo（Move From LO）和mfhi（Move From HI）指令将结果移至通用寄存器。因此该说法正确。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "五、判断题",
+      "position": 29,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "29"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s05-q005",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s05",
+    "groupTitle": "五、判断题",
+    "numberInGroup": 5,
+    "stem": "以下の各文は正しいか。正しければA、誤りであればBを答えよ。【マークシートに解答】\n\nパイプライン処理は、各命令の実行に必要な時間を減らすことができる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "流水线处理可以减少每条指令执行所需的时间。",
+    "explanation": "流水线处理（Pipeline）通过将指令执行划分为多个阶段（IF、ID、EX、MEM、WB）并使不同指令的不同阶段重叠执行，来提高指令吞吐率（Throughput）。然而，它并不减少单条指令的执行延迟（Latency，从开始到完成所需的时间），甚至因流水线寄存器等开销可能略微增加延迟。题干中\"各命令の実行に必要な時間を減らす\"（减少每条指令执行所需时间）特指延迟，因此该说法错误。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "五、判断题",
+      "position": 30,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "30"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s06-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s06",
+    "groupTitle": "六、IEEE 754 单精度表示",
+    "numberInGroup": 1,
+    "stem": "以下の各浮動小数点数をIEEE754の規定に従い、単精度で表現せよ。ただし、8桁の16進数で解答すること。なお、IEEE754単精度では、符号部、指数部、仮数部をそれぞれ1ビット、8ビット、23ビットで表す。【この用紙の解答欄に解答】\n\n3.5₁₀",
+    "options": [],
+    "answerKey": "",
+    "answerText": "40600000",
+    "translation": "将下列浮点数按IEEE754规定以单精度表示，用8位十六进制数解答。3.5₁₀",
+    "explanation": "3.5的二进制为11.1₂，规格化后为1.11₂ × 2¹。\n- 符号位：0（正）\n- 指数位：1 + 127 = 128 = 10000000₂\n- 尾数位：11000000000000000000000₂（去掉隐含的1后取11，补20个0）\n拼接得：01000000 01100000 00000000 00000000\n转换为十六进制：40600000",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "六、IEEE 754 单精度表示",
+      "position": 31,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "31"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s06-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s06",
+    "groupTitle": "六、IEEE 754 单精度表示",
+    "numberInGroup": 2,
+    "stem": "以下の各浮動小数点数をIEEE754の規定に従い、単精度で表現せよ。ただし、8桁の16進数で解答すること。なお、IEEE754単精度では、符号部、指数部、仮数部をそれぞれ1ビット、8ビット、23ビットで表す。【この用紙の解答欄に解答】\n\n0.25₁₀",
+    "options": [],
+    "answerKey": "",
+    "answerText": "3E800000",
+    "translation": "将下列浮点数按IEEE754规定以单精度表示，用8位十六进制数解答。0.25₁₀",
+    "explanation": "0.25的二进制为0.01₂，规格化后为1.0₂ × 2⁻²。\n- 符号位：0（正）\n- 指数位：-2 + 127 = 125 = 01111101₂\n- 尾数位：00000000000000000000000₂\n拼接得：00111101 00000000 00000000 00000000\n转换为十六进制：3E800000",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "六、IEEE 754 单精度表示",
+      "position": 32,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "32"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s06-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s06",
+    "groupTitle": "六、IEEE 754 单精度表示",
+    "numberInGroup": 3,
+    "stem": "以下の各浮動小数点数をIEEE754の規定に従い、単精度で表現せよ。ただし、8桁の16進数で解答すること。なお、IEEE754単精度では、符号部、指数部、仮数部をそれぞれ1ビット、8ビット、23ビットで表す。【この用紙の解答欄に解答】\n\n−0.078125₁₀",
+    "options": [],
+    "answerKey": "",
+    "answerText": "BDA00000",
+    "translation": "将下列浮点数按IEEE754规定以单精度表示，用8位十六进制数解答。−0.078125₁₀",
+    "explanation": "0.078125的二进制计算：0.078125 = 5/64，二进制为0.000101₂，规格化后为1.01₂ × 2⁻⁴。\n- 符号位：1（负）\n- 指数位：-4 + 127 = 123 = 01111011₂\n- 尾数位：01000000000000000000000₂（去掉隐含的1后取01，补21个0）\n拼接得：10111101 10100000 00000000 00000000\n转换为十六进制：BDA00000",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "六、IEEE 754 单精度表示",
+      "position": 33,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "33"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s07-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s07",
+    "groupTitle": "七、MIPS 机器码",
+    "numberInGroup": 1,
+    "stem": "以下の各命令に相当する機械語のコードを8桁の16進数で答えよ。各命令形式のビット割り当てとレジスタ番号は下図を参照のこと。【この用紙の解答欄に解答】\n\nadd $t0, $s0, $s1\n※add命令のop/functは0/20₁₆であり、各オペランドは順にrd, rs, rtに対応している。\n\n参考资料：\nR形式\n\n| op | rs | rt | rd | shamt | funct |\n| --- | --- | --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 5bit | 5bit | 6bit |\n\nI形式\n\n| op | rs | rt | immediate |\n| --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 16bit |\n\nJ形式\n\n| op | address |\n| --- | --- |\n| 6bit | 26bit |\n\n| $zero | 0 | 常にゼロ |\n| $t0-t9 | 8-15, 24-25 | 一時レジスタ(一時変数用) |\n| $s0-s7 | 16-23 | 退避レジスタ(変数用) |\n\n※この表におけるレジスタ番号は10進数で表記されている。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "02114020",
+    "translation": "将下列指令对应的机器码以8位十六进制数回答。add $t0, $s0, $s1",
+    "explanation": "该指令为R型格式。根据寄存器编号表：$s0=16，$s1=17，$t0=8；add指令op=0，funct=0x20(100000₂)。\n- op：000000\n- rs：10000（$s0）\n- rt：10001（$s1）\n- rd：01000（$t0）\n- shamt：00000\n- funct：100000\n拼接得：00000010 00010001 01000000 00100000\n转换为十六进制：02114020",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "七、MIPS 机器码",
+      "position": 34,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "34"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s07-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s07",
+    "groupTitle": "七、MIPS 机器码",
+    "numberInGroup": 2,
+    "stem": "以下の各命令に相当する機械語のコードを8桁の16進数で答えよ。各命令形式のビット割り当てとレジスタ番号は下図を参照のこと。【この用紙の解答欄に解答】\n\nj Label\n※j命令のopは2₁₆である。この命令の次に実行される命令(Labelが付与された命令)はメモリアドレス0040001C₁₆番地にあるものとする。\n\n参考资料：\nR形式\n\n| op | rs | rt | rd | shamt | funct |\n| --- | --- | --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 5bit | 5bit | 6bit |\n\nI形式\n\n| op | rs | rt | immediate |\n| --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 16bit |\n\nJ形式\n\n| op | address |\n| --- | --- |\n| 6bit | 26bit |\n\n| $zero | 0 | 常にゼロ |\n| $t0-t9 | 8-15, 24-25 | 一時レジスタ(一時変数用) |\n| $s0-s7 | 16-23 | 退避レジスタ(変数用) |\n\n※この表におけるレジスタ番号は10進数で表記されている。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "08100007",
+    "translation": "将下列指令对应的机器码以8位十六进制数回答。j Label",
+    "explanation": "MIPS的j使用J型格式：6位op和26位目标字段。目标字节地址为0x0040001C，按4字节对齐，编码字段为0x0040001C >> 2 = 0x00100007。op=2占最高6位，故机器码为(2 << 26) | 0x00100007 = 0x08000000 | 0x00100007 = 0x08100007。按8位十六进制填写08100007。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "七、MIPS 机器码",
+      "position": 35,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "35"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s07-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s07",
+    "groupTitle": "七、MIPS 机器码",
+    "numberInGroup": 3,
+    "stem": "以下の各命令に相当する機械語のコードを8桁の16進数で答えよ。各命令形式のビット割り当てとレジスタ番号は下図を参照のこと。【この用紙の解答欄に解答】\n\nlw $t0, 8($s0)\n※lw命令のopは23₁₆であり、各オペランドは順にrt, immediate, rsに対応している。\n\n参考资料：\nR形式\n\n| op | rs | rt | rd | shamt | funct |\n| --- | --- | --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 5bit | 5bit | 6bit |\n\nI形式\n\n| op | rs | rt | immediate |\n| --- | --- | --- | --- |\n| 6bit | 5bit | 5bit | 16bit |\n\nJ形式\n\n| op | address |\n| --- | --- |\n| 6bit | 26bit |\n\n| $zero | 0 | 常にゼロ |\n| $t0-t9 | 8-15, 24-25 | 一時レジスタ(一時変数用) |\n| $s0-s7 | 16-23 | 退避レジスタ(変数用) |\n\n※この表におけるレジスタ番号は10進数で表記されている。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "8E080008",
+    "translation": "请回答以下各指令对应的机器语言代码，用8位16进制数表示。各指令格式的位分配和寄存器编号请参照下图。【在答题纸的解答栏作答】\nlw $t0, 8($s0)",
+    "explanation": "lw指令为I型格式（op rs rt immediate）。\n- op = 35（十进制）= 0x23，对应100011₂\n- rs = $s0 = 16（十进制）= 10000₂（基址寄存器）\n- rt = $t0 = 8（十进制）= 01000₂（目标寄存器）\n- immediate = 8（十进制）= 0000000000001000₂\n\n拼接：op(6bit) + rs(5bit) + rt(5bit) + immediate(16bit)\n100011 10000 01000 0000000000001000\n\n转换为16进制（每8位一组）：\n10001110 = 0x8E\n00001000 = 0x08\n00000000 = 0x00\n00001000 = 0x08\n\n因此结果为 8E080008。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "七、MIPS 机器码",
+      "position": 36,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "36"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s08-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s08",
+    "groupTitle": "八、循环与分支汇编填空",
+    "numberInGroup": 1,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる語句や数値を答えよ。ただし、変数a, b, c, i はそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。【この用紙の解答欄に解答】\n\n| ソースコード | アセンブリコード |\n|---|---|\n| `while(i < a){` | `Loop:  slt  $t0, $s3, $s0` |\n| `  if(i == b){` | `       beq  $t0, $zero, (37)` |\n| `    i = c + 1;` | `       bne  $s3, $s1, (38)` |\n| `  }` | `       addi $s3, (39), 1` |\n| `  i = i + 1;` | `L1:    addi $s3, (40), 1` |\n| `}` | `       j    (41)` |\n| | `Exit:` |\n\n\n\n本题填写汇编代码中的空欄 (37)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "Exit",
+    "translation": "beq $t0, $zero, (37)（若$t0等于$zero，则跳转到Exit标签）",
+    "explanation": "本题考查循环与分支的汇编对应。\n1. 前面slt $t0, $s3, $s0比较i($s3)与a($s0)，若i<a则$t0=1，否则$t0=0。\n2. beq $t0, $zero, Exit：当i>=a（$t0=0）时，条件成立，应跳出循环（Exit）。\n3. 因此(37)处应填标签名Exit。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "八、循环与分支汇编填空",
+      "position": 37,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "37"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s08-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s08",
+    "groupTitle": "八、循环与分支汇编填空",
+    "numberInGroup": 2,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる語句や数値を答えよ。ただし、変数a, b, c, i はそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。【この用紙の解答欄に解答】\n\n| ソースコード | アセンブリコード |\n|---|---|\n| `while(i < a){` | `Loop:  slt  $t0, $s3, $s0` |\n| `  if(i == b){` | `       beq  $t0, $zero, (37)` |\n| `    i = c + 1;` | `       bne  $s3, $s1, (38)` |\n| `  }` | `       addi $s3, (39), 1` |\n| `  i = i + 1;` | `L1:    addi $s3, (40), 1` |\n| `}` | `       j    (41)` |\n| | `Exit:` |\n\n\n\n本题填写汇编代码中的空欄 (38)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "L1",
+    "translation": "bne $s3, $s1, (38)（若$s3不等于$s1，则跳转到L1标签）",
+    "explanation": "本题考查分支指令对应的C语言逻辑。\n1. C代码中if(i == b)表示当i等于b时，执行i=c+1；否则跳过该语句执行i=i+1。\n2. 汇编中bne $s3, $s1, L1：当i($s3)不等于b($s1)时，跳过下面的addi（i=c+1），跳转到L1执行i=i+1。\n3. 因此(38)处应填标签名L1。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "八、循环与分支汇编填空",
+      "position": 38,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "38"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s08-q003",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s08",
+    "groupTitle": "八、循环与分支汇编填空",
+    "numberInGroup": 3,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる語句や数値を答えよ。ただし、変数a, b, c, i はそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。【この用紙の解答欄に解答】\n\n| ソースコード | アセンブリコード |\n|---|---|\n| `while(i < a){` | `Loop:  slt  $t0, $s3, $s0` |\n| `  if(i == b){` | `       beq  $t0, $zero, (37)` |\n| `    i = c + 1;` | `       bne  $s3, $s1, (38)` |\n| `  }` | `       addi $s3, (39), 1` |\n| `  i = i + 1;` | `L1:    addi $s3, (40), 1` |\n| `}` | `       j    (41)` |\n| | `Exit:` |\n\n\n\n本题填写汇编代码中的空欄 (39)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "$s2",
+    "translation": "addi $s3, (39), 1（将寄存器(39)的值加1，结果存入$s3）",
+    "explanation": "本题考查addi指令与C代码i=c+1的对应关系。\n1. 题目说明变量c对应寄存器$s2。\n2. C代码i = c + 1对应汇编addi $s3, $s2, 1（$s3存i，$s2存c）。\n3. 因此(39)处应填$s2。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "八、循环与分支汇编填空",
+      "position": 39,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "39"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s08-q004",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s08",
+    "groupTitle": "八、循环与分支汇编填空",
+    "numberInGroup": 4,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる語句や数値を答えよ。ただし、変数a, b, c, i はそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。【この用紙の解答欄に解答】\n\n| ソースコード | アセンブリコード |\n|---|---|\n| `while(i < a){` | `Loop:  slt  $t0, $s3, $s0` |\n| `  if(i == b){` | `       beq  $t0, $zero, (37)` |\n| `    i = c + 1;` | `       bne  $s3, $s1, (38)` |\n| `  }` | `       addi $s3, (39), 1` |\n| `  i = i + 1;` | `L1:    addi $s3, (40), 1` |\n| `}` | `       j    (41)` |\n| | `Exit:` |\n\n\n\n本题填写汇编代码中的空欄 (40)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "$s3",
+    "translation": "addi $s3, (40), 1（将寄存器(40)的值加1，结果存入$s3）",
+    "explanation": "本题考查addi指令与C代码i=i+1的对应关系。\n1. C代码i = i + 1中，i对应寄存器$s3。\n2. 汇编addi $s3, $s3, 1表示$s3 = $s3 + 1。\n3. 因此(40)处应填$s3。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "八、循环与分支汇编填空",
+      "position": 40,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "40"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s08-q005",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s08",
+    "groupTitle": "八、循环与分支汇编填空",
+    "numberInGroup": 5,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる語句や数値を答えよ。ただし、変数a, b, c, i はそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。【この用紙の解答欄に解答】\n\n| ソースコード | アセンブリコード |\n|---|---|\n| `while(i < a){` | `Loop:  slt  $t0, $s3, $s0` |\n| `  if(i == b){` | `       beq  $t0, $zero, (37)` |\n| `    i = c + 1;` | `       bne  $s3, $s1, (38)` |\n| `  }` | `       addi $s3, (39), 1` |\n| `  i = i + 1;` | `L1:    addi $s3, (40), 1` |\n| `}` | `       j    (41)` |\n| | `Exit:` |\n\n\n\n本题填写汇编代码中的空欄 (41)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "Loop",
+    "translation": "j (41)（无条件跳转到Loop标签）",
+    "explanation": "本题考查循环控制的汇编结构。\n1. while循环每次迭代结束后需回到开头重新判断条件（i < a）。\n2. 汇编中L1: addi $s3, $s3, 1执行完i=i+1后，需跳回Loop标签处继续下一次循环。\n3. j Loop为无条件跳转指令，因此(41)处应填Loop。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "八、循环与分支汇编填空",
+      "position": 41,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "41"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s09-q001",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s09",
+    "groupTitle": "九、CPU 性能计算",
+    "numberInGroup": 1,
+    "stem": "以下の各問に答えよ。\n答えが無限小数の場合、小数第2位で四捨五入すること。\n【この用紙の解答欄に解答】\n\n同じ命令セットアーキテクチャを実現した以下の2種類のコンピュータがあるとする。あるプログラムXを実行するとき、計算機Aは計算機Bの何倍早いか。\n\n| | クロック・サイクル時間 | X実行時のCPI |\n|---|---|---|\n| 計算機A | 400ps | 1.25 |\n| 計算機B | 500ps | 1.20 |",
+    "options": [],
+    "answerKey": "",
+    "answerText": "1.2",
+    "translation": "以下是在C语言中描述的语句及其汇编代码。在汇编代码的各个空白处填写语句和数值。变量a, b, c, i分别对应寄存器$s0, $s1, $s2, $s3。某程序X执行时，计算机A是计算机B的多少倍快。",
+    "explanation": "CPU执行时间 = 指令数(IC) × CPI × 时钟周期时间。计算机A的执行时间为 IC × 1.25 × 400ps = 500×IC ps。计算机B的执行时间为 IC × 1.20 × 500ps = 600×IC ps。因此A的速度是B的 600/500 = 1.2倍。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "九、CPU 性能计算",
+      "position": 42,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "42"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-2021-final-s09-q002",
+    "category": "computer-2021-final",
+    "groupId": "computer-2021-final-s09",
+    "groupTitle": "九、CPU 性能计算",
+    "numberInGroup": 2,
+    "stem": "以下の各問に答えよ。\n答えが無限小数の場合、小数第2位で四捨五入すること。\n【この用紙の解答欄に解答】\n\nあるコード系列において、あるプログラムから生成されるコードの命令クラスごとの命令数、CPIは以下の通りである。このとき、プログラム全体のCPIはいくつか。\n\n| | 命令クラスA | 命令クラスB | 命令クラスC |\n|---|---|---|---|\n| 命令数 | 100 | 40 | 20 |\n| 命令クラスごとのCPI | 1 | 2 | 3 |",
+    "options": [],
+    "answerKey": "",
+    "answerText": "1.5",
+    "translation": "在某个代码序列中，从程序生成的代码按指令类别划分的指令数和CPI如下所示。此时，程序整体的CPI是多少？",
+    "explanation": "程序整体的CPI（加权平均CPI）计算公式为：\n\n$$CPI_{整体} = \\frac{\\sum (指令数_i \\times CPI_i)}{\\sum 指令数_i}$$\n\n代入题目数据：\n- 指令类A：100条，CPI=1\n- 指令类B：40条，CPI=2\n- 指令类C：20条，CPI=3\n\n总指令数 = 100 + 40 + 20 = 160\n总时钟周期数 = (100×1) + (40×2) + (20×3) = 100 + 80 + 60 = 240\n\n$$CPI_{整体} = \\frac{240}{160} = 1.5$$\n\n由于结果为有限小数，按题意无需四舍五入，直接填写1.5。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "2021计组期末.pdf",
+      "group": "九、CPU 性能计算",
+      "position": 43,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "43"
+      ],
+      "images": [
+        "computer-organization/computer-2021-final/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  }
+]

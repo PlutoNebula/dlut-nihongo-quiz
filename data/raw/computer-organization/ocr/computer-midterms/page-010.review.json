@@ -1,0 +1,60 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "(26)-(29)",
+    "五"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "四、それぞれの空欄にあてはまる数値や語句をA～Dから選べ。\n\n(26) 1[　] = 1000KB\n(A) TB 【圈选：B】 MB (C) GB (D) PB\n\n(27) 1[　] = 1000TB\n(A) EB (B) YB (C) GB 【圈选：D】 PB\n\n(28) 1KiB = [　] バイト\n(A) 8 (B) 1000 【圈选：C】 1024 (D) 1000000\n\n(29) 1000[　] 秒 = 1マイクロ秒\n(A) ミリ (B) デカ 【圈选：C】 ナノ (D) ピコ\n\n得点\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f, g, iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n| ソースコード | アセンブリコード |\n|---|---|\n| f[i] = g - f[3]; | lw $t0, [(30)]($s0) 【原图裁切】 |",
+  "corrections": [
+    {
+      "location": "第五大题说明文字",
+      "before": "ジスタ$s0, $s1, $s2",
+      "after": "レジスタ$s0, $s1, $s2",
+      "evidence": "图像中'レジスタ'的'レ'字可见，OCR漏识别首假名",
+      "confidence": "high"
+    },
+    {
+      "location": "第五大题源代码",
+      "before": "f[il] = g - f[3]",
+      "after": "f[i] = g - f[3]",
+      "evidence": "图像中f后方括号内为单字符i，非il",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "location": "试卷印刷页码",
+      "kind": "source_crop",
+      "detail": "页面可见区域未显示印刷页码（页面顶部显示为386.08%放大比例及时间戳，非页码）",
+      "next_action": "需要查看页面顶部或底部边缘以确认是否存在印刷页码"
+    },
+    {
+      "location": "试卷年份",
+      "kind": "source_crop",
+      "detail": "未找到考试年份标注（顶部10月27日为拍摄时间）",
+      "next_action": "需要查看试卷封面、标题页或页眉页脚区域"
+    },
+    {
+      "location": "第五大题汇编代码行",
+      "kind": "source_crop",
+      "detail": "汇编代码行'lw $t0, [(30)]($s0)'后内容被裁切，无法确认后续指令",
+      "next_action": "需要该页完整图像或相邻页面以查看完整汇编代码"
+    },
+    {
+      "location": "第五大题汇编代码列标题",
+      "kind": "source_crop",
+      "detail": "表格第二列标题'アセンブリコード'下半部分被裁切",
+      "next_action": "需要该区域完整图像"
+    }
+  ],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 10
+}

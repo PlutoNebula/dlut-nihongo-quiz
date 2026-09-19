@@ -5,11 +5,11 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Made with Vue](https://img.shields.io/badge/made%20with-Vue%203-42b883.svg)](https://vuejs.org/)
 
-大连理工大学本科生期末复习用的 Web App，覆盖综合日语、中国近现代史、党史、军事理论共 4 个学科、6,300+ 道题。最早是「大家的日语」第 26-36 课复习题库，后扩展到多学科。
+大连理工大学本科生期末复习用的 Web App，覆盖综合日语、中国近现代史、党史、军事理论、计算机组成共 5 个学科、6,500+ 道题。最早是「大家的日语」第 26-36 课复习题库，后扩展到多学科。
 
 ## 特性
 
-- 4 大学科，共 6,314 题：综合日语2（单词 + 语法） / 中国近现代史 / 党史 / 军事理论
+- 5 大学科，共 6,513 题：综合日语2（单词 + 语法） / 中国近现代史 / 党史 / 军事理论 / 计算机组成
 - 多题型：单选、多选、判断、填空 —— 历史 / 党史 / 军理共 1,482 道多选题、851 道判断题、385 道填空题
 - 每题都带详细解析 + 错选项注释，知道为什么错
 - 刷题模式：随机出题、顺序刷、按课次/章节、错题重做、弱点专练
@@ -17,17 +17,18 @@
 - 统计分析：按学科 / 课次 / 标签统计正确率，可视化学习进度
 - 离线优先：IndexedDB 存储，关闭浏览器再打开进度还在
 - 移动端友好：响应式布局，手机刷题体验流畅
-- MD 驱动：题库源是 Markdown，parser 自动生成 JSON，PR 就能加题
+- MD 驱动：题库源是 Markdown / 结构化 JSON，parser 自动生成应用 JSON，PR 就能加题
 
 ## 学科范围
 
-| 学科         |      题数 |      多选 |    判断 |    填空 | 来源                     | 用途           |
-| ------------ | --------: | --------: | ------: | ------: | ------------------------ | -------------- |
-| 综合日语2    |       963 |         0 |       0 |       0 | 单词 686 + 语法 277      | 大一下学期期末 |
-| 中国近现代史 |     2,985 |       851 |     755 |     161 | 课堂题库 + 纲要 + 习题集 | 近代史纲要期末 |
-| 党史         |     1,613 |       515 |       0 |       0 | 党史题库完整版           | 思政课复习     |
-| 军事理论     |       753 |       116 |      96 |     224 | 军理题库整理版           | 军训理论考核   |
-| **合计**     | **6,314** | **1,482** | **851** | **385** | —                        | —              |
+| 学科         |      题数 |      多选 |    判断 |    填空 | 来源                            | 用途           |
+| ------------ | --------: | --------: | ------: | ------: | ------------------------------- | -------------- |
+| 综合日语2    |       963 |         0 |       0 |       0 | 单词 686 + 语法 277             | 大一下学期期末 |
+| 中国近现代史 |     2,985 |       851 |     755 |     161 | 课堂题库 + 纲要 + 习题集        | 近代史纲要期末 |
+| 党史         |     1,613 |       515 |       0 |       0 | 党史题库完整版                  | 思政课复习     |
+| 军事理论     |       753 |       116 |      96 |     224 | 军理题库整理版                  | 军训理论考核   |
+| 计算机组成   |       199 |         0 |      18 |      47 | 四份试卷，StepFun生成并校订答案 | 计算机组成复习 |
+| **合计**     | **6,513** | **1,482** | **869** | **432** | —                               | —              |
 
 综合日语2 包含四个子库：单词（w26–w36）、学习通 99 题（g01–g10）、2021 年真题 79 题（g11）、2024 年真题 99 题（g21–g28）。
 
@@ -74,16 +75,17 @@ npm run dev          # http://localhost:5173/
 | `npm run audit:banks`     | 题库 schema + 内部去重检查                                    |
 | `npm run format`          | Prettier 自动格式化                                           |
 
-> 不要手改 `public/*.json` —— 它们是 parser 生成的。源在 `data/raw/` 下的 Markdown。
+> 不要手改 `public/*.json` —— 它们是 parser 生成的。源在 `data/raw/` 下的 Markdown 或结构化 JSON。
 
 ## 深入文档
 
-| 文档                                  | 内容                                                       |
-| ------------------------------------- | ---------------------------------------------------------- |
-| [项目结构](docs/project-structure.md) | 完整目录树、数据流、各模块职责                             |
-| [题库维护](docs/question-bank.md)     | 加题改题流程、Markdown 格式、多选/判断题写法、新增学科步骤 |
-| [部署](docs/deployment.md)            | GitHub Pages + Actions、自定义域名、本地预览生产构建       |
-| [贡献指南](CONTRIBUTING.md)           | Fork/PR 流程、代码风格、Commit 规范                        |
+| 文档                                              | 内容                                                       |
+| ------------------------------------------------- | ---------------------------------------------------------- |
+| [项目结构](docs/project-structure.md)             | 完整目录树、数据流、各模块职责                             |
+| [计算机组成题库](docs/computer-question-banks.md) | 四份试卷、答案来源、勘误与维护                             |
+| [题库维护](docs/question-bank.md)                 | 加题改题流程、Markdown 格式、多选/判断题写法、新增学科步骤 |
+| [部署](docs/deployment.md)                        | GitHub Pages + Actions、自定义域名、本地预览生产构建       |
+| [贡献指南](CONTRIBUTING.md)                       | Fork/PR 流程、代码风格、Commit 规范                        |
 
 ## 贡献
 
@@ -109,12 +111,13 @@ npm run dev          # http://localhost:5173/
 
 ## English Summary
 
-A Vue 3 + Vite + TypeScript + Dexie single-page quiz app built for final-exam review at Dalian University of Technology (DLUT). Originally a Japanese-review tool for lessons 26–36 of《大家的日语》(Minna no Nihongo), it now spans **four subjects and 6,314 questions**:
+A Vue 3 + Vite + TypeScript + Dexie single-page quiz app built for final-exam review at Dalian University of Technology (DLUT). Originally a Japanese-review tool for lessons 26–36 of《大家的日语》(Minna no Nihongo), it now spans **five subjects and 6,513 questions**:
 
 - Comprehensive Japanese 2 (963, including 686 vocabulary and 277 grammar, split into 学习通 / 2021 / 2024 sub-banks)
 - Modern Chinese history (2,985, including 851 multi-answer, 755 judgement and 161 fill-in-the-blank)
 - CPC party history (1,613, including 515 multi-answer)
 - Military theory (753, including 116 multi-answer, 96 judgement and 224 fill-in-the-blank)
+- Computer organization (199 across four papers; answers and explanations generated with StepFun step-3.7-flash and reviewed, not official answer keys)
 
 **Features:** single/multi/judgement/fill-in-the-blank question types, per-question explanations with wrong-option annotations, wrong-answer book with spaced-repetition scheduling, statistics by subject/lesson/tag, offline-first via IndexedDB, mobile-friendly responsive UI.
 
@@ -122,7 +125,7 @@ A Vue 3 + Vite + TypeScript + Dexie single-page quiz app built for final-exam re
 
 **Run locally:** `git clone`, `npm install`, `npm run dev` (Node 18+, CI uses 24).
 
-**Question bank:** Markdown is the source of truth under `data/raw/`; five `npm run parse:*` scripts generate the JSON consumed at runtime. Never edit `public/*.json` by hand.
+**Question bank:** Markdown and structured JSON are the sources of truth under `data/raw/`; the `npm run parse:*` scripts generate the JSON consumed at runtime. Never edit `public/*.json` by hand.
 
 **License:** Apache-2.0 for code. Question content is copyrighted by the original publishers and used here for educational review only.
 

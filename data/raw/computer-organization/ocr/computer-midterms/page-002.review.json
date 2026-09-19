@@ -1,0 +1,83 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "四、(21)-(23)",
+    "五、(24)-(25)",
+    "六、标题"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "得点　□\n\n四、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\nf = g + h[i];\n\nアセンブリコード\n(21)   $t0, $s3, 2\nadd    $t0, $t0, $s2\nlw     $t1, (22) ($t0)\nadd    (23), $s1, $t1\n\n(21)の選択肢：(A)add (B)sub (C)sll (D)lw\n(22)の選択肢：(A)$s2 (B)$s3 (C)$0 (D)2\n(23)の選択肢：(A)$s0 (B)$s1 (C)$s2 (D)$s3\n\n---\n\n得点　□\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n\nアセンブリコード\nbeq $s3, $s4, Else【印刷体下划线】\nadd $s0, $s1, $s2【手写：ADD】\nj Exit\nElse: sub $s0, $s1, $s2【手写：D46】\nExit:【手写：1040】【手写：262】\n\n(24)【印刷体下划线】各命令を2進数に直したとき、下線部Elseが対応するフィールドの値を10進数で表現したものはどれか。\n(A)2 (B)3 (C)8 (D)12\n\n(25)【印刷体下划线】各命令を2進数に直したとき、下線部Exitが対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭の【印刷体下划线】beq命令はメモリアドレス【手写：下划线】1024【手写：下划线】番地から始まっているものとする。\n(A)1028 (B)1036 (C)1040 (D)260\n\n六、以下の各問いにA～Dの記号で答えよ。",
+  "corrections": [
+    {
+      "location": "五、レジスタ対応説明",
+      "before": "$s2, $s3, $s4に対応しているものとする。",
+      "after": "$s0, $s1, $s2, $s3, $s4に対応しているものとする。",
+      "evidence": "图像中第五大题第一行明确列出$s0～$s4五个寄存器分别对应f,g,h,i,j",
+      "confidence": "high"
+    },
+    {
+      "location": "(22)の選択肢(C)",
+      "before": "(C)0",
+      "after": "(C)$0",
+      "evidence": "图像中第四大题(22)的选项(C)明确显示为$0（带美元符号的零寄存器）",
+      "confidence": "high"
+    },
+    {
+      "location": "(24)文中'下線部Else'",
+      "before": "【手写：下線】",
+      "after": "（印刷体下划线）",
+      "evidence": "图像中'Else'下方的下划线为印刷体黑色，非手写红色",
+      "confidence": "high"
+    },
+    {
+      "location": "(25)文中'下線部Exit'",
+      "before": "【手写：下線】",
+      "after": "（印刷体下划线）",
+      "evidence": "图像中'Exit'下方的下划线为印刷体黑色",
+      "confidence": "high"
+    },
+    {
+      "location": "(25)文中'下線・beq'",
+      "before": "【手写：下線・beq】",
+      "after": "（印刷体下划线）",
+      "evidence": "图像中'beq'下方的下划线为印刷体黑色",
+      "confidence": "high"
+    },
+    {
+      "location": "(25)文中'1024'",
+      "before": "【手写：1024】",
+      "after": "1024【手写：下划线】（数字为印刷体，下划线为手写红色）",
+      "evidence": "图像中'1024'为印刷体，其下方有红色手写下划线标记",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "location": "五、sub命令后",
+      "kind": "handwriting_uncertain",
+      "detail": "手写文字疑似'D46'或'1006'，红色笔迹，具体字符无法完全确认",
+      "next_action": "需要更高分辨率图像或原稿确认手写内容"
+    },
+    {
+      "location": "五、Exit右侧",
+      "kind": "handwriting_uncertain",
+      "detail": "手写数字'262'位于Exit标签右侧，含义不清（可能是偏移量计算中间值）",
+      "next_action": "需要确认该手写数字与题目的关联性"
+    },
+    {
+      "location": "五、右侧空白处",
+      "kind": "handwriting_uncertain",
+      "detail": "右侧有竖排手写笔记' (C)2P '、'(0)28'、'(0)3L'、'(0)6'、'262'等，字迹潦草难以辨认全部内容",
+      "next_action": "需要更高分辨率图像确认手写笔记内容"
+    }
+  ],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 2
+}

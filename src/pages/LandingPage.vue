@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getCategoryCounts } from '../services/quizEngine'
 import { loadActiveCategory, setActiveCategory } from '../services/categoryStore'
 import { CATEGORIES } from '../config/categories'
@@ -8,6 +8,12 @@ import { db } from '../db/database'
 import type { Category } from '../types/question'
 
 const router = useRouter()
+const route = useRoute()
+const selectingComputerPaper = computed(() => route.name === 'computer-organization')
+const computerPapers = CATEGORIES.filter((c) => c.key.startsWith('computer-'))
+const computerQuestionCount = computed(() =>
+  computerPapers.reduce((sum, c) => sum + (counts.value[c.key] || 0), 0),
+)
 
 const counts = ref<Record<Category, number>>({} as Record<Category, number>)
 const categoryProgress = ref<Record<Category, { done: number; rate: number }>>(
@@ -24,7 +30,7 @@ async function refresh() {
   error.value = ''
   try {
     await loadActiveCategory()
-    // 5 个分类并发加载
+    // 并发加载题库数量和答题记录
     const [c, stats] = await Promise.all([getCategoryCounts(), db.questionStats.toArray()])
     counts.value = c
     totalQuestions.value = Object.values(c).reduce((a, b) => a + b, 0)
@@ -52,10 +58,11 @@ async function refresh() {
               !id.startsWith('party-') &&
               !id.startsWith('party') &&
               !id.startsWith('mil-') &&
-              !id.startsWith('mil')
+              !id.startsWith('mil') &&
+              !id.startsWith('computer-')
             )
           default:
-            return true
+            return id.startsWith(`${cat.key}-`)
         }
       })
       const done = catStats.filter((s) => s.attemptCount > 0).length
@@ -90,10 +97,18 @@ function goCalculusNotes() {
 }
 
 const subjects = computed(() =>
-  CATEGORIES.map((c) => ({ key: c.key, title: c.long, desc: c.desc, icon: c.icon })),
+  (selectingComputerPaper.value
+    ? computerPapers
+    : CATEGORIES.filter((c) => !c.key.startsWith('computer-'))
+  ).map((c) => ({
+    key: c.key,
+    title: selectingComputerPaper.value ? c.short : c.long,
+    desc: c.desc,
+    icon: c.icon,
+  })),
 )
 
-const subjectCount = computed(() => CATEGORIES.length)
+const subjectCount = CATEGORIES.length - computerPapers.length + 2 // 计算机组成学科 + 微积分笔记
 </script>
 
 <template>
@@ -115,11 +130,18 @@ const subjectCount = computed(() => CATEGORIES.length)
   </div>
   <div v-else class="landing">
     <!-- Hero -->
-    <section class="hero">
+    <header v-if="selectingComputerPaper" class="paper-header">
+      <RouterLink class="btn btn-ghost" to="/">← 返回学科首页</RouterLink>
+      <h1>计算机组成（软国际）</h1>
+      <p>
+        {{ computerPapers.length }} 份试卷 · {{ computerQuestionCount }} 题，选择试卷后进入题单。
+      </p>
+    </header>
+    <section v-else class="hero">
       <div class="hero-badge stagger-1">DLUT · 国际信息与软件学院</div>
       <h1 class="hero-title stagger-2">题库</h1>
       <p class="hero-sub stagger-3">
-        日语语法词汇 · 近代史 · 党史 · 军事理论<br />一体化期末复习平台
+        日语语法词汇 · 近代史 · 党史 · 军事理论 · 计算机组成<br />一体化期末复习平台
       </p>
       <p class="hero-desc stagger-4">
         覆盖 {{ totalQuestions.toLocaleString() }} 道题目，内置智能错题本、掌握度追踪、薄弱点分析。
@@ -145,7 +167,7 @@ const subjectCount = computed(() => CATEGORIES.length)
     </section>
 
     <!-- Stats strip -->
-    <section class="stats-strip">
+    <section v-if="!selectingComputerPaper" class="stats-strip">
       <div class="strip-item">
         <span class="strip-num">{{ totalQuestions.toLocaleString() }}</span>
         <span class="strip-label">题库总量</span>
@@ -169,9 +191,13 @@ const subjectCount = computed(() => CATEGORIES.length)
 
     <!-- Subject cards -->
     <section class="subjects">
-      <h2>选择学科，开始复习</h2>
+      <h2>{{ selectingComputerPaper ? '选择试卷' : '选择学科，开始复习' }}</h2>
       <div class="subject-grid">
-        <div class="subject-card calculus-card" @click="goCalculusNotes">
+        <div
+          v-if="!selectingComputerPaper"
+          class="subject-card calculus-card"
+          @click="goCalculusNotes"
+        >
           <div class="sc-icon">微</div>
           <div class="sc-body">
             <h3 class="sc-title">微积分2</h3>
@@ -180,6 +206,19 @@ const subjectCount = computed(() => CATEGORIES.length)
           <div class="sc-count">18 课</div>
           <span class="sc-arrow">&rarr;</span>
         </div>
+        <RouterLink
+          v-if="!selectingComputerPaper"
+          class="subject-card subject-link"
+          to="/computer-organization"
+        >
+          <div class="sc-icon">组</div>
+          <div class="sc-body">
+            <h3 class="sc-title">计算机组成（软国际）</h3>
+            <p class="sc-desc">{{ computerPapers.length }} 份试卷 · 按卷选择题单 · 答案解析</p>
+          </div>
+          <div class="sc-count">{{ computerQuestionCount }} 题</div>
+          <span class="sc-arrow">&rarr;</span>
+        </RouterLink>
         <div v-for="s in subjects" :key="s.key" class="subject-card" @click="enterSubject(s.key)">
           <div class="sc-icon">{{ s.icon }}</div>
           <div class="sc-body">
@@ -209,7 +248,7 @@ const subjectCount = computed(() => CATEGORIES.length)
     </section>
 
     <!-- Features -->
-    <section class="features">
+    <section v-if="!selectingComputerPaper" class="features">
       <h2>功能一览</h2>
       <div class="feature-grid">
         <div class="feature-card">
@@ -240,7 +279,7 @@ const subjectCount = computed(() => CATEGORIES.length)
     </section>
 
     <!-- Footer CTA -->
-    <section class="cta">
+    <section v-if="!selectingComputerPaper" class="cta">
       <h2>准备好了吗？</h2>
       <p>选择一个学科，开始高效刷题。</p>
       <button class="btn btn-accent btn-lg" @click="quickStart">进入仪表盘</button>
@@ -264,6 +303,23 @@ const subjectCount = computed(() => CATEGORIES.length)
   max-width: 960px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+.paper-header {
+  padding: 40px 0 28px;
+}
+.paper-header h1 {
+  margin: 20px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 5vw, 36px);
+}
+.paper-header p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.subject-link {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Hero */

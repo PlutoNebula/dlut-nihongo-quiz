@@ -1,0 +1,50 @@
+{
+  "printed_page_labels": [
+    "/2"
+  ],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "11-20"
+  ],
+  "page_condition": "mixed",
+  "transcription_md": "(11) 計算機を構成するもののうち、回路や装置などのように物理的な実体を持つもの。\n(A)アプリケーション (B)プログラム (C)ソフトウェア (D)ハードウェア【手写-圈注】\n\n(12) 計算機の基本的な管理を担当するソフトウェア。基本ソフトウェアとも呼ばれる。\n(A)デバイス (B)ソースコード (C)OS【手写-圈注】 (D)アプリケーション\n\n(13) 計算機の五大装置のうち、演算と制御を担当するもの。\n(A)CPU【手写-圈注】 (B)キーボード (C)ディスプレイ (D)メモリ\n\n(14) CPU が一定時間内に行った作業量。【手写-蓝色横线】\n(A)応答時間 (B)スループット【手写-圈注】 (C)クロック周波数 (D)CPI\n\n(15) CPU における1秒あたりのクロック数。\n(A)CPU 時間 (B)スループット (C)クロック周波数【手写-圈注】 (D)CPI\n\n(16) 1秒間に可能な浮動小数点数の演算の回数。\n(A)DROPS (B)MIPS (C)FLOPS【手写-圈注】 (D)BLOBS\n\n(17) ソースコードをアセンブリ言語に変換する処理。\n(A)コンパイル【手写-圈注】 (B)アセンブル (C)リンク (D)リント\n\n(18) MIPSコンピューターシステムズ社が開発した命令セット。\n(A)MILS (B)MIPS【手写-圈注】 (C)CISC (D)RISC\n\n(19) 命令の演算対象。\n(A)オペレータ (B)オペランド【手写-圈注】 (C)アセンブリ (D)リンク\n\n(20) CPU 内で演算対象のデータを格納するための記憶領域。【原图裁切】",
+  "corrections": [
+    {
+      "location": "(11) D选项",
+      "before": "【手写-下划线】",
+      "after": "【手写-圈注】",
+      "evidence": "图像中(D)ハードウェア选项上有紫色圆形圈注，非下划线",
+      "confidence": "high"
+    },
+    {
+      "location": "(12) C选项",
+      "before": "【手写-下划线】",
+      "after": "【手写-圈注】",
+      "evidence": "图像中(C)OS选项上有紫色圆形圈注，非下划线",
+      "confidence": "high"
+    },
+    {
+      "location": "(13) A选项",
+      "before": "【手写-下划线】",
+      "after": "【手写-圈注】",
+      "evidence": "图像中(A)CPU选项上有紫色圆形圈注，非下划线",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "location": "(20) 选项部分",
+      "kind": "source_crop",
+      "detail": "第(20)题的选项(A)-(D)完全未在图像中显示，仅可见题干",
+      "next_action": "需获取包含第20题选项的图像或确认选项内容"
+    }
+  ],
+  "status": "needs_review",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 7
+}

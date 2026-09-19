@@ -1,0 +1,43 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "五",
+    "(24)",
+    "(25)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "| 得点 |  |\n| :--- | :--- |\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数$f,g,h,i,j$はそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\n**ソースコード**\n```\nif(i!=j)\n  f = g+h;\nelse\n  f = g-h;\n```\n\n**アセンブリコード**\n```\nbeq $s3, $s4, Else\nadd $s0, $s1, $s2\nj Exit\nElse: sub $s0, $s1, $s2\nExit:\n```\n\n(24) 各命令を2進数に直したとき、下線部 _Else_ が対応するフィールドの値を10進数で表現したものはどれか。\n\n(A)2　(B)3　(C)8　(D)12\n\n(25) 各命令を2進数に直したとき、下線部 _Exit_ が対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭のbeq命令はメモリアドレス1024番地から始まっているものとする。\n\n(A)1028　(B)1036　(C)1040　(D)260",
+  "corrections": [
+    {
+      "location": "レジスタ定義部分",
+      "before": "レジスタ$\\$s0,\\$s1,\\$s2,\\$s3,\\$s4",
+      "after": "レジスタ$s0, $s1, $s2, $s3, $s4",
+      "evidence": "第一図のテキストボックス内、変数宣言部分において、各レジスタ記号の後にスペースとカンマが存在",
+      "confidence": "high"
+    },
+    {
+      "location": "問題(24)選択肢",
+      "before": "(A)2【手写】",
+      "after": "(A)2【手写（丸囲み）】",
+      "evidence": "第四図において選択肢(A)に手書きの丸囲みがある",
+      "confidence": "high"
+    },
+    {
+      "location": "問題(25)選択肢",
+      "before": "(D)260【手写】",
+      "after": "(D)260【手写（丸囲み）】",
+      "evidence": "第四図において選択肢(D)に手書きの丸囲みがある",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 18
+}

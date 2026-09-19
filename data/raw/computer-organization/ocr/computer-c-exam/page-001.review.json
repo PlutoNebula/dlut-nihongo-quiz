@@ -1,0 +1,56 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "大連理工大学",
+    "date": "2026年3月【手写】8日",
+    "variant": "",
+    "declared_printed_pages": "5"
+  },
+  "question_ranges": [
+    "一",
+    "(1)",
+    "(2)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "大連理工大学\n\n科目名：計算機構成論　　問題種類：C　　試験形式：閉【手写】卷\n\n所属学部：国際情報ソフトウェア学部　試験の実施日：2026年3月【手写】8日\n\n問題用紙合計ページ数　5\n\n| | 一 | 二 | 三 | 四 | 五 | 六 | 七 |  |  | 合計 |\n|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n|配点|6|24|18|12|16|6|18| | |100|\n|得点| | | | | | | | | | |\n\n得点【手写】\n\n一、以下是C言語のwhileループとif文の一部を変換したアセンブリコードである。ラベルLoopの付いた命令文のメモリアドレスは10進数表記で800であるとする。これについて、以下の空欄(1)，(2)にあてはまる数値を答えよ。(2×3=6点)\n\nアセンブリコード\n\nLoop: add $s1, $s1, $s2\naddi $s0, $s0, -1\nbne $s0, $zero, Loop\nj Exit\nExit:\n\n(1) (bne $s0, $zero, Loop) の命令を2進数に直したとき，Loopが対応する値を10進数で表現したものは(1)である．\n\n(2) (j Exit) の命令を2進数に直したとき，Exitが対応する値を10進数で表現したものは(2)である．\n\n解答欄\n\n| (1) | (2) |  |\n|:---:|:---:|:---:|\n|  |  |  |",
+  "corrections": [
+    {
+      "location": "标题",
+      "before": "大连理工大学",
+      "after": "大連理工大学",
+      "evidence": "图像中'連'为日文/繁体字形（日文印刷体）",
+      "confidence": "high"
+    },
+    {
+      "location": "試験の実施日",
+      "before": "2026年3月【手写】8【手写】日",
+      "after": "2026年3月【手写】8日",
+      "evidence": "'8'为手写填写，'日'为印刷体",
+      "confidence": "high"
+    },
+    {
+      "location": "表格左侧",
+      "before": "|得点| | | | | | | | | | |（OCR将左侧得点框误作表格第三行）",
+      "after": "左侧有独立'得点'框（竖排文字），不属上方表格",
+      "evidence": "图像左侧有独立矩形框，内书'得点'，与表格物理分离",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "location": "左侧得点框",
+      "kind": "handwriting_uncertain",
+      "detail": "左侧'得点'框内是否有手写分数内容，图像中显示为空白或极淡，无法确认",
+      "next_action": "需要更高分辨率图像或原卷确认"
+    },
+    {
+      "location": "表格第七列后",
+      "kind": "layout_uncertain",
+      "detail": "表格'七'列后的两个空列具体标识不清（可能为八、九或留空），图像中未见明确印刷内容",
+      "next_action": "需要确认试卷原表头或更高分辨率图像"
+    }
+  ],
+  "status": "reviewed",
+  "source_pdf": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+  "physical_page": 1
+}

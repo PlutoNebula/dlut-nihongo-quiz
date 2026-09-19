@@ -1,0 +1,28 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "五",
+    "六"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "| 得点 | |\n|:---:|:---:|\n| | |\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n**ソースコード**\n```\nf[i] = g - f[3];\n```\n\n**アセンブリコード**\n```\nlw  $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw  $t0, (32)($t1)\n```\n\n(30)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Dに赤丸】\n(31)　(A) 0　(B) 1　(C) 2　(D) 4　【手写：Cに赤丸】\n(32)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Aに赤丸】\n\n【手写图示】\nメモリアドレス（縦書き、右端）\nx → f[0]\nx+4 → f[1]\nx+8 → f[2]\nx+12 → f[3]\n（f[3]下に手書きの\"i\"）\nx+4×i → f[i]\n\n| 得点 | |\n|:---:|:---:|\n| | |\n\n六、以下の問いの答えて正しいものをA～Dの記号で答えよ。",
+  "corrections": [
+    {
+      "location": "問題五本文",
+      "before": "ジスタ$s0, $s1, $s2",
+      "after": "レジスタ$s0, $s1, $s2",
+      "evidence": "画像中の\"レ\"の文字は明確に読める",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 11
+}

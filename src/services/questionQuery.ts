@@ -4,6 +4,7 @@
  * 纯读取操作，依赖 questionRepository 的缓存。
  */
 import type { Question, Category } from '../types/question'
+import { CATEGORIES } from '../config/categories'
 import { UI } from '../constants'
 import { getQuestions } from './questionRepository'
 
@@ -36,12 +37,7 @@ export function searchQuestions(keyword: string, category?: Category): Question[
 
   const lists: Question[][] = category
     ? [getQuestions(category)]
-    : [
-        getQuestions('japanese2'),
-        getQuestions('history'),
-        getQuestions('party'),
-        getQuestions('military'),
-      ]
+    : CATEGORIES.map((c) => getQuestions(c.key))
 
   // 带评分的搜索结果
   const scoredResults: Array<{ question: Question; score: number }> = []

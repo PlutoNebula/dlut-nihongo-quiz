@@ -1,0 +1,50 @@
+{
+  "printed_page_labels": [
+    "A-1"
+  ],
+  "paper_identity": {
+    "title": "计算机组织与结构",
+    "date": "2024年1月2日",
+    "variant": "A",
+    "declared_printed_pages": "10"
+  },
+  "question_ranges": [
+    "1-4"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "大连理工大学\n\n姓名_________  \n学号_________  \n院系_________  \n班级_________  \n课序号_________  \n任课教师_________\n\n课程名称：计算机组织与结构　　试卷：A　　考试形式：闭卷\n\n授课院（系）：软件学院、大连理工大学-立命馆大学国际信息与软件学院\n\n考试日期：2024年1月2日　　试卷共10页\n\n|  | 一 | 二 | 三 | 四 |  |  |  |  |  | 总分 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| 标准分 | 20 | 20 | 35 | 25 |  |  |  |  |  | 100 |\n| 得分 |  |  |  |  |  |  |  |  |  |  |\n\n【图示：页面左侧边缘有竖排文本“装订线”，其右侧设有带边框的矩形得分框，框内有竖排文本“得分”】\n\n一、单项选择题（共10题，每题2分，总计20分）\n\n1. Which I/O technique's speed is the fastest? ( )\nA. DMA\nB. Interrupt\nC. Programmed\nD. SSD\n\n2. Which is the core component of Von Neumann architecture? ( )\nA. Memory\nB. Input\nC. Output\nD. ALU\n\n3. Which of the following is not the functionality of OS in memory management? ( )\nA. Memory preemptive\nB. Memory protection\nC. Memory mapping\nD. Memory expansion\n\n4. Which of the following is unsigned? ( )\nA. 0 == 0U\nB. -1 > -2\nC. 2147483647 > (int)2147483648U\nD. (signed)-1 > -2\n\nA-1\n\n【扫描水印：Scanned with CamScanner】",
+  "corrections": [
+    {
+      "location": "左侧边缘图示",
+      "before": "",
+      "after": "【图示：页面左侧边缘有竖排文本“装订线”】",
+      "evidence": "图像左侧可见竖排印刷文字“装订线”",
+      "confidence": "high"
+    },
+    {
+      "location": "第4题选项A",
+      "before": "$0 == 0\\text{U}$",
+      "after": "0 == 0U",
+      "evidence": "印刷体为纯文本，无数学环境符号及\\text{}命令",
+      "confidence": "high"
+    },
+    {
+      "location": "第4题选项C",
+      "before": "$2147483647 > (\\text{int})\\,2147483648\\text{U}$",
+      "after": "2147483647>(int)2147483648U",
+      "evidence": "印刷体为纯文本，无数学环境符号，>与(int)之间无空格，(int)与数字之间无thinspace，U无\\text{}包裹",
+      "confidence": "high"
+    },
+    {
+      "location": "第4题选项D",
+      "before": "$(\\text{signed})\\,-1 > -2$",
+      "after": "(signed)-1>-2",
+      "evidence": "印刷体为纯文本，无数学环境符号及\\text{}命令，(signed)与-1之间无thinspace，-1与>-2之间无空格",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+  "physical_page": 1
+}

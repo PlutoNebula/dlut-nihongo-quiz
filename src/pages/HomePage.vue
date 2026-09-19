@@ -321,6 +321,8 @@ const subtitleText = computed(() => {
   if (k === 'history') return `${n} 题 · 11个刷题单 · 单选/多选/判断`
   if (k === 'party') return `${n} 题 · 7个刷题单 · 单选/多选/判断`
   if (k === 'military') return `${n} 题 · 22个刷题单 · 单选/多选/判断`
+  if (k.startsWith('computer-'))
+    return `${n} 题 · ${new Set(questions.value.map((q) => q.groupId)).size} 个题单`
   return `${n} 题`
 })
 const tagSectionTitle = computed(() => (isWordSubBank.value ? '按课/标签复习' : '按语法标签复习'))
@@ -435,6 +437,12 @@ const groupViewHint = computed(() => {
   </div>
   <div v-else class="home">
     <header class="home-header">
+      <RouterLink
+        v-if="activeCategory.startsWith('computer-')"
+        class="btn btn-ghost"
+        to="/computer-organization"
+        >← 计算机组成（软国际） · 选择试卷</RouterLink
+      >
       <div class="title-row">
         <h1>{{ titleText }}</h1>
         <span v-if="streak > 0" class="streak-chip" :title="`最近 ${streak} 天连续答题`"

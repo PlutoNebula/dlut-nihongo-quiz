@@ -1,0 +1,27 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "五、それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "(1)-(8)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "得点 $\\square$\n\n五、それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\n(1) Windows等のように、コンピュータの基本的な管理を担当するソフトウェア.\n　(A) アプリケーション　　　　(B) オペレーティングシステム\n　(C) ALU　　　　　　　　　　 (D) CPU\n\n(2) CPUがデータを取得するためにメモリ上のアドレスを指定する方法.\n　(A) アドレシングモード　　　 (B) プログラムカウンタ\n　(C) セル　　　　　　　　　　 (D) エンディアン\n\n(3) RAM (random access memory) のうち、リフレッシュが不要なもの.\n　(A) テープ　　　　　　　　　 (B) SRAM\n　(C) CD-ROM　　　　　　　　　 (D) DRAM\n\n(4) IEEE754における浮動小数点数の2進数表記では、本来の指数部の値にバイアス(もしくはゲタ)を加算する。32ビット形式の場合のバイアスの値を選択せよ.\n　(A) 128　　　(B) $-127$　　　(C) 127　　　(D) $-128$\n\n(5) メモリへのワードの格納において上位バイトから順に格納する方式.\n　(A) CISC　　　　 (B) RISC\n　(C) ビッグエンディアン　　　 (D) リトルエンディアン\n\n(6) コンピュータの性能評価のために選定されたプログラム群.\n　(A) ベンチマーク (B) OS\n　(C) ライブラリ　　　　　　　 (D) パイプライン\n\n(7) リンク後のオブジェクトファイルをメモリに読み込み、最初の命令を呼び出すソフトウェア.\n　(A) インタプリタ　　　　　　 (B) リンカ\n　(C) コンパイラ　　　　　　　 (D) ローダ\n\n(8) 2進数の最下位ビット.\n　(A) 補数　　　　　　　　　　 (B) MSB\n　(C) USB　　　　　　　　　　　(D) LSB\n\n解答欄\n\n| (1) | (2) | (3) |\n|-----|-----|-----|\n| (4) | (5) | (6) |\n| (7) | (8) |     |\n\n*Scanned with CS CamScanner*",
+  "corrections": [
+    {
+      "location": "(6) 選択肢(B)",
+      "before": "O/S",
+      "after": "OS",
+      "evidence": "画像の選択肢(B)は「OS」と印刷されており、スラッシュはない。",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+  "physical_page": 4
+}

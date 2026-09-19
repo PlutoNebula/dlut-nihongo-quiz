@@ -7,8 +7,12 @@ import {
 } from './categories'
 
 describe('CATEGORIES config', () => {
-  it('covers all 4 categories after japanese2 merge', () => {
+  it('covers existing subjects and four independent computer papers', () => {
     expect(CATEGORIES.map((c) => c.key).sort()).toEqual([
+      'computer-2021-final',
+      'computer-2024-final',
+      'computer-c-exam',
+      'computer-midterms',
       'history',
       'japanese2',
       'military',
@@ -43,12 +47,16 @@ describe('CATEGORIES config', () => {
     expect(NO_SHUFFLE_CATEGORIES.has('party')).toBe(true)
     expect(NO_SHUFFLE_CATEGORIES.has('military')).toBe(true)
     expect(NO_SHUFFLE_CATEGORIES.has('japanese2')).toBe(false)
+    for (const category of CATEGORIES.filter((c) => c.key.startsWith('computer-'))) {
+      expect(NO_SHUFFLE_CATEGORIES.has(category.key)).toBe(true)
+      expect(GROUPED_CATEGORIES.has(category.key)).toBe(true)
+    }
   })
 
-  it('GROUPED_CATEGORIES aligns with which entries have groupOrder', () => {
+  it('GROUPED_CATEGORIES aligns with entries that have a group view', () => {
     for (const c of CATEGORIES) {
       const inGrouped = GROUPED_CATEGORIES.has(c.key)
-      expect(inGrouped).toBe(Boolean(c.groupOrder && c.groupOrder.length > 0))
+      expect(inGrouped).toBe(Boolean(c.groupViewTitle))
     }
   })
 })

@@ -132,6 +132,46 @@ export const CATEGORIES: CategoryMeta[] = [
     groupViewHint:
       '每单独立计分。「按章节」组与「按优先级」组共享同一批题目；P1 必考核心建议先刷。',
   },
+  {
+    key: 'computer-2021-final',
+    short: '2021期末',
+    long: '计算机组成 · 2021期末',
+    desc: '按原卷拆分题单 · 答案与解析',
+    icon: '组',
+    bankFile: 'computer-2021-final-question-bank.json',
+    groupViewTitle: '刷题单',
+    groupViewHint: '按原卷大题分组，支持顺序、随机与错题复习。',
+  },
+  {
+    key: 'computer-2024-final',
+    short: '2024期末（部分试卷）',
+    long: '计算机组成 · 2024期末（部分试卷）',
+    desc: '按原卷拆分题单 · 答案与解析',
+    icon: '组',
+    bankFile: 'computer-2024-final-question-bank.json',
+    groupViewTitle: '刷题单',
+    groupViewHint: '按原卷大题分组，支持顺序、随机与错题复习。',
+  },
+  {
+    key: 'computer-c-exam',
+    short: 'C卷（日期待核对）',
+    long: '计算机组成 · C卷（日期待核对）',
+    desc: '按原卷拆分题单 · 答案与解析',
+    icon: '组',
+    bankFile: 'computer-c-exam-question-bank.json',
+    groupViewTitle: '刷题单',
+    groupViewHint: '按原卷大题分组，支持顺序、随机与错题复习。',
+  },
+  {
+    key: 'computer-midterms',
+    short: '期中三年合集',
+    long: '计算机组成 · 期中三年合集',
+    desc: '按原卷拆分题单 · 答案与解析',
+    icon: '组',
+    bankFile: 'computer-midterms-question-bank.json',
+    groupViewTitle: '刷题单',
+    groupViewHint: '按原卷大题分组，支持顺序、随机与错题复习。',
+  },
 ]
 
 const CATEGORY_MAP: Record<Category, CategoryMeta> = CATEGORIES.reduce(
@@ -150,6 +190,9 @@ export const NO_SHUFFLE_CATEGORIES: ReadonlySet<Category> = new Set([
   'history',
   'party',
   'military',
+  ...CATEGORIES.filter((c) => c.key.startsWith('computer-')).map((c) => c.key),
 ])
 
-export const GROUPED_CATEGORIES: ReadonlySet<Category> = new Set(['history', 'party', 'military'])
+export const GROUPED_CATEGORIES: ReadonlySet<Category> = new Set(
+  CATEGORIES.filter((c) => c.groupViewTitle).map((c) => c.key),
+)

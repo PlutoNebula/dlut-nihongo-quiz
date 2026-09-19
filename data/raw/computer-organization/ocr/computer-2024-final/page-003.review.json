@@ -1,0 +1,45 @@
+{
+  "printed_page_labels": [
+    "A-8"
+  ],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "b",
+    "4",
+    "1"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "b software and hardware?\n\n4、（5分）Discuss the advantages of the operating system.\n\n【图示：左侧有一个矩形框，框内左侧竖排标注“得分”二字，右侧有两个空白矩形框（评分栏）】\n\n四、计算题（共3题，总计25分）\n\n1、（5分）Would you believe 99% cache hits is twice as good as 97%? Explain the reason.\n\nA-8\n\n【图示：页面右下角有“Scanned with CamScanner”水印文字及标识】",
+  "corrections": [
+    {
+      "location": "第4题分值",
+      "before": "(5分)",
+      "after": "（5分）",
+      "evidence": "图像中第4题后的括号为中文全角括号“（）”",
+      "confidence": "high"
+    },
+    {
+      "location": "计算题标题括号",
+      "before": "(共3题，总计25分)",
+      "after": "（共3题，总计25分）",
+      "evidence": "图像中“四、计算题”后的括号为中文全角括号“（）”",
+      "confidence": "high"
+    },
+    {
+      "location": "第1题分值",
+      "before": "(5分)",
+      "after": "（5分）",
+      "evidence": "图像中第1题后的括号为中文全角括号“（）”",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+  "physical_page": 3
+}

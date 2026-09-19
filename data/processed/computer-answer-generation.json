@@ -1,0 +1,1308 @@
+{
+  "model": "step-3.7-flash",
+  "endpoint": "https://api.stepfun.com/step_plan/v1/chat/completions",
+  "questions": 199,
+  "reviewedQuestions": 199,
+  "answerProvenance": "generated",
+  "notOfficialAnswers": true,
+  "correctedAnswerIds": [
+    "computer-2021-final-s02-q003",
+    "computer-2021-final-s04-q008",
+    "computer-2021-final-s04-q009",
+    "computer-2021-final-s04-q012",
+    "computer-2021-final-s05-q001",
+    "computer-2021-final-s05-q003",
+    "computer-2021-final-s07-q003",
+    "computer-2021-final-s09-q001",
+    "computer-2024-final-s04-q001",
+    "computer-c-exam-s01-q002",
+    "computer-c-exam-s03-q005",
+    "computer-c-exam-s05-q004",
+    "computer-c-exam-s06-q001",
+    "computer-c-exam-s06-q002",
+    "computer-c-exam-s07-q001",
+    "computer-c-exam-s07-q002",
+    "computer-c-exam-s07-q003",
+    "computer-c-exam-s07-q004",
+    "computer-c-exam-s07-q005",
+    "computer-c-exam-s07-q006",
+    "computer-midterms-s01-q022",
+    "computer-midterms-s01-q026",
+    "computer-midterms-s01-q031",
+    "computer-midterms-s01-q033",
+    "computer-midterms-s02-q002",
+    "computer-midterms-s02-q003",
+    "computer-midterms-s02-q004",
+    "computer-midterms-s02-q005",
+    "computer-midterms-s02-q006",
+    "computer-midterms-s02-q007",
+    "computer-midterms-s02-q008",
+    "computer-midterms-s02-q010",
+    "computer-midterms-s02-q016",
+    "computer-midterms-s02-q034",
+    "computer-midterms-s03-q027",
+    "computer-midterms-s03-q031"
+  ],
+  "sourceCorrections": {
+    "computer-midterms-s01-q026": {
+      "stem": "10進数193を8ビットの2進数に変換せよ。\n\n整理说明：原卷选项A被遮挡，无法核实完整选项。本题按原题可辨认的193改为填空，填写8位二进制数。",
+      "options": [],
+      "questionType": "fill"
+    },
+    "computer-midterms-s01-q031": {
+      "stem": "2進数00111000を16進数に変換せよ。\n\n整理说明：原卷印刷选项中没有正确值，A项印刷为3A、旁有手写更正。本题改为填空，填写计算得到的两位十六进制数，不将手写标记作为标准答案。",
+      "options": [],
+      "questionType": "fill"
+    },
+    "computer-midterms-s03-q031": {
+      "stem": "2進数00111000を16進数に変換せよ。\n\n整理说明：原卷印刷选项中没有正确值，A项印刷为3A、旁有手写更正。本题改为填空，填写计算得到的两位十六进制数，不将手写标记作为标准答案。",
+      "options": [],
+      "questionType": "fill"
+    },
+    "computer-midterms-s01-q022": {
+      "options": [
+        {
+          "key": "A",
+          "text": "$s2"
+        },
+        {
+          "key": "B",
+          "text": "$s3"
+        },
+        {
+          "key": "C",
+          "text": "0"
+        },
+        {
+          "key": "D",
+          "text": "2"
+        }
+      ]
+    },
+    "computer-midterms-s02-q034": {
+      "options": [
+        {
+          "key": "A",
+          "text": "00010010"
+        },
+        {
+          "key": "B",
+          "text": "10101011"
+        },
+        {
+          "key": "C",
+          "text": "00110100"
+        },
+        {
+          "key": "D",
+          "text": "00001100"
+        }
+      ]
+    },
+    "computer-2021-final-s02-q003": {
+      "stem": "以下の各問の答えとして正しいものを選択肢から選び、A～Dの記号で答えよ。\n【マークシートに解答】\n\n10進数3.1415を正規化せよ。\n\n整理说明：原题未限定规格化尾数范围；本题按十进制小数形式的教材约定 $0.1 \\le m < 1$ 作答。"
+    },
+    "computer-c-exam-s07-q001": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (1)。"
+    },
+    "computer-c-exam-s07-q002": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (2)。"
+    },
+    "computer-c-exam-s07-q003": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (3)。"
+    },
+    "computer-c-exam-s07-q004": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (4)。"
+    },
+    "computer-c-exam-s07-q005": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (5)。"
+    },
+    "computer-c-exam-s07-q006": {
+      "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (6)。"
+    }
+  },
+  "requests": [
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "prompt_tokens": 3131,
+        "completion_tokens": 8517,
+        "total_tokens": 11648,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "a4041af66a6ea2fc9c5438b06746d07c.c7f333881618e21770cd8ae8992b7b5f"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3154,
+        "completion_tokens": 10991,
+        "total_tokens": 14145,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "3df45d55d7d2eb6f36d6a6433587aa0f.114f01e70a0672c281a550594dc3a636"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3180,
+        "completion_tokens": 6608,
+        "total_tokens": 9788,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "d4e3d6228bdf487e093b474926b1b878.4f0a9aa310608e640031fd2e278fc6f0"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4298,
+        "completion_tokens": 5885,
+        "total_tokens": 10183,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "a609942738ccdb8deb8ef8716aab25bf.229a89af1f27cd9c0d13affc73401260"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 3392,
+        "prompt_tokens": 3475,
+        "completion_tokens": 13183,
+        "total_tokens": 16658,
+        "prompt_tokens_details": {
+          "cached_tokens": 3392
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5d33d8edc6e8491801ff82261e8a0a86.7481d2de786eca9dd806d3549f0a5118"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5492,
+        "completion_tokens": 8576,
+        "total_tokens": 14068,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "7962918f9c9270d0b59fe86ad05f1609.24c381e035c7eeab73b812b65432a3d4"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 1843,
+        "completion_tokens": 2635,
+        "total_tokens": 4478,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "0e0d9b761a3bc9f40b14d237b8bb1d37.5cfa6fddea0efd3e757af77018745190"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5238,
+        "completion_tokens": 11543,
+        "total_tokens": 16781,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "44e032ec653e35994ddd1a1cc22737db.0ec9f43a3df2141d661c43c4bfffe152"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4198,
+        "completion_tokens": 10003,
+        "total_tokens": 14201,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "2335846338f193cb9de940144cb198e9.b9ffd554e705876453204f1163561537"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4778,
+        "completion_tokens": 13257,
+        "total_tokens": 18035,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "a107c792744cd23a841b53859155ae71.16c6e31b7d1218039106e07f7875d1ff"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5159,
+        "completion_tokens": 8198,
+        "total_tokens": 13357,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "c8a93f4b7b7631d9d4cb629022e1b014.de0dba791941c6cfeaf7e991bacbd886"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3343,
+        "completion_tokens": 4682,
+        "total_tokens": 8025,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "8dd6c864023fbcf66dc5e15a29d4c615.1be29201332d65d331cb197bc63de83c"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2273,
+        "completion_tokens": 11904,
+        "total_tokens": 14177,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "31ea022deb73ca6935dbb92dee1f3344.9ffd68af68e83027451b39273de3d055"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3058,
+        "completion_tokens": 6712,
+        "total_tokens": 9770,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "4a8f0ac5e089b1cafabead8021116ac5.bdfd60e18229e338d1b4d2e2540eb6f3"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3123,
+        "completion_tokens": 5714,
+        "total_tokens": 8837,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "8e9aefac35444d1e2864eda261bb3e19.3b2b3828f653065d48a3537dac8f5a99"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4990,
+        "completion_tokens": 6459,
+        "total_tokens": 11449,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "45581828b9e4fca3ef4e18da8895cc32.f4d86070b8f4183f76fe2ce456aa5b32"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4878,
+        "completion_tokens": 11753,
+        "total_tokens": 16631,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "d55aa88f8eaafa48e1aee944957b9beb.f121434673441eabbe324761e5eeabc2"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 6704,
+        "completion_tokens": 10824,
+        "total_tokens": 17528,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "1930b32566c3ca920fdea05fb8573849.82929745acec496b9b1e34f034cebfcb"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5994,
+        "completion_tokens": 8057,
+        "total_tokens": 14051,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5c84f1a089beedce8929d791fe079ec8.8dfc034045144dffb7db3ecdf37c4123"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5737,
+        "completion_tokens": 4715,
+        "total_tokens": 10452,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "f549359e420a363aca65ef78fa79212b.656b150cc20d1dd4e0f3ab5b9b5d596a"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 7067,
+        "completion_tokens": 4400,
+        "total_tokens": 11467,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "3359740f4c4b3f2fd9cdfe1f63f66700.c7cc47263e4ae0d1ee43545c2ff93d50"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 5764,
+        "completion_tokens": 7058,
+        "total_tokens": 12822,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "3341d43f064ac6e9c81ffb60ce3a9e1c.8089517597a721589e3688c537203569"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 7654,
+        "completion_tokens": 8513,
+        "total_tokens": 16167,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "bb45cea03b412c4adeeb0ee66f83a017.4df649b55165a3e0fa01418b6006155e"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4423,
+        "completion_tokens": 4681,
+        "total_tokens": 9104,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "a6189508b73344ed233e3c6888de664c.b20f96e98b493a36746921772f3b6dc9"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4254,
+        "completion_tokens": 2372,
+        "total_tokens": 6626,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "f72acd6023989b64458c1f61e2db6a80.97f84c98c1522aa714a1bd17a3432009"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3170,
+        "completion_tokens": 4183,
+        "total_tokens": 7353,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "f7dc251675e05a4ffdedd1db719913ce.55dc22045d6cca6dfc2468f3d69a354f"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 7581,
+        "completion_tokens": 8181,
+        "total_tokens": 15762,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "06a99cb8bc0f537d2d9d8d78186640d1.43a303a9a8853790527415a4fc9ab6b5"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 3094,
+        "completion_tokens": 8889,
+        "total_tokens": 11983,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "e8fb3d93687233bb56f52cfcb0aa9eac.7e70740bbe6826531a061e7b71ba67f4"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2037,
+        "completion_tokens": 3028,
+        "total_tokens": 5065,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "f2f3ceadde73975e9ac897a2818239ec.d155546141b45dc2af427420c14e74f1"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2327,
+        "completion_tokens": 3201,
+        "total_tokens": 5528,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "6a21f0e15859f25f30e29c715855ba23.6e7e8e51c1687d76e49226a2fd6d812d"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2892,
+        "completion_tokens": 3076,
+        "total_tokens": 5968,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "a8a6074e73b57e35080c67ac24d2bff7.784fcd424ad58b4c1374366da689b174"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 3913,
+        "completion_tokens": 31253,
+        "total_tokens": 35166,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "dd076d5f63e21ab53d88c5b6e573cbee.ff152096908ba7ceb1c5387cd0e30215"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 6400,
+        "completion_tokens": 6931,
+        "total_tokens": 13331,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5b50a886c7a44fe1efe5840594045dd4.0323095ef110a23909814b74640ad2aa"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 6073,
+        "completion_tokens": 7117,
+        "total_tokens": 13190,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "e95de85a4e0a5745a4149f16f23de1f6.188703a15ced04aeba3adb09e6100715"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 4110,
+        "completion_tokens": 5956,
+        "total_tokens": 10066,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "580dd3917edd61aeae5d3d0e096e6ab9.9f092122600a2d973bd5ecd1a0680e64"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 5859,
+        "completion_tokens": 10125,
+        "total_tokens": 15984,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "edfe462fe97c7794e3a92e8fe87cc319.b20ccc7a2ca2177d2f7cd174a3db75b7"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 6620,
+        "completion_tokens": 10686,
+        "total_tokens": 17306,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "46cb14be12e9e0b85ade4e1f93519982.76e0f7687c8f915942c81c86a30ed28c"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2184,
+        "completion_tokens": 2950,
+        "total_tokens": 5134,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "4e634f06eab0d6446289ca57fc506fd9.e87c123257e5c4bc4810329ead239df0"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2211,
+        "completion_tokens": 2803,
+        "total_tokens": 5014,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "0ab40095acbb96f2c140c53a4cb5352e.56e4819e4826434adf490eaf4ffb53be"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 2209,
+        "completion_tokens": 5037,
+        "total_tokens": 7246,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "c701b7c7ee2075f1037faee724e568e4.f4c04e5dae25a98b612d92be439b171a"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 384,
+        "prompt_tokens": 1899,
+        "completion_tokens": 1315,
+        "total_tokens": 3214,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "9389d56c4fdfb27f8663dca87e9b9727.2315b7de735c7e9c15ae9922dcb018fd"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "prompt_tokens": 2467,
+        "completion_tokens": 2336,
+        "total_tokens": 4803,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5edbfa0016ec07ce92a10d0d9eabc2c6.f6cf75195976cfa3a03ef71af44924be"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "prompt_tokens": 2538,
+        "completion_tokens": 2053,
+        "total_tokens": 4591,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "75ce2ee7e357fa18edbd240d40bc4728.558960a8c2f439368518893f9c5d4de9"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2455,
+        "completion_tokens": 1215,
+        "total_tokens": 3670,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "b3c2784c5664037e8a3a5f4fa8bb837a.d81c7bf123d6bec7c518f59fc571e117"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3022,
+        "completion_tokens": 4364,
+        "total_tokens": 7386,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "49fa1d6f1a2728eda3338227dfe9ff6f.834d34601ae4117ebc4f375ceadb9a24"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2994,
+        "completion_tokens": 2497,
+        "total_tokens": 5491,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "2dec0087ea73bef7af8ea36f455cbf77.eb4438ff1d715e51f474bfec826d5159"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3937,
+        "completion_tokens": 2930,
+        "total_tokens": 6867,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "6832c712a6de40f0290319cb47d49ced.7755e6133f221c837a02a0cda5eb6c88"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 729,
+        "completion_tokens": 630,
+        "total_tokens": 1359,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "0e84d3167ce367b1b9944079cb63c07f.e6caf7b3776187f5b439d59672c7337d"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2582,
+        "completion_tokens": 1412,
+        "total_tokens": 3994,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "7b0191e622ab005d4b4556258473a32a.8b45c60e47401a59dd3e9abf28855656"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2563,
+        "completion_tokens": 5696,
+        "total_tokens": 8259,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "fa89b88dc8e50319fb2e6f87e917f1c2.84e59d638f33e41f8b1ec22b01d5e6c5"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 2624,
+        "prompt_tokens": 2751,
+        "completion_tokens": 3995,
+        "total_tokens": 6746,
+        "prompt_tokens_details": {
+          "cached_tokens": 2624
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "bc0af7bdf6accf8995ddfcd56f9d5177.f3d461003df70d8428d1dbc659788e3a"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3153,
+        "completion_tokens": 1730,
+        "total_tokens": 4883,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "4cb06c374a44a9701b6fb9ace73691ba.cb69469bdf6f1610d6720395ce743f4e"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3998,
+        "completion_tokens": 3434,
+        "total_tokens": 7432,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "38a898e8769ae42788b4b2e9d838673f.087fecbc62de2d5c0d9955a97e67c611"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3182,
+        "completion_tokens": 3605,
+        "total_tokens": 6787,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5e8940882fd49f87eb286f4d4aef09f4.909f740a86c4261a6f4f10941d6433b5"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 4351,
+        "completion_tokens": 5116,
+        "total_tokens": 9467,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "8c02a9541fd52211e4188bf7e60ecd02.03ee3d7c8d6757cee7696c40b89539c8"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 1342,
+        "completion_tokens": 7137,
+        "total_tokens": 8479,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "801bdd3788ae34f8f5faf6c07adbae50.3e4a6ddfc4a109ff6da57ac367c8fb25"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 1901,
+        "completion_tokens": 1696,
+        "total_tokens": 3597,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "d9838abc5dc03da19dae367b609383cf.d7941143d19695e4322bbd968cc4b39b"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 1993,
+        "completion_tokens": 1182,
+        "total_tokens": 3175,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "60ceb897f765eaa85035c3e92a6f650a.9ccfff0e584b179cccc6539eb2a09fdc"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 2624,
+        "prompt_tokens": 2742,
+        "completion_tokens": 1932,
+        "total_tokens": 4674,
+        "prompt_tokens_details": {
+          "cached_tokens": 2624
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "22026a2b7aab28088c9848f4f2560fa8.303564eeffefb2923bc0989150aec5bb"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2835,
+        "completion_tokens": 2608,
+        "total_tokens": 5443,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "702749d75969cf78ed1a8a55a2d46acb.14b5b83e6fbcaf92fc30cb1df217fa7c"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2409,
+        "completion_tokens": 1632,
+        "total_tokens": 4041,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "ad2be49d11651af50337c34ae190b6ac.befba08681c3dd31539f35201491d094"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2205,
+        "completion_tokens": 4285,
+        "total_tokens": 6490,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "04b12438dd64c198adfd2ecb4f68300c.09a435fbb2f89f55c2a1846318945f8a"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2412,
+        "completion_tokens": 4313,
+        "total_tokens": 6725,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "03326cc2194e6a14c09082b8e5543d35.b8b3f6e6e7059572196262a1efdcccdd"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2041,
+        "completion_tokens": 3088,
+        "total_tokens": 5129,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "ff5766c2bf7dea13a3477aa450a66f3b.dec72a68a2a53ca53440d9e38c568494"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2039,
+        "completion_tokens": 2779,
+        "total_tokens": 4818,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "f7393d6ac10b2bc236dc5d1722a84fbc.97c0db616e93ec00b322fcb90b42ba82"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2953,
+        "completion_tokens": 3370,
+        "total_tokens": 6323,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "3a44b3aac14595914084ab9487379d72.d6efc56d5d3165339a2b9d96fa7cfb47"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2206,
+        "completion_tokens": 945,
+        "total_tokens": 3151,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "5bc2d4203a3a83097367bf6b7248b758.8694c3af5fdf619dda659ee728989876"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2099,
+        "completion_tokens": 1254,
+        "total_tokens": 3353,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "8157dd9efd57346ecc6d2bf0b37c0231.f6bf3d9ebf875c343f8d2a4ec4a659ce"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2218,
+        "completion_tokens": 1702,
+        "total_tokens": 3920,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "4599b328efadeae332108a01f1b8efff.a7d1486a81dbd8da9ebe7c2be94a7e92"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 3328,
+        "completion_tokens": 1404,
+        "total_tokens": 4732,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "01dc13b4af2eb94c8aa9c70cee95b685.044412f740771c5df9431a2756ba6f38"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 2103,
+        "completion_tokens": 4270,
+        "total_tokens": 6373,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "cd6386280c8e39fd1bc44b3ab67ac0b2.fab3ac4a59db0054998c3610d971dfb5"
+    },
+    {
+      "model": "step-3.7-flash",
+      "usage": {
+        "cached_tokens": 256,
+        "prompt_tokens": 1026,
+        "completion_tokens": 748,
+        "total_tokens": 1774,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "id": "7886c9b382a2e5541cb5f04adddac9ca.d2980dea737888791e31187ab6f386de"
+    }
+  ],
+  "editorialCorrections": {
+    "computer-2021-final-s07-q002": {
+      "answerText": "08100007",
+      "explanation": "MIPS的j使用J型格式：6位op和26位目标字段。目标字节地址为0x0040001C，按4字节对齐，编码字段为0x0040001C >> 2 = 0x00100007。op=2占最高6位，故机器码为(2 << 26) | 0x00100007 = 0x08000000 | 0x00100007 = 0x08100007。按8位十六进制填写08100007。"
+    },
+    "computer-midterms-s02-q008": {
+      "explanation": "逻辑左移1位时，最高位移出丢弃，最低位补0。01010010左移1位得到10100100，对应选项B。原值为82，左移后为164，未超出8位无符号数范围。"
+    },
+    "computer-c-exam-s02-q008": {
+      "explanation": "按位或（OR）：只要对应位中至少一个为1，结果就为1。\n\n```text\n  10110010\n| 11010110\n----------\n  11110110\n```\n\n也可用十六进制复核：0xB2 | 0xD6 = 0xF6，即11110110。"
+    },
+    "computer-c-exam-s01-q002": {
+      "answerText": "204",
+      "reason": "仅提取所问空(2)，不把同一题干中的空(1)答案一并填入。"
+    },
+    "computer-c-exam-s04-q001": {
+      "answerText": "2000000000",
+      "reason": "将模型生成的2×10^9规范化为十进制数字，沿用现有文本填空判分。"
+    },
+    "computer-2021-final-s04-q009": {
+      "answerKey": "B",
+      "answerText": "桁落ち",
+      "explanation": "桁落ち（消去误差、catastrophic cancellation）指浮点数运算后有效数字位数显著减少，典型情况是两个数值相近的数相减，高位有效数字相互抵消，因此选B。情報落ち则通常指大小悬殊的数相加时，对阶使较小数的有效信息丢失；它与桁落ち不同。丸め誤差来自有限位数舍入；打ち切り誤差来自截断近似过程。"
+    },
+    "computer-c-exam-s02-q005": {
+      "explanation": "逻辑左移1位时，最高位移出丢弃，最低位补0，所以00000101变为00001010，即十进制5乘2得到10。逻辑左移与算术左移的位操作相同；逻辑右移在高位补0，算术右移在高位补符号位。"
+    }
+  },
+  "verification": [
+    "199题均完成独立第二轮StepFun文本审校；人工对照原图复核疑点。",
+    "使用本地整数位运算及IEEE754打包核对机器码、分支字段和浮点表示。",
+    "对模型审校仍遗漏的跳转指令编码和移位解释进行人工勘误。"
+  ]
+}

@@ -1,0 +1,747 @@
+{
+  "category": "computer-2024-final",
+  "title": "2024 计算机组织与结构期末 A 卷",
+  "description": "2024年1月2日期末卷；当前PDF仅4个物理页，印刷页码为A-1、A-2、A-8、A-7。只整理现有可见题目，缺页不补写。 答案与解析由StepFun step-3.7-flash生成并复核，非官方标准答案。",
+  "groups": [
+    {
+      "id": "computer-2024-final-s01",
+      "title": "一、单项选择题"
+    },
+    {
+      "id": "computer-2024-final-s03",
+      "title": "三、简答题（可见部分，序号待核对）"
+    },
+    {
+      "id": "computer-2024-final-s04",
+      "title": "四、计算题（可见部分）"
+    }
+  ],
+  "questions": [
+    {
+      "id": "computer-2024-final-s01-q001",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 1,
+      "stem": "Which I/O technique's speed is the fastest? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "DMA"
+        },
+        {
+          "key": "B",
+          "text": "Interrupt"
+        },
+        {
+          "key": "C",
+          "text": "Programmed"
+        },
+        {
+          "key": "D",
+          "text": "SSD"
+        }
+      ],
+      "answerKey": "A",
+      "answerText": "DMA",
+      "translation": "哪种I/O技术的速度最快？",
+      "explanation": "程序控制I/O（Programmed I/O，选项C）需要CPU不断轮询设备状态寄存器，速度最慢；中断驱动I/O（Interrupt，选项B）通过中断信号通知CPU I/O操作完成，减少了CPU忙等时间，但数据传输阶段仍需CPU参与处理中断；直接内存访问（DMA，选项A）允许I/O设备直接在内存与I/O设备之间批量传输数据，CPU仅需在传输开始和结束时进行初始化，数据传输阶段完全由DMA控制器接管，不占用CPU资源，是这三种I/O控制技术中速度最快的。SSD（选项D）是固态存储设备，属于外部设备/存储介质，并非I/O控制技术（I/O technique），因此不属于该比较范畴。\n\n**题目说明：**原卷未提供标准答案；选项D（SSD）作为存储设备与I/O控制技术分类不当，属于干扰项。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 1,
+        "pages": [
+          1
+        ],
+        "originalNumbers": [
+          "1"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-001.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q002",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 2,
+      "stem": "Which is the core component of Von Neumann architecture? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "Memory"
+        },
+        {
+          "key": "B",
+          "text": "Input"
+        },
+        {
+          "key": "C",
+          "text": "Output"
+        },
+        {
+          "key": "D",
+          "text": "ALU"
+        }
+      ],
+      "answerKey": "A",
+      "answerText": "Memory",
+      "translation": "冯·诺依曼体系结构的核心组件是什么？",
+      "explanation": "冯·诺依曼体系结构（Von Neumann architecture）的核心特征是\"存储程序\"（Stored-Program Concept）原理，即程序指令和数据以二进制形式同等地位存储在同一个存储器（Memory，选项A）中，计算机通过控制器从存储器中自动取出指令并执行。这一特征使得计算机能够实现程序自动运行，是其区别于其他体系结构（如哈佛架构）的本质特征。虽然运算器（ALU，选项D）、输入（B）和输出（C）设备也是计算机的重要组成部分，但存储器体现了该架构最核心的设计思想。\n\n**题目说明：**原卷未提供标准答案；\"core component\"（核心组件）可能引发歧义（ALU或控制器也可能是备选），但Memory最能体现冯·诺依曼架构的\"存储程序\"核心特征。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 2,
+        "pages": [
+          1
+        ],
+        "originalNumbers": [
+          "2"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-001.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q003",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 3,
+      "stem": "Which of the following is not the functionality of OS in memory management? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "Memory preemptive"
+        },
+        {
+          "key": "B",
+          "text": "Memory protection"
+        },
+        {
+          "key": "C",
+          "text": "Memory mapping"
+        },
+        {
+          "key": "D",
+          "text": "Memory expansion"
+        }
+      ],
+      "answerKey": "A",
+      "answerText": "Memory preemptive",
+      "translation": "内存抢占",
+      "explanation": "操作系统内存管理的核心功能包括：内存保护（Memory Protection，防止进程非法访问其他进程内存空间）、内存映射（Memory Mapping，建立虚拟地址到物理地址的映射关系）、内存扩充/扩展（Memory Expansion，通过虚拟内存、交换技术等扩展可用内存容量）。而\"Memory preemptive\"（内存抢占）并非操作系统中的标准术语或功能，\"抢占式\"（Preemptive）概念通常用于描述CPU调度策略（如抢占式调度），不属于内存管理范畴。因此A选项是正确答案。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 3,
+        "pages": [
+          1
+        ],
+        "originalNumbers": [
+          "3"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-001.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q004",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 4,
+      "stem": "Which of the following is unsigned? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "0 == 0U"
+        },
+        {
+          "key": "B",
+          "text": "-1 > -2"
+        },
+        {
+          "key": "C",
+          "text": "2147483647 > (int)2147483648U"
+        },
+        {
+          "key": "D",
+          "text": "(signed)-1 > -2"
+        }
+      ],
+      "answerKey": "A",
+      "answerText": "0 == 0U",
+      "translation": "0 等于 0U",
+      "explanation": "本题考查C/C++语言中无符号类型的识别。选项A中的**0U**是unsigned int（无符号整数）类型的字面量常量（U后缀表示无符号），明确属于无符号类型。选项B中的-1和-2默认为有符号整数（int类型）；选项C中2147483648U虽为无符号字面量，但被强制类型转换为(int)后，比较实际在两个有符号整数（2147483647与转换后的值）之间进行；选项D明确使用(signed)修饰符指定为有符号类型。因此，只有选项A明确包含无符号类型（0U）。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 4,
+        "pages": [
+          1
+        ],
+        "originalNumbers": [
+          "4"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-001.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q005",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 5,
+      "stem": "Which of the following is correct about I/O conflict techniques?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Chain query mode is sensitive to faulty and no priority."
+        },
+        {
+          "key": "B",
+          "text": "Counter query mode is sensitive to faulty and increases device addresses."
+        },
+        {
+          "key": "C",
+          "text": "Independent query has massive control buses."
+        },
+        {
+          "key": "D",
+          "text": "None above."
+        }
+      ],
+      "answerKey": "C",
+      "answerText": "Independent query has massive control buses.",
+      "translation": "关于I/O查询（冲突仲裁）技术，以下哪项是正确的？",
+      "explanation": "在I/O设备总线仲裁的三种查询方式中：链式查询（Daisy Chain）方式优先级固定（链首设备优先级最高），对故障敏感（链式通路中断则后续设备无法响应），但控制线少；计数器查询（Counter）方式优先级可通过编程改变（改变计数器初值），对故障不敏感，设备地址与查询方式无关；独立查询（Independent Request）方式每个设备都有独立的请求线和允许线，因此需要大量的控制总线（n个设备需要2n条控制线）。选项A中'no priority'表述不准确（应为优先级固定）；选项B中'senstive to faulty'和'increases device addresses'均错误；选项C正确描述了独立查询需要大量控制总线的特点。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 5,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "5"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q006",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 6,
+      "stem": "Which does not belong to the main memory? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "ROM"
+        },
+        {
+          "key": "B",
+          "text": "DRAM"
+        },
+        {
+          "key": "C",
+          "text": "Flash"
+        },
+        {
+          "key": "D",
+          "text": "SRAM"
+        }
+      ],
+      "answerKey": "C",
+      "answerText": "Flash",
+      "translation": "下列哪项不属于主存储器？",
+      "explanation": "主存储器（Main Memory）通常指CPU通过系统总线直接访问的存储器，主要包括RAM（随机存取存储器，如DRAM、SRAM）以及ROM（只读存储器，如BIOS芯片，集成在主板上）。Flash（闪存）是一种非易失性半导体存储器，通常作为辅助存储器（Secondary Storage，如SSD、U盘）或固件存储使用，在计算机组成原理的典型分类中，它不被视为主存（主存通常指易失性的RAM及其互补的ROM部分）。DRAM和SRAM是RAM的两种类型，ROM也是主存系统的一部分。因此Flash不属于主存。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 6,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "6"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q007",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 7,
+      "stem": "Which of the following is not the component of the system bus? (",
+      "options": [
+        {
+          "key": "A",
+          "text": "Address Bus"
+        },
+        {
+          "key": "B",
+          "text": "Data Bus"
+        },
+        {
+          "key": "C",
+          "text": "Signal Bus"
+        },
+        {
+          "key": "D",
+          "text": "Control Bus"
+        }
+      ],
+      "answerKey": "C",
+      "answerText": "Signal Bus",
+      "translation": "以下哪项不是系统总线的组成部分？",
+      "explanation": "系统总线（System Bus）是计算机系统中连接CPU、主存与I/O设备的关键通信通道，按照功能可分为三个标准组成部分：\n1. **数据总线（Data Bus）**：传输实际的数据信息（如指令、操作数），是双向的。\n2. **地址总线（Address Bus）**：由CPU发出，用于指定数据传输的目标地址（内存地址或I/O端口地址），是单向的。\n3. **控制总线（Control Bus）**：传输各类控制信号（如读/写信号、时钟信号、中断请求、复位信号等），用于协调各部件的工作时序与操作。\n\n\"Signal Bus\"（信号总线）并非计算机体系结构中的标准分类术语，它不是一个公认的、独立的系统总线组成部分。因此，Signal Bus 是正确答案。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 7,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "7"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q008",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 8,
+      "stem": "Which instruction does not have an operand?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Mov"
+        },
+        {
+          "key": "B",
+          "text": "Call"
+        },
+        {
+          "key": "C",
+          "text": "Add"
+        },
+        {
+          "key": "D",
+          "text": "Ret"
+        }
+      ],
+      "answerKey": "D",
+      "answerText": "Ret",
+      "translation": "哪条指令没有操作数？",
+      "explanation": "Ret（返回）指令通过栈隐式获取返回地址，通常不需要显式操作数。而Mov（数据传送）、Call（子程序调用）和Add（加法运算）均需要显式指定源操作数和目的操作数（或目标地址）。例如，Mov需要源和目的操作数；Call需要目标地址；Add需要参与运算的操作数。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 8,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "8"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q009",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 9,
+      "stem": "In a 5-level pipeline architecture with a 32-bit fixed-length instruction system, when the address of the executing instruction is 0x9000, what is the address of the instruction being fetched? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "0x9004"
+        },
+        {
+          "key": "B",
+          "text": "0x9008"
+        },
+        {
+          "key": "C",
+          "text": "0x9002"
+        },
+        {
+          "key": "D",
+          "text": "0x9001"
+        }
+      ],
+      "answerKey": "B",
+      "answerText": "0x9008",
+      "translation": "在一个5级流水线架构、32位定长指令系统中，当正在执行的指令地址为0x9000时，正在取指的指令地址是多少？",
+      "explanation": "在经典5级流水线（IF、ID、EX、MEM、WB）中，正在执行的指令位于EX段（执行段）。正在取指的指令位于IF段（取指段）。这两个流水段之间相差2个阶段（ID和EX），即相差2条指令。由于指令长度为32位（4字节），地址差为2 × 4 = 8字节（0x8）。因此取指地址为0x9000 + 0x8 = 0x9008。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 9,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "9"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s01-q010",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s01",
+      "groupTitle": "一、单项选择题",
+      "numberInGroup": 10,
+      "stem": "Which description of IEEE 754 is not true? ( )",
+      "options": [
+        {
+          "key": "A",
+          "text": "There are three categories of floating points."
+        },
+        {
+          "key": "B",
+          "text": "For normalized values, exp ≠ 000···0 and exp ≠ 111···1."
+        },
+        {
+          "key": "C",
+          "text": "The Exponent value can be used for ensuring seamless distribution of data."
+        },
+        {
+          "key": "D",
+          "text": "For denormalized values, we have exp = 000...0, frac = 000...0."
+        }
+      ],
+      "answerKey": "D",
+      "answerText": "For denormalized values, we have exp = 000...0, frac = 000...0.",
+      "translation": "关于IEEE 754的哪项描述不正确？",
+      "explanation": "选项D不正确。对于非规范化（denormalized）数值，指数域exp全为0（000...0），但尾数域frac不全为0（frac ≠ 000...0）。当exp和frac全为0时，表示的是零值（+0或-0），属于特殊值而非非规范化数。选项A正确（浮点数分为规范化、非规范化和特殊值三类）；选项B正确（规范化数的指数域既不全0也不全1）；选项C正确（偏移表示的指数有助于数据的有序分布与比较）。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "一、单项选择题",
+        "position": 10,
+        "pages": [
+          2
+        ],
+        "originalNumbers": [
+          "10"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-002.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "single",
+      "answerProvenance": "generated",
+      "reviewNotes": [],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s03-q001",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s03",
+      "groupTitle": "三、简答题（可见部分，序号待核对）",
+      "numberInGroup": 1,
+      "stem": "（10分）Which I/O technique can be regarded as a collaboration of both software and hardware?\nPlease describe its detailed process.\n\n作答提示：本题为原卷简答题，沿用填空输入；可先自行作答，再提交查看参考答案与解析。文字不同不代表理解错误。",
+      "options": [],
+      "answerKey": "",
+      "answerText": "中断驱动I/O（Interrupt-driven I/O）。详细过程：① CPU向设备控制器发出I/O命令（启动设备）后，不等待完成，而是继续执行其他程序（软件控制）；② I/O设备/控制器在后台完成数据传输（硬件执行）；③ 设备准备就绪后，向中断控制器发送中断请求信号（硬件信号）；④ CPU在当前指令执行完毕后，响应中断，将程序计数器（PC）和状态寄存器压入栈中，并跳转至中断向量表指定的中断服务程序ISR（软件响应）；⑤ ISR读取设备数据寄存器或状态寄存器，将数据从设备缓冲区传送到内存，或处理设备状态（软件执行）；⑥ 执行中断返回指令（IRET），从栈中恢复现场，继续执行被中断的原程序。",
+      "translation": "哪种I/O技术可视为软件与硬件的协作？请描述其详细过程。",
+      "explanation": "该题考查I/O控制方式中的中断驱动I/O（Interrupt-driven I/O），其核心特征是硬件（设备控制器）与软件（CPU/ISR）的协作：硬件完成操作后主动发信号，软件响应并处理数据。区别于程序查询方式（纯软件轮询），中断驱动I/O通过中断机制实现了两者的协作。过程要点：启动→并行工作→中断请求→响应→服务→返回。若回答存储器映射I/O（Memory-Mapped I/O），其协作体现在：软件执行普通访存指令，硬件通过地址译码识别I/O端口并产生相应控制信号，二者通过总线协作完成数据交换。\n\n**题目说明：**题目未明确指定具体I/O技术名称（如中断驱动I/O或存储器映射I/O），两者均可视为软件与硬件的协作。此处按'中断驱动I/O'作答，因其动态协作过程更为典型。若指Memory-Mapped I/O，过程为：CPU执行LOAD/STORE指令→地址译码器识别I/O空间→产生I/O读/写信号→设备响应并完成数据传送。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "三、简答题（可见部分，序号待核对）",
+        "position": 11,
+        "pages": [
+          4,
+          3
+        ],
+        "originalNumbers": [
+          "3"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-004.jpg",
+          "computer-organization/computer-2024-final/page-003.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "fill",
+      "answerProvenance": "generated",
+      "reviewNotes": [
+        "完整文字在PDF第4页；第3页顶部仅有重复残片，按文字与题序关联归并。",
+        "大题三标题未在OCR页明确出现，题单名依据四大题结构暂标，需原卷核对。"
+      ],
+      "sourceNotes": [
+        "PDF第3页顶部残片：b software and hardware?",
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s03-q002",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s03",
+      "groupTitle": "三、简答题（可见部分，序号待核对）",
+      "numberInGroup": 2,
+      "stem": "（5分）Discuss the advantages of the operating system.\n\n作答提示：本题为原卷简答题，沿用填空输入；可先自行作答，再提交查看参考答案与解析。文字不同不代表理解错误。",
+      "options": [],
+      "answerKey": "",
+      "answerText": "操作系统的主要优势包括：（1）提高系统资源利用率（CPU、内存、I/O设备）；（2）提供抽象和方便的用户接口，隐藏硬件细节；（3）实现多任务并发执行与进程调度；（4）提供保护与安全机制，实现进程间隔离；（5）提供文件系统、设备驱动等统一管理服务。",
+      "translation": "讨论操作系统的优势。",
+      "explanation": "操作系统作为系统软件的核心，其优势主要体现在资源管理与服务提供方面。首先，它作为资源管理器，合理分配CPU时间、内存空间和I/O设备，提高资源利用率和系统吞吐量；其次，它提供抽象接口（如文件、进程），隐藏硬件复杂性，方便应用程序开发；第三，它通过并发控制和调度机制实现多任务处理；第四，通过保护机制（内存保护、特权级）确保系统安全和进程隔离；第五，提供标准化的服务（如文件系统、网络协议栈）。这些优势使得计算机系统更高效、易用和安全。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "三、简答题（可见部分，序号待核对）",
+        "position": 12,
+        "pages": [
+          3,
+          4
+        ],
+        "originalNumbers": [
+          "4"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-003.jpg",
+          "computer-organization/computer-2024-final/page-004.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "fill",
+      "answerProvenance": "generated",
+      "reviewNotes": [
+        "PDF第4页仅出现4、(5分)题头，完整正文取PDF第3页同号同分值题。",
+        "大题三标题未在OCR页明确出现，题单名依据四大题结构暂标，需原卷核对。"
+      ],
+      "sourceNotes": [
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    },
+    {
+      "id": "computer-2024-final-s04-q001",
+      "category": "computer-2024-final",
+      "groupId": "computer-2024-final-s04",
+      "groupTitle": "四、计算题（可见部分）",
+      "numberInGroup": 1,
+      "stem": "四、计算题（共3题，总计25分）\n\n（5分）Would you believe 99% cache hits is twice as good as 97%? Explain the reason.\n\n作答提示：本题为原卷简答题，沿用填空输入；可先自行作答，再提交查看参考答案与解析。文字不同不代表理解错误。",
+      "options": [],
+      "answerKey": "",
+      "answerText": "并非普遍成立。仅当缺失代价(Miss Penalty)是命中时间(Hit Time)的100倍时，99%命中率的平均内存访问时间(AMAT)才是97%的一半（性能为2倍）。典型场景下（如缺失代价为20倍命中时间），性能提升仅约1.33倍。",
+      "translation": "Would you believe 99% cache hits is twice as good as 97%? Explain the reason.",
+      "explanation": "缓存性能由平均内存访问时间（AMAT）衡量：AMAT = 命中时间(H) + 缺失率 × 缺失代价(P)。设命中率为Hr（题目中为99%或97%），缺失率为Mr。AMAT₉₉ = H + 0.01P，AMAT₉₇ = H + 0.03P。若99%命中率“是两倍好”（即性能为2倍，对应AMAT减半），则需满足 H + 0.03P = 2(H + 0.01P)，解得 P = 100H。即缺失代价需为命中时间的100倍。在实际系统（缺失代价通常为20~100个周期，命中时间1~2个周期）中此条件不成立。例如当P=20H时，AMAT₉₉=1.2H，AMAT₉₇=1.6H，性能比为1.6/1.2=4/3≈1.33倍，远非2倍。",
+      "grammarPoints": [],
+      "tags": [
+        "计算机组成"
+      ],
+      "source": {
+        "file": "b0df88ac7b33e4088f71eb18b00ed750.pdf",
+        "group": "四、计算题（可见部分）",
+        "position": 13,
+        "pages": [
+          3,
+          4
+        ],
+        "originalNumbers": [
+          "1"
+        ],
+        "images": [
+          "computer-organization/computer-2024-final/page-003.jpg",
+          "computer-organization/computer-2024-final/page-004.jpg"
+        ]
+      },
+      "status": "ready",
+      "questionType": "fill",
+      "answerProvenance": "generated",
+      "reviewNotes": [
+        "PDF第4页同题号同分值处只有Wou【原图裁切】；完整文字取PDF第3页，未补猜裁切文字。"
+      ],
+      "sourceNotes": [
+        "PDF第4页残片：1、(5分) Wou【原图裁切】",
+        "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "page": 1,
+      "questionIds": [
+        "computer-2024-final-s01-q001",
+        "computer-2024-final-s01-q002",
+        "computer-2024-final-s01-q003",
+        "computer-2024-final-s01-q004"
+      ],
+      "nonQuestionContent": "卷头、个人信息栏、评分栏、空白答题栏、页码、装订线及水印不作为题目。",
+      "notes": "单项选择第1–4题，印刷页A-1。"
+    },
+    {
+      "page": 2,
+      "questionIds": [
+        "computer-2024-final-s01-q005",
+        "computer-2024-final-s01-q006",
+        "computer-2024-final-s01-q007",
+        "computer-2024-final-s01-q008",
+        "computer-2024-final-s01-q009",
+        "computer-2024-final-s01-q010"
+      ],
+      "nonQuestionContent": "卷头、个人信息栏、评分栏、空白答题栏、页码、装订线及水印不作为题目。",
+      "notes": "单项选择第5–10题，印刷页A-2。"
+    },
+    {
+      "page": 3,
+      "questionIds": [
+        "computer-2024-final-s03-q001",
+        "computer-2024-final-s03-q002",
+        "computer-2024-final-s04-q001"
+      ],
+      "nonQuestionContent": "卷头、个人信息栏、评分栏、空白答题栏、页码、装订线及水印不作为题目。",
+      "notes": "简答第3题重复残片、第4题全文、计算第1题全文，印刷页A-8。"
+    },
+    {
+      "page": 4,
+      "questionIds": [
+        "computer-2024-final-s03-q001",
+        "computer-2024-final-s03-q002",
+        "computer-2024-final-s04-q001"
+      ],
+      "nonQuestionContent": "卷头、个人信息栏、评分栏、空白答题栏、页码、装订线及水印不作为题目。",
+      "notes": "简答第3题全文、第4题题头、计算第1题裁切开头，印刷页A-7。与第3页重叠内容归并，保留双页来源。"
+    }
+  ]
+}

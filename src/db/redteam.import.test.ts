@@ -80,9 +80,7 @@ describe('redteam: 恶意备份导入必须 fail-closed', () => {
 
   it('损坏 JSON：拒绝且现有数据不变', async () => {
     await db.questionStats.put(stat)
-    await expect(importData('{broken', { merge: true })).rejects.toThrow(
-      '备份文件不是有效的 JSON',
-    )
+    await expect(importData('{broken', { merge: true })).rejects.toThrow('备份文件不是有效的 JSON')
     expect((await db.questionStats.get('q-1'))?.attemptCount).toBe(10)
   })
 
@@ -113,7 +111,14 @@ describe('redteam: merge 混合集（部分重复部分新增）', () => {
     await db.questionStats.put(stat)
     const imported = [
       { ...stat }, // 重复：应与现有累加
-      { ...stat, questionId: 'q-new', attemptCount: 1, correctCount: 0, wrongCount: 1, masteryLevel: 1 }, // 新增
+      {
+        ...stat,
+        questionId: 'q-new',
+        attemptCount: 1,
+        correctCount: 0,
+        wrongCount: 1,
+        masteryLevel: 1,
+      }, // 新增
     ]
     await importData(JSON.stringify({ version: 2, questionStats: imported }), { merge: true })
     const merged = await db.questionStats.get('q-1')

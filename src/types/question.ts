@@ -1,4 +1,12 @@
-export type Category = 'japanese2' | 'history' | 'party' | 'military'
+export type Category =
+  | 'japanese2'
+  | 'history'
+  | 'party'
+  | 'military'
+  | 'computer-2021-final'
+  | 'computer-2024-final'
+  | 'computer-c-exam'
+  | 'computer-midterms'
 
 export interface SubBankMeta {
   key: string
@@ -24,8 +32,18 @@ export interface Question {
   explanation: string
   grammarPoints: string[]
   tags: string[]
-  source: { file: string; group: string; position: number }
+  source: {
+    file: string
+    group: string
+    position: number
+    pages?: number[]
+    originalNumbers?: string[]
+    images?: string[]
+  }
   status: 'ready' | 'needs_review'
+  answerProvenance?: 'none' | 'printed' | 'handwritten' | 'generated'
+  reviewNotes?: string[]
+  sourceNotes?: string[]
   subType?: 'kana-to-kanji' | 'kanji-to-kana'
   headword?: string
   multiAnswer?: boolean

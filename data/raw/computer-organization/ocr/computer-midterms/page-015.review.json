@@ -1,0 +1,19 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "(6)-(10)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "线\n\n(6) CPU内で演算対象のデータを格納するための記憶領域。\n(A) レジスタ 【手写：圈选】\n(B) メモリ\n(C) プログラムカウンタ\n(D) 命令\n\n(7) 命令の演算対象。\n(A) オペレータ\n(B) 語\n(C) オペランド 【手写：圈选】\n(D) 演算子\n\n(8) 現在実行中の命令のメモリアドレスを指し示す。\n(A) アドレシングモード\n(B) プログラムカウンタ 【手写：圈选】\n(C) セル\n(D) エンディアン\n\n(9) 高級言語のプログラムを機械語に変換する途中で用いられる中間言語。\n(A) C言語\n(B) コンパイラ\n(C) アセンブリ言語 【手写：圈选】\n(D) アセンブラ\n\n(10) UNIXのオブジェクトファイルのうち、機械語のプログラムコードが格納される領域。\n(A) ヘッダ\n(B) テキスト・セグメント 【手写：圈选】\n(C) 静的データ・セグメント\n(D) シンボル・テーブル\n\nScanned with CamScanner",
+  "corrections": [],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 15
+}

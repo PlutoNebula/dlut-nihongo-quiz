@@ -1,0 +1,27 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "一、以下の各問の答えをA～Dから選べ。",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "(1)-(10)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "得点\n\n一、以下の各問の答えをA～Dから選べ。\n\n(1) 8ビットの2進数 01101100 を10進数に直せ。\n(A)60  (B)72  (C)102  (D)108\n【手写】$2^{2}+2^{3}+2^{5}+2^{6}$\n$=4+8+32+64$  【手写】$\textcircled{D}$\n\n(2) 8ビットの2進数 11001111 を16進数に直せ。\n(A)49  (B)DF  (C)CF  (D)EF\n【手写】$\textcircled{C}$  【手写】$1010\\to\\text{A}$ $1101\\to\\text{D}$ $1011\\to\\text{B}$ $1110\\to\\text{E}$ $1100\\to\\text{C}$ $1111\\to\\text{F}$\n\n(3) 10進数34を8ビットの2進数に直せ。\n(A)00110100 (B)00100010 (C)01000010 (D)00110010\n【手写】$\textcircled{B}$\n\n(4) 16進数44を8ビットの2進数に直せ。\n(A)01000100 (B)00101100 (C)10000100 (D)01001100\n【手写】$\textcircled{A}$\n\n(5) 10進数 $-56$ を2の補数による負数表現で8ビットの2進数に直せ。\n(A)11001000 (B)00110111 (C)11000111 (D)00111000\n【手写】$\textcircled{A}$  【手写】\n$\\begin{array}{r|l} 56 & \\\\ \\div 2 & 28\\cdots 0 \\\\ \\div 2 & 14\\cdots 0 \\\\ \\div 2 & 7\\cdots 0 \\\\ \\div 2 & 3\\cdots 1 \\\\ \\div 2 & 1\\cdots 1 \\\\ \\div 2 & 0\\cdots 1 \\end{array}$\n\n(6) 4ビットの符号付き2進数 0001 を8ビットに符号拡張せよ。\n(A)00000001 (B)11111001 (C)00010000 (D)00010001\n【手写】$\textcircled{A}$\n\n(7) 4ビットの符号付き2進数 1010 を8ビットに符号拡張せよ。\n(A)00001010 (B)11111010 (C)10101111 (D)10101010\n【手写】$\textcircled{B}$\n\n(8) 8ビットの2進数 01010010 を左に1ビット論理シフトせよ。\n(A)00101001 (B)10100100 (C)10101001 (D)10100101\n【手写】$\textcircled{B}$\n\n(9) 8ビットの2進数 11010011 を右に2ビット論理シフトせよ。\n(A)11101001 (B)11110100 (C)01101001 (D)00110100\n【手写】$\textcircled{D}$\n\n(10) 8ビットの2進数 11010001 を右に1ビット算術シフトせよ。\n(A)01101000 (B)11101000 (C)10100010 (D)10100011\n【手写】$\textcircled{B}$\n\nScanned with CamScanner\n\n装                       订",
+  "corrections": [
+    {
+      "location": "第(3)題 手書きマーク",
+      "before": "【手写】$\textcircled{A}$",
+      "after": "【手写】$\textcircled{B}$",
+      "evidence": "第(3)題の選択肢(B) 00100010 を赤い円で囲んでいる。10進数34を8ビット2進数に変換すると00100010となるため、正解は(B)である。",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 6
+}

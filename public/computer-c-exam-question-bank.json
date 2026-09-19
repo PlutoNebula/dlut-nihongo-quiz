@@ -1,0 +1,1536 @@
+[
+  {
+    "id": "computer-c-exam-s01-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s01",
+    "groupTitle": "一、MIPS 跳转地址",
+    "numberInGroup": 1,
+    "stem": "以下是C言語のwhileループとif文の一部を変換したアセンブリコードである。ラベルLoopの付いた命令文のメモリアドレスは10進数表記で800であるとする。これについて、以下の空欄(1)，(2)にあてはまる数値を答えよ。(2×3=6点)\n\nアセンブリコード\n\n```assembly\nLoop: add $s1, $s1, $s2\naddi $s0, $s0, -1\nbne $s0, $zero, Loop\nj Exit\nExit:\n```\n\n(bne $s0, $zero, Loop) の命令を2進数に直したとき，Loopが対応する値を10進数で表現したものは(1)である．",
+    "options": [],
+    "answerKey": "",
+    "answerText": "-3",
+    "translation": "以下是将C语言while循环和if语句的一部分转换后的汇编代码。假设标签Loop所附指令的内存地址用十进制表示为800。对此，以下空栏(1)、(2)应填入的数值是多少？（2×3=6分）\n\n汇编代码\n```assembly\nLoop: add $s1, $s1, $s2\naddi $s0, $s0, -1\nbne $s0, $zero, Loop\nj Exit\nExit:\n```\n\n将(bne $s0, $zero, Loop)指令转换为二进制时，Loop对应的值以十进制表示为(1)。",
+    "explanation": "**地址分析**：\n- add指令（Loop标签）位于地址 800（十进制）\n- addi指令位于地址 804\n- **bne指令位于地址 808**\n- j Exit指令位于地址 812\n- Exit标签位于地址 816\n\n**MIPS bne指令格式（I-type）**：\nbne为I型指令，其16位立即数字段（immediate）存储的是**相对于PC+4的字节偏移量**（以字为单位，有符号）。计算公式为：\n目标地址 = (PC + 4) + (sign_extend(immediate) << 2)\n\n**计算偏移量**：\n- PC（bne指令地址）= 808\n- PC + 4 = 812（延迟槽指令地址）\n- 目标地址（Loop）= 800\n- 偏移量（字）= (800 - 812) / 4 = **-3**\n\n因此，该指令二进制表示中对应Loop的16位立即数（以有符号数解释）的十进制值为 **-3**。（注：若将16位二进制1111111111111101视为无符号数，则为65533，但在MIPS分支指令语境下，通常询问的是有符号偏移量值-3。）",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "一、MIPS 跳转地址",
+      "position": 1,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "一(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s01-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s01",
+    "groupTitle": "一、MIPS 跳转地址",
+    "numberInGroup": 2,
+    "stem": "以下是C言語のwhileループとif文の一部を変換したアセンブリコードである。ラベルLoopの付いた命令文のメモリアドレスは10進数表記で800であるとする。これについて、以下の空欄(1)，(2)にあてはまる数値を答えよ。(2×3=6点)\n\nアセンブリコード\n\n```assembly\nLoop: add $s1, $s1, $s2\naddi $s0, $s0, -1\nbne $s0, $zero, Loop\nj Exit\nExit:\n```\n\n(j Exit) の命令を2進数に直したとき，Exitが対応する値を10進数で表現したものは(2)である．",
+    "options": [],
+    "answerKey": "",
+    "answerText": "204",
+    "translation": "以下是将C语言while循环和if语句的一部分转换后的汇编代码。标签Loop的指令内存地址为十进制800。关于此，(1)是bne $s0, $zero, Loop指令转换为二进制时，Loop对应的十进制数值；(2)是j Exit指令转换为二进制时，Exit对应的十进制数值。",
+    "explanation": "MIPS指令编码分析：\n(1) `bne`为I型指令，其16位立即数字段存储分支偏移量（字偏移，即目标地址与下一条指令地址之差除以4）。`bne`指令位于地址808（Loop在800，之后依次为addi 804、bne 808）。下一条指令地址为812。目标Loop地址为800。偏移量 = (800 − 812) / 4 = −3。该值以16位二进制补码形式存入立即数字段，其十进制值为−3。\n(2) `j`为J型指令，其26位目标字段存储目标地址右移2位后的值（字地址）。`j Exit`位于地址812，其后为Exit标签。Exit地址 = 812 + 4 = 816。目标字段值 = 816 >> 2 = 204。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "一、MIPS 跳转地址",
+      "position": 2,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "一(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 1,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n16進数DAを8ビットの2進数に直せ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "11011010",
+    "translation": "请用数值回答以下问题。（3×8=24分）\n\n(1) 将十六进制DA转换为8位二进制数。",
+    "explanation": "十六进制转二进制，每位十六进制数对应4位二进制：\n- D（13）= 1101\n- A（10）= 1010\n- 连接得：**11011010**",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 3,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 2,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n10進数の-77を2の補数による負数表現を用いて8ビットの2進数に変換せよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "10110011",
+    "translation": "请用数值回答以下问题。（3×8=24分）\n\n(2) 将十进制数-77使用2的补码表示转换为8位二进制数。",
+    "explanation": "**步骤1：求77的8位二进制**\n77 = 64 + 8 + 4 + 1 = 01001101\n\n**步骤2：求反码**\n取反得：10110010\n\n**步骤3：加1得补码**\n10110010 + 1 = **10110011**\n\n验证：10110011 = -128 + 32 + 16 + 2 + 1 = -128 + 51 = -77（正确）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 4,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q003",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 3,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n10進数の66−12を8ビット2進数で答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "00110110",
+    "translation": "请用数值回答以下问题。（3×8=24分）\n\n(3) 用8位二进制数表示十进制数66−12。",
+    "explanation": "**步骤1：十进制计算**\n66 - 12 = 54\n\n**步骤2：转换为8位二进制**\n54 = 32 + 16 + 4 + 2 = 2^5 + 2^4 + 2^2 + 2^1\n二进制：**00110110**（确保8位，高位补0）",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 5,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(3)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q004",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 4,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n10進数の111−44を8ビット2進数で答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "01000011",
+    "translation": "请用数值回答以下问题。（3×8=24分）\n\n(4) 用8位二进制数表示十进制数111−44。",
+    "explanation": "**步骤1：十进制计算**\n111 - 44 = 67\n\n**步骤2：转换为8位二进制**\n67 = 64 + 2 + 1 = 2^6 + 2^1 + 2^0\n二进制：**01000011**（确保8位，高位补0）",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 6,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(4)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q005",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 5,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n2進数00000101を左に1ビット論理シフトした値を答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "00001010",
+    "translation": "请用数值回答以下问题。（3×8=24分）\n\n(5) 将二进制数00000101向左逻辑移1位后的值是多少？",
+    "explanation": "逻辑左移1位时，最高位移出丢弃，最低位补0，所以00000101变为00001010，即十进制5乘2得到10。逻辑左移与算术左移的位操作相同；逻辑右移在高位补0，算术右移在高位补符号位。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 7,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(5)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q006",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 6,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n符号あり8ビット2進数10001000を右に2ビット算術シフトした値を答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "11100010",
+    "translation": "将带符号的8位二进制数10001000向右算术移位2位，求其值。",
+    "explanation": "10001000是补码表示的负数（最高位为1），表示十进制值-120。算术右移（arithmetic shift right）会保持符号位不变，将数值位右移，并在高位补符号位（1）。\n\n- 原码：10001000\n- 右移1位（算术）：11000100（最高位补1）\n- 右移2位（算术）：11100010（最高位补1）\n\n验证：-120 ÷ 4 = -30，-30的8位补码为11100010（30=00011110，取反得11100001，加1得11100010），结果一致。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 8,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(6)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q007",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 7,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n10111111 & 00110101 = □の空欄の値を答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "00110101",
+    "translation": "计算 10111111 & 00110101 的值，并回答方框中的数值。",
+    "explanation": "按位与（AND）运算规则：对应位均为1时结果为1，否则为0。\n\n```\n  10111111\n& 00110101\n----------\n  00110101\n```\n逐位计算：\n- 第7位：1&0=0\n- 第6位：0&0=0\n- 第5位：1&1=1\n- 第4位：1&1=1\n- 第3位：1&0=0\n- 第2位：1&1=1\n- 第1位：1&0=0\n- 第0位：1&1=1\n\n结果为 00110101。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 9,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(7)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s02-q008",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s02",
+    "groupTitle": "二、数值表示与位运算",
+    "numberInGroup": 8,
+    "stem": "以下の問の回答を数値を答えよ。(3×8=24点)\n\n10110010 | 11010110 = □の空欄の値を答えよ.",
+    "options": [],
+    "answerKey": "",
+    "answerText": "11110110",
+    "translation": "计算 10110010 | 11010110 的值，并回答方框中的数值。",
+    "explanation": "按位或（OR）：只要对应位中至少一个为1，结果就为1。\n\n```text\n  10110010\n| 11010110\n----------\n  11110110\n```\n\n也可用十六进制复核：0xB2 | 0xD6 = 0xF6，即11110110。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "二、数值表示与位运算",
+      "position": 10,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "二(8)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 1,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (1)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "16",
+    "translation": "以下是用C语言描述的语句及其转换后的汇编代码。选择汇编代码中各空栏所对应的内容并作答。（3×6=18分）... 本题填写空欄 (1)。",
+    "explanation": "C代码 `a[i] = b[4] + c;` 中，`b[4]` 表示数组b的第5个元素（索引4）。数组元素为int型（4字节），b的基地址在寄存器$s1。\n\n因此，`b[4]` 的内存地址为：$s1 + 4 \\times 4 = $s1 + 16$。\n\n第一条指令 `lw $t0, (1)($s1)` 用于加载b[4]的值到$t0，其中(1)为偏移量，应为 **16**。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 11,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 2,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (2)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "add",
+    "translation": "以下是用C语言描述的语句及其转换后的汇编代码。选择汇编代码中各空栏所对应的内容并作答。（3×6=18分）... 本题填写空欄 (2)。",
+    "explanation": "C代码中 `b[4] + c` 需要将b[4]的值（已加载到$t0）与变量c（在寄存器$s3）进行加法运算。\n\n第二条指令 `(2) $t0, $t0, (3)` 是MIPS的三操作数算术指令格式。进行整数加法对应 **add** 指令（addu也可，但教材通常用add）。指令将$t0与$s3相加，结果存回$t0。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 12,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q003",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 3,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (3)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "$s3",
+    "translation": "以下是用C语言描述的语句及其转换后的汇编代码。选择汇编代码中各空栏所对应的内容并作答。（3×6=18分）... 本题填写空欄 (3)。",
+    "explanation": "根据题目条件，整数变量c对应寄存器$s3。第二条指令 `add $t0, $t0, (3)` 需要将b[4]的值（$t0）与c（$s3）相加，因此(3)处应填入 **$s3**。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 13,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(3)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q004",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 4,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (4)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "sll",
+    "translation": "以下是用C语言描述的语句及其转换后的汇编代码。选择汇编代码中各空栏所对应的内容并作答。（3×6=18分）... 本题填写空欄 (4)。",
+    "explanation": "第四条指令 `(4) $t1, $s2, 2` 用于计算数组索引i（在$s2中）对应的字节偏移量。因为int型元素占4字节，需要将索引乘以4。\n\n在MIPS中，逻辑左移（Shift Left Logical）指令 **sll** 可以将寄存器值乘以2的幂次。左移2位（$s2 << 2）相当于乘以4，正好得到字节偏移量。因此(4)为sll。计算后$t1 = i × 4。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 14,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(4)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q005",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 5,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (5)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "$t1",
+    "translation": "根据C语言语句a[i] = b[4] + c及其对应的汇编代码，填写空栏(5)。",
+    "explanation": "分析汇编代码：第4行(4)为sll（逻辑左移）指令，格式为sll $t1, $s2, 2，用于将整数i（在$s2中）乘以4（左移2位），结果存入$t1。第5行add $t1, $s0, (5)用于计算数组a的基址（$s0）加上偏移量（4*i，已在$t1中），得到a[i]的地址。因此(5)处应填入$t1。具体对应：lw加载b[4]（偏移16），add将c（$s3）与b[4]相加，sll计算偏移，add计算地址，sw存储结果。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 15,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(5)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s03-q006",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s03",
+    "groupTitle": "三、数组访问汇编填空",
+    "numberInGroup": 6,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、解答せよ。（3×6=18点）\n\nただし、配列a, bの先頭アドレスはそれぞれレジスタ $s0, $s1 に、整数変数 i, c はそれぞれレジスタ $s2, $s3 に対応しているものとする。また、配列の要素はすべて int 型（各要素4バイト相当）と考える。\n\nソースコード\n```c\na[i] = b[4] + c;\n```\n\nアセンブリコード\n```assembly\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n```\n\n本题填写空欄 (6)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "0",
+    "translation": "以下是用C语言描述的语句及其转换后的汇编代码。请选择汇编代码中各空栏应填入的内容并作答。（3×6=18分）\n\n假设数组a, b的首地址分别对应寄存器$s0, $s1，整数变量i, c分别对应寄存器$s2, $s3。此外，数组元素均为int型（各元素4字节）。\n\n源代码\na[i] = b[4] + c;\n\n汇编代码\nlw     $t0, (1)($s1)\n(2)    $t0, $t0, (3)\n(4)    $t1, $s2, 2\nadd    $t1, $s0, (5)\nsw     $t0, (6)($t1)\n\n本题填写空欄 (6)。",
+    "explanation": "解析：指令`sw $t0, (6)($t1)`表示将$t0的值存储到由$t1基址加上偏移(6)所指定的内存地址。由于前面的`add`指令已将a[i]的完整地址计算并存放在$t1中，此处存储地址无需额外偏移，因此空欄(6)应填入0。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "三、数组访问汇编填空",
+      "position": 16,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "三(6)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s04-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s04",
+    "groupTitle": "四、时钟与CPU性能填空",
+    "numberInGroup": 1,
+    "stem": "以下の各問に答えよ。\n\n・クロックサイクル時間が0.5n（nano, ナノ）秒のときのクロック周波数は(1)Hzである。\n・同じ命令セットアーキテクチャを実現した計算機Aと計算機Bの2種類の計算機があるとする。クロック・サイクル時間は、計算機Aが(2)ps、計算機Bが300psである。また、プログラムXでのCPIは、計算機Aが4、計算機Bが(3)である。プログラムXを実行するとき、1命令の時間は、計算機Aが1200ps、計算機Bが600psである。計算機Aは計算機Bより(4)倍遅い。空欄を回答せよ。（3×4=12点）\n\n本题填写空欄 (1)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "2000000000",
+    "translation": "回答以下各问。\n\n·当时钟周期时间为0.5ns（纳秒）时，时钟频率为(1)Hz。\n·有两种计算机A和B实现了相同的指令集架构。时钟周期时间方面，计算机A为(2)ps，计算机B为300ps。此外，程序X的CPI方面，计算机A为4，计算机B为(3)。执行程序X时，单指令执行时间为：计算机A 1200ps，计算机B 600ps。计算机A比计算机B慢(4)倍。请回答各空栏。（3×4=12分）\n\n本题填写空欄 (1)。",
+    "explanation": "解析：时钟周期时间（クロックサイクル時間）T = 0.5 ns = 0.5 × 10^(-9) 秒。时钟频率（クロック周波数）f = 1/T = 1/(0.5 × 10^(-9)) = 2 × 10^9 Hz。因此答案为2×10^9（或2GHz）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "四、时钟与CPU性能填空",
+      "position": 17,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "四(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "OCR手写记录（未经确认，不作为答案）：【手写：2】(1), 【手写：2】(2), 【手写：1】(3), 【手写：2】(4)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s04-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s04",
+    "groupTitle": "四、时钟与CPU性能填空",
+    "numberInGroup": 2,
+    "stem": "以下の各問に答えよ。\n\n・クロックサイクル時間が0.5n（nano, ナノ）秒のときのクロック周波数は(1)Hzである。\n・同じ命令セットアーキテクチャを実現した計算機Aと計算機Bの2種類の計算機があるとする。クロック・サイクル時間は、計算機Aが(2)ps、計算機Bが300psである。また、プログラムXでのCPIは、計算機Aが4、計算機Bが(3)である。プログラムXを実行するとき、1命令の時間は、計算機Aが1200ps、計算機Bが600psである。計算機Aは計算機Bより(4)倍遅い。空欄を回答せよ。（3×4=12点）\n\n本题填写空欄 (2)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "300",
+    "translation": "回答以下各问。\n\n·当时钟周期时间为0.5ns（纳秒）时，时钟频率为(1)Hz。\n·有两种计算机A和B实现了相同的指令集架构。时钟周期时间方面，计算机A为(2)ps，计算机B为300ps。此外，程序X的CPI方面，计算机A为4，计算机B为(3)。执行程序X时，单指令执行时间为：计算机A 1200ps，计算机B 600ps。计算机A比计算机B慢(4)倍。请回答各空栏。（3×4=12分）\n\n本题填写空欄 (2)。",
+    "explanation": "解析：计算机A的单指令执行时间为1200ps，CPI为4。时钟周期时间 = 单指令时间 / CPI = 1200 / 4 = 300ps。因此空欄(2)填300。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "四、时钟与CPU性能填空",
+      "position": 18,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "四(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "OCR手写记录（未经确认，不作为答案）：【手写：2】(1), 【手写：2】(2), 【手写：1】(3), 【手写：2】(4)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s04-q003",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s04",
+    "groupTitle": "四、时钟与CPU性能填空",
+    "numberInGroup": 3,
+    "stem": "以下の各問に答えよ。\n\n・クロックサイクル時間が0.5n（nano, ナノ）秒のときのクロック周波数は(1)Hzである。\n・同じ命令セットアーキテクチャを実現した計算機Aと計算機Bの2種類の計算機があるとする。クロック・サイクル時間は、計算機Aが(2)ps、計算機Bが300psである。また、プログラムXでのCPIは、計算機Aが4、計算機Bが(3)である。プログラムXを実行するとき、1命令の時間は、計算機Aが1200ps、計算機Bが600psである。計算機Aは計算機Bより(4)倍遅い。空欄を回答せよ。（3×4=12点）\n\n本题填写空欄 (3)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "2",
+    "translation": "回答以下各问。\n\n·当时钟周期时间为0.5ns（纳秒）时，时钟频率为(1)Hz。\n·有两种计算机A和B实现了相同的指令集架构。时钟周期时间方面，计算机A为(2)ps，计算机B为300ps。此外，程序X的CPI方面，计算机A为4，计算机B为(3)。执行程序X时，单指令执行时间为：计算机A 1200ps，计算机B 600ps。计算机A比计算机B慢(4)倍。请回答各空栏。（3×4=12分）\n\n本题填写空欄 (3)。",
+    "explanation": "解析：计算机B的时钟周期时间为300ps，单指令执行时间为600ps。CPI = 单指令时间 / 时钟周期时间 = 600 / 300 = 2。因此空欄(3)填2。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "四、时钟与CPU性能填空",
+      "position": 19,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "四(3)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "OCR手写记录（未经确认，不作为答案）：【手写：2】(1), 【手写：2】(2), 【手写：1】(3), 【手写：2】(4)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s04-q004",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s04",
+    "groupTitle": "四、时钟与CPU性能填空",
+    "numberInGroup": 4,
+    "stem": "以下の各問に答えよ。\n\n・クロックサイクル時間が0.5n（nano, ナノ）秒のときのクロック周波数は(1)Hzである。\n・同じ命令セットアーキテクチャを実現した計算機Aと計算機Bの2種類の計算機があるとする。クロック・サイクル時間は、計算機Aが(2)ps、計算機Bが300psである。また、プログラムXでのCPIは、計算機Aが4、計算機Bが(3)である。プログラムXを実行するとき、1命令の時間は、計算機Aが1200ps、計算機Bが600psである。計算機Aは計算機Bより(4)倍遅い。空欄を回答せよ。（3×4=12点）\n\n本题填写空欄 (4)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "2",
+    "translation": "回答以下各问。\n\n·当时钟周期时间为0.5ns（纳秒）时，时钟频率为(1)Hz。\n·有两种计算机A和B实现了相同的指令集架构。时钟周期时间方面，计算机A为(2)ps，计算机B为300ps。此外，程序X的CPI方面，计算机A为4，计算机B为(3)。执行程序X时，单指令执行时间为：计算机A 1200ps，计算机B 600ps。计算机A比计算机B慢(4)倍。请回答各空栏。（3×4=12分）\n\n本题填写空欄 (4)。",
+    "explanation": "解析：执行相同程序X（指令数相同）时，总执行时间与单指令时间成正比。计算机A的单指令时间为1200ps，计算机B为600ps。因此A是B的1200/600 = 2倍慢。或者使用公式：Time_A/Time_B = (CPI_A × ClockCycle_A) / (CPI_B × ClockCycle_B) = (4×300)/(2×300) = 2。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "四、时钟与CPU性能填空",
+      "position": 20,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "四(4)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "OCR手写记录（未经确认，不作为答案）：【手写：2】(1), 【手写：2】(2), 【手写：1】(3), 【手写：2】(4)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 1,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nWindows等のように、コンピュータの基本的な管理を担当するソフトウェア.",
+    "options": [
+      {
+        "key": "A",
+        "text": "アプリケーション"
+      },
+      {
+        "key": "B",
+        "text": "オペレーティングシステム"
+      },
+      {
+        "key": "C",
+        "text": "ALU"
+      },
+      {
+        "key": "D",
+        "text": "CPU"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "オペレーティングシステム",
+    "translation": "选择最符合各说明的语句，用A～D的符号作答。（2×8=16分）\n\n(1) 如同Windows等，负责计算机基本管理的软件。",
+    "explanation": "解析：如同Windows一样负责计算机基本管理（进程管理、内存管理、文件系统等）的软件是操作系统（オペレーティングシステム，Operating System）。因此选B。A（アプリケーション）是应用程序，C（ALU）是算术逻辑单元，D（CPU）是中央处理器。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 21,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 2,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nCPUがデータを取得するためにメモリ上のアドレスを指定する方法.",
+    "options": [
+      {
+        "key": "A",
+        "text": "アドレシングモード"
+      },
+      {
+        "key": "B",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "C",
+        "text": "セル"
+      },
+      {
+        "key": "D",
+        "text": "エンディアン"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "アドレシングモード",
+    "translation": "CPU为了获取数据而指定内存地址的方法。",
+    "explanation": "**答案：A (アドレシングモード/寻址模式)**\n\n**解析：**\n- **寻址模式（Addressing Mode）** 是指令中用来指定操作数（数据）在内存中地址的方式。CPU通过不同的寻址模式（如直接寻址、间接寻址、寄存器寻址等）来获取数据。\n- **程序计数器（Program Counter, B）** 是指向下一条将要执行指令的地址的寄存器，并非指定数据地址的方法。\n- **セル（Cell, C）** 指的是内存的基本存储单元（存储元），不是地址指定方法。\n- **エンディアン（Endian, D）** 指的是多字节数据在内存中的字节排列顺序（大端/小端），与地址指定方法无关。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 22,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q003",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 3,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nRAM (random access memory) のうち、リフレッシュが不要なもの.",
+    "options": [
+      {
+        "key": "A",
+        "text": "テープ"
+      },
+      {
+        "key": "B",
+        "text": "SRAM"
+      },
+      {
+        "key": "C",
+        "text": "CD-ROM"
+      },
+      {
+        "key": "D",
+        "text": "DRAM"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "SRAM",
+    "translation": "RAM（随机存取存储器）中不需要刷新的类型。",
+    "explanation": "**答案：B (SRAM/静态RAM)**\n\n**解析：**\n- **SRAM（Static RAM）** 使用双稳态触发器（flip-flop）电路存储数据，只要供电就保持数据，因此**不需要刷新（リフレッシュ不要）**。\n- **DRAM（Dynamic RAM, D）** 使用电容存储电荷，电容会漏电，因此需要定期刷新（通常每几毫秒一次）以保持数据。\n- **テープ（Tape, A）** 和 **CD-ROM（C）** 属于外部存储设备（辅助存储器），不属于RAM（主存储器）的范畴。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 23,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(3)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q004",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 4,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nIEEE754における浮動小数点数の2進数表記では、本来の指数部の値にバイアス(もしくはゲタ)を加算する。32ビット形式の場合のバイアスの値を選択せよ.",
+    "options": [
+      {
+        "key": "A",
+        "text": "128"
+      },
+      {
+        "key": "B",
+        "text": "$-127$"
+      },
+      {
+        "key": "C",
+        "text": "127"
+      },
+      {
+        "key": "D",
+        "text": "$-128$"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "127",
+    "translation": "",
+    "explanation": "**正确答案：C (127)**\n\nIEEE 754标准中，单精度浮点数（32位格式）的指数部分占8位，偏置值（Bias）用于将指数域的无符号存储值转换为实际的指数值，计算公式为$Bias=2^{k-1}-1$，其中$k$为指数位的位数。代入$k=8$，可得$Bias=2^{7}-1=128-1=127$。\n- 选项A（128）：并非任何IEEE 754标准格式的偏置值，双精度浮点数（64位，指数11位）的偏置为$2^{10}-1=1023$，与128无关。\n- 选项B（-127）、D（-128）：偏置值为无符号整数，不可能为负数，因此错误。\n实际指数值$E$与存储的指数字段$e$的关系为：当$e \neq 0$且$e \neq 255$时，$E = e - Bias = e - 127$。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 24,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(4)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q005",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 5,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nメモリへのワードの格納において上位バイトから順に格納する方式.",
+    "options": [
+      {
+        "key": "A",
+        "text": "CISC"
+      },
+      {
+        "key": "B",
+        "text": "RISC"
+      },
+      {
+        "key": "C",
+        "text": "ビッグエンディアン"
+      },
+      {
+        "key": "D",
+        "text": "リトルエンディアン"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "ビッグエンディアン",
+    "translation": "在内存中存储字（Word）时，从高位字节开始按顺序存储的方式。",
+    "explanation": "**答案：C (ビッグエンディアン/Big Endian/大端序)**\n\n**解析：**\n- **大端序（Big Endian）** 是指将数据的高位字节（Most Significant Byte）存储在低地址（内存的前面），低位字节存储在高地址。即\"先存高位\"。\n- **小端序（Little Endian, D）** 则相反，将低位字节（Least Significant Byte）存储在低地址，即\"先存低位\"。\n- **CISC（A）** 和 **RISC（B）** 是指令集架构的分类（复杂/精简指令集），与数据存储的字节顺序无关。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 25,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(5)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q006",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 6,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nコンピュータの性能評価のために選定されたプログラム群.",
+    "options": [
+      {
+        "key": "A",
+        "text": "ベンチマーク"
+      },
+      {
+        "key": "B",
+        "text": "OS"
+      },
+      {
+        "key": "C",
+        "text": "ライブラリ"
+      },
+      {
+        "key": "D",
+        "text": "パイプライン"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "ベンチマーク",
+    "translation": "为评价计算机性能而选定的程序群。",
+    "explanation": "**答案：A (ベンチマーク/Benchmark/基准测试)**\n\n**解析：**\n- **基准测试（Benchmark）** 是指为测量和比较计算机系统性能（如CPU速度、内存带宽、磁盘I/O等）而特别设计的一组标准测试程序。\n- **OS（B）** 是操作系统（Operating System），是管理计算机资源的系统软件，不是用于性能评价的程序群。\n- **ライブラリ（Library, C）** 是预编译的代码集合，供程序调用。\n- **パイプライン（Pipeline, D）** 是一种指令执行技术（流水线），用于提高CPU性能，不是程序群。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 26,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(6)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q007",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 7,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\nリンク後のオブジェクトファイルをメモリに読み込み、最初の命令を呼び出すソフトウェア.",
+    "options": [
+      {
+        "key": "A",
+        "text": "インタプリタ"
+      },
+      {
+        "key": "B",
+        "text": "リンカ"
+      },
+      {
+        "key": "C",
+        "text": "コンパイラ"
+      },
+      {
+        "key": "D",
+        "text": "ローダ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "ローダ",
+    "translation": "将链接后的目标文件读入内存，并调用第一条指令的软件。",
+    "explanation": "**答案：D (ローダ/Loader/加载器)**\n\n**解析：**\n- **加载器（Loader）** 是操作系统中的一个组件，负责将可执行文件（链接后的目标文件/ executable file）从磁盘加载到内存中，并跳转到程序的入口点（第一条指令）开始执行。\n- **インタプリタ（Interpreter, A）** 是直接解释执行源代码的软件，不经过编译链接过程，也不涉及\"链接后的目标文件\"加载。\n- **リンカ（Linker, B）** 是链接器，负责将多个目标文件（.o/.obj）和库文件合并成一个可执行文件，发生在加载之前。\n- **コンパイラ（Compiler, C）** 是编译器，负责将高级语言源代码翻译成目标代码（汇编或机器代码），发生在链接之前。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 27,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(7)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s05-q008",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s05",
+    "groupTitle": "五、计算机组成基本概念",
+    "numberInGroup": 8,
+    "stem": "それぞれの説明にもっともあてはまる語句を選択肢から選び、A～Dの記号で答えよ。($2 \\times 8 = 16$ 点)\n\n2進数の最下位ビット.",
+    "options": [
+      {
+        "key": "A",
+        "text": "補数"
+      },
+      {
+        "key": "B",
+        "text": "MSB"
+      },
+      {
+        "key": "C",
+        "text": "USB"
+      },
+      {
+        "key": "D",
+        "text": "LSB"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "LSB",
+    "translation": "二进制数的最低位。",
+    "explanation": "**答案：D (LSB/Least Significant Bit/最低有效位)**\n\n**解析：**\n- **LSB（Least Significant Bit）** 是二进制数中权重最低（通常为$2^0$）的位，也就是最右边的那一位。\n- **MSB（Most Significant Bit, B）** 是最高有效位，即二进制数中最左边（权重最高）的位，与题意\"最下位\"（最低位）相反。\n- **補数（A）**（补码）是一种表示有符号数的方法（Two's Complement）。\n- **USB（C）**（Universal Serial Bus）是通用串行总线，一种外部接口标准，与二进制位的概念无关。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "五、计算机组成基本概念",
+      "position": 28,
+      "pages": [
+        4
+      ],
+      "originalNumbers": [
+        "五(8)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-004.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s06-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s06",
+    "groupTitle": "六、IEEE 754 单精度表示",
+    "numberInGroup": 1,
+    "stem": "以下の各浮動小数点数をIEEE754の規定に従い、指定された精度で表現せよ。なお、単精度では、符号部、指数部、仮数部をそれぞれ1ビット、8ビット、23ビットで表現する。倍精度では、符号部、指数部、仮数部をそれぞれ1ビット、11ビット、52ビットとする。(2×3＝6点)\n\n$-0.140625_{10}$ を単精度で表現せよ。32桁の2進数で表現した値を解答すること。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "10111110000100000000000000000000",
+    "translation": "将十进制数-0.140625按IEEE 754单精度（32位）格式表示为32位二进制数。",
+    "explanation": "步骤1：符号位为1（负数）。步骤2：将0.140625转换为二进制小数：0.140625×2=0.28125→0；0.28125×2=0.5625→0；0.5625×2=1.125→1；0.125×2=0.25→0；0.25×2=0.5→0；0.5×2=1.0→1。因此0.140625₁₀=0.001001₂。步骤3：规格化表示：-0.001001₂ = -1.001₂ × 2⁻³。步骤4：计算偏置指数：-3+127=124=01111100₂。步骤5：尾数取规格化后的小数部分001，后补20个0：00100000000000000000000。步骤6：拼接符号位1、指数01111100、尾数001...，得到32位二进制10111110000100000000000000000000。验证：-(1+0.125)×2⁻³=-1.125×0.125=-0.140625，正确。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "六、IEEE 754 单精度表示",
+      "position": 29,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "六(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s06-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s06",
+    "groupTitle": "六、IEEE 754 单精度表示",
+    "numberInGroup": 2,
+    "stem": "以下の各浮動小数点数をIEEE754の規定に従い、指定された精度で表現せよ。なお、単精度では、符号部、指数部、仮数部をそれぞれ1ビット、8ビット、23ビットで表現する。倍精度では、符号部、指数部、仮数部をそれぞれ1ビット、11ビット、52ビットとする。(2×3＝6点)\n\n$1.75_{10}$ を単精度で表現せよ。32桁の2進数で表現した値を解答すること。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "00111111111000000000000000000000",
+    "translation": "将十进制数1.75按IEEE 754单精度（32位）格式表示为32位二进制数。",
+    "explanation": "步骤1：符号位为0（正数）。步骤2：将1.75转换为二进制：整数部分1为1₂，小数部分0.75×2=1.5→1，0.5×2=1.0→1，故1.75₁₀=1.11₂。步骤3：规格化表示：1.11₂ = 1.11₂ × 2⁰。步骤4：计算偏置指数：0+127=127=01111111₂。步骤5：尾数取规格化后的小数部分11，后补21个0：11000000000000000000000。步骤6：拼接符号位0、指数01111111、尾数110...，得到32位二进制00111111111000000000000000000000。验证：(1+0.75)×2⁰=1.75，正确。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "六、IEEE 754 单精度表示",
+      "position": 30,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "六(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [],
+    "sourceNotes": [
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q001",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 1,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (1)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "0110",
+    "translation": "被乘数（4bit）的初始值",
+    "explanation": "被乘数为6。6的4位二进制表示为0110。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 31,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(1)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q002",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 2,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (2)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "00001011",
+    "translation": "积·乘数（8bit）的初始值（积=0000，乘数=1011）",
+    "explanation": "初始时积（高4位）为0，乘数（低4位）为11（二进制1011）。因此8位共用寄存器为0000 1011，即00001011。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 32,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(2)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q003",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 3,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (3)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "01101011",
+    "translation": "第1回：被乘数加算后的积·乘数（8bit）",
+    "explanation": "第1回乘数LSB=1（被乘数加算）。积高4位=0000+0110=0110，乘数低4位保持1011，故组合为0110 1011（即01101011）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 33,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(3)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q004",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 4,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (4)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "10000101",
+    "translation": "第4回：被乘数加算后的积·乘数（8bit，右移前）",
+    "explanation": "前一步（第3回右移后）积·乘数为0010 0101（P=0010, Q=0101）。第4回LSB=1，执行被乘数加算：P=0010+0110=1000，Q保持0101。故组合为1000 0101（即10000101）。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 34,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(4)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q005",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 5,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (5)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "1",
+    "translation": "第1回（及第2、4回）的乘数LSB值",
+    "explanation": "乘数11（1011₂）从LSB（最低位）开始逐位检查：第1位(bit0)=1，第2位(bit1)=1，第3位(bit2)=0，第4位(bit3)=1。表中第1、2、4回均对应LSB=1的情况（执行被乘数加算），第3回对应LSB=0（无操作）。因此(5)处为1。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 35,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(5)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。",
+      "空欄(5)仅在答题栏明确出现，计算表正文位置无法可靠定位，保留待核对残题。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  },
+  {
+    "id": "computer-c-exam-s07-q006",
+    "category": "computer-c-exam",
+    "groupId": "computer-c-exam-s07",
+    "groupTitle": "七、乘法器计算过程",
+    "numberInGroup": 6,
+    "stem": "七、下図は本講義で解説した乗算回路（第3版）である。この乗算器を使って計算6×11を行った過程について、各空欄に当てはまる値を2進数で答えよ。ここではレジスタ長32、64bitをそれぞれ4、8bitに読み替える。\n\n被乗数は4ビットの固定レジスタに保持する。積と乗数は8ビットの共用レジスタに保持し、上位4ビットに被乗数を加算した後、全体を論理右シフトする。\n\n| 操作 | 被乗数（4bit） | 積・乗数（8bit） |\n|---|---|---|\n| 初期状態 | (1) | (2) |\n| 第1回：乗数LSB=(5) → 被乗数加算 | | (3) |\n| 右シフト | | |\n| 第2回：乗数LSB=(5) → 被乗数加算 | | |\n| 右シフト | | |\n| 第3回：乗数LSB=(6) → 何もしない | | |\n| 右シフト | | |\n| 第4回：乗数LSB=(5) → 被乗数加算 | | (4) |\n| 右シフト | | |\n\n整理勘误：原卷第三轮写“被乗数加算”、第四轮写“何もしない”，与乘数11（1011₂）的逐位运算矛盾；上表按标准算法更正这两处操作，空号及所在位置保持原卷。\n\n本题填写空欄 (6)。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "0",
+    "translation": "第3回的乘数LSB值",
+    "explanation": "如上述，第3回对应乘数的第3位(bit2)，其值为0，故执行'何もしない'（无操作）。(6)处为0。",
+    "grammarPoints": [],
+    "tags": [
+      "计算机组成"
+    ],
+    "source": {
+      "file": "b9ad7aba87d84a34a60c56c5b66fc89d.pdf",
+      "group": "七、乘法器计算过程",
+      "position": 36,
+      "pages": [
+        5
+      ],
+      "originalNumbers": [
+        "七(6)"
+      ],
+      "images": [
+        "computer-organization/computer-c-exam/page-005.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "reviewNotes": [
+      "图示仅保留StepFun转录描述与原图链接，未自行读图。",
+      "LSB=(?)处数字或空号在二次OCR中未判定，按转录保留，不依据计算推导回填。",
+      "空欄(6)仅在答题栏明确出现，计算表正文位置无法可靠定位，保留待核对残题。"
+    ],
+    "sourceNotes": [
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ]
+  }
+]

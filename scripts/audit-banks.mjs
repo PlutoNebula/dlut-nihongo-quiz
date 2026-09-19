@@ -17,6 +17,10 @@ const BANKS = [
   'history-question-bank.json',
   'party-question-bank.json',
   'military-question-bank.json',
+  'computer-2021-final-question-bank.json',
+  'computer-2024-final-question-bank.json',
+  'computer-c-exam-question-bank.json',
+  'computer-midterms-question-bank.json',
 ]
 
 const REQUIRED_FIELDS = ['id', 'groupId', 'stem', 'options', 'answerKey', 'explanation']

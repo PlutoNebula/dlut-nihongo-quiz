@@ -1,0 +1,62 @@
+{
+  "printed_page_labels": [
+    "375.3"
+  ],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "16-24"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "ティビティ ドキュメントビューアー\n1 /2\n10月27日 (水) 15:37\n中国語聴解答.pdf\n375.3\n\n(A)DROPS (B)MIPS (C)FLOPS【手写】 (D)BLOBS\n\n(17)ソースコードをアセンブリ言語に変換する処理。\n(A)コンパイル【手写】 (B)アセンブル (C)リンク (D)リント\n\n(18)MIPSコンピューターシステムズ社が開発した命令セット。\n(A)MILS (B)MIPS【手写】 (C)CISC (D)RISC\n\n(19)命令の演算対象。\n(A)オペレータ (B)オペランド【手写】 (C)アセンブリ (D)リンク\n\n(20)CPU内で演算対象のデータを格納するための記憶領域。\n(A)ハードディスク (B)メモリ (C)キャッシュ (D)レジスタ【手写】\n\n(21)メモリへのワードの格納において上位バイトから順に格納する方式。\n(A)ビッグエンディアン【手写】 (B)リトルエンディアン\n(C)ノイマン型 (D)整列化方式\n\n(22)現在実行中の命令のメモリアドレスを示すレジスタ。\n(A)プログラムカウンタ【手写】 (B)グローバルポインタ\n(C)スタックポインタ (D)フレームポインタ\n\n| 得点 |   |\n|:---:|:---:|\n\n三、以下の各文は正しいか。正しければA、誤りであればBで答えよ。\n\n(23)揮発性メモリは電源を切ってもデータが消えない。\n\n(24)シーケンシャルアクセスメモリは先頭から順番にデータを読み書きする。",
+  "corrections": [
+    {
+      "location": "第16题选项(C)",
+      "before": "(C)FLOPS",
+      "after": "(C)FLOPS【手写】",
+      "evidence": "第二张图显示选项C有手写圈选标记",
+      "confidence": "high"
+    },
+    {
+      "location": "第22题与第23题之间",
+      "before": "(22)現在実行中の命令のメモリアドレスを示すレジスタ。\n(23)揮発性メモリ...",
+      "after": "(22)現在実行中の命令のメモリアドレスを示すレジスタ。\n| 得点 |   |\n|:---:|:---:|\n(23)揮発性メモリ...",
+      "evidence": "第一张图左下角可见'得点'表格及空白单元格",
+      "confidence": "high"
+    },
+    {
+      "location": "第20题题干",
+      "before": "CPU 内",
+      "after": "CPU内",
+      "evidence": "第一张图及第二张图显示'CPU内'无空格",
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "location": "页面顶部",
+      "kind": "source_crop",
+      "detail": "第16题题号(16)不可见，可能在画面上方裁切区域",
+      "next_action": "需核查原PDF第16题题号是否印刷在页面上方"
+    },
+    {
+      "location": "页面右上角",
+      "kind": "other",
+      "detail": "印刷标记'375.3'的含义不确定，可能是页码或其他标记",
+      "next_action": "需确认375.3是否为印刷页码"
+    },
+    {
+      "location": "试卷整体",
+      "kind": "other",
+      "detail": "试卷年份不可见",
+      "next_action": "需查看其他页面或封面确认试卷年份"
+    }
+  ],
+  "status": "needs_review",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 8
+}

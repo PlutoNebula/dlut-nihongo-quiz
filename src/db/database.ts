@@ -295,8 +295,11 @@ export async function importData(json: string, options: { merge?: boolean } = {}
       typeof it.questionId === 'string' &&
       allNumber(it, ['attemptCount', 'correctCount', 'wrongCount', 'masteryLevel']),
     tagStats: (it) =>
-      isRecord(it) && typeof it.tag === 'string' && allNumber(it, ['attemptCount', 'correctCount', 'wrongCount']),
-    sessions: (it) => isRecord(it) && typeof it.mode === 'string' && typeof it.startedAt === 'string',
+      isRecord(it) &&
+      typeof it.tag === 'string' &&
+      allNumber(it, ['attemptCount', 'correctCount', 'wrongCount']),
+    sessions: (it) =>
+      isRecord(it) && typeof it.mode === 'string' && typeof it.startedAt === 'string',
     settings: (it) => isRecord(it) && typeof it.key === 'string' && typeof it.value === 'string',
   }
   for (const k of tableKeys) {

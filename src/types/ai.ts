@@ -109,6 +109,10 @@ export const AI_SYSTEM_PROMPTS = {
       party: '党史',
       military: '军事理论',
       notes: '学习笔记',
+      'computer-2021-final': '计算机组成',
+      'computer-2024-final': '计算机组成',
+      'computer-c-exam': '计算机组成',
+      'computer-midterms': '计算机组成',
     }
     return `你是一个${categoryNames[category] || category}学科的辅导助手。
 用户正在做${categoryNames[category] || category}的练习题，请结合学科特点提供专业的解析。`

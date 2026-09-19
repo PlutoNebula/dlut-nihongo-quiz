@@ -1,0 +1,6320 @@
+[
+  {
+    "id": "computer-midterms-s01-q002",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 2,
+    "stem": "計算機を構成する回路等のように、物理的な実体を持つもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ソフトウェア"
+      },
+      {
+        "key": "B",
+        "text": "ハードウェア"
+      },
+      {
+        "key": "C",
+        "text": "プログラム"
+      },
+      {
+        "key": "D",
+        "text": "ソースコード"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "ハードウェア",
+    "translation": "如同构成计算机的电路等，具有物理实体的东西。",
+    "explanation": "硬件（Hardware）是指计算机系统中具有物理实体的组成部分，包括电路、芯片、输入输出设备等有形部分，与软件（Software）相对。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 2,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "2"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機を構成する回路等のように、物理的な実体を持つもの。\n(A) ソフトウェア\n(B) ハードウェア【手写◎】\n(C) プログラム\n(D) ソースコード",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q003",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 3,
+    "stem": "計算機を構成する装置のうち、演算や制御を行うもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "HDD"
+      },
+      {
+        "key": "B",
+        "text": "マウス"
+      },
+      {
+        "key": "C",
+        "text": "CPU"
+      },
+      {
+        "key": "D",
+        "text": "メモリ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "CPU",
+    "translation": "在构成计算机的装置中，进行运算和控制操作的装置。",
+    "explanation": "CPU（Central Processing Unit，中央处理器）是计算机的核心部件，负责执行算术运算、逻辑运算以及控制计算机各部件协调工作。HDD是存储设备，鼠标是输入设备，内存是存储设备，均不负责运算与控制。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 3,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "3"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機を構成する装置のうち、演算や制御を行うもの。\n(A) HDD\n(B) マウス\n(C) CPU【手写◎】\n(D) メモリ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q004",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 4,
+    "stem": "記憶装置の一種。メモリより高速にアクセス可能で、一時的なデータの保管場所として使用される。",
+    "options": [
+      {
+        "key": "A",
+        "text": "HDD"
+      },
+      {
+        "key": "B",
+        "text": "SSD"
+      },
+      {
+        "key": "C",
+        "text": "CD-ROM"
+      },
+      {
+        "key": "D",
+        "text": "キャッシュ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "キャッシュ",
+    "translation": "存储装置的一种。比内存访问速度更快，用作临时数据保管场所。",
+    "explanation": "高速缓存（Cache）是一种位于CPU和主存之间的高速静态存储器（SRAM），其访问速度远高于主内存（RAM），用于临时存储CPU频繁访问的数据和指令，以减少访问主存的延迟。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 4,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "4"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n記憶装置の一種。メモリより高速にアクセス可能で、一時的なデータの保管場所として使用される。\n(A) HDD\n(B) SSD\n(C) CD-ROM\n(D) キャッシュ【手写◎】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q005",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 5,
+    "stem": "基本的な論理演算に対応する電子回路。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ダイオード"
+      },
+      {
+        "key": "B",
+        "text": "トランジスタ"
+      },
+      {
+        "key": "C",
+        "text": "論理ゲート"
+      },
+      {
+        "key": "D",
+        "text": "レジスタ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "論理ゲート",
+    "translation": "对应基本逻辑运算的电子电路。",
+    "explanation": "逻辑门（Logic Gate）是实现基本逻辑运算（如与AND、或OR、非NOT、异或XOR等）的电子电路，是数字逻辑电路的基本构建单元。二极管和晶体管是构成逻辑门的物理元件，寄存器是由逻辑门构成的存储单元。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 5,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "5"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n基本的な論理演算に対応する電子回路。\n(A) ダイオード\n(B) トランジスタ\n(C) 論理ゲート【手写◎】\n(D) レジスタ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q006",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 6,
+    "stem": "CPU内で演算対象のデータを格納するための記憶領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "レジスタ"
+      },
+      {
+        "key": "B",
+        "text": "メモリ"
+      },
+      {
+        "key": "C",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "D",
+        "text": "命令"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "レジスタ",
+    "translation": "CPU内部用于存储运算对象数据的存储区域。",
+    "explanation": "寄存器（Register）是CPU内部的高速存储单元，直接与ALU（算术逻辑单元）相连，用于暂存正在被运算的数据、指令或地址。其访问速度远高于主存（メモリ）。程序计数器（PC）是一种专用寄存器，但泛指运算数据存储区域时应选通用寄存器。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 6,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "6"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nCPU内で演算対象のデータを格納するための記憶領域。\n(A) レジスタ【手写◎】\n(B) メモリ\n(C) プログラムカウンタ\n(D) 命令",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q007",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 7,
+    "stem": "命令の演算対象。",
+    "options": [
+      {
+        "key": "A",
+        "text": "オペレータ"
+      },
+      {
+        "key": "B",
+        "text": "語"
+      },
+      {
+        "key": "C",
+        "text": "オペランド"
+      },
+      {
+        "key": "D",
+        "text": "演算子"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "オペランド",
+    "translation": "命令的运算对象。",
+    "explanation": "操作数（Operand）是指令中参与运算的数据或操作对象。例如在加法指令中，被加数和加数即为操作数。与之相对的是运算符/算符（Operator/演算子），用于指定操作类型。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 7,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "7"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n命令の演算対象。\n(A) オペレータ\n(B) 語\n(C) オペランド【手写◎】\n(D) 演算子",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q008",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 8,
+    "stem": "現在実行中の命令のメモリアドレスを指し示す。",
+    "options": [
+      {
+        "key": "A",
+        "text": "アドレシングモード"
+      },
+      {
+        "key": "B",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "C",
+        "text": "セル"
+      },
+      {
+        "key": "D",
+        "text": "エンディアン"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "プログラムカウンタ",
+    "translation": "指向当前正在执行的指令的内存地址。",
+    "explanation": "程序计数器（Program Counter, PC）是CPU中的一个专用寄存器，用于存储下一条即将被取指并执行的指令的内存地址。在顺序执行时，PC自动递增指向下一条指令；遇到跳转指令时则更新为跳转目标地址。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 8,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "8"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n現在実行中の命令のメモリアドレスを指し示す。\n(A) アドレシングモード\n(B) プログラムカウンタ【手写◎】\n(C) セル\n(D) エンディアン",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q009",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 9,
+    "stem": "高級言語のプログラムを機械語に変換する途中で用いられる中間言語。",
+    "options": [
+      {
+        "key": "A",
+        "text": "C言語"
+      },
+      {
+        "key": "B",
+        "text": "アセンブリ言語"
+      },
+      {
+        "key": "C",
+        "text": "アセンブラ"
+      },
+      {
+        "key": "D",
+        "text": "アセンブル"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "アセンブリ言語",
+    "translation": "高级语言程序转换为机器语言过程中使用的一种中间语言。",
+    "explanation": "汇编语言(Assembly Language)是介于高级语言与机器语言之间的符号化表示形式，作为中间表示由汇编器转换为机器码。选项C（汇编器）是转换工具，D（汇编）是转换过程，A（C语言）是源语言而非中间语言。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 9,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "9"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n高級言語のプログラムを機械語に変換する途中で用いられる中間言語。\n(A) C言語\n(B) アセンブリ言語\n(C) アセンブラ【手写◎】\n(D) アセンブル",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "与卷段三同号题文字或选项不同，未将相似题合并，也未采用另一卷段替换。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q010",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 10,
+    "stem": "UNIXのオブジェクトファイルのうち、機械語のプログラムコードが格納される領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ヘッダ"
+      },
+      {
+        "key": "B",
+        "text": "テキスト・セグメント"
+      },
+      {
+        "key": "C",
+        "text": "静的データ・セグメント"
+      },
+      {
+        "key": "D",
+        "text": "シンボル・テーブル"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "テキスト・セグメント",
+    "translation": "在UNIX目标文件中，存储机器语言程序代码的区域。",
+    "explanation": "在UNIX目标文件（如a.out格式）中，文本段（Text Segment，也称代码段）专门用于存储可执行的机器代码指令。头部（Header）存储文件元数据，静态数据段存储初始化数据，符号表用于调试。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 10,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "10"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nUNIXのオブジェクトファイルのうち、機械語のプログラムコードが格納される領域。\n(A) ヘッダ\n(B) テキスト・セグメント【手写B】\n(C) 静的データ・セグメント\n(D) シンボル・テーブル",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q011",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 11,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n一般に、CPUのクロック周波数が低い方が短い時間に多くの命令を実行できる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "一般来说，CPU的时钟频率越低，越能在短时间内执行更多的指令。",
+    "explanation": "CPU时钟频率（Clock Frequency）表示每秒时钟周期数。频率越高，时钟周期越短，在CPI（每指令周期数）不变时，单位时间内执行的指令数（吞吐量）越多。因此，时钟频率低时单位时间执行的指令数更少，题干表述错误。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 11,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "11"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n一般に、CPUのクロック周波数が低い方が短い時間に多くの命令を実行できる。 B【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q012",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 12,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n計算機の電源を切ると、揮発性メモリに保存されたデータは消失する。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "计算机关闭电源时，保存在易失性内存中的数据会丢失。",
+    "explanation": "易失性内存（Volatile Memory，如RAM）需要持续供电来维持存储的数据（依靠电荷或触发器状态）。断电后，数据无法保持而消失。非易失性存储（如ROM、Flash）断电后数据不丢失。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 12,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "12"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機の電源を切ると、揮発性メモリに保存されたデータは消失する。 A【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q013",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 13,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nRAM(random access memory)のうち、SRAMはデータ保持のためにリフレッシュが必要である。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "在RAM中，SRAM为了保持数据需要刷新。",
+    "explanation": "SRAM（静态RAM）使用双稳态触发器（Flip-flop）存储数据，只要电源持续供电，数据就能保持稳定，无需刷新。DRAM（动态RAM）使用电容存储电荷，需要定期刷新以防止漏电导致数据丢失。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 13,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "13"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nRAM(random access memory)のうち、SRAMはデータ保持のためにリフレッシュが必要である。 B【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q014",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 14,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nビッグエンディアンは、命令を上位バイトから順にメモリに格納する方式である。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "大端序是将指令按照从高位字节到低位字节的顺序存储到内存中的方式。",
+    "explanation": "大端序（Big-endian）规定将多字节数据的最高有效字节（MSB，上位バイト）存储在最低的内存地址（即存储顺序从高位字节到低位字节）。该描述与大端序定义一致。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 14,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "14"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nビッグエンディアンは、命令を上位バイトから順にメモリに格納する方式である。 A【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q015",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 15,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n擬似命令moveは、add命令を使って置き換えることができる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "伪指令move可以用add指令替换。",
+    "explanation": "在MIPS体系结构中，move是一个伪指令（Pseudo-instruction），用于寄存器间数据传送。它被汇编器展开为一条add指令（add $dest, $src, $zero），即将源寄存器加上常数0（$zero寄存器）存入目标寄存器，因此可以用add指令替换。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 15,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "15"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n擬似命令moveは、add命令を使って置き換えることができる。 A【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q016",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 16,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1バイト＝［空欄］ビット",
+    "options": [
+      {
+        "key": "A",
+        "text": "2"
+      },
+      {
+        "key": "B",
+        "text": "5"
+      },
+      {
+        "key": "C",
+        "text": "8"
+      },
+      {
+        "key": "D",
+        "text": "10"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "8",
+    "translation": "1字节等于[ ]比特。",
+    "explanation": "在计算机科学中，1字节（byte）固定等于8比特（bit），这是计算机存储与数据表示的基本单位定义。选项A（2）、B（5）、D（10）均不符合该标准。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 16,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "16"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 1バイト＝【C】ビット\n| (A) 2 (B) 5 (C) 8【手写】 (D) 10",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q017",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 17,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1000キロバイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メガ"
+      },
+      {
+        "key": "B",
+        "text": "テラ"
+      },
+      {
+        "key": "C",
+        "text": "ミリ"
+      },
+      {
+        "key": "D",
+        "text": "ギガ"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "メガ",
+    "translation": "1000千字节等于1[ ]字节。",
+    "explanation": "根据国际单位制（SI）十进制前缀，1000千字节（kilobyte, kB）等于1兆字节（megabyte, MB），日语中称为「メガバイト」。选项B（テラ）、D（ギガ）是更高数量级的单位，选项C（ミリ）是毫（千分之一），均不符合。注意：若使用二进制前缀（IEC标准），1024 KiB = 1 MiB（メビ），但本题明确为1000。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 17,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "17"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 1000キロバイト＝1【A】メガバイト\n| (A) メガ【手写】 (B) テラ (C) ミリ (D) ギガ",
+      "首轮OCR的填写块证据（非标准答案）：\n(16) | 1バイト＝ **[C] 8** ビット |\n| | (A) 2 (B) 5 **(C) 8**【手写】 (D) 10 |\n| (17) | 1000キロバイト＝ **[A] メガ** バイト |\n| | (A) メガ【手写】 (B) テラ (C) ミリ (D) ギガ |\n| (18) | 1000テラバイト＝ **[C] ペタ** バイト |\n| | (A) メガ (B) エクサ **(C) ペタ**【手写】 (D) ギガ |\n| (19) | 1024バイト＝ **[B] キビ** バイト |\n| | (A) メビ **(B) キビ**【手写】 (C) ギビ (D) ミリ |\n| (20) | 1ミリ秒＝ **[D] マイクロ** |\n| | (A) キロ (B) ピコ (C) ナノ **(D) マイクロ**【手写】 |\n\n---",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "首轮把单位前缀明确放在填写块中（如「[A] メガ」），二轮混入题干；据首轮文字移除填写前缀，保留二轮系数，原始差异待核验。未根据知识解答。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q018",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 18,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1000テラバイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メガ"
+      },
+      {
+        "key": "B",
+        "text": "エクサ"
+      },
+      {
+        "key": "C",
+        "text": "ペタ"
+      },
+      {
+        "key": "D",
+        "text": "ギガ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "ペタ",
+    "translation": "1000太字节等于1[ ]字节。",
+    "explanation": "国际单位制中，1000太字节（terabyte, TB）等于1拍字节（petabyte, PB），日语中称为「ペタバイト」（peta，10^15）。选项A（メガ）、D（ギガ）单位过小，选项B（エクサ，exa，10^18）过大。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 18,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "18"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 1000テラバイト＝1【C】ペタバイト\n| (A) メガ (B) エクサ (C) ペタ【手写】 (D) ギガ",
+      "首轮OCR的填写块证据（非标准答案）：\n(16) | 1バイト＝ **[C] 8** ビット |\n| | (A) 2 (B) 5 **(C) 8**【手写】 (D) 10 |\n| (17) | 1000キロバイト＝ **[A] メガ** バイト |\n| | (A) メガ【手写】 (B) テラ (C) ミリ (D) ギガ |\n| (18) | 1000テラバイト＝ **[C] ペタ** バイト |\n| | (A) メガ (B) エクサ **(C) ペタ**【手写】 (D) ギガ |\n| (19) | 1024バイト＝ **[B] キビ** バイト |\n| | (A) メビ **(B) キビ**【手写】 (C) ギビ (D) ミリ |\n| (20) | 1ミリ秒＝ **[D] マイクロ** |\n| | (A) キロ (B) ピコ (C) ナノ **(D) マイクロ**【手写】 |\n\n---",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "首轮把单位前缀明确放在填写块中（如「[A] メガ」），二轮混入题干；据首轮文字移除填写前缀，保留二轮系数，原始差异待核验。未根据知识解答。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q019",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 19,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1024バイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メビ"
+      },
+      {
+        "key": "B",
+        "text": "キビ"
+      },
+      {
+        "key": "C",
+        "text": "ギビ"
+      },
+      {
+        "key": "D",
+        "text": "ミリ"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "キビ",
+    "translation": "1024字节等于1[ ]字节。",
+    "explanation": "根据IEC二进制前缀标准（JEDEC等也在计算机领域常用），1024字节（bytes）等于1 kibibyte（KiB），日语中称为「キビバイト」（kibi，2^10）。选项A（メビ，mebi）对应2^20=1,048,576，选项C（ギビ，gibi）对应2^30，选项D（ミリ）为毫（10^-3），均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 19,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "19"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 1024バイト＝1【B】キビバイト\n| (A) メビ (B) キビ【手写】 (C) ギビ (D) ミリ",
+      "首轮OCR的填写块证据（非标准答案）：\n(16) | 1バイト＝ **[C] 8** ビット |\n| | (A) 2 (B) 5 **(C) 8**【手写】 (D) 10 |\n| (17) | 1000キロバイト＝ **[A] メガ** バイト |\n| | (A) メガ【手写】 (B) テラ (C) ミリ (D) ギガ |\n| (18) | 1000テラバイト＝ **[C] ペタ** バイト |\n| | (A) メガ (B) エクサ **(C) ペタ**【手写】 (D) ギガ |\n| (19) | 1024バイト＝ **[B] キビ** バイト |\n| | (A) メビ **(B) キビ**【手写】 (C) ギビ (D) ミリ |\n| (20) | 1ミリ秒＝ **[D] マイクロ** |\n| | (A) キロ (B) ピコ (C) ナノ **(D) マイクロ**【手写】 |\n\n---",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "首轮把单位前缀明确放在填写块中（如「[A] メガ」），二轮混入题干；据首轮文字移除填写前缀，保留二轮系数，原始差异待核验。未根据知识解答。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q020",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 20,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1ミリ秒＝1000［空欄］秒",
+    "options": [
+      {
+        "key": "A",
+        "text": "キロ"
+      },
+      {
+        "key": "B",
+        "text": "ピコ"
+      },
+      {
+        "key": "C",
+        "text": "ナノ"
+      },
+      {
+        "key": "D",
+        "text": "マイクロ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "マイクロ",
+    "translation": "1毫秒等于1000[ ]秒。",
+    "explanation": "时间单位换算中，1毫秒（millisecond, ms）等于1000微秒（microsecond, μs），日语中称为「マイクロ秒」（micro）。选项A（キロ，kilo）为千倍，选项B（ピコ，pico）为10^-12，选项C（ナノ，nano）为10^-9，均不符合。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 20,
+      "pages": [
+        1
+      ],
+      "originalNumbers": [
+        "20"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-001.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 1ミリ秒＝1000【D】マイクロ秒\n| (A) キロ (B) ピコ (C) ナノ (D) マイクロ【手写】",
+      "首轮OCR的填写块证据（非标准答案）：\n(16) | 1バイト＝ **[C] 8** ビット |\n| | (A) 2 (B) 5 **(C) 8**【手写】 (D) 10 |\n| (17) | 1000キロバイト＝ **[A] メガ** バイト |\n| | (A) メガ【手写】 (B) テラ (C) ミリ (D) ギガ |\n| (18) | 1000テラバイト＝ **[C] ペタ** バイト |\n| | (A) メガ (B) エクサ **(C) ペタ**【手写】 (D) ギガ |\n| (19) | 1024バイト＝ **[B] キビ** バイト |\n| | (A) メビ **(B) キビ**【手写】 (C) ギビ (D) ミリ |\n| (20) | 1ミリ秒＝ **[D] マイクロ** |\n| | (A) キロ (B) ピコ (C) ナノ **(D) マイクロ**【手写】 |\n\n---",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "首轮把单位前缀明确放在填写块中（如「[A] メガ」），二轮混入题干；据首轮文字移除填写前缀，保留二轮系数，原始差异待核验。未根据知识解答。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q021",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 21,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(21)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "add"
+      },
+      {
+        "key": "B",
+        "text": "sub"
+      },
+      {
+        "key": "C",
+        "text": "sll"
+      },
+      {
+        "key": "D",
+        "text": "lw"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "sll",
+    "translation": "请选择填入空栏(21)的指令。",
+    "explanation": "C语言语句`f = g + h[i];`中，h是int型数组（各元素4字节），i为索引。计算h[i]的地址需要将索引i乘以4（字节偏移）。指令`sll $t0, $s3, 2`（Shift Left Logical）将寄存器$s3（i）左移2位，实现乘以4的操作，结果存入$t0。后续add指令将数组基址$s2（h）与该偏移相加，得到有效地址。因此(21)应为sll。选项A（add）、B（sub）、D（lw）均不能实现乘以4的索引计算。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 21,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "21"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q022",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 22,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(22)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "$s2"
+      },
+      {
+        "key": "B",
+        "text": "$s3"
+      },
+      {
+        "key": "C",
+        "text": "0"
+      },
+      {
+        "key": "D",
+        "text": "2"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "0",
+    "translation": "以下是用C语言描述的语句f = g + h[i]及其转换后的汇编代码。请选择填入汇编代码中空栏(22)的选项。假设变量f、g、h、i分别对应寄存器$s0、$s1、$s2、$s3，数组h为int型（4字节/元素）。",
+    "explanation": "**推导过程：**\n1. **数组寻址计算**：C语句访问`h[i]`，其中数组基址在$s2，索引i在$s3。int型占4字节，需计算`i × 4`。汇编第(21)行使用`sll $t0, $s3, 2`（逻辑左移2位）实现乘法，结果存入$t0。\n2. **求元素地址**：第2行`add $t0, $t0, $s2`将偏移量与基地址相加，此时$t0已包含`&h[i]`（h[i]的内存地址）。\n3. **加载数组值**：第3行`lw $t1, offset($t0)`从内存加载字到$t1。由于$t0已直接指向目标地址，偏移量(22)必须为**0**（立即数）。\n4. **运算与赋值**：第4行`add (23), $s1, $t1`对应`f = g + h[i]`，即$s0 = $s1 + $t1，故(23)为$s0。\n\n**结论**：空栏(22)应填入立即数0，对应选项C。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 22,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "22"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第2页选项C为「$0」，第17页相似题为「0」；保留各卷段自己的OCR值，不自动合并。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q023",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 23,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(23)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "$s0"
+      },
+      {
+        "key": "B",
+        "text": "$s1"
+      },
+      {
+        "key": "C",
+        "text": "$s2"
+      },
+      {
+        "key": "D",
+        "text": "$s3"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "$s0",
+    "translation": "以下是用C语言描述的语句及其转换的汇编代码。请选择填入汇编代码中第(23)空的选项，用A～D的符号回答。假设变量f,g,h,i分别对应寄存器$s0, $s1, $s2, $s3。此外，数组h的各元素均为int型（各元素占4字节）。",
+    "explanation": "汇编代码执行f = g + h[i]。其中$s1对应g，$t1对应h[i]（通过lw加载），$s0对应f。add指令的格式为add rd, rs, rt，即将rs与rt的和存入rd。因此(23)处应填入目标寄存器$s0。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 23,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "23"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q024",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 24,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\n```c\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n```\n\nアセンブリコード\n```asm\nbeq $s3, $s4, Else\nadd $s0, $s1, $s2\nj Exit\nElse: sub $s0, $s1, $s2\nExit:\n```\n\n各命令を2進数に直したとき、下線部Elseが対応するフィールドの値を10進数で表現したものはどれか。",
+    "options": [
+      {
+        "key": "A",
+        "text": "2"
+      },
+      {
+        "key": "B",
+        "text": "3"
+      },
+      {
+        "key": "C",
+        "text": "8"
+      },
+      {
+        "key": "D",
+        "text": "12"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "2",
+    "translation": "以下是用C语言描述的if-else语句及其转换的汇编代码。请回答：各指令转换为二进制时，下划线\"Else\"对应字段的值（十进制）是多少？",
+    "explanation": "在MIPS的beq指令中，16位立即数字段表示相对于PC+4地址的偏移量（以字为单位）。假设beq位于地址0，则add在4，j在8，Else（sub指令）在12。偏移量 = (目标地址 - (PC+4)) / 4 = (12 - 4) / 4 = 2。因此该字段的值为2。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 24,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "24"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n\nアセンブリコード\nbeq $s3, $s4, Else【印刷体下划线】\nadd $s0, $s1, $s2【手写：ADD】\nj Exit\nElse: sub $s0, $s1, $s2【手写：D46】\nExit:【手写：1040】【手写：262】\n\n(24)【印刷体下划线】各命令を2進数に直したとき、下線部Elseが対応するフィールドの値を10進数で表現したものはどれか。\n(A)2 (B)3 (C)8 (D)12\n\n(25)【印刷体下划线】各命令を2進数に直したとき、下線部Exitが対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭の【印刷体下划线】beq命令はメモリアドレス【手写：下划线】1024【手写：下划线】番地から始まっているものとする。\n(A)1028 (B)1036 (C)1040 (D)260\n\n六、以下の各問いにA～Dの記号で答えよ。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q025",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 25,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\n```c\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n```\n\nアセンブリコード\n```asm\nbeq $s3, $s4, Else\nadd $s0, $s1, $s2\nj Exit\nElse: sub $s0, $s1, $s2\nExit:\n```\n\n各命令を2進数に直したとき、下線部Exitが対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭のbeq命令はメモリアドレス1024番地から始まっているものとする。",
+    "options": [
+      {
+        "key": "A",
+        "text": "1028"
+      },
+      {
+        "key": "B",
+        "text": "1036"
+      },
+      {
+        "key": "C",
+        "text": "1040"
+      },
+      {
+        "key": "D",
+        "text": "260"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "260",
+    "translation": "以下是用C语言描述的if-else语句及其转换的汇编代码。请回答：各指令转换为二进制时，下划线\"Exit\"对应字段的值（十进制）是多少？假设第一条beq指令从内存地址1024开始。",
+    "explanation": "MIPS的jump指令（j-type）中，26位地址字段存储的是目标地址除以4（右移2位）后的值。地址计算：beq在1024，add在1028，j在1032，Else(sub)在1036，Exit在1040。因此目标地址1040除以4等于260。该字段的值为260。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 25,
+      "pages": [
+        2
+      ],
+      "originalNumbers": [
+        "25"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-002.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n\nアセンブリコード\nbeq $s3, $s4, Else【印刷体下划线】\nadd $s0, $s1, $s2【手写：ADD】\nj Exit\nElse: sub $s0, $s1, $s2【手写：D46】\nExit:【手写：1040】【手写：262】\n\n(24)【印刷体下划线】各命令を2進数に直したとき、下線部Elseが対応するフィールドの値を10進数で表現したものはどれか。\n(A)2 (B)3 (C)8 (D)12\n\n(25)【印刷体下划线】各命令を2進数に直したとき、下線部Exitが対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭の【印刷体下划线】beq命令はメモリアドレス【手写：下划线】1024【手写：下划线】番地から始まっているものとする。\n(A)1028 (B)1036 (C)1040 (D)260\n\n六、以下の各問いにA～Dの記号で答えよ。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q026",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 26,
+    "stem": "10進数193を8ビットの2進数に変換せよ。\n\n整理说明：原卷选项A被遮挡，无法核实完整选项。本题按原题可辨认的193改为填空，填写8位二进制数。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "11000001",
+    "translation": "将十进制数193转换为8位二进制数。",
+    "explanation": "采用除2取余法：193÷2=96余1，96÷2=48余0，48÷2=24余0，24÷2=12余0，12÷2=6余0，6÷2=3余0，3÷2=1余1，1÷2=0余1。将余数从低位到高位（从下往上）排列，得到二进制数 **11000001**。验证：$1\\times2^7 + 1\\times2^6 + 1\\times2^0 = 128+64+1=193$。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 26,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "26"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "题号根据前后连续位置记为26；题干开头及选项A被裁切，其他选项位数也有异常，保留残缺OCR。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q027",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 27,
+    "stem": "2進数 01100110 を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "198"
+      },
+      {
+        "key": "B",
+        "text": "136"
+      },
+      {
+        "key": "C",
+        "text": "102"
+      },
+      {
+        "key": "D",
+        "text": "54"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "102",
+    "translation": "将二进制数01100110转换为十进制数。",
+    "explanation": "01100110₂ = 0×2⁷ + 1×2⁶ + 1×2⁵ + 0×2⁴ + 0×2³ + 1×2² + 1×2¹ + 0×2⁰ = 64 + 32 + 4 + 2 = 102。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 27,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "27"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数 01100110 を10進数に変換せよ。\n(A)198\t(B)136\t(C)102【手写】\t(D)54",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q028",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 28,
+    "stem": "10進数の-2を2の補数による負数表現を用いて8ビットの2進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00000010"
+      },
+      {
+        "key": "B",
+        "text": "11111111"
+      },
+      {
+        "key": "C",
+        "text": "11111101"
+      },
+      {
+        "key": "D",
+        "text": "11111110"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "11111110",
+    "translation": "将十进制数-2用2的补数（负数表示）转换为8位二进制数。",
+    "explanation": "-2的2的补数表示：2的二进制为00000010，取反得11111101，加1得11111110。因此-2的8位二进制表示为11111110。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 28,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "28"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数の-2を2の補数による負数表現を用いて8ビットの2進数に変換せよ。\n(A)00000010\t(B)11111111\t(C)11111101\t(D)11111110【手写】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q029",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 29,
+    "stem": "10進数の-104を2の補数による負数表現を用いて8ビットの2進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "11100110"
+      },
+      {
+        "key": "B",
+        "text": "10011000"
+      },
+      {
+        "key": "C",
+        "text": "01001010"
+      },
+      {
+        "key": "D",
+        "text": "10110000"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "10011000",
+    "translation": "将十进制数-104用2的补数（负数表示）转换为8位二进制数。",
+    "explanation": "104的二进制为01101000（64+32+8）。取反得10010111，加1得10011000。因此-104的8位二进制表示为10011000。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 29,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "29"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数の-104を2の補数による負数表現を用いて8ビットの2進数に変換せよ。\n(A)11100110【手写】\t(B)10011000\t(C)01001010\t(D)10110000",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q030",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 30,
+    "stem": "2進数の1101を16進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "A"
+      },
+      {
+        "key": "B",
+        "text": "B"
+      },
+      {
+        "key": "C",
+        "text": "C"
+      },
+      {
+        "key": "D",
+        "text": "D"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "D",
+    "translation": "将二进制数1101转换为十六进制。",
+    "explanation": "二进制数1101转换为十进制为：1×2³ + 1×2² + 0×2¹ + 1×2⁰ = 8 + 4 + 0 + 1 = 13。十进制数13对应的十六进制数为D（A=10, B=11, C=12, D=13）。或者直接按4位二进制分组，1101对应十六进制的D。因此正确答案是D。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 30,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "30"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数の1101を16進数に変換せよ。\n(A)A【手写】\t(B)B\t(C)C\t(D)D",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q031",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 31,
+    "stem": "2進数00111000を16進数に変換せよ。\n\n整理说明：原卷印刷选项中没有正确值，A项印刷为3A、旁有手写更正。本题改为填空，填写计算得到的两位十六进制数，不将手写标记作为标准答案。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "38",
+    "translation": "将二进制数00111000转换为十六进制数。",
+    "explanation": "将8位二进制数从右向左每4位分为一组：0011 和 1000。第一组 0011 对应十六进制数 3，第二组 1000 对应十六进制数 8。因此转换结果为 **38**。注：原卷印刷选项A为3A（对应二进制00111010）系印刷错误，旁有手写更正为38。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 31,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "31"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数の00110000を16進数に変換せよ。\n(A)3A【手写】\t(B)1B\t(C)2A\t(D)70",
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "与卷段三同号题文字或选项不同，未将相似题合并，也未采用另一卷段替换。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q032",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 32,
+    "stem": "16進数の7BC1を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "31713"
+      },
+      {
+        "key": "B",
+        "text": "15297"
+      },
+      {
+        "key": "C",
+        "text": "31617"
+      },
+      {
+        "key": "D",
+        "text": "31681"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "31681",
+    "translation": "将十六进制数7BC1转换为十进制。",
+    "explanation": "十六进制数7BC1转换为十进制的计算过程如下：\n- 7 × 16³ = 7 × 4096 = 28672\n- B (11) × 16² = 11 × 256 = 2816\n- C (12) × 16¹ = 12 × 16 = 192\n- 1 × 16⁰ = 1\n总和：28672 + 2816 + 192 + 1 = 31681。\n因此正确答案是D) 31681。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 32,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "32"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q033",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 33,
+    "stem": "2進数10001111を右に1ビット算術シフトした結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00001110"
+      },
+      {
+        "key": "B",
+        "text": "01000111"
+      },
+      {
+        "key": "C",
+        "text": "11000111"
+      },
+      {
+        "key": "D",
+        "text": "10011110"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "11000111",
+    "translation": "将二进制数10001111右移1位（算术移位），求结果。",
+    "explanation": "10001111为8位补码，最高位为1表示负数。算术右移（符号扩展）规则：保持符号位（最高位）不变，右移1位，最低位丢弃，最高位补符号位1。因此10001111算术右移1位后为11000111。选项A（00001110）为逻辑右移结果；选项B（01000111）错误；选项D（10011110）不是标准移位结果。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 33,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "33"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数10001111を右に1ビット算術シフトした結果を答えよ。\n(A)00001110\t(B)01000111\t(C)11000111【手写】\t(D)10011110",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s01-q034",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 34,
+    "stem": "2進数10101010を左に2ビット論理シフトした結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "01010101"
+      },
+      {
+        "key": "B",
+        "text": "00101010"
+      },
+      {
+        "key": "C",
+        "text": "10101000"
+      },
+      {
+        "key": "D",
+        "text": "10101010"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "10101000",
+    "translation": "将二进制数10101010左移2位逻辑移位后的结果。",
+    "explanation": "逻辑左移（Logical Left Shift）将所有位向左移动指定的位数，右侧空出的位用0填充。\n原数10101010左移2位：\n- 左移2位后，右侧2位补0，左侧2位（10）移出。\n结果：10101000。\n选项A（01010101）是循环左移或位反转的结果；选项B（00101010）是右移2位结果；选项D为原数。因此正确答案是C。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 34,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "34"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数10101010を左に2ビット論理シフトした結果を答えよ。\n(A)01010101\t(B)00101010\t(C)10101000【手写】\t(D)10101010",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "与卷段三同号题文字或选项不同，未将相似题合并，也未采用另一卷段替换。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s01-q035",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s01",
+    "groupTitle": "期中卷段一（第1–3页，年份待核验）",
+    "numberInGroup": 35,
+    "stem": "2進数11000000(符号あり)を16ビットに符号拡張した結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "1111111111000000"
+      },
+      {
+        "key": "B",
+        "text": "0000000011000000"
+      },
+      {
+        "key": "C",
+        "text": "1100000000000000"
+      },
+      {
+        "key": "D",
+        "text": "1100000011111111"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "1111111111000000",
+    "translation": "将有符号二进制数11000000（8位）符号扩展至16位的结果。",
+    "explanation": "符号扩展（Sign Extension）将有符号数从较短的位数扩展到较长的位数，通过复制符号位（最高位）到所有新增的高位来保持数值不变。\n原8位二进制数11000000的最高位（符号位）为1（表示负数），扩展为16位时，需要在左侧补8个1（与符号位相同）。\n结果：11111111 11000000，合并为1111111111000000。\n选项B是零扩展（Zero Extension），用于正数；选项C和D为错误的扩展方式。因此正确答案是A。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段一（第1–3页，年份待核验）",
+      "position": 35,
+      "pages": [
+        3
+      ],
+      "originalNumbers": [
+        "35"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-003.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数11000000(符号あり)を16ビットに符号拡張した結果を答えよ。\n(A)1111111111000000【手写】\t(B)0000000011000000\t(C)1100000000000000\t(D)1100000011111111",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s02-q001",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 1,
+    "stem": "8ビットの2進数 01101100 を10進数に直せ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "60"
+      },
+      {
+        "key": "B",
+        "text": "72"
+      },
+      {
+        "key": "C",
+        "text": "102"
+      },
+      {
+        "key": "D",
+        "text": "108"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "108",
+    "translation": "将8位二进制数01101100转换为十进制。",
+    "explanation": "二进制数01101100转换为十进制的计算过程为：\n0×2⁷ + 1×2⁶ + 1×2⁵ + 0×2⁴ + 1×2³ + 1×2² + 0×2¹ + 0×2⁰\n= 0 + 64 + 32 + 0 + 8 + 4 + 0 + 0\n= 108。\n或者：64 + 32 = 96；96 + 8 = 104；104 + 4 = 108。\n因此正确答案是D) 108。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 1,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "1"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n8ビットの2進数 01101100 を10進数に直せ。\n(A)60  (B)72  (C)102  (D)108\n【手写】$2^{2}+2^{3}+2^{5}+2^{6}$\n$=4+8+32+64$  【手写】$\textcircled{D}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q002",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 2,
+    "stem": "8ビットの2進数 11001111 を16進数に直せ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "49"
+      },
+      {
+        "key": "B",
+        "text": "DF"
+      },
+      {
+        "key": "C",
+        "text": "CF"
+      },
+      {
+        "key": "D",
+        "text": "EF"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "CF",
+    "translation": "",
+    "explanation": "正确转换规则：将8位二进制数从右向左每4位分为一组，1100对应十六进制的C，1111对应十六进制的F，合并后结果为CF，对应选项C。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 2,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "2"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n8ビットの2進数 11001111 を16進数に直せ。\n(A)49  (B)DF  (C)CF  (D)EF\n【手写】$\textcircled{C}$  【手写】$1010\\to\\text{A}$ $1101\\to\\text{D}$ $1011\\to\\text{B}$ $1110\\to\\text{E}$ $1100\\to\\text{C}$ $1111\\to\\text{F}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q003",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 3,
+    "stem": "10進数34を8ビットの2進数に直せ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00110100"
+      },
+      {
+        "key": "B",
+        "text": "00100010"
+      },
+      {
+        "key": "C",
+        "text": "01000010"
+      },
+      {
+        "key": "D",
+        "text": "00110010"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "00100010",
+    "translation": "",
+    "explanation": "正确转换规则：用除2取余法将十进制34转换为二进制，余数倒序排列得100010，左侧补零至8位为00100010，对应选项B。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 3,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "3"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数34を8ビットの2進数に直せ。\n(A)00110100 (B)00100010 (C)01000010 (D)00110010\n【手写】$\textcircled{B}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q004",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 4,
+    "stem": "16進数44を8ビットの2進数に直せ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "01000100"
+      },
+      {
+        "key": "B",
+        "text": "00101100"
+      },
+      {
+        "key": "C",
+        "text": "10000100"
+      },
+      {
+        "key": "D",
+        "text": "01001100"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "01000100",
+    "translation": "",
+    "explanation": "正确转换规则：每位十六进制数对应4位二进制，4₁₆=0100₂，因此44₁₆=0100 0100₂=01000100，对应选项A。\n\n**题目说明：**原始OCR记录显示，不同扫描页面对选项B的文本识别存在冲突（第4、6页显示为00101100，第5页显示为00110100），但该选项并非正确答案，不影响解题。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 4,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "4"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n16進数44を8ビットの2進数に直せ。\n(A)01000100 (B)00101100 (C)10000100 (D)01001100\n【手写】$\textcircled{A}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。",
+      "重复扫描存在选项B冲突：第4、6页为00101100，第5页为00110100；主文本采用第6页，冲突待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q005",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 5,
+    "stem": "10進数 $-56$ を2の補数による負数表現で8ビットの2進数に直せ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "11001000"
+      },
+      {
+        "key": "B",
+        "text": "00110111"
+      },
+      {
+        "key": "C",
+        "text": "11000111"
+      },
+      {
+        "key": "D",
+        "text": "00111000"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "11001000",
+    "translation": "",
+    "explanation": "正确计算2的补码：先求56的8位无符号二进制为00111000，按位取反得反码11000111，加1得补码11001000；或直接计算256-56=200，200的8位二进制为11001000，对应选项A。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 5,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "5"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数 $-56$ を2の補数による負数表現で8ビットの2進数に直せ。\n(A)11001000 (B)00110111 (C)11000111 (D)00111000\n【手写】$\textcircled{A}$  【手写】\n$\\begin{array}{r|l} 56 & \\\\ \\div 2 & 28\\cdots 0 \\\\ \\div 2 & 14\\cdots 0 \\\\ \\div 2 & 7\\cdots 0 \\\\ \\div 2 & 3\\cdots 1 \\\\ \\div 2 & 1\\cdots 1 \\\\ \\div 2 & 0\\cdots 1 \\end{array}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q006",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 6,
+    "stem": "4ビットの符号付き2進数 0001 を8ビットに符号拡張せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00000001"
+      },
+      {
+        "key": "B",
+        "text": "11111001"
+      },
+      {
+        "key": "C",
+        "text": "00010000"
+      },
+      {
+        "key": "D",
+        "text": "00010001"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "00000001",
+    "translation": "",
+    "explanation": "符号扩展规则：4位有符号数0001的最高位为0（表示正数），扩展为8位时左侧补4个符号位0，结果为00000001，对应选项A。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 6,
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "6"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n4ビットの符号付き2進数 0001 を8ビットに符号拡張せよ。\n(A)00000001 (B)11111001 (C)00010000 (D)00010001\n【手写】$\textcircled{A}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。",
+      "重复扫描存在选项B冲突：第5页为11110001，第6页为11111001；主文本采用第6页，冲突待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q007",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 7,
+    "stem": "4ビットの符号付き2進数 1010 を8ビットに符号拡張せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00001010"
+      },
+      {
+        "key": "B",
+        "text": "11111010"
+      },
+      {
+        "key": "C",
+        "text": "10101111"
+      },
+      {
+        "key": "D",
+        "text": "10101010"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "11111010",
+    "translation": "",
+    "explanation": "符号扩展规则：4位有符号数1010的最高位为1（表示负数），扩展为8位时左侧补4个符号位1，结果为11111010，对应选项B。\n\n**题目说明：**原始OCR记录显示，不同扫描页面对选项B的文本识别存在冲突（第5页显示为11110001，第6页显示为11111001），但该选项并非正确答案，不影响解题。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 7,
+      "pages": [
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "7"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n4ビットの符号付き2進数 1010 を8ビットに符号拡張せよ。\n(A)00001010 (B)11111010 (C)10101111 (D)10101010\n【手写】$\textcircled{B}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q008",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 8,
+    "stem": "8ビットの2進数 01010010 を左に1ビット論理シフトせよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00101001"
+      },
+      {
+        "key": "B",
+        "text": "10100100"
+      },
+      {
+        "key": "C",
+        "text": "10101001"
+      },
+      {
+        "key": "D",
+        "text": "10100101"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "10100100",
+    "translation": "",
+    "explanation": "逻辑左移1位时，最高位移出丢弃，最低位补0。01010010左移1位得到10100100，对应选项B。原值为82，左移后为164，未超出8位无符号数范围。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 8,
+      "pages": [
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "8"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n8ビットの2進数 01010010 を左に1ビット論理シフトせよ。\n(A)00101001 (B)10100100 (C)10101001 (D)10100101\n【手写】$\textcircled{B}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q009",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 9,
+    "stem": "8ビットの2進数 11010011 を右に2ビット論理シフトせよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "11101001"
+      },
+      {
+        "key": "B",
+        "text": "11110100"
+      },
+      {
+        "key": "C",
+        "text": "01101001"
+      },
+      {
+        "key": "D",
+        "text": "00110100"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "00110100",
+    "translation": "将8位二进制数 11010011 向右逻辑移位2位。",
+    "explanation": "逻辑右移（Logical Right Shift）是向低位方向移动，左边空出的高位补0，右边丢弃低位的比特。二进制数 11010011 右移2位时，右边最低的2位（11）被丢弃，左边最高位补2个0，结果为 **00110100**。\n\n选项分析：\n- (A) 11101001：错误，这是左移或其他操作的结果\n- (B) 11110100：错误\n- (C) 01101001：这是右移1位的结果（11010011 >> 1）\n- (D) 00110100：**正确**",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 9,
+      "pages": [
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "9"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n8ビットの2進数 11010011 を右に2ビット論理シフトせよ。\n(A)11101001 (B)11110100 (C)01101001 (D)00110100\n【手写】$\textcircled{D}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q010",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 10,
+    "stem": "8ビットの2進数 11010001 を右に1ビット算術シフトせよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "01101000"
+      },
+      {
+        "key": "B",
+        "text": "11101000"
+      },
+      {
+        "key": "C",
+        "text": "10100010"
+      },
+      {
+        "key": "D",
+        "text": "10100011"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "11101000",
+    "translation": "将8位二进制数11010001右移1位（算术移位）。",
+    "explanation": "11010001为负数补码（值为-111）。算术右移时，符号位（1）保持不变，右移1位，最低位1被丢弃，高位补符号位1，得到11101000（对应十进制-56）。选项A（01101000）为逻辑右移结果；选项C、D不是正确的算术右移结果。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 10,
+      "pages": [
+        5,
+        6
+      ],
+      "originalNumbers": [
+        "10"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-005.jpg",
+        "computer-organization/computer-midterms/page-006.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n8ビットの2進数 11010001 を右に1ビット算術シフトせよ。\n(A)01101000 (B)11101000 (C)10100010 (D)10100011\n【手写】$\textcircled{B}$",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q011",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 11,
+    "stem": "計算機を構成するもののうち、回路や装置などのように物理的な実体を持つもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "アプリケーション"
+      },
+      {
+        "key": "B",
+        "text": "プログラム"
+      },
+      {
+        "key": "C",
+        "text": "ソフトウェア"
+      },
+      {
+        "key": "D",
+        "text": "ハードウェア"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "ハードウェア",
+    "translation": "在构成计算机的事物中，具有电路、装置等物理实体的是什么？",
+    "explanation": "**硬件（ハードウェア）** 是指计算机中具有物理实体的组成部分，包括CPU、内存、主板、输入输出设备（键盘、显示器）、电路等有形部件。\n\n其他选项：\n- (A) 应用程序（アプリケーション）：软件\n- (B) 程序（プログラム）：软件\n- (C) 软件（ソフトウェア）：程序和数据的总称，无物理实体",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 11,
+      "pages": [
+        7
+      ],
+      "originalNumbers": [
+        "11"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機を構成するもののうち、回路や装置などのように物理的な実体を持つもの。\n(A)アプリケーション (B)プログラム (C)ソフトウェア (D)ハードウェア【手写-圈注】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q012",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 12,
+    "stem": "計算機の基本的な管理を担当するソフトウェア。基本ソフトウェアとも呼ばれる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "デバイス"
+      },
+      {
+        "key": "B",
+        "text": "ソースコード"
+      },
+      {
+        "key": "C",
+        "text": "OS"
+      },
+      {
+        "key": "D",
+        "text": "アプリケーション"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "OS",
+    "translation": "负责计算机基本管理的软件，也称为基本软件。",
+    "explanation": "**OS（Operating System，操作系统）** 是计算机系统中最基本的系统软件，负责管理计算机硬件与软件资源，为应用程序提供运行环境。也称为基本ソフトウェア（基础软件）。\n\n其他选项：\n- (A) 设备（デバイス）：硬件设备\n- (B) 源代码（ソースコード）：程序文本\n- (D) 应用程序（アプリケーション）：运行在OS之上的软件",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 12,
+      "pages": [
+        7
+      ],
+      "originalNumbers": [
+        "12"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機の基本的な管理を担当するソフトウェア。基本ソフトウェアとも呼ばれる。\n(A)デバイス (B)ソースコード (C)OS【手写-圈注】 (D)アプリケーション",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q013",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 13,
+    "stem": "計算機の五大装置のうち、演算と制御を担当するもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "CPU"
+      },
+      {
+        "key": "B",
+        "text": "キーボード"
+      },
+      {
+        "key": "C",
+        "text": "ディスプレイ"
+      },
+      {
+        "key": "D",
+        "text": "メモリ"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "CPU",
+    "translation": "在计算机的五大装置中，负责运算和控制的是什么？",
+    "explanation": "计算机的五大装置（ファイブ大装置）包括：输入设备、输出设备、存储器、**运算器**、**控制器**。其中运算器（ALU）负责运算，控制器负责指令执行控制，两者合称为 **CPU（Central Processing Unit，中央处理器）**。\n\n其他选项：\n- (B) 键盘：输入设备\n- (C) 显示器：输出设备\n- (D) 内存：存储器（主存储器）",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 13,
+      "pages": [
+        7
+      ],
+      "originalNumbers": [
+        "13"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機の五大装置のうち、演算と制御を担当するもの。\n(A)CPU【手写-圈注】 (B)キーボード (C)ディスプレイ (D)メモリ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q014",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 14,
+    "stem": "CPU が一定時間内に行った作業量。",
+    "options": [
+      {
+        "key": "A",
+        "text": "応答時間"
+      },
+      {
+        "key": "B",
+        "text": "スループット"
+      },
+      {
+        "key": "C",
+        "text": "クロック周波数"
+      },
+      {
+        "key": "D",
+        "text": "CPI"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "スループット",
+    "translation": "CPU在一定时间内完成的工作量。",
+    "explanation": "**吞吐量（スループット）** 是指单位时间内系统或CPU处理的数据量或完成的任务数量，衡量系统的工作能力。\n\n其他选项：\n- (A) 响应时间（応答時間）：从发出请求到收到响应的时间，是延迟指标\n- (C) 时钟频率（クロック周波数）：CPU时钟每秒的周期数，是速度指标\n- (D) CPI（Clock cycles Per Instruction）：执行一条指令所需的平均时钟周期数",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 14,
+      "pages": [
+        7
+      ],
+      "originalNumbers": [
+        "14"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nCPU が一定時間内に行った作業量。【手写-蓝色横线】\n(A)応答時間 (B)スループット【手写-圈注】 (C)クロック周波数 (D)CPI",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q015",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 15,
+    "stem": "CPU における1秒あたりのクロック数。",
+    "options": [
+      {
+        "key": "A",
+        "text": "CPU 時間"
+      },
+      {
+        "key": "B",
+        "text": "スループット"
+      },
+      {
+        "key": "C",
+        "text": "クロック周波数"
+      },
+      {
+        "key": "D",
+        "text": "CPI"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "クロック周波数",
+    "translation": "CPU中每秒钟的时钟数。",
+    "explanation": "**时钟频率（クロック周波数）** 是指CPU时钟信号每秒的振荡周期数，单位是赫兹（Hz，如GHz），表示CPU的基本运行速度。频率越高，CPU在单位时间内能执行的周期数越多。\n\n其他选项：\n- (A) CPU时间：CPU实际执行程序的时间\n- (B) 吞吐量（スループット）：单位时间内完成的工作量\n- (D) CPI：执行单条指令所需的时钟周期数",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 15,
+      "pages": [
+        7
+      ],
+      "originalNumbers": [
+        "15"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nCPU における1秒あたりのクロック数。\n(A)CPU 時間 (B)スループット (C)クロック周波数【手写-圈注】 (D)CPI",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q016",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 16,
+    "stem": "1秒間に可能な浮動小数点数の演算の回数。",
+    "options": [
+      {
+        "key": "A",
+        "text": "DROPS"
+      },
+      {
+        "key": "B",
+        "text": "MIPS"
+      },
+      {
+        "key": "C",
+        "text": "FLOPS"
+      },
+      {
+        "key": "D",
+        "text": "BLOBS"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "FLOPS",
+    "translation": "",
+    "explanation": "FLOPS（Floating Point Operations Per Second）是衡量每秒浮点运算次数的标准性能单位；MIPS（Million Instructions Per Second）是每秒百万条指令，通常用于衡量整数指令性能；DROPS和BLOBS并非计算机性能衡量的标准单位。原",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 16,
+      "pages": [
+        7,
+        8
+      ],
+      "originalNumbers": [
+        "16"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg",
+        "computer-organization/computer-midterms/page-008.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1秒間に可能な浮動小数点数の演算の回数。\n(A)DROPS (B)MIPS (C)FLOPS【手写-圈注】 (D)BLOBS",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q017",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 17,
+    "stem": "ソースコードをアセンブリ言語に変換する処理。",
+    "options": [
+      {
+        "key": "A",
+        "text": "コンパイル"
+      },
+      {
+        "key": "B",
+        "text": "アセンブル"
+      },
+      {
+        "key": "C",
+        "text": "リンク"
+      },
+      {
+        "key": "D",
+        "text": "リント"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "コンパイル",
+    "translation": "将源代码转换为汇编语言的处理。",
+    "explanation": "编译器（Compiler）的功能是将高级语言源代码转换为汇编语言或机器语言。汇编器（Assembler）是将汇编语言转换为机器语言（目标代码）的程序。链接器（Linker）用于将多个目标文件链接成可执行文件。Lint 是代码静态检查工具。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 17,
+      "pages": [
+        7,
+        8
+      ],
+      "originalNumbers": [
+        "17"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-007.jpg",
+        "computer-organization/computer-midterms/page-008.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nソースコードをアセンブリ言語に変換する処理。\n(A)コンパイル【手写-圈注】 (B)アセンブル (C)リンク (D)リント",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q018",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 18,
+    "stem": "MIPSコンピューターシステムズ社が開発した命令セット。",
+    "options": [
+      {
+        "key": "A",
+        "text": "MILS"
+      },
+      {
+        "key": "B",
+        "text": "MIPS"
+      },
+      {
+        "key": "C",
+        "text": "CISC"
+      },
+      {
+        "key": "D",
+        "text": "RISC"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "MIPS",
+    "translation": "MIPS Computer Systems公司开发的指令集。",
+    "explanation": "MIPS（Microprocessor without Interlocked Pipeline Stages）是由 MIPS Computer Systems（现为 MIPS Technologies）开发的 RISC 架构指令集。虽然 MIPS 本质上属于 RISC 架构，但题目明确指出了公司名称，因此应选 MIPS 本身而非架构分类。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 18,
+      "pages": [
+        4,
+        7,
+        8
+      ],
+      "originalNumbers": [
+        "18"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-007.jpg",
+        "computer-organization/computer-midterms/page-008.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nMIPSコンピューターシステムズ社が開発した命令セット。\n(A)MILS (B)MIPS【手写-圈注】 (C)CISC (D)RISC",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q019",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 19,
+    "stem": "命令の演算対象。",
+    "options": [
+      {
+        "key": "A",
+        "text": "オペレータ"
+      },
+      {
+        "key": "B",
+        "text": "オペランド"
+      },
+      {
+        "key": "C",
+        "text": "アセンブリ"
+      },
+      {
+        "key": "D",
+        "text": "リンク"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "オペランド",
+    "translation": "指令的运算对象。",
+    "explanation": "运算符（オペレータ/Operator）指定操作类型（如加法、减法），操作数（オペランド/Operand）是运算对象（被操作的数据或寄存器）。汇编（アセンブリ）指汇编语言或汇编过程。链接（リンク）是链接过程。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 19,
+      "pages": [
+        4,
+        7,
+        8
+      ],
+      "originalNumbers": [
+        "19"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-007.jpg",
+        "computer-organization/computer-midterms/page-008.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n命令の演算対象。\n(A)オペレータ (B)オペランド【手写-圈注】 (C)アセンブリ (D)リンク",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q020",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 20,
+    "stem": "CPU 内で演算対象のデータを格納するための記憶領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ハードディスク"
+      },
+      {
+        "key": "B",
+        "text": "メモリ"
+      },
+      {
+        "key": "C",
+        "text": "キャッシュ"
+      },
+      {
+        "key": "D",
+        "text": "レジスタ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "レジスタ",
+    "translation": "CPU内部用于存储运算对象数据的存储区域。",
+    "explanation": "寄存器（Register）是 CPU 内部的高速存储单元，由触发器构成，用于临时存储运算过程中的操作数、地址及运算结果。内存（メモリ/Memory）通常指主存储器（RAM）。硬盘（ハードディスク）是外存。缓存（キャッシュ）位于 CPU 与内存之间，用于缓存频繁访问的数据，虽在 CPU 内部或附近，但题目所述“演算対象のデータを格納するための記憶領域”最准确对应寄存器。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 20,
+      "pages": [
+        4,
+        7,
+        8,
+        9
+      ],
+      "originalNumbers": [
+        "20"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-007.jpg",
+        "computer-organization/computer-midterms/page-008.jpg",
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nCPU 内で演算対象のデータを格納するための記憶領域。\n(A)ハードディスク　(B)メモリ　(C)キャッシュ　(D)レジスタ\n【手写】(D)に丸印、左 margin に【手写】了",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q021",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 21,
+    "stem": "メモリへのワードの格納において上位バイトから順に格納する方式。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ビッグエンディアン"
+      },
+      {
+        "key": "B",
+        "text": "リトルエンディアン"
+      },
+      {
+        "key": "C",
+        "text": "ノイマン型"
+      },
+      {
+        "key": "D",
+        "text": "整列化方式"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "ビッグエンディアン",
+    "translation": "在存储器按字存储时，从高位字节开始依次存储的方式。",
+    "explanation": "大端方式（Big Endian）将最高有效字节（Most Significant Byte）存储在最低地址。小端方式（Little Endian）将最低有效字节（Least Significant Byte）存储在最低地址。诺依曼型（ノイマン型）是指令和数据共享同一存储器的架构。整列化方式并非标准术语。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 21,
+      "pages": [
+        4,
+        8,
+        9
+      ],
+      "originalNumbers": [
+        "21"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-004.jpg",
+        "computer-organization/computer-midterms/page-008.jpg",
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nメモリへのワードの格納において上位バイトから順に格納する方式。\n(A)ビッグエンディアン　(B)リトルエンディアン\n(C)ノイマン型　(D)整列化方式\n【手写】(A)に丸印、左 margin に【手写】改",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q022",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 22,
+    "stem": "現在実行中の命令のメモリアドレスを示すレジスタ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "B",
+        "text": "グローバルポインタ"
+      },
+      {
+        "key": "C",
+        "text": "スタックポインタ"
+      },
+      {
+        "key": "D",
+        "text": "フレームポインタ"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "プログラムカウンタ",
+    "translation": "显示当前执行指令的内存地址的寄存器。",
+    "explanation": "程序计数器（Program Counter, PC）存储下一条要执行指令的内存地址。全局指针（グローバルポインタ）指向全局数据区。栈指针（スタックポインタ）指向栈顶。帧指针（フレームポインタ）用于栈帧寻址，指向当前栈帧的基址。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 22,
+      "pages": [
+        8,
+        9
+      ],
+      "originalNumbers": [
+        "22"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-008.jpg",
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n現在実行中の命令のメモリアドレスを示すレジスタ。\n(A)プログラムカウンタ　(B)グローバルポインタ\n(C)スタックポインタ　(D)フレームポインタ\n【手写】(A)に丸印、左 margin に【手写】改\n\n| 得点 | 　 |\n| --- | --- |",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q023",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 23,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n揮発性メモリは電源を切ってもデータが消えない。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "挥发性存储器即使切断电源数据也不会消失。",
+    "explanation": "揮発性メモリ（Volatile Memory，如DRAM、SRAM）需要持续供电以保持存储的数据，一旦断电，存储的信息会立即丢失。只有非揮発性メモリ（Non-volatile Memory，如ROM、Flash Memory）才具有断电数据保持特性。因此该陈述错误。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 23,
+      "pages": [
+        8,
+        9
+      ],
+      "originalNumbers": [
+        "23"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-008.jpg",
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n揮発性メモリは電源を切ってもデータが消えない。\n【手写】B（左 margin に赤色）",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q024",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 24,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nシーケンシャルアクセスメモリは先頭から順番にデータを読み書きする。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "顺序访问存储器从头开始按顺序读写数据。",
+    "explanation": "シーケンシャルアクセスメモリ（Sequential Access Memory）是一种只能按特定顺序（从头到尾）访问的存储设备，如磁带存储。若要访问后面的数据，必须先经过前面的所有数据。这与RAM（随机访问存储器）可任意地址直接访问的特性不同。因此该陈述正确。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 24,
+      "pages": [
+        8,
+        9
+      ],
+      "originalNumbers": [
+        "24"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-008.jpg",
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nシーケンシャルアクセスメモリは先頭から順番にデータを読み書きする。\n【手写】A（左 margin に赤色）",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q025",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 25,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nレジスタを増やせば増やすほど計算機の性能が向上する。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "寄存器越多，计算机性能就越高。",
+    "explanation": "虽然增加寄存器数量可以减少访存次数（降低访问延迟），但寄存器数量增加会带来负面影响：1) 增加CPU芯片面积和功耗；2) 增加寄存器文件的访问时间（需要多端口结构）；3) 增加指令编码长度（需要更多位来指定寄存器编号）；4) 增加硬件复杂度。因此寄存器数量存在最优值，并非越多越好。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 25,
+      "pages": [
+        9
+      ],
+      "originalNumbers": [
+        "25"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-009.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nレジスタを増やせば増やすほど計算機の性能が向上する。\n【手写】B（左 margin に赤色）",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q026",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 26,
+    "stem": "それぞれの空欄にあてはまる数値や語句をA～Dから選べ。\n\n1［空欄］ = 1000KB",
+    "options": [
+      {
+        "key": "A",
+        "text": "TB"
+      },
+      {
+        "key": "B",
+        "text": "MB"
+      },
+      {
+        "key": "C",
+        "text": "GB"
+      },
+      {
+        "key": "D",
+        "text": "PB"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "MB",
+    "translation": "1 [MB] = 1000KB",
+    "explanation": "根据国际单位制（SI）十进制前缀，1 MB（Megabyte，兆字节）= 1000 KB（Kilobyte，千字节）。注：二进制前缀中1 MiB = 1024 KiB，但本题使用1000为换算关系，且选项中包含MB，故答案为MB。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 26,
+      "pages": [
+        10
+      ],
+      "originalNumbers": [
+        "26"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-010.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1[　] = 1000KB\n(A) TB 【圈选：B】 MB (C) GB (D) PB",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q027",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 27,
+    "stem": "それぞれの空欄にあてはまる数値や語句をA～Dから選べ。\n\n1［空欄］ = 1000TB",
+    "options": [
+      {
+        "key": "A",
+        "text": "EB"
+      },
+      {
+        "key": "B",
+        "text": "YB"
+      },
+      {
+        "key": "C",
+        "text": "GB"
+      },
+      {
+        "key": "D",
+        "text": "PB"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "PB",
+    "translation": "1 [PB] = 1000TB",
+    "explanation": "根据国际单位制（SI）前缀，1 PB（Petabyte，拍字节）= 1000 TB（Terabyte，太字节）。PB是TB的下一个十进制单位（Peta = 1000 Tera）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 27,
+      "pages": [
+        10
+      ],
+      "originalNumbers": [
+        "27"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-010.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1[　] = 1000TB\n(A) EB (B) YB (C) GB 【圈选：D】 PB",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q028",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 28,
+    "stem": "それぞれの空欄にあてはまる数値や語句をA～Dから選べ。\n\n1KiB = ［空欄］ バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "8"
+      },
+      {
+        "key": "B",
+        "text": "1000"
+      },
+      {
+        "key": "C",
+        "text": "1024"
+      },
+      {
+        "key": "D",
+        "text": "1000000"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "1024",
+    "translation": "1KiB = [1024] 字节",
+    "explanation": "KiB（Kibibyte， kibibyte）是国际电工委员会（IEC）定义的二进制单位，1 KiB = 2^10 = 1024字节。这与十进制单位KB（Kilobyte，1 KB = 1000字节）不同，前缀'Ki'明确表示二进制。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 28,
+      "pages": [
+        10
+      ],
+      "originalNumbers": [
+        "28"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-010.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1KiB = [　] バイト\n(A) 8 (B) 1000 【圈选：C】 1024 (D) 1000000",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q029",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 29,
+    "stem": "それぞれの空欄にあてはまる数値や語句をA～Dから選べ。\n\n1000［空欄］ 秒 = 1マイクロ秒",
+    "options": [
+      {
+        "key": "A",
+        "text": "ミリ"
+      },
+      {
+        "key": "B",
+        "text": "デカ"
+      },
+      {
+        "key": "C",
+        "text": "ナノ"
+      },
+      {
+        "key": "D",
+        "text": "ピコ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "ナノ",
+    "translation": "1000[纳诺]秒 = 1微秒",
+    "explanation": "1微秒（μs）= 10^-6秒。ナノ秒（纳秒，nanosecond）= 10^-9秒。因此1000 × 10^-9秒 = 10^-6秒，即1000纳秒等于1微秒。选项中'ナノ'对应nano（10^-9）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 29,
+      "pages": [
+        10
+      ],
+      "originalNumbers": [
+        "29"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-010.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1000[　] 秒 = 1マイクロ秒\n(A) ミリ (B) デカ 【圈选：C】 ナノ (D) ピコ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q030",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 30,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf[i] = g - f[3];\n```\n\nアセンブリコード\n```asm\nlw $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw $t0, (32)($t1)\n```\n\n空欄(30)にあてはまる数値を選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "0"
+      },
+      {
+        "key": "B",
+        "text": "3"
+      },
+      {
+        "key": "C",
+        "text": "4"
+      },
+      {
+        "key": "D",
+        "text": "12"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "12",
+    "translation": "在汇编代码的空栏(30)中填入从A-D中选择的数值。",
+    "explanation": "根据C语句`f[i] = g - f[3]`及变量对应关系（f→$s0，g→$s1，i→$s2），汇编代码第一行`lw $t0, (30)($s0)`用于加载f[3]的值。由于f为int型数组（每元素4字节），f[3]的地址为基地址$s0 + 3×4 = $s0 + 12，因此偏移量(30)为12。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 30,
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "originalNumbers": [
+        "30"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-010.jpg",
+        "computer-organization/computer-midterms/page-011.jpg",
+        "computer-organization/computer-midterms/page-012.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 | |\n|:---:|:---:|\n| | |\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n**ソースコード**\n```\nf[i] = g - f[3];\n```\n\n**アセンブリコード**\n```\nlw  $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw  $t0, (32)($t1)\n```\n\n(30)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Dに赤丸】\n(31)　(A) 0　(B) 1　(C) 2　(D) 4　【手写：Cに赤丸】\n(32)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Aに赤丸】\n\n【手写图示】\nメモリアドレス（縦書き、右端）\nx → f[0]\nx+4 → f[1]\nx+8 → f[2]\nx+12 → f[3]\n（f[3]下に手書きの\"i\"）\nx+4×i → f[i]\n\n| 得点 | |\n|:---:|:---:|\n| | |\n\n六、以下の問いの答えて正しいものをA～Dの記号で答えよ。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q031",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 31,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf[i] = g - f[3];\n```\n\nアセンブリコード\n```asm\nlw $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw $t0, (32)($t1)\n```\n\n空欄(31)にあてはまる数値を選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "0"
+      },
+      {
+        "key": "B",
+        "text": "1"
+      },
+      {
+        "key": "C",
+        "text": "2"
+      },
+      {
+        "key": "D",
+        "text": "4"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "2",
+    "translation": "在汇编代码的空栏(31)中填入从A-D中选择的数值。",
+    "explanation": "汇编代码第三行`sll $t1, $s2, (31)`用于将索引i（$s2）左移以计算字节偏移量。由于int型占4字节（2²），需要左移2位（shamt=2）来实现i×4的转换，从而得到正确的数组下标字节偏移。因此(31)为2。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 31,
+      "pages": [
+        11,
+        12
+      ],
+      "originalNumbers": [
+        "31"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-011.jpg",
+        "computer-organization/computer-midterms/page-012.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 | |\n|:---:|:---:|\n| | |\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n**ソースコード**\n```\nf[i] = g - f[3];\n```\n\n**アセンブリコード**\n```\nlw  $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw  $t0, (32)($t1)\n```\n\n(30)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Dに赤丸】\n(31)　(A) 0　(B) 1　(C) 2　(D) 4　【手写：Cに赤丸】\n(32)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Aに赤丸】\n\n【手写图示】\nメモリアドレス（縦書き、右端）\nx → f[0]\nx+4 → f[1]\nx+8 → f[2]\nx+12 → f[3]\n（f[3]下に手書きの\"i\"）\nx+4×i → f[i]\n\n| 得点 | |\n|:---:|:---:|\n| | |\n\n六、以下の問いの答えて正しいものをA～Dの記号で答えよ。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q032",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 32,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf[i] = g - f[3];\n```\n\nアセンブリコード\n```asm\nlw $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw $t0, (32)($t1)\n```\n\n空欄(32)にあてはまる数値を選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "0"
+      },
+      {
+        "key": "B",
+        "text": "3"
+      },
+      {
+        "key": "C",
+        "text": "4"
+      },
+      {
+        "key": "D",
+        "text": "12"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "0",
+    "translation": "在汇编代码的空栏(32)中填入从A-D中选择的数值。",
+    "explanation": "汇编代码最后一行`sw $t0, (32)($t1)`用于将计算结果存入f[i]。此前`add $t1, $s0, $t1`已计算出f[i]的地址（基地址$s0 + 字节偏移）并存入$t1。存储到该地址的偏移量为0。因此(32)为0。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 32,
+      "pages": [
+        11,
+        12
+      ],
+      "originalNumbers": [
+        "32"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-011.jpg",
+        "computer-organization/computer-midterms/page-012.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 | |\n|:---:|:---:|\n| | |\n\n五、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまる数値をそれぞれA～Dから選べ。ただし、変数f,g,iはそれぞれレジスタ$s0, $s1, $s2に対応しているものとする。また、配列fの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n**ソースコード**\n```\nf[i] = g - f[3];\n```\n\n**アセンブリコード**\n```\nlw  $t0, (30)($s0)\nsub $t0, $s1, $t0\nsll $t1, $s2, (31)\nadd $t1, $s0, $t1\nsw  $t0, (32)($t1)\n```\n\n(30)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Dに赤丸】\n(31)　(A) 0　(B) 1　(C) 2　(D) 4　【手写：Cに赤丸】\n(32)　(A) 0　(B) 3　(C) 4　(D) 12　【手写：Aに赤丸】\n\n【手写图示】\nメモリアドレス（縦書き、右端）\nx → f[0]\nx+4 → f[1]\nx+8 → f[2]\nx+12 → f[3]\n（f[3]下に手書きの\"i\"）\nx+4×i → f[i]\n\n| 得点 | |\n|:---:|:---:|\n| | |\n\n六、以下の問いの答えて正しいものをA～Dの記号で答えよ。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q033",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 33,
+    "stem": "MIPSにおいてint型の配列A[100]を宣言した。A[0]が格納されているメモリアドレスが1024のとき、A[12]が格納されているメモリセルの先頭アドレスを答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "1012"
+      },
+      {
+        "key": "B",
+        "text": "1036"
+      },
+      {
+        "key": "C",
+        "text": "1048"
+      },
+      {
+        "key": "D",
+        "text": "1072"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "1072",
+    "translation": "在MIPS中声明了int型数组A[100]。当A[0]存储的内存地址为1024时，回答A[12]存储的内存单元的首地址。",
+    "explanation": "int型占4字节。A[12]的首地址 = A[0]地址 + 12×4 = 1024 + 48 = 1072。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 33,
+      "pages": [
+        12
+      ],
+      "originalNumbers": [
+        "33"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-012.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q034",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 34,
+    "stem": "MIPSにおいてint型の配列A[100]を宣言した。A[0]が格納されているメモリアドレスが1024のとき、A[12]が格納されているメモリセルの先頭アドレスを答えよ。\n\nMIPSはビッグエンディアンである。上記(33)の状況でA[0] = 1234ABCD₁₆のとき、主記憶のアドレス1025の内容を2進数で答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00010010"
+      },
+      {
+        "key": "B",
+        "text": "10101011"
+      },
+      {
+        "key": "C",
+        "text": "00110100"
+      },
+      {
+        "key": "D",
+        "text": "00001100"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "00110100",
+    "translation": "在MIPS中声明了int型数组A[100]。当A[0]存储的内存地址为1024时（第33问），在上述情况下，当A[0] = 1234ABCD₁₆时，求主存地址1025的内容（用二进制表示）。",
+    "explanation": "**推导过程：**\n1. **数据结构**：int型占4字节。A[0]起始地址为1024，其值1234ABCD₁₆为32位（4字节）。\n2. **字节序**：MIPS为大端序（Big Endian），即最高有效字节（Most Significant Byte）存储在最低地址。\n3. **内存布局分解**（按地址递增顺序）：\n   - 地址1024（MSB）：**12**₁₆ = 00010010₂\n   - 地址1025（次高）：**34**₁₆ = 00110100₂ ← **目标地址**\n   - 地址1026（次低）：AB₁₆ = 10101011₂\n   - 地址1027（LSB）：CD₁₆ = 11001101₂\n4. **结果**：地址1025存储的字节为0x34，其二进制表示为**00110100**。\n\n**结论**：正确答案为C（00110100）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 34,
+      "pages": [
+        12
+      ],
+      "originalNumbers": [
+        "34"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-012.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nMIPSはビッグエンディアンである。上記(33)の状況でA[0] = 1234ABCD₁₆のとき、主記憶のアドレス1025の内容を2進数で答えよ。\n\n(A) 00010010 (B) 10101011 (C) 000110100 (D) 00001100\n\n【图示-手写】\n- 右上方：箭头从\"x+12\"指向标注\"f[3]\"的单元格\n- 右下方：箭头从\"x+i×4\"（或\"x+i/4\"）指向标注\"f[i]\"的单元格\n- 右侧中间：手写\"1024\"\n- 右侧：手绘内存表格，标注\"1024\"及\"12 34\"（部分可见）\n\n【手写标记】\n- (30)选项(D)旁有粉红色圈注【手写】\n- (31)选项(C)旁有粉红色圈注【手写】\n- (32)选项(A)旁有粉红色圈注【手写】\n- (33)选项(D)旁有蓝色圈注及手写\"1072\"等计算痕迹【手写】\n- (34)选项(C)旁有蓝色圈注及手写\"2⁰+2¹\"及\"4\"等痕迹【手写】",
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。",
+      "选项C的OCR为「000110100」（9位），阶段1标注存在印刷/OCR疑点，未自行改为8位。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q035",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 35,
+    "stem": "以下の命令は何形式か。A～Cの記号で答えよ。\n\nadd",
+    "options": [
+      {
+        "key": "A",
+        "text": "R形式"
+      },
+      {
+        "key": "B",
+        "text": "I形式"
+      },
+      {
+        "key": "C",
+        "text": "J形式"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "R形式",
+    "translation": "以下指令各是什么格式？用A-C的符号回答。",
+    "explanation": "add（Add）指令执行寄存器-寄存器加法运算，三个操作数均为寄存器（rd, rs, rt），无立即数字段。其格式为R格式（Register format），包含opcode(6)、rs(5)、rt(5)、rd(5)、shamt(5)、funct(6)。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 35,
+      "pages": [
+        13
+      ],
+      "originalNumbers": [
+        "35"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-013.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nadd\n　(A) R形式【手写圈选】\n　(B) I形式\n　(C) J形式",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q036",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 36,
+    "stem": "以下の命令は何形式か。A～Cの記号で答えよ。\n\naddi",
+    "options": [
+      {
+        "key": "A",
+        "text": "R形式"
+      },
+      {
+        "key": "B",
+        "text": "I形式"
+      },
+      {
+        "key": "C",
+        "text": "J形式"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "I形式",
+    "translation": "以下指令各是什么格式？用A-C的符号回答。",
+    "explanation": "addi（Add Immediate）指令执行寄存器加立即数运算，包含一个16位立即数（immediate）字段。其格式为I格式（Immediate format），包含opcode(6)、rs(5)、rt(5)、immediate(16)。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 36,
+      "pages": [
+        13
+      ],
+      "originalNumbers": [
+        "36"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-013.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\naddi\n　(A) R形式\n　(B) I形式【手写圈选】\n　(C) J形式",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q037",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 37,
+    "stem": "以下の命令は何形式か。A～Cの記号で答えよ。\n\nlw",
+    "options": [
+      {
+        "key": "A",
+        "text": "R形式"
+      },
+      {
+        "key": "B",
+        "text": "I形式"
+      },
+      {
+        "key": "C",
+        "text": "J形式"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "I形式",
+    "translation": "以下指令是什么格式？请用A～C的符号回答。\nlw",
+    "explanation": "MIPS指令格式中，lw（Load Word）属于I（立即数/Immediate）格式。I格式指令用于数据传送（如lw/sw）、分支指令（如beq）以及含有立即数的运算指令（如addi）。lw指令的格式为：操作码(6位) | 基址寄存器(5位) | 目标寄存器(5位) | 16位立即数偏移量，符合I格式的结构特征。R格式用于寄存器间运算（如add），J格式用于跳转（如j）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 37,
+      "pages": [
+        13
+      ],
+      "originalNumbers": [
+        "37"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-013.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nlw\n　(A) R形式\n　(B) I形式【手写圈选】\n　(C) J形式",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s02-q038",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s02",
+    "groupTitle": "期中卷段二（第4–13页，2021封面）",
+    "numberInGroup": 38,
+    "stem": "以下の命令は何形式か。A～Cの記号で答えよ。\n\nj",
+    "options": [
+      {
+        "key": "A",
+        "text": "R形式"
+      },
+      {
+        "key": "B",
+        "text": "I形式"
+      },
+      {
+        "key": "C",
+        "text": "J形式"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "J形式",
+    "translation": "以下指令是什么格式？请用A～C的符号回答。\nj",
+    "explanation": "MIPS指令格式中，j（Jump）属于J（跳转/Jump）格式。J格式指令用于无条件跳转，其编码结构为：6位操作码（opcode=000010）后接26位的目标地址字段（target address）。这与R格式（包含rs、rt、rd、shamt、funct字段）和I格式（包含立即数字段）有明显区别。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段二（第4–13页，2021封面）",
+      "position": 38,
+      "pages": [
+        13
+      ],
+      "originalNumbers": [
+        "38"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-013.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nj\n　(A) R形式\n　(B) I形式\n　(C) J形式【手写圈选】",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "第4页封面标注2021年10月27日A卷；第5–13页依据题号连续及重复题干拼接，后续页同卷归属仍待核验。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q001",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 1,
+    "stem": "家電等の専用の機能を持つ機器に組み込まれたコンピュータ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "組込みコンピュータ"
+      },
+      {
+        "key": "B",
+        "text": "スーパーコンピュータ"
+      },
+      {
+        "key": "C",
+        "text": "パーソナルコンピュータ"
+      },
+      {
+        "key": "D",
+        "text": "スマートフォン"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "組込みコンピュータ",
+    "translation": "嵌入家电等专用功能设备中的计算机。",
+    "explanation": "这是嵌入式计算机（Embedded Computer）的定义。嵌入式计算机是专门设计用于执行特定功能的计算机系统，通常嵌入在更大的设备（如家电、汽车、工业机械）中。选项B超级计算机用于高性能科学计算；选项C个人计算机是通用计算设备；选项D智能手机是移动智能终端，虽然也属于嵌入式系统范畴，但题干描述的“家電等の専用の機能を持つ機器”更符合广义嵌入式计算机（特别是微控制器单元MCU）的定义。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 1,
+      "pages": [
+        14
+      ],
+      "originalNumbers": [
+        "1"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-014.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n家電等の専用の機能を持つ機器に組み込まれたコンピュータ。\n- (A) 組込みコンピュータ【手写：红色笔圈出标记】\n- (B) スーパーコンピュータ\n- (C) パーソナルコンピュータ\n- (D) スマートフォン",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "PDF第14页仅有首轮StepFun OCR；二次核对两次HTTP 451，未复核。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q002",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 2,
+    "stem": "計算機を構成する回路等のように、物理的な実体を持つもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ソフトウェア"
+      },
+      {
+        "key": "B",
+        "text": "ハードウェア"
+      },
+      {
+        "key": "C",
+        "text": "プログラム"
+      },
+      {
+        "key": "D",
+        "text": "ソースコード"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "ハードウェア",
+    "translation": "构成计算机的电路等具有物理实体的东西。",
+    "explanation": "硬件（Hardware）是指计算机系统中具有物理实体、可以触摸到的组成部分，包括CPU、内存、电路板、存储设备等。选项A软件（Software）是逻辑程序；选项C程序（Program）是软件的具体内容；选项D源代码（Source Code）是程序的文本形式，均无物理实体。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 2,
+      "pages": [
+        14
+      ],
+      "originalNumbers": [
+        "2"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-014.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "PDF第14页仅有首轮StepFun OCR；二次核对两次HTTP 451，未复核。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q003",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 3,
+    "stem": "計算機を構成する装置のうち、演算や制御を行うもの。",
+    "options": [
+      {
+        "key": "A",
+        "text": "HDD"
+      },
+      {
+        "key": "B",
+        "text": "マウス"
+      },
+      {
+        "key": "C",
+        "text": "CPU"
+      },
+      {
+        "key": "D",
+        "text": "メモリ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "CPU",
+    "translation": "构成计算机的装置中，进行运算和控制的部分。",
+    "explanation": "CPU（Central Processing Unit，中央处理器）是计算机的核心部件，负责从内存中取出指令、解释指令、执行运算（算术/逻辑运算）以及控制其他部件协同工作。选项A（HDD）是外存设备；选项B（鼠标）是输入设备；选项D（メモリ/内存）是存储设备，均不承担运算和控制功能。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 3,
+      "pages": [
+        14
+      ],
+      "originalNumbers": [
+        "3"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-014.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機を構成する装置のうち、演算や制御を行うもの。\n- (A) HDD\n- (B) マウス\n- (C) CPU【手写：红色笔圈出标记】\n- (D) メモリ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "PDF第14页仅有首轮StepFun OCR；二次核对两次HTTP 451，未复核。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q004",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 4,
+    "stem": "記憶装置の一種。メモリより高速にアクセス可能で、一時的なデータの保管場所として使用される。",
+    "options": [
+      {
+        "key": "A",
+        "text": "HDD"
+      },
+      {
+        "key": "B",
+        "text": "SSD"
+      },
+      {
+        "key": "C",
+        "text": "CD-ROM"
+      },
+      {
+        "key": "D",
+        "text": "キャッシュ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "キャッシュ",
+    "translation": "存储装置的一种。比内存访问速度更快，用作临时数据存储场所。",
+    "explanation": "缓存（Cache）是位于CPU和主存（RAM）之间的高速静态存储器（SRAM），其访问速度远高于主存（DRAM）。它用于临时存放CPU最近频繁访问的指令和数据，利用程序局部性原理提高访问效率。选项A（HDD）和B（SSD）是辅助存储器，速度低于内存；选项C（CD-ROM）是只读光盘存储器，速度也远低于内存。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 4,
+      "pages": [
+        14
+      ],
+      "originalNumbers": [
+        "4"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-014.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "PDF第14页仅有首轮StepFun OCR；二次核对两次HTTP 451，未复核。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q005",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 5,
+    "stem": "基本的な論理演算に対応する電子回路。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ダイオード"
+      },
+      {
+        "key": "B",
+        "text": "トランジスタ"
+      },
+      {
+        "key": "C",
+        "text": "論理ゲート"
+      },
+      {
+        "key": "D",
+        "text": "レジスタ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "論理ゲート",
+    "translation": "对应基本逻辑运算的电子电路。",
+    "explanation": "逻辑门（Logic Gate）是数字电路的基本单元，用于实现基本的布尔逻辑运算，如与（AND）、或（OR）、非（NOT）、与非（NAND）、或非（NOR）、异或（XOR）等。选项A（二极管）和B（晶体管）是构成逻辑门的半导体器件，但本身不是直接对应逻辑运算的电路单元；选项D（寄存器）是由多个触发器构成的存储电路，用于存储多位二进制数据，不直接实现基本逻辑运算。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 5,
+      "pages": [
+        14
+      ],
+      "originalNumbers": [
+        "5"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-014.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n基本的な論理演算に対応する電子回路。\n- (A) ダイオード\n- (B) トランジスタ\n- (C) 論理ゲート【手写：红色笔圈出标记】\n- (D) レジスタ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "PDF第14页仅有首轮StepFun OCR；二次核对两次HTTP 451，未复核。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q006",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 6,
+    "stem": "CPU内で演算対象のデータを格納するための記憶領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "レジスタ"
+      },
+      {
+        "key": "B",
+        "text": "メモリ"
+      },
+      {
+        "key": "C",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "D",
+        "text": "命令"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "レジスタ",
+    "translation": "在CPU内部用于存储运算对象的记忆区域。",
+    "explanation": "本题考查CPU内部基本组成。CPU内部用于暂存运算数据和地址的存储部件是寄存器（Register，日语：レジスタ）。内存（Memory）通常指主存，位于CPU外部；程序计数器（Program Counter）是专用寄存器；命令（指令）是控制信号而非存储区域。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 6,
+      "pages": [
+        15
+      ],
+      "originalNumbers": [
+        "6"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-015.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nCPU内で演算対象のデータを格納するための記憶領域。\n(A) レジスタ 【手写：圈选】\n(B) メモリ\n(C) プログラムカウンタ\n(D) 命令",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q007",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 7,
+    "stem": "命令の演算対象。",
+    "options": [
+      {
+        "key": "A",
+        "text": "オペレータ"
+      },
+      {
+        "key": "B",
+        "text": "語"
+      },
+      {
+        "key": "C",
+        "text": "オペランド"
+      },
+      {
+        "key": "D",
+        "text": "演算子"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "オペランド",
+    "translation": "命令的运算对象。",
+    "explanation": "本题考查指令的基本组成。在计算机体系结构中，指令由操作码（オペコード）和操作数（オペランド，Operand）组成。オペランド特指指令所操作的运算对象（数据或地址）。オペレータ（Operator）通常指运算符或人；語（语言单位）与演算子（运算符）均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 7,
+      "pages": [
+        15
+      ],
+      "originalNumbers": [
+        "7"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-015.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n命令の演算対象。\n(A) オペレータ\n(B) 語\n(C) オペランド 【手写：圈选】\n(D) 演算子",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q008",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 8,
+    "stem": "現在実行中の命令のメモリアドレスを指し示す。",
+    "options": [
+      {
+        "key": "A",
+        "text": "アドレシングモード"
+      },
+      {
+        "key": "B",
+        "text": "プログラムカウンタ"
+      },
+      {
+        "key": "C",
+        "text": "セル"
+      },
+      {
+        "key": "D",
+        "text": "エンディアン"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "プログラムカウンタ",
+    "translation": "指向当前执行中的命令的内存地址。",
+    "explanation": "本题考查CPU核心部件功能。程序计数器（Program Counter，PC，日语：プログラムカウンタ）用于存储下一条待执行指令的内存地址（或当前执行指令的地址，取决于具体架构定义）。アドレシングモード是寻址方式；セル是存储单元；エンディアン是字节序，均不符合题意。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 8,
+      "pages": [
+        15
+      ],
+      "originalNumbers": [
+        "8"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-015.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n現在実行中の命令のメモリアドレスを指し示す。\n(A) アドレシングモード\n(B) プログラムカウンタ 【手写：圈选】\n(C) セル\n(D) エンディアン",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q009",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 9,
+    "stem": "高級言語のプログラムを機械語に変換する途中で用いられる中間言語。",
+    "options": [
+      {
+        "key": "A",
+        "text": "C言語"
+      },
+      {
+        "key": "B",
+        "text": "コンパイラ"
+      },
+      {
+        "key": "C",
+        "text": "アセンブリ言語"
+      },
+      {
+        "key": "D",
+        "text": "アセンブラ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "アセンブリ言語",
+    "translation": "在将高级语言程序转换为机器语言的过程中使用的中间语言。",
+    "explanation": "本题考查程序编译过程。高级语言（如C）通常先被编译（compile）为汇编语言（アセンブリ言語，Assembly Language），再通过汇编器（アセンブラ）转换为机器语言。コンパイラ（编译器）是转换工具而非语言；C言語是高级语言；アセンブラ是汇编器工具。汇编语言是高级语言到机器语言之间的典型中间表示（IR）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 9,
+      "pages": [
+        15
+      ],
+      "originalNumbers": [
+        "9"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-015.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n高級言語のプログラムを機械語に変換する途中で用いられる中間言語。\n(A) C言語\n(B) コンパイラ\n(C) アセンブリ言語 【手写：圈选】\n(D) アセンブラ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q010",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 10,
+    "stem": "UNIXのオブジェクトファイルのうち、機械語のプログラムコードが格納される領域。",
+    "options": [
+      {
+        "key": "A",
+        "text": "ヘッダ"
+      },
+      {
+        "key": "B",
+        "text": "テキスト・セグメント"
+      },
+      {
+        "key": "C",
+        "text": "静的データ・セグメント"
+      },
+      {
+        "key": "D",
+        "text": "シンボル・テーブル"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "テキスト・セグメント",
+    "translation": "在UNIX的目标文件中，存储机器语言程序代码的区域。",
+    "explanation": "本题考查可执行文件/目标文件结构。在UNIX/Linux系统中，可执行文件或目标文件（.o）的布局通常包含：ヘッダ（Header，文件头）、テキスト・セグメント（Text Segment，代码段，存放机器指令）、データ・セグメント（数据段，存放全局变量等）、シンボル・テーブル（符号表，存放调试信息）。机器代码存放在Text Segment。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 10,
+      "pages": [
+        15
+      ],
+      "originalNumbers": [
+        "10"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-015.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nUNIXのオブジェクトファイルのうち、機械語のプログラムコードが格納される領域。\n(A) ヘッダ\n(B) テキスト・セグメント 【手写：圈选】\n(C) 静的データ・セグメント\n(D) シンボル・テーブル",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q011",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 11,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n一般に、CPUのクロック周波数が低い方が短い時間で多くの命令を実行できる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "一般来说，CPU时钟频率越低，能在越短的时间内执行更多指令。",
+    "explanation": "本题考查CPU性能与时钟频率的关系。CPU时钟频率（Clock Frequency）表示每秒时钟周期数。频率越低，每个时钟周期越长，执行单条指令所需时间越长，单位时间内能执行的指令数（IPS）越少。因此该陈述错误。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 11,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "11"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n一般に、CPUのクロック周波数が低い方が短い時間で多くの命令を実行できる。【手写】B",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q012",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 12,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n計算機の電源を切ると、揮発性メモリに保存されたデータは消失する。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "当计算机关闭电源时，存储在易失性内存中的数据会消失。",
+    "explanation": "本题考查存储器分类特性。揮発性メモリ（Volatile Memory，如RAM、SRAM、DRAM）依赖电力维持数据存储，断电后数据立即丢失。非易失性存储器（如ROM、Flash）断电后数据仍保留。题干描述符合挥发性的定义。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 12,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "12"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n計算機の電源を切ると、揮発性メモリに保存されたデータは消失する。【手写】A",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q013",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 13,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nRAM (random access memory)のうち、SRAMはデータ保持のためにリフレッシュが必要である。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "誤り",
+    "translation": "在RAM（随机存取存储器）中，SRAM需要刷新操作来保持数据。",
+    "explanation": "该表述错误。SRAM（静态随机存取存储器）使用双稳态触发器（flip-flop）电路存储数据，只要电源持续供应，数据就能保持稳定，因此不需要定期刷新。需要刷新操作的是DRAM（动态随机存取存储器），其使用电容存储电荷，电荷会随时间泄漏，必须定期刷新。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 13,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "13"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nRAM (random access memory)のうち、SRAMはデータ保持のためにリフレッシュが必要である。【手写】B",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q014",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 14,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\nビッグエンディアンは、命令を上位バイトから順にメモリに格納する方式である。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "大端序（Big Endian）是将数据（指令）从高位字节开始顺序存储到内存的方式。",
+    "explanation": "该表述正确。大端序（Big Endian）是一种字节序（endianness），其特点是将多字节数据（包括指令）的最高有效字节（Most Significant Byte, MSB，即高位字节）存储在最低的内存地址（或说从高位字节开始顺序存储）。例如，16进制值0x12345678在大端序系统中，0x12存储在低地址，0x78存储在高地址。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 14,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "14"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\nビッグエンディアンは、命令を上位バイトから順にメモリに格納する方式である。【手写】A",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q015",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 15,
+    "stem": "以下の文は正しいか。正しければA、誤りであればBで答えよ。\n\n擬似命令 move は、add 命令を使って置き換えることができる。",
+    "options": [
+      {
+        "key": "A",
+        "text": "正しい"
+      },
+      {
+        "key": "B",
+        "text": "誤り"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "正しい",
+    "translation": "伪指令 move 可以使用 add 指令来替换。",
+    "explanation": "该表述正确。在MIPS体系结构中，move 是一个伪指令（pseudo-instruction），用于将一个寄存器的值复制到另一个寄存器（move $t, $s）。汇编器会将其转换为实际的机器指令：add $t, $s, $zero（将源寄存器与零寄存器相加，结果存入目标寄存器，效果等同于复制）。因此，该伪指令确实可以通过 add 指令实现。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 15,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "15"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "judgement",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n擬似命令 move は、add 命令を使って置き換えることができる。【手写】A",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q016",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 16,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1バイト＝［空欄］ビット",
+    "options": [
+      {
+        "key": "A",
+        "text": "2"
+      },
+      {
+        "key": "B",
+        "text": "5"
+      },
+      {
+        "key": "C",
+        "text": "8"
+      },
+      {
+        "key": "D",
+        "text": "10"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "8",
+    "translation": "1字节 = [空栏] 比特",
+    "explanation": "计算机存储单位的基本换算：1字节（byte）等于8比特（bit）。这是国际标准定义，字节是构成计算机存储和数据传输的基本单位。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 16,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "16"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1バイト=【手写】C ビット\n　(A)2　(B)5　(C)8　(D)10",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q017",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 17,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1000キロバイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メガ"
+      },
+      {
+        "key": "B",
+        "text": "テラ"
+      },
+      {
+        "key": "C",
+        "text": "ミリ"
+      },
+      {
+        "key": "D",
+        "text": "ギガ"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "メガ",
+    "translation": "1000千字节 = 1 [空栏] 字节",
+    "explanation": "根据国际单位制（SI）的十进制前缀：1千字节（KB, kilobyte）= 10^3 字节，1兆字节（MB, megabyte）= 10^6 字节 = 1000 KB。因此1000キロバイト（1000 KB）等于1メガバイト（1 MB）。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 17,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "17"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1000キロバイト=1【手写】A バイト\n　(A)メガ　(B)テラ　(C)ミリ　(D)ギガ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q018",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 18,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1000テラバイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メガ"
+      },
+      {
+        "key": "B",
+        "text": "エクサ"
+      },
+      {
+        "key": "C",
+        "text": "ペタ"
+      },
+      {
+        "key": "D",
+        "text": "ギガ"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "ペタ",
+    "translation": "1000太字节 = 1 [空栏] 字节",
+    "explanation": "根据国际单位制（SI）的十进制前缀：1太字节（TB, terabyte）= 10^12 字节，1拍字节（PB, petabyte）= 10^15 字节。因此1000 TB = 1000 × 10^12 = 10^15 = 1 PB（ペタバイト）。注意：选项B（エクサ，exabyte）是10^18，过大；选项D（ギガ，gigabyte）是10^9，过小。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 18,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "18"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1000テラバイト=1【手写】C バイト\n　(A)メガ　(B)エクサ　(C)ペタ　(D)ギガ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q019",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 19,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1024バイト＝1［空欄］バイト",
+    "options": [
+      {
+        "key": "A",
+        "text": "メビ"
+      },
+      {
+        "key": "B",
+        "text": "キビ"
+      },
+      {
+        "key": "C",
+        "text": "ギビ"
+      },
+      {
+        "key": "D",
+        "text": "ミリ"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "キビ",
+    "translation": "1024字节 = 1 [空栏] 字节",
+    "explanation": "根据国际电工委员会（IEC）的二进制前缀标准：1 kibibyte（KiB，キビバイト）= 2^10 = 1024 字节。这是为了与十进制前缀（如KB）区分而定义的专用二进制单位。1024字节正好等于1 KiB。其他选项：メビ（mebi）是1024^2，ギビ（gibi）是1024^3。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 19,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "19"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1024バイト=1【手写】B バイト\n　(A)メビ　(B)キビ　(C)ギビ　(D)ミリ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q020",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 20,
+    "stem": "それぞれの空欄にあてはまる数値や語句を、選択肢から選び、A～Dの記号で答えよ。\n\n1ミリ秒＝1000［空欄］秒",
+    "options": [
+      {
+        "key": "A",
+        "text": "キロ"
+      },
+      {
+        "key": "B",
+        "text": "ピコ"
+      },
+      {
+        "key": "C",
+        "text": "ナノ"
+      },
+      {
+        "key": "D",
+        "text": "マイクロ"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "マイクロ",
+    "translation": "1毫秒等于1000 [ ] 秒",
+    "explanation": "1毫秒(millisecond, ms)等于10⁻³秒，而1000微秒(microsecond, µs)等于1000×10⁻⁶秒=10⁻³秒。因此1毫秒=1000微秒。选项中D「マイクロ」(微)对应微秒。A「キロ」(千)对应10³，B「ピコ」(皮)对应10⁻¹²，C「ナノ」(纳)对应10⁻⁹，均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 20,
+      "pages": [
+        16
+      ],
+      "originalNumbers": [
+        "20"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-016.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n1ミリ秒=1000【手写】D 秒\n　(A)キロ　(B)ピコ　(C)ナノ　(D)マイクロ",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q021",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 21,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(21)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "add"
+      },
+      {
+        "key": "B",
+        "text": "sub"
+      },
+      {
+        "key": "C",
+        "text": "sll"
+      },
+      {
+        "key": "D",
+        "text": "lw"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "sll",
+    "translation": "从以下C语言语句及其转换的汇编代码中选择适合填入各空格的选项。变量f,g,h,i分别对应寄存器$s0,$s1,$s2,$s3。数组h的各元素均为int型(各元素4字节)。源代码：f = g + h[i]; 汇编代码中空格(21)应填入什么？",
+    "explanation": "要访问数组h[i]，需要计算地址：基址($s2) + 索引i($s3) × 4(字节)。在MIPS中，左移2位(sll)可实现乘以4。因此第一行应为`sll $t0, $s3, 2`，将i左移2位得到字节偏移量。后续`add $t0, $t0, $s2`将数组基址加到偏移量上，得到h[i]的有效地址。add、sub、lw均不符合此处进行移位乘法的操作需求。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 21,
+      "pages": [
+        17
+      ],
+      "originalNumbers": [
+        "21"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-017.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 |  |\n| --- | --- |\n\n四、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ`$s0`, `$s1`, `$s2`, `$s3`に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n| ソースコード | アセンブリコード |\n| --- | --- |\n| `f = g + h[i];` | `(21)` `$t0`, `$s3`, 2<br>`add` `$t0`, `$t0`, `$s2`<br>`lw` `$t1`, `(22)` (`$t0`)<br>`add` `(23)`, `$s1`, `$t1` |\n\n(21)の選択肢：(A)`add` (B)`sub` (C)`sll` (D)`lw`\n(22)の選択肢：(A)`$s2` (B)`$s3` (C)`0` (D)`2`\n(23)の選択肢：(A)`$s0` (B)`$s1` (C)`$s2` (D)`$s3`\n\n**手写标记：**\n- (21)の選択肢 **(C)** 【手写】\n- (23)の選択肢 **(A)** 【手写】\n\nScanned with CS CamScanner",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q022",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 22,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(22)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "$s2"
+      },
+      {
+        "key": "B",
+        "text": "$s3"
+      },
+      {
+        "key": "C",
+        "text": "0"
+      },
+      {
+        "key": "D",
+        "text": "2"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "0",
+    "translation": "选择适合填入汇编代码中空格(22)的选项。",
+    "explanation": "指令`lw $t1, (22)($t0)`表示从$t0指定的内存地址加载字到$t1。在前一条指令中，$t0已经被计算为h[i]的完整地址（基址+偏移量），因此加载时不需要额外偏移，立即数字段应为0。即`lw $t1, 0($t0)`。选项A($s2)、B($s3)是寄存器名而非立即数，D(2)表示2字节偏移，均不正确。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 22,
+      "pages": [
+        17
+      ],
+      "originalNumbers": [
+        "22"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-017.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 |  |\n| --- | --- |\n\n四、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ`$s0`, `$s1`, `$s2`, `$s3`に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n| ソースコード | アセンブリコード |\n| --- | --- |\n| `f = g + h[i];` | `(21)` `$t0`, `$s3`, 2<br>`add` `$t0`, `$t0`, `$s2`<br>`lw` `$t1`, `(22)` (`$t0`)<br>`add` `(23)`, `$s1`, `$t1` |\n\n(21)の選択肢：(A)`add` (B)`sub` (C)`sll` (D)`lw`\n(22)の選択肢：(A)`$s2` (B)`$s3` (C)`0` (D)`2`\n(23)の選択肢：(A)`$s0` (B)`$s1` (C)`$s2` (D)`$s3`\n\n**手写标记：**\n- (21)の選択肢 **(C)** 【手写】\n- (23)の選択肢 **(A)** 【手写】\n\nScanned with CS CamScanner",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q023",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 23,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ$s0, $s1, $s2, $s3に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\nソースコード\n```c\nf = g + h[i];\n```\n\nアセンブリコード\n```asm\n(21) $t0, $s3, 2\nadd $t0, $t0, $s2\nlw $t1, (22)($t0)\nadd (23), $s1, $t1\n```\n\n空欄(23)にあてはまるものを選べ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "$s0"
+      },
+      {
+        "key": "B",
+        "text": "$s1"
+      },
+      {
+        "key": "C",
+        "text": "$s2"
+      },
+      {
+        "key": "D",
+        "text": "$s3"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "$s0",
+    "translation": "选择适合填入汇编代码中空格(23)的选项。",
+    "explanation": "源代码f = g + h[i]中，f对应$s0，g对应$s1。经过前面的计算，$t1中存储的是从内存加载的h[i]的值。最后一条add指令应将$s1(g)与$t1(h[i])相加，结果存入目标寄存器$s0(f)。因此指令为`add $s0, $s1, $t1`，空格(23)处应填目标寄存器$s0。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 23,
+      "pages": [
+        17
+      ],
+      "originalNumbers": [
+        "23"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-017.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n| 得点 |  |\n| --- | --- |\n\n四、以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。アセンブリコード中の各空欄にあてはまるものを選び、A～Dの記号で答えよ。ただし、変数f,g,h,iはそれぞれレジスタ`$s0`, `$s1`, `$s2`, `$s3`に対応しているものとする。また、配列hの各要素はいずれもint型(各要素4バイト相当)と考える。\n\n| ソースコード | アセンブリコード |\n| --- | --- |\n| `f = g + h[i];` | `(21)` `$t0`, `$s3`, 2<br>`add` `$t0`, `$t0`, `$s2`<br>`lw` `$t1`, `(22)` (`$t0`)<br>`add` `(23)`, `$s1`, `$t1` |\n\n(21)の選択肢：(A)`add` (B)`sub` (C)`sll` (D)`lw`\n(22)の選択肢：(A)`$s2` (B)`$s3` (C)`0` (D)`2`\n(23)の選択肢：(A)`$s0` (B)`$s1` (C)`$s2` (D)`$s3`\n\n**手写标记：**\n- (21)の選択肢 **(C)** 【手写】\n- (23)の選択肢 **(A)** 【手写】\n\nScanned with CS CamScanner",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q024",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 24,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\n```c\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n```\n\nアセンブリコード\n```asm\nbeq $s3, $s4, Else\nadd $s0, $s1, $s2\nj Exit\nElse: sub $s0, $s1, $s2\nExit:\n```\n\n各命令を2進数に直したとき、下線部 _Else_ が対応するフィールドの値を10進数で表現したものはどれか。",
+    "options": [
+      {
+        "key": "A",
+        "text": "2"
+      },
+      {
+        "key": "B",
+        "text": "3"
+      },
+      {
+        "key": "C",
+        "text": "8"
+      },
+      {
+        "key": "D",
+        "text": "12"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "2",
+    "translation": "将各指令转换为二进制时，下划线部分Else对应的字段值用十进制表示的是哪个？",
+    "explanation": "这是MIPS的beq指令（I型），其16位立即数字段(immediate)存储PC相对偏移量（以字为单位）。假设beq指令位于地址P，则Else标签位于P+12（beq占4字节，add占4字节，j Exit占4字节）。目标地址=P+12，下一条指令地址(PC+4)=P+4。字偏移量=(P+12-(P+4))/4=8/4=2。因此immediate字段的值为2。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 24,
+      "pages": [
+        18
+      ],
+      "originalNumbers": [
+        "24"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-018.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q025",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 25,
+    "stem": "以下はC言語で記述されたステートメントと、それを変換したアセンブリコードである。これについて、以下の各問にA～Dの記号で答えよ。ただし、変数f,g,h,i,jはそれぞれレジスタ$s0, $s1, $s2, $s3, $s4に対応しているものとする。\n\nソースコード\n```c\nif(i!=j)\n    f = g+h;\nelse\n    f = g-h;\n```\n\nアセンブリコード\n```asm\nbeq $s3, $s4, Else\nadd $s0, $s1, $s2\nj Exit\nElse: sub $s0, $s1, $s2\nExit:\n```\n\n各命令を2進数に直したとき、下線部 _Exit_ が対応するフィールドの値を10進数で表現したものはどれか。ただし、先頭のbeq命令はメモリアドレス1024番地から始まっているものとする。",
+    "options": [
+      {
+        "key": "A",
+        "text": "1028"
+      },
+      {
+        "key": "B",
+        "text": "1036"
+      },
+      {
+        "key": "C",
+        "text": "1040"
+      },
+      {
+        "key": "D",
+        "text": "260"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "260",
+    "translation": "将各指令转换为二进制时，下划线部分Exit对应的字段值用十进制表示的是哪个？假设开头的beq命令从内存地址1024开始。",
+    "explanation": "这是MIPS的j指令（J型），其26位地址字段(address)存储跳转目标地址。地址计算如下：beq在1024，add在1028，j Exit在1032，sub(Else)在1036，Exit标签在1040。目标地址Exit=1040。MIPS跳转指令的地址字段存储目标地址除以4后的值（因为最低2位恒为0，且按字对齐）。1040÷4=260。因此address字段的值为260。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 25,
+      "pages": [
+        18
+      ],
+      "originalNumbers": [
+        "25"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-018.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q026",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 26,
+    "stem": "10進数の193を8ビットの2進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "11000001"
+      },
+      {
+        "key": "B",
+        "text": "11011001"
+      },
+      {
+        "key": "C",
+        "text": "11000101"
+      },
+      {
+        "key": "D",
+        "text": "11000011"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "11000001",
+    "translation": "将十进制数193转换为8位二进制数。",
+    "explanation": "193 = 128 + 64 + 1 = 2⁷ + 2⁶ + 2⁰。二进制表示为11000001。验证：11000001 = 1×2⁷ + 1×2⁶ + 0×2⁵ + 0×2⁴ + 0×2³ + 0×2² + 0×2¹ + 1×2⁰ = 128 + 64 + 1 = 193。选项A为11000001。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 26,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "26"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数の193を8ビットの2進数に変換せよ。\n(A)11000001\n(B)11011001\n(C)11000101\n(D)11000011\n【手写】(A)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q027",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 27,
+    "stem": "2進数 01100110 を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "198"
+      },
+      {
+        "key": "B",
+        "text": "136"
+      },
+      {
+        "key": "C",
+        "text": "102"
+      },
+      {
+        "key": "D",
+        "text": "54"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "102",
+    "translation": "",
+    "explanation": "二进制数01100110转换为十进制的计算过程：从右到左按位权展开，2⁶位为1对应64，2⁵位为1对应32，2²位为1对应4，2¹位为1对应2，其余位为0，总和为64+32+4+2=102，对应选项C。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 27,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "27"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数 01100110 を10進数に変換せよ。\n(A)198\n(B)136\n(C)102\n(D)54\n【手写】(C)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q028",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 28,
+    "stem": "10進数の-2を2の補数による負数表現を用いて8ビットの2進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00000010"
+      },
+      {
+        "key": "B",
+        "text": "11111111"
+      },
+      {
+        "key": "C",
+        "text": "11111101"
+      },
+      {
+        "key": "D",
+        "text": "11111110"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "11111110",
+    "translation": "使用二进制补码表示法，将十进制数-2转换为8位二进制数。",
+    "explanation": "步骤：1) +2的二进制为00000010；2) 按位取反得11111101；3) 加1得11111110。或者计算$2^8 - 2 = 254$，254的二进制为11111110。对应选项D。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 28,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "28"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数の-2を2の補数による負数表現を用いて8ビットの2進数に変換せよ。\n(A)00000010\n(B)11111111\n(C)11111101\n(D)11111110\n【手写】(D)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q029",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 29,
+    "stem": "10進数の-104を2の補数による負数表現を用いて8ビットの2進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "11100110"
+      },
+      {
+        "key": "B",
+        "text": "10011000"
+      },
+      {
+        "key": "C",
+        "text": "01001010"
+      },
+      {
+        "key": "D",
+        "text": "10110000"
+      }
+    ],
+    "answerKey": "B",
+    "answerText": "10011000",
+    "translation": "使用二进制补码表示法，将十进制数-104转换为8位二进制数。",
+    "explanation": "步骤：1) +104的二进制为01101000（$64+32+8$）；2) 按位取反得10010111；3) 加1得10011000。或者计算$2^8 - 104 = 152$，152的二进制为$128+16+8=10011000$。对应选项B。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 29,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "29"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n10進数の-104を2の補数による負数表現を用いて8ビットの2進数に変換せよ。\n(A)11100110\n(B)10011000\n(C)01001010\n(D)10110000\n【手写】(B)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q030",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 30,
+    "stem": "2進数の1101を16進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "A"
+      },
+      {
+        "key": "B",
+        "text": "B"
+      },
+      {
+        "key": "C",
+        "text": "C"
+      },
+      {
+        "key": "D",
+        "text": "D"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "D",
+    "translation": "将二进制数1101转换为十六进制数。",
+    "explanation": "二进制1101转换为十进制为$8+4+1=13$，13对应的十六进制数字为D。对应选项D。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 30,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "30"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数の1101を16進数に変換せよ。\n(A)A\n(B)B\n(C)C\n(D)D\n【手写】(D)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q031",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 31,
+    "stem": "2進数00111000を16進数に変換せよ。\n\n整理说明：原卷印刷选项中没有正确值，A项印刷为3A、旁有手写更正。本题改为填空，填写计算得到的两位十六进制数，不将手写标记作为标准答案。",
+    "options": [],
+    "answerKey": "",
+    "answerText": "38",
+    "translation": "将二进制数00111000转换为十六进制数。",
+    "explanation": "将二进制数 00111000 从右向左每4位分为两组：0011 和 1000。0011 转换为十六进制为 3，1000 转换为十六进制为 8。组合后得到两位十六进制数 **38**。原卷印刷选项A（3A）为干扰项（对应二进制00111010），手写批注已更正为38。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 31,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "31"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "fill",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数の00111000を16進数に変換せよ。\n(A)3A【手写】38\n(B)1B\n(C)2A\n(D)70\n【手写】(A)",
+      "本次答案整理已对照原图修正OCR/明确作答格式，原始转录保留在ocr目录；具体勘误见computer-answer-generation.json。",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": [
+      "印刷选项A识别为3A，旁有手写38；保留3A，不将手写修正当作印刷选项或答案。"
+    ]
+  },
+  {
+    "id": "computer-midterms-s03-q032",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 32,
+    "stem": "16進数の7BC1を10進数に変換せよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "31713"
+      },
+      {
+        "key": "B",
+        "text": "15297"
+      },
+      {
+        "key": "C",
+        "text": "31617"
+      },
+      {
+        "key": "D",
+        "text": "31681"
+      }
+    ],
+    "answerKey": "D",
+    "answerText": "31681",
+    "translation": "将十六进制数7BC1转换为十进制数。",
+    "explanation": "计算过程：$7 \\times 16^3 + 11 \\times 16^2 + 12 \\times 16^1 + 1 \\times 16^0 = 7 \\times 4096 + 11 \\times 256 + 192 + 1 = 28672 + 2816 + 192 + 1 = 31681$。对应选项D。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 32,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "32"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n16進数の7BC1を10進数に変換せよ。\n(A)31713\n(B)15297\n(C)31617\n(D)31681\n【手写】(D)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q033",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 33,
+    "stem": "2進数10001111を右に1ビット算術シフトした結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "00001110"
+      },
+      {
+        "key": "B",
+        "text": "01000111"
+      },
+      {
+        "key": "C",
+        "text": "11000111"
+      },
+      {
+        "key": "D",
+        "text": "10011110"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "11000111",
+    "translation": "对二进制数10001111进行1位右算术移位，给出结果。",
+    "explanation": "10001111最高位为1，表示负数（二进制补码）。算术右移时，符号位保持不变，其余位右移1位，空出的高位用符号位1填充。结果：11000111。验证：原数-113（10001111），右移1位得-57，-57的二进制补码为11000111。对应选项C。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 33,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "33"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数10001111を右に1ビット算術シフトした結果を答えよ。\n(A)00001110\n(B)01000111\n(C)11000111\n(D)10011110\n【手写】(C)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q034",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 34,
+    "stem": "2進数10101010を左に2ビット論理シフトした結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "01010101"
+      },
+      {
+        "key": "B",
+        "text": "00101010"
+      },
+      {
+        "key": "C",
+        "text": "10101000"
+      },
+      {
+        "key": "D",
+        "text": "11011110"
+      }
+    ],
+    "answerKey": "C",
+    "answerText": "10101000",
+    "translation": "将二进制数10101010向左逻辑移位2位的结果是多少？",
+    "explanation": "逻辑左移（Logical Left Shift）操作中，所有位向左移动指定位数，左侧移出的位被丢弃，右侧空出的位用0填充。\n\n原数：10101010（8位）\n左移2位后：\n- 左侧2位（\"10\"）移出并丢弃\n- 剩余6位（\"101010\"）左移2位\n- 右侧补充2个\"0\"\n\n计算结果：10101000\n\n对应选项C。选项A（01010101）是算术右移或循环移位的可能结果；选项B（00101010）是逻辑右移2位的结果；选项D（11011110）无对应逻辑。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 34,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "34"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数10101010を左に2ビット論理シフトした結果を答えよ。\n(A)01010101\n(B)00101010\n(C)10101000\n(D)11011110\n【手写】(C)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  },
+  {
+    "id": "computer-midterms-s03-q035",
+    "category": "computer-midterms",
+    "groupId": "computer-midterms-s03",
+    "groupTitle": "期中卷段三（第14–19页，年份待核验）",
+    "numberInGroup": 35,
+    "stem": "2進数11000000(符号あり)を16ビットに符号拡張した結果を答えよ。",
+    "options": [
+      {
+        "key": "A",
+        "text": "1111111111000000"
+      },
+      {
+        "key": "B",
+        "text": "0000000011000000"
+      },
+      {
+        "key": "C",
+        "text": "1100000000000000"
+      },
+      {
+        "key": "D",
+        "text": "1100000011111111"
+      }
+    ],
+    "answerKey": "A",
+    "answerText": "1111111111000000",
+    "translation": "将有符号二进制数11000000符号扩展（Sign-Extend）到16位的结果是什么？",
+    "explanation": "符号扩展（Sign Extension）用于将有符号数的位数扩展时保持数值不变。若原数为负数（符号位为1），则在高位（左侧）补充符号位的值（1）；若为正数（符号位为0），则补充0。\n\n原数：11000000（8位有符号）\n- 最左侧符号位为\"1\"，表示这是一个负数\n- 扩展到16位需要在左侧补充8位\n- 因是负数，补充8个\"1\"（即11111111）\n\n结果：11111111 11000000 = 1111111111000000\n\n对应选项A。\n\n其他选项分析：\n- B（0000000011000000）：误将原数当作正数处理。\n- C（1100000000000000）：仅在右侧补0，未进行符号扩展。\n- D（1100000011111111）：在右侧填充1，不属于符号扩展操作。",
+    "grammarPoints": [],
+    "tags": [
+      "期中试卷",
+      "OCR整理",
+      "标准答案待核验"
+    ],
+    "source": {
+      "file": "计组期中 三年合集（19 21）.pdf",
+      "group": "期中卷段三（第14–19页，年份待核验）",
+      "position": 35,
+      "pages": [
+        19
+      ],
+      "originalNumbers": [
+        "35"
+      ],
+      "images": [
+        "computer-organization/computer-midterms/page-019.jpg"
+      ]
+    },
+    "status": "ready",
+    "questionType": "single",
+    "answerProvenance": "generated",
+    "sourceNotes": [
+      "题目结构化依据StepFun step-3.7-flash输出；未读取图片自行识别、未推导答案。",
+      "OCR来源文字（其中手写/圈选仅供溯源，不是标准答案）：\n2進数11000000(符号あり)を16ビットに符号拡張した結果を答えよ。\n(A)1111111111000000\n(B)0000000011000000\n(C)1100000000000000\n(D)1100000011111111\n【手写】(A)",
+      "答案与中文解析由StepFun step-3.7-flash生成，经第二轮模型审校及程序/人工抽核；非原卷官方答案。"
+    ],
+    "reviewNotes": []
+  }
+]

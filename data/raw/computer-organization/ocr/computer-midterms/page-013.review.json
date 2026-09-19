@@ -1,0 +1,32 @@
+{
+  "printed_page_labels": [],
+  "paper_identity": {
+    "title": "",
+    "date": "",
+    "variant": "",
+    "declared_printed_pages": ""
+  },
+  "question_ranges": [
+    "(35)-(38)"
+  ],
+  "page_condition": "clear",
+  "transcription_md": "[PDF查看器界面]\nドキュメントビューアー\n10月27日(水) 15:52\n中国結城版.pdf\n386.08%\n1/2\n\n[页面内容]\n左上角：得点（得分）表格\n\n七、以下の命令はそれぞれ何形式か。A～Cの記号で答えよ。\n\n(35) add\n　(A) R形式【手写圈选】\n　(B) I形式\n　(C) J形式\n\n(36) addi\n　(A) R形式\n　(B) I形式【手写圈选】\n　(C) J形式\n\n(37) lw\n　(A) R形式\n　(B) I形式【手写圈选】\n　(C) J形式\n\n(38) j\n　(A) R形式\n　(B) I形式\n　(C) J形式【手写圈选】\n\n[右下角]\nScanned with CamScanner",
+  "corrections": [],
+  "unresolved": [
+    {
+      "location": "左上角",
+      "kind": "source_crop",
+      "detail": "PDF查看器显示\"1/2\"页码指示，无法确认是否为原卷印刷页码",
+      "next_action": "需要原卷印刷版或更高清扫描确认是否有印刷页码"
+    },
+    {
+      "location": "全局",
+      "kind": "source_crop",
+      "detail": "试卷年份、卷别（variant）及总页数未在图像中显示",
+      "next_action": "需要试卷封面或完整页面信息"
+    }
+  ],
+  "status": "reviewed",
+  "source_pdf": "计组期中 三年合集（19 21）.pdf",
+  "physical_page": 13
+}
