@@ -117,7 +117,7 @@ A Vue 3 + Vite + TypeScript + Dexie single-page quiz app built for final-exam re
 - Modern Chinese history (2,985, including 851 multi-answer, 755 judgement and 161 fill-in-the-blank)
 - CPC party history (1,613, including 515 multi-answer)
 - Military theory (753, including 116 multi-answer, 96 judgement and 224 fill-in-the-blank)
-- Computer organization (199 across four papers; answers and explanations generated with StepFun step-3.7-flash and reviewed, not official answer keys)
+- Computer organization (199 questions; answers and explanations generated with StepFun step-3.7-flash and reviewed, not official answer keys)
 
 **Features:** single/multi/judgement/fill-in-the-blank question types, per-question explanations with wrong-option annotations, wrong-answer book with spaced-repetition scheduling, statistics by subject/lesson/tag, offline-first via IndexedDB, mobile-friendly responsive UI.
 
