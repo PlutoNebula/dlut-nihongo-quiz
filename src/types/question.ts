@@ -38,7 +38,6 @@ export interface Question {
     position: number
     pages?: number[]
     originalNumbers?: string[]
-    images?: string[]
   }
   status: 'ready' | 'needs_review'
   answerProvenance?: 'none' | 'printed' | 'handwritten' | 'generated'

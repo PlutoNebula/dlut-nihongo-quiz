@@ -68,9 +68,7 @@ test('all 31 source pages and all questions remain traceable after splitting', (
   let questions = 0
   for (const { key, pages: count } of COMPUTER_BANKS) {
     const source = readBank(key)
-    const result = validateSource(source, count, (image) =>
-      fs.existsSync(new URL(`../public/${image}`, import.meta.url)),
-    )
+    const result = validateSource(source, count)
     const generated = JSON.parse(
       fs.readFileSync(new URL(`../public/${key}-question-bank.json`, import.meta.url), 'utf8'),
     )

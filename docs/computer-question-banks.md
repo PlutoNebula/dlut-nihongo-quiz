@@ -30,7 +30,6 @@
 
 - `data/raw/computer-organization/<category>.json`：题库源，包含题干、选项、答案、解析和来源页。
 - 同目录`*-coverage.md`与`ocr/`：首次OCR拆题记录及来源证据；这些历史记录中的“答案留空”不代表当前题库状态。
-- `public/computer-organization/<category>/page-NNN.jpg`：31张原卷图片，保留供内容核对。
 - `public/<category>-question-bank.json`：生成后的应用题库，不直接编辑。
 
 修改题库源后运行：
@@ -42,4 +41,4 @@ npm run test:computer
 npm run audit:banks
 ```
 
-生成器先验证全部四库再写入，检查题目ID、题单、答案与选项一致性、非空解析、图片路径和逐页覆盖。缺页的2024卷没有补造题目；C卷日期、期中合集卷段年份仍保留待核对标记。原第14页二次OCR失败记录作为历史来源信息保留。
+生成器先验证全部四库再写入，检查题目ID、题单、答案与选项一致性、非空解析和逐页覆盖。缺页的2024卷没有补造题目；C卷日期、期中合集卷段年份仍保留待核对标记。原第14页二次OCR失败记录作为历史来源信息保留。

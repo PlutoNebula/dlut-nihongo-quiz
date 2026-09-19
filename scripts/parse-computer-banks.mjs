@@ -11,7 +11,7 @@ export const COMPUTER_BANKS = [
   { key: 'computer-midterms', pages: 19 },
 ]
 
-export function validateSource(bank, expectedPages, imageExists = () => true) {
+export function validateSource(bank, expectedPages) {
   const check = (ok, message) => {
     if (!ok) throw new Error(`${bank.category}: ${message}`)
   }
@@ -84,17 +84,6 @@ export function validateSource(bank, expectedPages, imageExists = () => true) {
       q.source.pages.every((p) => Number.isInteger(p) && p >= 1 && p <= expectedPages),
       `${q.id}: source page out of range`,
     )
-    check(
-      Array.isArray(q.source.images) && q.source.images.length === q.source.pages.length,
-      `${q.id}: missing source images`,
-    )
-    for (const [i, page] of q.source.pages.entries()) {
-      const expected = `computer-organization/${bank.category}/page-${String(page).padStart(3, '0')}.jpg`
-      check(
-        q.source.images[i] === expected && imageExists(expected),
-        `${q.id}: invalid or missing image ${expected}`,
-      )
-    }
     if (bank.category === 'computer-midterms' && q.source.pages.includes(14)) {
       check(
         q.reviewNotes?.some((n) => /451|未.{0,5}核对|未复核/.test(n)),
@@ -156,9 +145,7 @@ function main() {
       fs.readFileSync(path.join(root, 'data/raw/computer-organization', `${key}.json`), 'utf8'),
     )
     if (source.category !== key) throw new Error(`${key}: mismatched source`)
-    const result = validateSource(source, pages, (image) =>
-      fs.existsSync(path.join(root, 'public', image)),
-    )
+    const result = validateSource(source, pages)
     return { key, source, result }
   })
   for (const { key, source, result } of inputs) {

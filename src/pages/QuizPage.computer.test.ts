@@ -77,7 +77,6 @@ const sample = (overrides: Partial<Question> = {}): Question => ({
     group: '一',
     position: 1,
     pages: [1],
-    images: ['computer-organization/computer-2021-final/page-001.jpg'],
   },
   ...overrides,
 })
