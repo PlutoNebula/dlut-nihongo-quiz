@@ -21,16 +21,18 @@
 
 ## 学科范围
 
-| 学科         |      题数 |      多选 |    判断 |    填空 | 来源                            | 用途           |
-| ------------ | --------: | --------: | ------: | ------: | ------------------------------- | -------------- |
-| 综合日语2    |       963 |         0 |       0 |       0 | 单词 686 + 语法 277             | 大一下学期期末 |
-| 中国近现代史 |     2,985 |       851 |     755 |     161 | 课堂题库 + 纲要 + 习题集        | 近代史纲要期末 |
-| 党史         |     1,613 |       515 |       0 |       0 | 党史题库完整版                  | 思政课复习     |
-| 军事理论     |       753 |       116 |      96 |     224 | 军理题库整理版                  | 军训理论考核   |
-| 计算机组成   |       199 |         0 |      18 |      47 | 四份试卷，StepFun生成并校订答案 | 计算机组成复习 |
-| **合计**     | **6,513** | **1,482** | **869** | **432** | —                               | —              |
+| 学科         |      题数 |      多选 |    判断 |    填空 | 来源                             | 用途           |
+| ------------ | --------: | --------: | ------: | ------: | -------------------------------- | -------------- |
+| 综合日语2    |       963 |         0 |       0 |       0 | 单词 686 + 语法 277              | 大一下学期期末 |
+| 中国近现代史 |     2,985 |       851 |     755 |     161 | 课堂题库 + 纲要 + 习题集         | 近代史纲要期末 |
+| 党史         |     1,613 |       515 |       0 |       0 | 党史题库完整版                   | 思政课复习     |
+| 军事理论     |       753 |       116 |      96 |     224 | 军理题库整理版                   | 军训理论考核   |
+| 计算机组成   |       199 |         0 |      18 |      47 | 计算机组成题库，答案经生成与校订 | 计算机组成复习 |
+| **合计**     | **6,513** | **1,482** | **869** | **432** | —                                | —              |
 
 综合日语2 包含四个子库：单词（w26–w36）、学习通 99 题（g01–g10）、2021 年真题 79 题（g11）、2024 年真题 99 题（g21–g28）。
+
+计算机组成（软国际）共 199 题，均提供答案和中文解析。参考答案由 StepFun `step-3.7-flash` 生成并经复核，非官方答案。详见[计算机组成题库说明](docs/computer-question-banks.md)。
 
 ## 在线使用
 
@@ -50,7 +52,7 @@
 
 ## 快速开始
 
-需要 Node.js 18+（CI 用 Node 24）。
+推荐 Node.js 24（与 CI 一致；Vite 8 要求 Node.js 20.19+ 或 22.12+）。
 
 ```bash
 git clone https://github.com/tianxingleo/dlut-nihongo-quiz.git
@@ -66,23 +68,26 @@ npm run dev          # http://localhost:5173/
 | `npm run dev`             | 启动开发服务器                                                |
 | `npm run build`           | 生产构建（`base=/dlut-nihongo-quiz/`，含 `vue-tsc` 类型检查） |
 | `npm run preview`         | 本地预览生产构建                                              |
-| `npm run test`            | 单元测试（vitest）                                            |
+| `npm run test`            | Vitest 测试 + 计算机题库回归检查                              |
 | `npm run parse:all`       | 一次性跑全部 parser                                           |
-| `npm run parse:japanese2` | 综合日语2 md → JSON（合并语法 + 单词）                        |
+| `npm run merge:japanese2` | 合并已生成的语法、单词 JSON 为综合日语2题库                   |
 | `npm run parse:history`   | 历史 md → JSON                                                |
 | `npm run parse:party`     | 党史 md → JSON                                                |
 | `npm run parse:military`  | 军事 md → JSON                                                |
+| `npm run parse:computer`  | 从结构化源文件生成计算机组成题库                              |
+| `npm run test:computer`   | 检查计算机题库答案、来源覆盖与已知勘误                        |
+| `npm run generate:meta`   | 更新各分类题数统计                                            |
 | `npm run audit:banks`     | 题库 schema + 内部去重检查                                    |
 | `npm run format`          | Prettier 自动格式化                                           |
 
-> 不要手改 `public/*.json` —— 它们是 parser 生成的。源在 `data/raw/` 下的 Markdown 或结构化 JSON。
+> 题库源保留在 `data/raw/`。修改源文件后运行对应 parser，再运行 `npm run generate:meta`、`npm run audit:banks` 和 `npm test`；不要直接修改生成的 `public/*-question-bank.json`。
 
 ## 深入文档
 
 | 文档                                              | 内容                                                       |
 | ------------------------------------------------- | ---------------------------------------------------------- |
 | [项目结构](docs/project-structure.md)             | 完整目录树、数据流、各模块职责                             |
-| [计算机组成题库](docs/computer-question-banks.md) | 四份试卷、答案来源、勘误与维护                             |
+| [计算机组成题库](docs/computer-question-banks.md) | 学科介绍、答案来源、勘误与维护                             |
 | [题库维护](docs/question-bank.md)                 | 加题改题流程、Markdown 格式、多选/判断题写法、新增学科步骤 |
 | [部署](docs/deployment.md)                        | GitHub Pages + Actions、自定义域名、本地预览生产构建       |
 | [贡献指南](CONTRIBUTING.md)                       | Fork/PR 流程、代码风格、Commit 规范                        |
