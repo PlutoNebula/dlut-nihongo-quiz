@@ -111,6 +111,8 @@ export interface ActiveSession {
   // 进入刷题页的入口签名（category/mode/group 等 query 的拼接）。
   // 直接刷新页面（无 resume=1）时，用它判断存盘会话是否属于当前入口，从而自动恢复进度。
   entryKey?: string
+  // 这条记录属于哪份试卷（学科 + 子题库/题单 + 标签）。不同试卷的记录分开存，互不覆盖。
+  paperKey?: string
   // 重做错题模式：答对时立即清零 wrongCount、提升 masteryLevel
   wrongRedo?: boolean
 }
