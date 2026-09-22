@@ -1330,6 +1330,21 @@ def ai_review(
         "answer_table_snippets": len(snippets),
     }
     raw = normalize_ai_review(raw, report)
+    # **不许"质量骤降"的结果静默覆盖缓存**：实测 403 题的卷子，输出预算不够时模型只回
+    # 1 条答案（上一次同一份卷子给了 298 条）—— 覆盖后 md 从"有答案 346"退回"101"，
+    # 而 S5 只会告诉你"302 道会被丢弃"，完全看不出是 AI 那次偷懒。
+    if cache_path.exists():
+        old = c.read_json(cache_path) or {}
+        old_n = len(old.get("answers") or []) + len(old.get("questionTypes") or [])
+        new_n = len(raw.get("answers") or []) + len(raw.get("questionTypes") or [])
+        if old_n >= 20 and new_n < old_n // 3:
+            c.warn(
+                f"AI 终审这次只给了 {new_n} 条结果（缓存里上一次是 {old_n} 条）——"
+                f"疑似输出被截断/形状异常，**保留旧缓存不覆盖**。"
+                f"确认要覆盖：删掉 {cache_path.name} 后重跑（或加大 --ai-max-tokens）"
+            )
+            report["ai_review_regressed"].append((old_n, new_n))
+            return old
     c.write_json_atomic(cache_path, raw)
     c.always(
         f"[{STAGE}] AI 终审：{c.human_ms(started)}ms / {c.human_tokens(tokens)} tok → "
@@ -2334,9 +2349,10 @@ def main() -> int:
     parser.add_argument(
         "--ai-max-tokens",
         type=int,
-        default=65536,
-        help="AI 终审单次响应上限，默认 65536（**推理模型**会把思维链也算进这里，"
-        "16384 实测会被思维链吃光、正文为空；DeepSeek 合法上限 393216）",
+        default=131072,
+        help="AI 终审单次响应上限，默认 131072（**推理模型**会把思维链也算进这里："
+        "实测 40 页卷 403 题 + 答案页，16384/65536 都不够它把 ~300 条答案写完，"
+        "会只回几条甚至空正文；DeepSeek 合法上限 393216）",
     )
     parser.add_argument("--ai-timeout", type=int, default=180, help="AI 终审单次超时秒数，默认 180")
     parser.add_argument("--quiet", action="store_true", help="只打印每页完成行与最终摘要")
@@ -2382,6 +2398,7 @@ def main() -> int:
         "ai_shape_fixed": [],
         "ai_shape_broken": [],
         "ai_review_failed": [],
+        "ai_review_regressed": [],
         "criteria_rows": [],
         "criteria_attached": [],
         "criteria_by_order": 0,
