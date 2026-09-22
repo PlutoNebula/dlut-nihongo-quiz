@@ -1101,10 +1101,9 @@ AI_REVIEW_SCHEMA = """请输出如下 JSON（键名固定）：
     {"number": 8, "keepNumber": 7, "reason": "题干与选项完全相同，仅答案不同，判为重复", "confidence": "high"}
   ],
   "answerKeySource": "卷首答案表 1-5 DDDBC / 6-10 ABDDB / 11-15 ABCAC（没有就写空）",
-  "answers": [{"number": 1, "answerKey": "D", "reason": "答案表位置 1"}],
+  "answers": [{"index": 12, "answerKey": "D", "reason": "答案表 第一章 一、单选题 1~5 DCBAC 的第 2 个"}],
   "questionTypes": [
-    {"number": 1, "group": "二、多项选择题", "questionType": "multi", "answerKey": "CE",
-     "reason": "卷面大题写「多项选择题」；且答案 CE 是两个字母"}
+    {"index": 12, "questionType": "multi", "answerKey": "CE", "reason": "卷面大题写「多选题」"}
   ],
   "notes": []
 }
@@ -1114,28 +1113,24 @@ AI_REVIEW_SCHEMA = """请输出如下 JSON（键名固定）：
    只是"长得像"或题型相同**不算**；拿不准就不要报（宁缺勿滥）。keepNumber 填保留哪一条。
 2) 删除后**题号整体前移**（顺延）：被删题之后的所有题号减 1，依次类推 —— 这一层 S4 会自己算，
    你只要报 duplicates。
-3) `answers` 是**顺延之后**每个题号的答案（answerKey 用 A/B/C/D/E）。**必须同时给 `group`**
-   （原样抄回上面那道题的「大题=」字段）—— 很多卷子按「绪论/第一章/第二章」分节、
-   **每章题号都从 1 重新开始**，只写题号会把第一章的答案贴到第二章的题上。
-   答案是按"章 + 大题 + 题号"给的，请你自己读懂【参考答案页原文】的版式（可能是
-   `1～5 ADAAD`（全角波浪号）、`1、ABCD 2、ABD`（多选）、`1~4 × √ × ×`（判断题符号）、
-   甚至带"绪论/第一章"小标题、每章重新编号）再把每条答案对到具体题目上。
-   只在卷面确实有答案表（或题干里印了答案）时才给；没有把握的题**不要放进 answers**。
+3) `answers` 里每条**必须带 `index`**（题目行首的 `#序号`，原样抄回）—— 这是唯一无歧义的引用：
+   很多卷子按「绪论/第一章/第二章」分节、**每章题号都从 1 重新开始**，而且 OCR 抽题时
+   常常整段没写大题名，用"题号/大题名"根本对不上（实测 421 题里 277 题完全没有大题名）。
+   `answerKey` 用 A/B/C/D/E。请自己读懂【参考答案页原文】的版式（可能是 `1～5 ADAAD`（全角波浪号）、
+   `1、ABCD 2、ABD`（多选）、`1~4 × √ × ×`（判断题符号），还常带"绪论/第一章"小标题、
+   每章重新编号）——**按"章的顺序 + 大题 + 题号"落到对应的 #序号 上**。
+   判断题符号 `√` 记作 `A`、`×` 记作 `B`（卷面判断题的选项是 A.正确 / B.错误）。
+   卷面没给答案的题就**不要放进 answers**。
 4) 卷面答案表按"位置"给（如 `1-5 DDDBC` 表示第 1~5 题依次是 D D D B C）；
    多选题可能写作 `1.CE 2.AC` 这种，answerKey 直接拼成 "CE"。
    **⚠ 很多卷子每个大题都从 1 重新编号**（一、单项 1-15；二、多项 1-5；三、论述 1…）——
    `answers[].number` 配的是**上面给你的那道题**，别把「单项选择 第4题=B」贴到
    「多项选择 第4题」上（S4 实测踩过：卷面答案是 ABC，被改成了 B）。
    `answers[]` **只用来补卷面没给出答案的题**；已经有答案的题不要放进 answers。
-5) **questionTypes：题型判定（重点）**。对**每一道有选项的题**都给一条；没有选项的主观题不用给。
-   a. 判据优先级：**卷面大题标题**（"多项选择题/不定项" → multi，"单项选择题" → single，
-      "判断题/正误" → judgement）> **答案的字母个数**（≥2 个 → multi）> 题干与选项内容。
-   b. `group` 必须**原样抄回**上面给你的「大题=」字段 —— 很多卷子每个大题都从 1 重新编号，
-      只写题号 S4 对不上号。
-   c. `answerKey` 填**你认为该题的全部正确选项**（多选就把字母全拼上，如 "CE"；
-      单选就一个字母）。它的作用是交叉验证：**如果一道题其实是多选、而卷面答案表只抄到了
-      一个字母，那说明答案表漏读了** —— 这种情况请务必按你的判断把字母给全。
-   d. 题型与答案都拿不准时，`questionType` 填 "single"、`answerKey` 留空，并在 reason 里说明。
+5) **questionTypes：题型判定（次要任务，答案做完再判）**。
+   只对**大题名看不出题型**的题给（大题名写着"单选题/多选题/判断题"的题**不用给**，S4 有确定性规则）。
+   判据优先级：卷面大题标题 > 答案的字母个数（≥2 → multi）> 题干与选项内容。
+   `answerKey` 填你认为的全部正确项（多选拼起来，如 "CE"），用来交叉验证答案表有没有漏读。
 6) 不确定的一律写进 notes，不要编造。"""
 
 
@@ -1188,13 +1183,13 @@ def snippet(text, head: int = 80, tail: int = 80) -> str:
 
 
 def build_review_payload(model: str | None, entries: list[dict], snippets: list[str], max_tokens: int) -> dict:
-    lines = ["【全卷题目】"]
-    for entry in entries:
+    lines = ["【全卷题目】（**引用题目一律用行首的 #序号** —— 很多卷子按章重新编号，题号会重）"]
+    for index, entry in enumerate(entries, start=1):
         q = entry["q"]
         options = " / ".join(f"{o['key']}.{o['text']}" for o in q.get("options") or [])
         lines.append(
-            f"- 第{q.get('number')}题（大题={q.get('group') or '未写'} / 题组={entry.get('group_title') or '未分组'}"
-            f" / 现有题型={q.get('questionType') or '未定'}）"
+            f"#{index} 第{q.get('number')}题（page {entry['page']} / 大题={q.get('group') or '未写'}"
+            f" / 题组={entry.get('group_title') or '未分组'} / 现有题型={q.get('questionType') or '未定'}）"
             f"{snippet(q.get('stem'))}"
             + (f"  [{options[:200]}]" if options else "")
             + f"  答案={q.get('answerKey') or '（无）'}"
@@ -1333,6 +1328,9 @@ def apply_ai_review(entries: list[dict], review: dict, report: dict) -> list[dic
     """
     if not review:
         return entries
+    # AI 用**清单序号**引用题目。序号按 AI 看到的顺序编，**必须在删重复之前**记下来
+    # （删完 entries 就整体前移了；而且对象引用稳定，删掉的题自然查不到）。
+    by_index: dict[int, dict] = {index: entry for index, entry in enumerate(entries, start=1)}
     duplicates = review.get("duplicates") or []
     drop_positions: set[int] = set()
     by_number: dict[int, list[int]] = {}
@@ -1401,16 +1399,20 @@ def apply_ai_review(entries: list[dict], review: dict, report: dict) -> list[dic
     for item in answers:
         if not isinstance(item, dict):
             continue
-        number = item.get("number")
         key = flatten(item.get("answerKey")).upper()
-        if not isinstance(number, int):
-            continue
-        bucket = section_bucket(item.get("group"), item.get("groupTitle"))
-        entry = by_place.get((bucket, number))
+        # **优先按 AI 抄回的 #序号 找题**（题号/大题名不可靠时唯一无歧义的引用）
+        raw_index = item.get("index")
+        entry = by_index.get(raw_index) if isinstance(raw_index, int) else None
         if entry is None:
-            # 大题名对不上时，只有"全卷只有这一道该题号"才敢用题号兜底
-            candidates = by_number.get(number) or []
-            entry = candidates[0] if len(candidates) == 1 else None
+            number = item.get("number")
+            if not isinstance(number, int):
+                continue
+            bucket = section_bucket(item.get("group"), item.get("groupTitle"))
+            entry = by_place.get((bucket, number))
+            if entry is None:
+                # 大题名对不上时，只有"全卷只有这一道该题号"才敢用题号兜底
+                candidates = by_number.get(number) or []
+                entry = candidates[0] if len(candidates) == 1 else None
         if not entry or not key:
             continue
         text = option_text(entry["q"], key)
@@ -1432,11 +1434,13 @@ def apply_ai_review(entries: list[dict], review: dict, report: dict) -> list[dic
         report["ai_answers"].append((number, before or "（无）", key, text[:20], str(item.get("reason") or "")[:40]))
         entry["q"]["answerKey"] = key
         entry["q"]["answerText"] = text or entry["q"].get("answerText") or ""
-    apply_ai_types(entries, review, report)
+    apply_ai_types(entries, review, report, by_index)
     return entries
 
 
-def apply_ai_types(entries: list[dict], review: dict, report: dict) -> None:
+def apply_ai_types(
+    entries: list[dict], review: dict, report: dict, by_index: dict | None = None
+) -> None:
     """按 AI 的判型结果补正题型，并交叉验证多选答案有没有漏读（用户："用 ai 判断"）。
 
     为什么必须靠 AI：**答案表本身不写"这题是多选"**，而每道题都挂着好几个选项 ——
@@ -1468,9 +1472,17 @@ def apply_ai_types(entries: list[dict], review: dict, report: dict) -> None:
         try:
             number = int(item.get("number"))
         except (TypeError, ValueError):
+            number = None
+        raw_index = item.get("index")
+        # schema 现在要求 AI 用 `#序号` 引用题目（题号/大题名不可靠）→ **不能强求 number**
+        if not isinstance(raw_index, int) and number is None:
             continue
         bucket = section_bucket(item.get("group"), item.get("groupTitle"))
-        entry = index.get((bucket, number))
+        # 优先按 AI 抄回的 #序号（题号/大题名不可靠时唯一无歧义的引用）
+        raw_index = item.get("index")
+        entry = (by_index or {}).get(raw_index) if isinstance(raw_index, int) else None
+        if entry is None:
+            entry = index.get((bucket, number))
         if entry is None:  # 大题名对不上时，只有"全卷只有这一道该题号"才敢用题号兜底
             candidates = [e for (_b, n), e in index.items() if n == number]
             entry = candidates[0] if len(candidates) == 1 else None
