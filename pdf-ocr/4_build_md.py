@@ -440,8 +440,26 @@ def mine_answers_from_transcription(text, table: dict, page: int, report: dict) 
     return found
 
 
+# 「这行长得像答案」：`1~5 ADAAD`（含全角波浪号）或 `1、ABCD` / `12．C` 这种逐题答案
+ANSWER_LIKE_LINE = re.compile(
+    r"^\s*(?:\d+\s*[~～\-–—至]\s*\d+\s*[A-Ea-e√×对错\s]{2,}"
+    r"|\d+\s*[、.．:：]\s*[A-Ea-e]{1,5}\s*$)"
+)
+
+
+def looks_like_answer_key(text) -> bool:
+    """按**内容**判断这页是不是答案页（≥3 行"长得像答案"）。
+
+    为什么不能只看标题：实测这份 40 页卷的答案页**没有「参考答案」标题** —— 直接在卷尾从
+    `绪论 / 一、单选题： / 1~5 ADAAD` 开始，靠关键词一个字都匹配不到，于是"答案页=空"，
+    答案页原文根本没喂给 AI（答案 0 条）。
+    """
+    hits = sum(1 for line in str(text or "").split("\n") if ANSWER_LIKE_LINE.match(line.strip()))
+    return hits >= 3
+
+
 def transcription_answer_pages(pages_dir: Path, pages: list[int]) -> list[int]:
-    """哪些页的**转写**里有"参考答案 / 评分标准"（与模型抽没抽出题无关）。"""
+    """哪些页的**转写**像"参考答案 / 评分标准"页（与模型抽没抽出题无关）。"""
     hits: list[int] = []
     for page in pages:
         for label in ("a", "b"):
@@ -450,7 +468,7 @@ def transcription_answer_pages(pages_dir: Path, pages: list[int]) -> list[int]:
                 continue
             data = c.read_json(path) or {}
             text = str(data.get("transcription_md") or "")
-            if ANSWER_KEY_PAGE.search(text) or "参考答案" in text:
+            if ANSWER_KEY_PAGE.search(text) or "参考答案" in text or looks_like_answer_key(text):
                 hits.append(page)
                 break
     return hits
@@ -1287,7 +1305,10 @@ def ai_review(
         c.warn("没配 DEEPSEEK_API_KEY，跳过 AI 终审（判重/答案对位都不会做）")
         return None
 
-    snippets = answer_table_snippets(pages_dir, pages)
+    # **只喂答案页的原文**。以前这里传的是全部页，24k 字符预算从第 1 页开始截 →
+    # 答案页（卷尾）被整段截掉，AI 根本没见过答案表（实测：答案 0 条）。
+    answer_pages = transcription_answer_pages(pages_dir, pages)
+    snippets = answer_table_snippets(pages_dir, answer_pages or pages)
     payload = build_review_payload(cfg.get("model"), entries, snippets, args.ai_max_tokens)
     c.info(f"    AI 终审：{len(entries)} 题 + {len(snippets)} 段答案表 → {cfg.get('model')}")
     started = time.perf_counter()
