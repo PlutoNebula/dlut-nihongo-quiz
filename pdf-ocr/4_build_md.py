@@ -1114,8 +1114,13 @@ AI_REVIEW_SCHEMA = """请输出如下 JSON（键名固定）：
    只是"长得像"或题型相同**不算**；拿不准就不要报（宁缺勿滥）。keepNumber 填保留哪一条。
 2) 删除后**题号整体前移**（顺延）：被删题之后的所有题号减 1，依次类推 —— 这一层 S4 会自己算，
    你只要报 duplicates。
-3) `answers` 是**顺延之后**每个题号的答案（answerKey 用 A/B/C/D/E）。只在卷面确实有答案表
-   （或题干里印了答案）时才给；没有把握的题**不要放进 answers**（宁可留空让人工看）。
+3) `answers` 是**顺延之后**每个题号的答案（answerKey 用 A/B/C/D/E）。**必须同时给 `group`**
+   （原样抄回上面那道题的「大题=」字段）—— 很多卷子按「绪论/第一章/第二章」分节、
+   **每章题号都从 1 重新开始**，只写题号会把第一章的答案贴到第二章的题上。
+   答案是按"章 + 大题 + 题号"给的，请你自己读懂【参考答案页原文】的版式（可能是
+   `1～5 ADAAD`（全角波浪号）、`1、ABCD 2、ABD`（多选）、`1~4 × √ × ×`（判断题符号）、
+   甚至带"绪论/第一章"小标题、每章重新编号）再把每条答案对到具体题目上。
+   只在卷面确实有答案表（或题干里印了答案）时才给；没有把握的题**不要放进 answers**。
 4) 卷面答案表按"位置"给（如 `1-5 DDDBC` 表示第 1~5 题依次是 D D D B C）；
    多选题可能写作 `1.CE 2.AC` 这种，answerKey 直接拼成 "CE"。
    **⚠ 很多卷子每个大题都从 1 重新编号**（一、单项 1-15；二、多项 1-5；三、论述 1…）——
@@ -1135,27 +1140,26 @@ AI_REVIEW_SCHEMA = """请输出如下 JSON（键名固定）：
 
 
 def answer_table_snippets(pages_dir: Path, pages: list[int], limit: int = 40) -> list[str]:
-    """从各页 OCR 转写里挑"答案表/评分标准"片段，喂给 AI 终审。
+    """把**答案页的整页转写**喂给 AI 终审（用户要求：答案匹配交给 AI 分析，不用正则）。
 
-    实测卷首就印着 `1-5 DDDBC / 6-10 ABDDB`，参考答案页也有 —— 答案是按**位置**给的，
-    所以删掉重复题后必须按位置重新对位，否则后面全部错位。
+    以前这里用一条窄正则去"挑片段"（只认 `1-5 DDDBC` 这种），实测在真实卷子上**一条都挑不到**：
+    马原 40 页卷的答案是 `1～5 ADAAD`（全角波浪号）、按「绪论/第一章/第二章」分节且**每章题号
+    都从 1 重新开始**、判断题答案是 `× √ × ×` 符号 —— 窄正则全军覆没，于是"答案页找到了、
+    却挖到 0 条"，而这一步是**静默**的。
+
+    现在改成：**把答案页的原文整段交给 AI**，由它读懂版式、按"章 + 大题 + 题号"把答案对到题上。
+    只有 `--no-ai-review`（纯离线）时才回落到确定性的 `mine_answers_from_transcription()`。
     """
-    pattern = re.compile(r"^\s*\d+\s*[-–—~]\s*\d+\s+[A-Ea-e]|参考答案|评分标准|答案表|标准答案")
-    snippets: list[str] = []
+    texts: list[str] = []
     for page in pages:
         for label in ("a", "b"):
             path = pages_dir / f"page-{page:03d}.{label}.review.json"
             if not path.exists():
                 continue
-            lines = str(c.read_json(path).get("transcription_md") or "").split("\n")
-            for index, line in enumerate(lines):
-                if pattern.search(line.strip()):
-                    block = "\n".join(lines[index : index + 4]).strip()
-                    if block and block not in snippets:
-                        snippets.append(f"（page {page}）{block}")
-                    if len(snippets) >= limit:
-                        return snippets
-    return snippets
+            text = str((c.read_json(path) or {}).get("transcription_md") or "").strip()
+            if text:
+                texts.append(f"（page {page} / {label} 路）\n{text}")
+    return texts
 
 
 def snippet(text, head: int = 80, tail: int = 80) -> str:
@@ -1183,7 +1187,7 @@ def build_review_payload(model: str | None, entries: list[dict], snippets: list[
             + f"  答案={q.get('answerKey') or '（无）'}"
         )
     if snippets:
-        lines += ["", "【卷面答案表/评分标准片段】", *snippets]
+        lines += ["", "【参考答案页原文（整页 OCR 转写，答案一律以它为准）】", *snippets]
     lines += ["", AI_REVIEW_SCHEMA]
     return {
         "model": model,
@@ -1194,6 +1198,61 @@ def build_review_payload(model: str | None, entries: list[dict], snippets: list[
             {"role": "user", "content": "\n".join(lines)},
         ],
     }
+
+
+AI_ITEM_KEYS = ("duplicates", "answers", "questionTypes", "explanations")
+AI_ITEM_MARKERS = {
+    "duplicates": ("stem", "keepNumber"),
+    "answers": ("answerKey",),
+    "questionTypes": ("questionType",),
+    "explanations": ("explanation",),
+}
+
+
+def normalize_ai_review(raw, report: dict) -> dict:
+    """把 AI 返回的 JSON **形状**收拾成"每个键都是数组"，收不了就大声报出来。
+
+    实测（马原 40 页卷）：模型没按 schema 回 `{"explanations":[…]}`，而是直接回了一个**裸对象**
+    （只有 1 条解析）。旧代码 `raw.get("explanations")` 得到 None → **整段结果被静默丢掉**，
+    报告里只剩一句"AI 判型 0 题"，根本看不出是解析形状不对。
+    这里兼容三种常见形状：① 正常对象；② 键的值是单个对象；③ 整个回复就是一个裸对象/裸数组。
+    """
+    fixed: dict = dict(raw) if isinstance(raw, dict) else {}
+    notes: list[str] = []
+
+    if isinstance(raw, list):  # ③ 裸数组：按字段归位
+        fixed = {}
+        for key in AI_ITEM_KEYS:
+            picked = [
+                item
+                for item in raw
+                if isinstance(item, dict) and any(m in item for m in AI_ITEM_MARKERS[key])
+            ]
+            if picked:
+                fixed[key] = picked
+        if fixed:
+            notes.append("裸数组 → 按字段归位")
+
+    for key in AI_ITEM_KEYS:  # ② 键的值是单个对象
+        if isinstance(fixed.get(key), dict):
+            fixed[key] = [fixed[key]]
+            notes.append(f"{key}: 单对象 → 数组")
+
+    if not any(isinstance(fixed.get(k), list) for k in AI_ITEM_KEYS):  # ③ 整个回复是裸对象
+        item = {k: v for k, v in fixed.items() if not str(k).startswith("_")}
+        for key in AI_ITEM_KEYS:
+            if any(m in item for m in AI_ITEM_MARKERS[key]):
+                fixed[key] = [item]
+                notes.append(f"裸对象 → 归入 {key}")
+                break
+
+    if notes:
+        report["ai_shape_fixed"].extend(notes)
+    if not any(isinstance(fixed.get(k), list) for k in AI_ITEM_KEYS):
+        preview = str(raw)[:200]
+        c.warn(f"AI 终审返回的形状无法识别，本次结果整段忽略；原文前 200 字：{preview}")
+        report["ai_shape_broken"].append(preview)
+    return fixed
 
 
 def ai_review(
@@ -1241,10 +1300,12 @@ def ai_review(
         "json_truncated": bool(repair.get("truncated")),
         "answer_table_snippets": len(snippets),
     }
+    raw = normalize_ai_review(raw, report)
     c.write_json_atomic(cache_path, raw)
     c.always(
         f"[{STAGE}] AI 终审：{c.human_ms(started)}ms / {c.human_tokens(tokens)} tok → "
-        f"判重 {len(raw.get('duplicates') or [])}、答案 {len(raw.get('answers') or [])}（{cache_path.name}）"
+        f"判重 {len(raw.get('duplicates') or [])}、答案 {len(raw.get('answers') or [])}"
+        f"、题型 {len(raw.get('questionTypes') or [])}（{cache_path.name}）"
     )
     return raw
 
@@ -1311,15 +1372,32 @@ def apply_ai_review(entries: list[dict], review: dict, report: dict) -> list[dic
                 entry["q"]["number"] = start + offset
 
     answers = review.get("answers") or []
-    index_by_number = {
-        entry["q"].get("number"): entry for entry in entries if isinstance(entry["q"].get("number"), int)
-    }
+    # **按 (大题, 题号) 找题**：很多卷子（含马原 40 页卷）按"绪论/第一章/第二章"分节，
+    # **每章题号都从 1 重新开始** —— 只按题号查会全部落到同一道题上（旧代码的 dict 推导
+    # 还会静默保留最后一个 entry）。AI 被要求在 answers[].group 里原样抄回大题名。
+    by_place: dict[tuple[str, int], dict] = {}
+    by_number: dict[int, list[dict]] = {}
+    for entry in entries:
+        number = entry["q"].get("number")
+        if not isinstance(number, int):
+            continue
+        bucket = section_bucket(entry["q"].get("group"), entry["q"].get("groupTitle"))
+        by_place[(bucket, number)] = entry
+        by_number.setdefault(number, []).append(entry)
+
     for item in answers:
         if not isinstance(item, dict):
             continue
         number = item.get("number")
         key = flatten(item.get("answerKey")).upper()
-        entry = index_by_number.get(number) if isinstance(number, int) else None
+        if not isinstance(number, int):
+            continue
+        bucket = section_bucket(item.get("group"), item.get("groupTitle"))
+        entry = by_place.get((bucket, number))
+        if entry is None:
+            # 大题名对不上时，只有"全卷只有这一道该题号"才敢用题号兜底
+            candidates = by_number.get(number) or []
+            entry = candidates[0] if len(candidates) == 1 else None
         if not entry or not key:
             continue
         text = option_text(entry["q"], key)
@@ -2249,6 +2327,8 @@ def main() -> int:
         "answers_from_table": [],
         "answer_without_question": [],
         "answer_rows_any_page": [],
+        "ai_shape_fixed": [],
+        "ai_shape_broken": [],
         "criteria_rows": [],
         "criteria_attached": [],
         "criteria_by_order": 0,
