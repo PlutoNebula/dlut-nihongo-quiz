@@ -13,6 +13,9 @@
     上不一致时，即使模型没报冲突，也补一条 synthetic conflict 并把整页标 needs_review ——
     因为两路提示词刻意异构，转写文本的排版本来就不同，只有这些字段可直接逐字段比。
   * 只有一路成功（另一路失败）时仍提取，但整页标 needs_review 并注明缺一路。
+  * **题号覆盖 / 题数匹配兜底**：把两路 `question_ranges` 的并集与"实际提出的题号"对账，
+    少了（模型静默漏抽）/ 多了（编题号）/ 同页重复 → 补 synthetic conflict 并整页标 needs_review。
+    实测抓到过：page 4 两路都声明 34-41，模型只提出 36-41，丢了第 34、35 题。
 
 产物字段见 §7.2；中间产物留在 pdf-ocr/work/，不写 data/raw。
 退出码：0 成功；1 参数/环境错误；3 有页失败。
@@ -62,7 +65,14 @@ SCHEMA_BLOCK = """请输出如下 JSON（键名固定）：
 3) 题干/选项被页边界切成两半（本页只有半截）时，continued 为 true —— 交给后续拼接，不要脑补后半截。
 4) 只提取本页真实出现的题目，number 用页面上的原始题号；选项 key 用 A/B/C/D。
    没有选项的题（填空/简答）options 给 []，answerKey 给 ""，答案写在 answerText。
-5) 两路都没写清的内容不要编造；宁可在 explanation 里留空 + needs_review=true。"""
+5) 两路都没写清的内容不要编造；宁可在 explanation 里留空 + needs_review=true。
+6) **公共题干（题组导言 / 代码块 / 表格）与它下面的小题**：
+   a. 一个题组的小题共用一段导言时（如「以下は…空欄を A～D で答えよ」+ 代码块），
+      把这段导言**原样**抄到该题组**第一道小题的 stem 开头**（保留换行和 ``` 代码围栏）。
+   b. `groupTitle` 只写题组的**短名**（如「题组二」）。**不要把整段导言塞进 groupTitle。**
+   c. **该题组下的每一个小题都必须单独成题**，即使小题自己的文字只是「(34) の選択肢：」这样的
+      占位符、或者小题的题干不在这页 —— 题号用页面上的小题号，选项/答案照抄卷面，**不许跳过**。
+      宁可用占位文字 + needs_review=true，也不能少一道小题。"""
 
 
 # ── 格式无关字段的确定性比对（兜底）───────────────────────────────────────
@@ -132,6 +142,84 @@ def structural_diffs(review_a: dict, review_b: dict) -> list[dict]:
         diff.setdefault("chosen", "")
         diff.setdefault("reason", "两路在这项上不一致（确定性比对发现，模型未报）")
         diff.setdefault("confidence", "low")
+    return diffs
+
+
+# ── 题号覆盖 / 题数匹配的确定性兜底 ──────────────────────────────────────
+def _as_int(value) -> int | None:
+    try:
+        return int(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def declared_numbers(reviews: dict[str, dict]) -> tuple[set[int], list[str]]:
+    """两路 `question_ranges` 的并集 → (期望题号集合, 原始声明文本)。"""
+    numbers: set[int] = set()
+    sources: list[str] = []
+    for label in sorted(reviews):
+        ranges = reviews[label].get("question_ranges") or []
+        if ranges:
+            sources.append(f"{label.upper()} 路：{', '.join(str(x) for x in ranges)}")
+        numbers |= normalize_range(ranges)
+    return numbers, sources
+
+
+def coverage_diffs(reviews: dict[str, dict], questions: list[dict]) -> list[dict]:
+    """题号覆盖 / 题数匹配的确定性检查（**不发新请求，纯本地比对**）。
+
+    OCR 两路各自声明了本页含哪些题号（`question_ranges`，如 `["34-41"]`）。
+    取并集，与"本次实际提出的题号"比一遍：
+
+      * 少了 → 模型**静默漏抽**（实测：page 4 声明 34-41，只提出 36-41，丢了第 34/35 题）
+      * 多了 → 模型编了题号，或 OCR 的范围写错
+      * 同页重复 → 复制粘贴
+
+    只报案、不阻断：冲突进 `conflicts[]`，整页 `needs_review`。
+    """
+    expected, sources = declared_numbers(reviews)
+    actual = [n for n in (_as_int(q.get("number")) for q in questions) if n is not None]
+    actual_set = set(actual)
+    source_text = "；".join(sources) or "（两路都没声明题号范围）"
+    diffs: list[dict] = []
+
+    if expected:
+        missing = sorted(expected - actual_set)
+        extra = sorted(actual_set - expected)
+        if missing or extra:
+            detail = []
+            if missing:
+                detail.append(f"缺 {len(missing)} 题（{c.format_pages(missing)}）")
+            if extra:
+                detail.append(f"多出未声明的题号（{c.format_pages(extra)}）")
+            diffs.append(
+                {
+                    "question": None,
+                    "field": "question_coverage",
+                    "a": f"OCR 声明本页 {len(expected)} 题：{c.format_pages(sorted(expected))}",
+                    "b": f"实际提出 {len(actual)} 题：{c.format_pages(sorted(actual_set)) or '无'}",
+                    "chosen": "",
+                    "reason": (
+                        f"题数不匹配：{'；'.join(detail)}。来源：{source_text}。"
+                        "少题通常是模型静默漏抽 —— 请对照页图补抽，或确认该题号是 OCR 笔误"
+                    ),
+                    "confidence": "medium",
+                }
+            )
+
+    duplicates = sorted({n for n in actual if actual.count(n) > 1})
+    if duplicates:
+        diffs.append(
+            {
+                "question": None,
+                "field": "question_number_duplicate",
+                "a": f"本页提出 {len(actual)} 题",
+                "b": f"重复题号：{c.format_pages(duplicates)}",
+                "chosen": "",
+                "reason": "同页出现重复题号，模型可能复制粘贴了同一题；请对照页图确认",
+                "confidence": "medium",
+            }
+        )
     return diffs
 
 
@@ -338,7 +426,7 @@ def merge_one_page(
                     raw = dict(raw)
                     raw["conflicts"] = list(raw.get("conflicts") or []) + extra
                     notes.append(f"确定性比对另发现 {len(extra)} 处两路不一致")
-            return normalize_merge(
+            merged = normalize_merge(
                 raw,
                 page,
                 cfg,
@@ -351,6 +439,14 @@ def merge_one_page(
                     "json_truncated": repair.get("truncated", False),
                 },
             )
+            # 题号覆盖 / 题数匹配兜底：与"两路 OCR 自己声明的题号范围"对账
+            coverage = coverage_diffs(reviews, merged.get("questions") or [])
+            if coverage:
+                merged["conflicts"] = list(merged.get("conflicts") or []) + coverage
+                notes.append(f"题号覆盖核对发现 {len(coverage)} 处不一致")
+                merged["notes"] = notes
+                merged["needs_review"] = True
+            return merged
         except c.ApiError as exc:
             last_error = str(exc)
             if not exc.retryable:
