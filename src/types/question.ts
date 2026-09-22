@@ -8,6 +8,7 @@ export type Category =
   | 'computer-c-exam'
   | 'computer-midterms'
   | 'computer-2026-midterm'
+  | 'principles-of-marxism-1'
 
 export interface SubBankMeta {
   key: string

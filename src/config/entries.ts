@@ -40,6 +40,15 @@ export const ENTRIES: EntryMeta[] = [
       'computer-2026-midterm',
     ],
   },
+  {
+    key: 'marxism',
+    name: '马克思主义原理',
+    icon: '马',
+    desc: '机考真题（40页）',
+    papers: [
+      'principles-of-marxism-1',
+    ],
+  },
 ]
 
 /** 按 key（路由参数）找入口。 */

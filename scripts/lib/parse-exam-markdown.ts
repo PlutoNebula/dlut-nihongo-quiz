@@ -333,7 +333,12 @@ export function parseExamMarkdown(content: string, options: ParseOptions = {}): 
 
     cleanStem = cleanStem.replace(/^[\s\n]+/, '').trim()
 
-    if (cleanStem && (options.length >= 2 || (options.length === 0 && (answerKey || answerText)))) {
+    // 收录条件：**必须真有答案**（`**正确答案：（待补）**` 不算），且
+    // 选项 ≥2，或没有选项但有**答案文本**（主观题/填空题的参考答案就是那段文本）。
+    // 与 `5_check.py` 的口径必须一字一致：那边有"缺答案"这条丢弃理由，
+    // 否则 S6 会因"解析端收下 N 题 ≠ S5 记录的 M 题"而拒绝发布（实测差 3 道）。
+    const answered = Boolean(answerKey || answerText)
+    if (cleanStem && answered && (options.length >= 2 || (options.length === 0 && answerText))) {
       const article = articleByQ.get(num)
       const stemWithArticle = article ? `${article}\n\n${cleanStem}` : cleanStem
       questions.push({
