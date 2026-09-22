@@ -16,6 +16,7 @@ describe('CATEGORIES config', () => {
       'computer-midterms',
       'history',
       'japanese2',
+      'marxism-1',
       'military',
       'party',
       'principles-of-marxism-1',

@@ -192,6 +192,16 @@ export const CATEGORIES: CategoryMeta[] = [
     groupViewTitle: '刷题单',
     groupViewHint: '全卷 1 张题单；匹配题的公共题干已复制到每道小题的题干上方。',
   },
+  {
+    key: 'marxism-1',
+    short: '马原试卷1',
+    long: '马原试卷1',
+    desc: '22题 · 双路 OCR 校对 · AI 解析 22 题',
+    icon: '组',
+    bankFile: 'marxism-1-question-bank.json',
+    groupViewTitle: '刷题单',
+    groupViewHint: '全卷 1 张题单；匹配题的公共题干已复制到每道小题的题干上方。',
+  },
 ]
 
 const CATEGORY_MAP: Record<Category, CategoryMeta> = CATEGORIES.reduce(
