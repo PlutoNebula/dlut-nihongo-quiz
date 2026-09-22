@@ -176,14 +176,18 @@ def import_one(row: dict, opts: argparse.Namespace, first: bool) -> int:
 
         code = run_step(step, argv, opts.quiet)
         name, desc = STEPS[step - 1][1], STEPS[step - 1][2]
-        if code != 0:
+        # 退出码约定：0 = 全绿；**2 = 有警告（正常通过）**；1 = 参数/环境；3 = 有失败；4 = 预算耗尽。
+        # 以前把"非 0"一律当失败 → S5 只要带待复核警告（exit 2）就被判失败、
+        # **根本不会去跑 S6**，于是题库和卡片永远不出现（实测坑了两份卷）。
+        if code not in (0, 2):
             c.always(
                 f"[{STAGE}] ✗ {row['pdf'].name} 在 {desc}（{name}）失败，退出码 {code}"
                 f"（{c.human_ms(started)}ms）"
             )
             return code
         if not opts.quiet:
-            c.info(f"      ✓ {desc}（{c.human_ms(started)}ms）")
+            warn_note = "（有警告，按约定算通过）" if code == 2 else ""
+            c.info(f"      ✓ {desc}（{c.human_ms(started)}ms）{warn_note}")
     return 0
 
 

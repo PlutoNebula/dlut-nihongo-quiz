@@ -865,6 +865,12 @@ def attach_shared_stems(entries: list[dict], pages_dir: Path, report: dict) -> N
         if not passage:
             report["shared_stem_missing"].append((numeral, len(group), thin))
             continue
+        # **答案区不能当导言**：整段"长得像答案"就拒绝（否则答案会被复制进每个小题）
+        if looks_like_answer_key(passage):
+            report["answer_region_rejected"].append(
+                (numeral, "公共题干", len(flatten(passage)))
+            )
+            continue
         # 别把"题组标题下面恰好接着的普通一行"误当导言：要求它确实像公共题干
         if not (
             from_stem
@@ -931,6 +937,12 @@ def attach_material_passages(entries: list[dict], report: dict) -> list[dict]:
             continue  # 小题自己已经带着材料，不重复贴
         passage = clean_passage(stem)
         if len(flatten(passage)) < MATERIAL_MIN:
+            continue
+        # **答案区不能当材料**：同样的道理，答案不该出现在任何题干里
+        if looks_like_answer_key(passage):
+            report["answer_region_rejected"].append(
+                (head["page"], "材料", len(flatten(passage)))
+            )
             continue
 
         flat_passage = flatten(passage)
@@ -1752,6 +1764,34 @@ def check_group_counts(entries: list[dict], report: dict) -> None:
             report["long_group_titles"].append((numeral, len(title), title[:60]))
 
 
+def strip_answer_lines(entries: list[dict], report: dict) -> None:
+    """把**混进题干里的答案区**剥掉（用户要求："确保答案不会出现在问题中"）。
+
+    为什么会有：不少卷子把答案表印在**第 1 页顶部**，S3 抽取时整段抄进了题干 / 当成了公共题干，
+    于是答案被复制到十几道题的题干上方（实测 试卷1：15 道小题带着答案表）。
+
+    答案行的长相很固定（见 `ANSWER_LIKE_LINE`）：`1~5 ADAAD`、`1、ABCD 2、ABD`、
+    `四、判断题 1~4 × √ × ×`。它们**永远不属于题干**，逐行删掉并记进 report。
+    """
+    for entry in entries:
+        q = entry["q"]
+        stem = str(q.get("stem") or "")
+        if not stem:
+            continue
+        kept: list[str] = []
+        dropped = 0
+        for line in stem.split("\n"):
+            if ANSWER_LIKE_LINE.match(line.strip()):
+                dropped += 1
+                continue
+            kept.append(line)
+        if dropped:
+            q["stem"] = "\n".join(kept).strip()
+            report["answer_lines_stripped"].append(
+                (entry["page"], q.get("number"), dropped)
+            )
+
+
 def renumber_if_duplicated(entries: list[dict], report: dict) -> list[dict]:
     """题号重复时**按大题顺序重排 + 全卷重新连续编号**（1..N），返回新列表。
 
@@ -2401,6 +2441,8 @@ def main() -> int:
         "ai_shape_broken": [],
         "ai_review_failed": [],
         "ai_review_regressed": [],
+        "answer_lines_stripped": [],
+        "answer_region_rejected": [],
         "criteria_rows": [],
         "criteria_attached": [],
         "criteria_by_order": 0,
@@ -2558,6 +2600,9 @@ def main() -> int:
     # 答案表 / 大题标题 → 先落到题目上，后面几步（去重、完整性检查）才看得到正确答案
     apply_answer_table(entries, answer_table, report)
     check_answer_coverage(entries, answer_table, report)
+    # **先把混进题干的答案区剥掉**，再做公共题干/材料题挂载 ——
+    # 否则答案表会被当"导言"复制到一大片小题上（实测踩过）。
+    strip_answer_lines(entries, report)
     normalize_question_types(entries, report)
     group_order = normalize_groups(entries, pages_dir, report)
     if len(group_order) > MAX_GROUPS:

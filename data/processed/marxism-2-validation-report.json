@@ -1,0 +1,59 @@
+{
+  "category": "marxism-2",
+  "source": "data/raw/marxism-2/marxism-2.md",
+  "questions": 26,
+  "groups": [
+    "原理概论（闭卷）"
+  ],
+  "s5": {
+    "checkedAt": "2026-09-23T02:40:24+08:00",
+    "exitCode": 2,
+    "warnings": [
+      "带待复核标记 6 处"
+    ]
+  },
+  "explanationSource": {
+    "printed": 6,
+    "generated": 20,
+    "none": 0
+  },
+  "needsReview": [
+    {
+      "id": "marxism-2-q010",
+      "notes": [
+        "页首片段已并入（39 字），请与页图核对"
+      ]
+    },
+    {
+      "id": "marxism-2-q014",
+      "notes": [
+        "OCR 冲突：options.B（A 路「否定之定规律」/ B 路「否定之否定规律」）"
+      ]
+    },
+    {
+      "id": "marxism-2-q017",
+      "notes": [
+        "OCR 冲突：options.A（A 路「价格受供求关系影响，围绕价格上下波动（路A自报：疑似“围绕价值上下波动”的印刷错误）」/ B 路「价格受供求关系影响，围绕价格上下波动（路B自报以 high 置信度改正为“围绕价值上下波动”）」）"
+      ]
+    },
+    {
+      "id": "marxism-2-q018",
+      "notes": [
+        "模型标记待复核（置信度 medium）"
+      ]
+    },
+    {
+      "id": "marxism-2-q020",
+      "notes": [
+        "模型标记待复核（置信度 medium）"
+      ]
+    },
+    {
+      "id": "marxism-2-q024",
+      "notes": [
+        "OCR 冲突：page.transcription（A 路「」/ B 路「思考题："
+      ]
+    }
+  ],
+  "numberGaps": []
+}
