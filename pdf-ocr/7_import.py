@@ -61,6 +61,18 @@ def slug(text: str) -> str:
     return re.sub(r"-{2,}", "-", flat)
 
 
+def clean_paper_title(stem: str) -> str:
+    """把 PDF 文件名收拾成**卡片标题**：去掉平台导出的噪声尾巴。
+
+    实测这些卷的名字长这样：`马原试卷1(1)_0_1790064200614.pdf`、`马原机考题库_202412081720_15114_0_1790063990489.pdf`
+    —— 直接当卡片名很难看。这里去掉 `_0_<长数字>` / 结尾的 `_<10 位以上数字>` / 首尾空白。
+    """
+    text = str(stem or "").strip()
+    text = re.sub(r"_0_\d{6,}$", "", text)
+    text = re.sub(r"[_\-\s]+\d{10,}$", "", text)
+    return text.strip() or str(stem or "").strip()
+
+
 def collect_pdfs(folder: Path) -> list[Path]:
     """文件夹里的 PDF（不递归子目录；按文件名排序，保证卡片顺序稳定）。"""
     pdfs = sorted(
@@ -71,15 +83,34 @@ def collect_pdfs(folder: Path) -> list[Path]:
 
 
 def plan(folder: Path, pdfs: list[Path], entry_key: str, prefix: str, paper_prefix: str) -> list[dict]:
-    """每份 PDF 一行计划：分类名 / 试卷标题 / 输入路径。"""
+    """每份 PDF 一行计划：分类名 / 试卷标题 / 输入路径。
+
+    **每份卷一个独立目录**：分类名就是它的目录名（`data/raw/<分类名>/` 放最终 md、
+    `pdf-ocr/work/<分类名>/` 放页图与每页 JSON），S1 会自动建。源 PDF **不复制入库**。
+    分类名优先用 PDF 文件名推出来的 ASCII 短名；推不出（纯中文名）时退回 `<前缀>-<序号>`。
+    卡片标题用文件名清洗后的结果（去掉平台导出的 `_0_<长数字>` 尾巴）。
+    """
     rows = []
+    used: set[str] = set()
     for index, pdf in enumerate(pdfs, start=1):
+        title = clean_paper_title(pdf.stem)
+        slugged = slug(title)
+        # 必须**含字母**才算"推得出目录名"：纯中文名 slug 后往往只剩几个数字
+        # （`马原试卷1(1)` → `1-1`），拿它当目录名既无意义又容易撞车。
+        usable = slugged if re.search(r"[a-z]", slugged) else ""
+        if len(pdfs) > 1:
+            category = usable or f"{prefix}-{index}"
+        else:
+            category = usable or prefix
+        while category in used:  # 两份卷同名时避免撞目录
+            category = f"{category}-{index}"
+        used.add(category)
         rows.append(
             {
                 "index": index,
                 "pdf": pdf,
-                "category": f"{prefix}-{index}" if len(pdfs) > 1 else prefix,
-                "paper": f"{paper_prefix}{pdf.stem}".strip(),
+                "category": category,
+                "paper": f"{paper_prefix}{title}".strip(),
             }
         )
     return rows

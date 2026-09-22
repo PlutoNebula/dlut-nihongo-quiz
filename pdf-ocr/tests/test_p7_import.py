@@ -38,11 +38,16 @@ try:
     pdfs = import7.collect_pdfs(folder)
     assert [p.name for p in pdfs] == ["2024A.pdf", "2024B.pdf"], [p.name for p in pdfs]  # 排序稳定
     rows = import7.plan(folder, pdfs, "english-cet4", "english-cet4", "")
-    assert [r["category"] for r in rows] == ["english-cet4-1", "english-cet4-2"], rows
+    # 文件名能推出 ASCII 名字 → **每份卷用自己的目录名**（每份卷一个独立文件夹）
+    assert [r["category"] for r in rows] == ["2024a", "2024b"], rows
     assert [r["paper"] for r in rows] == ["2024A", "2024B"], rows
     single = import7.plan(folder, pdfs[:1], "english-cet4", "english-cet4", "")
-    assert single[0]["category"] == "english-cet4", single
-    print("[2] 计划：多份 PDF 分类名带序号、单份不带；PDF 按文件名排序（卡片顺序稳定）")
+    assert single[0]["category"] == "2024a", single
+    # 纯中文文件名 slug 后只剩数字 → **不能拿它当目录名**，退回 `<前缀>-<序号>`
+    cn_rows = import7.plan(folder, [Path("马原试卷1(1)_0_1790064200614.pdf")], "x", "principles", "")
+    assert cn_rows[0]["category"] == "principles", cn_rows
+    assert cn_rows[0]["paper"] == "马原试卷1(1)", cn_rows  # 卡片名去掉平台噪声
+    print("[2] 计划：能推出名字就用文件名（每卷一个目录）、纯中文退回前缀+序号；卡片名去掉 `_0_<长数字>`")
 
     # ── 3) dry-run：**入口名默认 = 文件夹名**；中文名给稳定兜底 key ───────
     cn = sandbox / "马原试卷"
