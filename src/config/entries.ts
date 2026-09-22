@@ -46,8 +46,9 @@ export const ENTRIES: EntryMeta[] = [
     icon: '马',
     desc: '机考真题（40页）',
     papers: [
-      'principles-of-marxism-1',
       'marxism-1',
+      'marxism-2',
+      'principles-of-marxism-1',
     ],
   },
 ]

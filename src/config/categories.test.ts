@@ -17,6 +17,7 @@ describe('CATEGORIES config', () => {
       'history',
       'japanese2',
       'marxism-1',
+      'marxism-2',
       'military',
       'party',
       'principles-of-marxism-1',

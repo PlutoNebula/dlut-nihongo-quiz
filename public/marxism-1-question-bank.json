@@ -5,7 +5,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 1,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n马克思主义认为，物质的唯一特性是（ ）",
+    "stem": "马克思主义认为，物质的唯一特性是（ ）",
     "options": [
       {
         "key": "A",
@@ -46,7 +46,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 2,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n\"心诚则灵，心不诚则不灵\"的说法是（ ）的观点",
+    "stem": "\"心诚则灵，心不诚则不灵\"的说法是（ ）的观点",
     "options": [
       {
         "key": "A",
@@ -87,7 +87,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 3,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n\"一把钥匙开一把锁\"，这句话强调的是（ ）",
+    "stem": "\"一把钥匙开一把锁\"，这句话强调的是（ ）",
     "options": [
       {
         "key": "A",
@@ -128,7 +128,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 4,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n社会历史的基本问题是（ ）",
+    "stem": "社会历史的基本问题是（ ）",
     "options": [
       {
         "key": "A",
@@ -169,7 +169,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 5,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n未来学家尼葛洛庞蒂说：\"预测未来的最好办法就是把它创造出来。\"从认识与实践的关系看，这句话对我们的启示是（ ）",
+    "stem": "未来学家尼葛洛庞蒂说：\"预测未来的最好办法就是把它创造出来。\"从认识与实践的关系看，这句话对我们的启示是（ ）",
     "options": [
       {
         "key": "A",
@@ -210,7 +210,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 6,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n一种认识是不是真理，要看它（ ）",
+    "stem": "一种认识是不是真理，要看它（ ）",
     "options": [
       {
         "key": "A",
@@ -251,7 +251,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 7,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n\"人都是自私的\"的观点错误在于它（ ）",
+    "stem": "\"人都是自私的\"的观点错误在于它（ ）",
     "options": [
       {
         "key": "A",
@@ -292,7 +292,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 8,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n\"任何英雄人物的历史作用都不能超出他们所处的历史条件所许可的范围\"。这种看法是（ ）",
+    "stem": "\"任何英雄人物的历史作用都不能超出他们所处的历史条件所许可的范围\"。这种看法是（ ）",
     "options": [
       {
         "key": "A",
@@ -337,7 +337,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 9,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n商品的本质属性是（ ） A.使用价值 B.交换价值 C.价值 D.价格",
+    "stem": "商品的本质属性是（ ） A.使用价值 B.交换价值 C.价值 D.价格",
     "options": [
       {
         "key": "A",
@@ -381,7 +381,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 10,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n马克思通过对资本主义生产中价值增值过程分析，把雇佣工人劳动时间分为( )",
+    "stem": "马克思通过对资本主义生产中价值增值过程分析，把雇佣工人劳动时间分为( )",
     "options": [
       {
         "key": "A",
@@ -422,7 +422,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 11,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n正确反映资本家对工人剥削程度的是( )",
+    "stem": "正确反映资本家对工人剥削程度的是( )",
     "options": [
       {
         "key": "A",
@@ -463,7 +463,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 12,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n资本主义再生产过程的实质是( )的统一",
+    "stem": "资本主义再生产过程的实质是( )的统一",
     "options": [
       {
         "key": "A",
@@ -504,7 +504,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 13,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n资本主义经济危机呈现出周期性的原因在于( )",
+    "stem": "资本主义经济危机呈现出周期性的原因在于( )",
     "options": [
       {
         "key": "A",
@@ -545,7 +545,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 14,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n国家垄断资本主义的产生和发展，从根本上说是( )",
+    "stem": "国家垄断资本主义的产生和发展，从根本上说是( )",
     "options": [
       {
         "key": "A",
@@ -589,7 +589,7 @@
     "groupId": "marxism-1-g01",
     "groupTitle": "大连理工大学",
     "numberInGroup": 15,
-    "stem": "1-5 DDDBB\n6-10 DDDCD\n11-15 CBBDA\n二、多项选择题（每题1分，共5分）\n1-5 ACE CDE CD AC BDE\n三、辨析题（每题5分，共10分）给一次小分即可\n社会主义实现由空想到科学发展的标志是( )",
+    "stem": "社会主义实现由空想到科学发展的标志是( )",
     "options": [
       {
         "key": "A",

@@ -57,7 +57,28 @@ def _resolve(name: str) -> str:
     return found
 
 
-def run(args: list[str], label: str) -> tuple[int, str]:
+def run(args: list[str], label: str, attempts: int = 2) -> tuple[int, str]:
+    """跑一条外部命令，**失败自动重试**（默认 1 次）。
+
+    为什么：`vue-tsc` / `vite build` / `tsx` 都是 node 进程，机器内存吃紧时会偶发
+    `VirtualAlloc failed` 直接崩掉（实测遇到过：批量导入同时跑 OCR + 构建）。
+    这类失败重跑一次就好，不该让整份试卷的发布白费。**重试只是重跑同一条命令**，
+    不影响幂等性（源码拼接是幂等的、构建无副作用）。
+    """
+    last_code, last_output = 1, ""
+    for attempt in range(1, attempts + 1):
+        suffix = "" if attempt == 1 else f"（重试 {attempt - 1}/{attempts - 1}）"
+        last_code, last_output = _run_once(args, label + suffix)
+        if last_code == 0 or attempt == attempts:
+            return last_code, last_output
+        c.warn(
+            f"命令失败（退出码 {last_code}），立即重试一次：{' '.join(args[:3])} … "
+            f"（node 偶发崩溃/OOM 时重试通常就能过）"
+        )
+    return last_code, last_output
+
+
+def _run_once(args: list[str], label: str) -> tuple[int, str]:
     """跑一条命令并返回 (退出码, 输出)。故意同时用 shell 兜底（.cmd 在 Windows 上要 cmd.exe）。"""
     display = " ".join(["npx" if i == 0 else a for i, a in enumerate(args)])
     c.info(f"    $ {display}")

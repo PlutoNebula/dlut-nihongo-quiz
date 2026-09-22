@@ -1,8 +1,8 @@
 {
   "category": "marxism-2",
   "md": "data/raw/marxism-2/marxism-2.md",
-  "md_sha256": "8d977b5591d3c9b7af7b895c54dc3397796e2b52ff996d1bbc58250d612e19b8",
-  "checked_at": "2026-09-23T02:45:10+08:00",
+  "md_sha256": "bcfd597fc412ffff7d3be6cd1480aa1f446d74f2609be60f03b02769026fb783",
+  "checked_at": "2026-09-23T03:18:13+08:00",
   "exit_code": 2,
   "passed": true,
   "questions": 26,
@@ -11,6 +11,6 @@
   "parser_dropped": 0,
   "hard_errors": [],
   "warnings": [
-    "带待复核标记 6 处"
+    "带待复核标记 9 处"
   ]
 }

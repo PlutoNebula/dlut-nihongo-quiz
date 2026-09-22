@@ -10,6 +10,7 @@ export type Category =
   | 'computer-2026-midterm'
   | 'principles-of-marxism-1'
   | 'marxism-1'
+  | 'marxism-2'
 
 export interface SubBankMeta {
   key: string
