@@ -22,7 +22,6 @@ const BANKS = [
   'computer-c-exam-question-bank.json',
   'computer-midterms-question-bank.json',
   'computer-2026-midterm-question-bank.json',
-  'Principles-of-Marxism-question-bank.json',
 ]
 
 const REQUIRED_FIELDS = ['id', 'groupId', 'stem', 'options', 'answerKey', 'explanation']

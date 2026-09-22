@@ -132,20 +132,6 @@ export const COURSE_TREE: TreeNode[] = [
       },
     ],
   },
-  {
-    type: 'group',
-    key: 'Principles-of-Marxism-group',
-    label: '马克思主义原理',
-    icon: '马',
-    children: [
-      {
-        type: 'leaf',
-        key: 'Principles-of-Marxism',
-        label: '真题2',
-        category: 'Principles-of-Marxism',
-      },
-    ],
-  },
 ]
 
 export function findLeafByKey(key: string): TreeNode | undefined {

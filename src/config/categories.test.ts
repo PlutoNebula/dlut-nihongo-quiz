@@ -9,7 +9,6 @@ import {
 describe('CATEGORIES config', () => {
   it('covers existing subjects and four independent computer papers', () => {
     expect(CATEGORIES.map((c) => c.key).sort()).toEqual([
-      'Principles-of-Marxism',
       'computer-2021-final',
       'computer-2024-final',
       'computer-2026-midterm',
