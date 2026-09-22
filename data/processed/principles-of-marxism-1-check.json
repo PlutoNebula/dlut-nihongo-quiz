@@ -1,0 +1,18 @@
+{
+  "category": "principles-of-marxism-1",
+  "md": "data/raw/principles-of-marxism-1/principles-of-marxism-1.md",
+  "md_sha256": "5bd493a714def58e491677bfede3cdf1d7393b550ae298e5f9859564778d110e",
+  "checked_at": "2026-09-23T01:35:26+08:00",
+  "exit_code": 3,
+  "passed": false,
+  "questions": 403,
+  "groups": 1,
+  "parser_kept": 345,
+  "parser_dropped": 58,
+  "hard_errors": [
+    "会被解析端丢弃的题 58 道"
+  ],
+  "warnings": [
+    "带待复核标记 224 处"
+  ]
+}
