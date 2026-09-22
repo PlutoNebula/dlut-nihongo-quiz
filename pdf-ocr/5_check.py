@@ -36,10 +36,20 @@ GROUP_HDR = re.compile(r"^## 题组([一二三四五六七八九十])[：:]")
 # 块内查找版：**不能带 `^`**！解析端用的是 `block.matchAll(/## 题组…/g)`（:225/:365），
 # 一个题块里除了自己的内容还夹着"下一题的题组标题"，带锚点就会一个都找不到。
 GROUP_IN_BLOCK = re.compile(r"## 题组([一二三四五六七八九十])[：:]")
-OPTION_LINE = re.compile(r"^([A-D])[\.\s、]+(.+)")
-OPTION_TEST = re.compile(r"^[A-D][\.\s、]")
-ANSWER_BOLD = re.compile(r"\*\*正确答案[：:]\s*([A-D])\s*(.+?)\*\*")
-ANSWER_PLAIN = re.compile(r"正确答案[：:]\s*([A-D])\s*(\S+)")
+# 选项/答案允许的字母：**到 E 为止**（多选题实测有 5 个选项），且答案可以是多个字母
+# （`**正确答案：AC 甲、丙**`）；字母部分**可省略** —— 主观题/填空题的答案是一段文本
+# （`**正确答案：对 2分 …**`）。与 `scripts/lib/parse-exam-markdown.ts` 一字对齐。
+OPTION_LINE = re.compile(r"^([A-E])[\.\s、]+(.+)")
+OPTION_TEST = re.compile(r"^[A-E][\.\s、]")
+ANSWER_BOLD = re.compile(r"\*\*正确答案[：:]\s*([A-E]{1,5})?\s*(.+?)\*\*")
+ANSWER_PLAIN = re.compile(r"正确答案[：:]\s*([A-E]{1,5})\s*(\S+)")
+PENDING_ANSWER = re.compile(r"^[（(]?\s*待补\s*[）)]?$")
+
+
+def normalize_answer_key(raw: str) -> str:
+    """答案字母去重 + 升序（与解析端的 `normalizeAnswerKey` 一致）。"""
+    return "".join(sorted(set(str(raw or "").upper())))
+
 META_BOUNDARY = re.compile(r"(?:^|\n)(?:##\s|### 本组核心知识点总结)")
 CN_NUMERALS = "一二三四五六七八九十"
 # 题组标题里自己写的题数声明（如「数值转换题（共10题）」）
@@ -184,24 +194,34 @@ def parse_like_parser(content: str) -> tuple[list[dict], list[dict]]:
 
         options: list[dict] = []
         for line in option_lines:
-            match = OPTION_LINE.match(re.sub(r"^([A-D])[\.\s、]+", r"\1 ", line))
+            match = OPTION_LINE.match(re.sub(r"^([A-E])[\.\s、]+", r"\1 ", line))
             if match:
                 options.append({"key": match.group(1), "text": match.group(2).strip()})
 
         if not options and exp_section:
             for line in exp_section.split("\n"):
-                match = OPTION_LINE.match(re.sub(r"^([A-D])[\.\s、]+", r"\1 ", line.strip()))
+                match = OPTION_LINE.match(re.sub(r"^([A-E])[\.\s、]+", r"\1 ", line.strip()))
                 if match:
                     options.append({"key": match.group(1), "text": match.group(2).strip()})
 
         answer_key = ""
+        answer_text = ""
         match = ANSWER_BOLD.search(exp_section)
         if match:
-            answer_key = match.group(1)
+            letters = normalize_answer_key(match.group(1) or "")
+            body = match.group(2).strip()
+            option_keys = {o["key"] for o in options}
+            # 字母必须确实是这道题的选项，否则 `**正确答案：Add $t0**` 会被误当成 answerKey='A'
+            if letters and all(ch in option_keys for ch in letters):
+                answer_key = letters
+                answer_text = body
+            else:
+                text = f"{match.group(1) or ''}{body}".strip()
+                answer_text = "" if PENDING_ANSWER.match(text) else text
         else:
             match = ANSWER_PLAIN.search(exp_section)
             if match:
-                answer_key = match.group(1)
+                answer_key = normalize_answer_key(match.group(1))
 
         item = {
             "number": number,
@@ -212,16 +232,18 @@ def parse_like_parser(content: str) -> tuple[list[dict], list[dict]]:
             "article": article_by_q.get(number, ""),
             "options": options,
             "answerKey": answer_key,
+            "answerText": answer_text,
             "truncatedAt": truncated_at,
             "hasAnswerLine": bool(ANSWER_BOLD.search(exp_section) or ANSWER_PLAIN.search(exp_section)),
         }
-        # `parse-japanese-2024-markdown.ts:349` 的收录条件（注意它判的是 cleanStem，不含文章）
+        # `parse-japanese-2024-markdown.ts:349` 的收录条件（注意它判的是 cleanStem，不含文章）：
+        # 选项 ≥2，**或**没有选项但答案文本非空（主观题/填空题的参考答案就是那段文本）
         reasons = []
         if not clean_stem:
             reasons.append("题干为空")
-        if len(options) < 2:
+        if len(options) < 2 and not (not options and answer_text):
             reasons.append(f"选项不足 2 个（{len(options)}）")
-        if not answer_key:
+        if not answer_key and not answer_text:
             reasons.append("缺 `**正确答案：X …**`")
         if reasons:
             drops.append({**item, "reasons": reasons})
@@ -288,8 +310,12 @@ def main() -> int:
     kept, drops = parse_like_parser(content)
     if drops:
         hard.append(f"会被解析端丢弃的题 {len(drops)} 道")
+    # 多选题的答案是**多个字母**，要逐字母判（`CE` 不会等于任何一个选项 key）
     answer_not_in_options = [
-        q for q in kept if q["answerKey"] and q["answerKey"] not in {o["key"] for o in q["options"]}
+        q
+        for q in kept
+        if q["answerKey"]
+        and not all(ch in {o["key"] for o in q["options"]} for ch in q["answerKey"])
     ]
     if answer_not_in_options:
         soft.append(
@@ -353,13 +379,40 @@ def main() -> int:
             c.always(f"[警告] {line}")
 
     status = "✗" if hard else ("⚠" if soft else "✓")
+    code = 3 if hard else (2 if soft else 0)
     c.always(
         f"[S5/5 校验] 契约检查：题块 {len(numbers)} / 题组 {len(set(group_nums))} / "
         f"会被丢弃 {len(drops)} / 公共题干 {article_blocks} 段 / "
         f"硬错误 {len(hard)} / 警告 {len(soft)}  {status}"
     )
     c.always(f"[S5/5 校验] {md_path.name} → 解析端可收下 {len(kept)} 题")
-    return 3 if hard else (2 if soft else 0)
+
+    # ── 把校验结论落盘（S6 的发布门禁读它）────────────────────────────────
+    # 只在**按分类名**校验时写：这是"某份试卷通过发布门禁"的记录，要随仓库入库
+    # （放 data/processed/ 而不是 gitignore 的 pdf-ocr/work/，新克隆也能直接发布）。
+    # `--md` 是临时的单文件检查（回归测试也走这条路），不该污染 data/processed/。
+    if not args.category:
+        return code
+    name = c.safe_name(args.category)
+    verdict = {
+        "category": name,
+        "md": md_path.relative_to(c.REPO_ROOT).as_posix(),
+        "md_sha256": c.sha256_of_file(md_path),
+        "checked_at": c.now_iso(),
+        "exit_code": code,
+        "passed": not hard,
+        "questions": len(numbers),
+        "groups": len(set(group_nums)),
+        "parser_kept": len(kept),
+        "parser_dropped": len(drops),
+        "hard_errors": hard,
+        "warnings": soft,
+    }
+    verdict_path = c.REPO_ROOT / "data" / "processed" / f"{name}-check.json"
+    c.ensure_under(verdict_path, c.REPO_ROOT / "data" / "processed")
+    c.write_json_atomic(verdict_path, verdict)
+    c.info(f"[清单] {verdict_path.relative_to(c.REPO_ROOT)}")
+    return code
 
 
 if __name__ == "__main__":

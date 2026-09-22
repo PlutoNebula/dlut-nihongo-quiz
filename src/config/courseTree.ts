@@ -43,6 +43,12 @@ export const COURSE_TREE: TreeNode[] = [
         label: '期中三年合集',
         category: 'computer-midterms',
       },
+      {
+        type: 'leaf',
+        key: 'computer-2026-midterm',
+        label: '计算机组织与结构（软国）2026年',
+        category: 'computer-2026-midterm',
+      },
     ],
   },
   {
@@ -123,6 +129,20 @@ export const COURSE_TREE: TreeNode[] = [
         key: 'four-histories',
         label: '四史',
         children: [{ type: 'leaf', key: 'party', label: '党史', category: 'party', subBank: null }],
+      },
+    ],
+  },
+  {
+    type: 'group',
+    key: 'Principles-of-Marxism-group',
+    label: '马克思主义原理',
+    icon: '马',
+    children: [
+      {
+        type: 'leaf',
+        key: 'Principles-of-Marxism',
+        label: '真题2',
+        category: 'Principles-of-Marxism',
       },
     ],
   },

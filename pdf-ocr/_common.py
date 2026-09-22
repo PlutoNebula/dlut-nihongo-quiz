@@ -38,6 +38,52 @@ DEFAULTS = {
 # 阶段标签（docs §6）
 STAGES = {1: "S1/4 渲染", 2: "S2/4 OCR", 3: "S3/4 比对提取", 4: "S4/4 汇总写盘"}
 
+# ── 题型：合法值 + 从"卷面大题标题"读题型（S3 与 S4 共用，见 docs §34）────────
+#
+# questionType 的合法值 = `src/types/question.ts` 里的联合类型（`other` 不是合法值）。
+QUIZ_TYPES = ("single", "multi", "judgement", "fill")
+
+# 卷面大题标题（"二、多项选择题"）比模型逐题猜的题型可靠得多：实测 Principles-of-Marxism
+# 第二大题写着「二、多项选择题」、每题 5 个选项，模型却逐题给了 `single`，站上就变单选。
+# 顺序有意义 —— 先判"多项选择"，再判"单项选择"。
+SECTION_TYPE_RULES: tuple[tuple[tuple[str, ...], str], ...] = (
+    (("多项选择", "多选", "不定项"), "multi"),
+    (("单项选择", "单选", "单向选择"), "single"),
+    (("判断", "正误", "是非"), "judgement"),
+    (("填空",), "fill"),
+    (("论述", "简答", "问答", "名词解释", "案例", "辨析", "分析", "思考", "计算"), "fill"),
+)
+
+
+def squash_text(text) -> str:
+    """判题型/归一分区用的压缩：去空白与常见标点、转小写、去掉全角括号。"""
+    flat = str(text or "").strip().lower()
+    return re.sub(r"[\s_\-/、，,。.：:；;（）()\[\]【】]+", "", flat)
+
+
+def question_type_from_section(section: str) -> str:
+    """从"题组名 / 大题标题"里读题型（读不出返回空串）。"""
+    flat = squash_text(section)
+    if not flat:
+        return ""
+    for keywords, quiz_type in SECTION_TYPE_RULES:
+        if any(keyword in flat for keyword in keywords):
+            return quiz_type
+    return ""
+
+
+# 模型给"这一页没有题干"的行写的占位文字（参考答案 / 评分标准页的每一行都长这样，
+# 各次运行措辞不同）。这种题干**不是题干**：既不能判重（每行都一模一样，
+# 实测 23 条答案会被判重删到只剩 1 条），也不能当成"题目"（详见 docs §34）。
+ANSWER_ROW_STEM = re.compile(r"未印题干|无题干|仅有答案|只有答案|本题无题干")
+
+
+def is_placeholder_stem(text) -> bool:
+    """题干是不是"空的 / 只是模型写的占位"（= 这一行不是一道真题）。"""
+    flat = "".join(str(text or "").split())
+    return (not flat) or bool(ANSWER_ROW_STEM.search(flat))
+
+
 # 单次响应 token 上限（docs §18.5 / §20.5）。**已按用户要求放开到各端点允许的最大值。**
 #
 # 实测（2026-09-22，见 docs §20.5）：

@@ -31,28 +31,45 @@ merge3 = load("3_merge")
 build = load("4_build_md")
 check = load("5_check")
 
-PAGES = c.WORK_ROOT / "LL11512" / "pages"
+PAGES = c.WORK_ROOT / "computer-2026-midterm" / "pages"
+
+
+def real_reviews():
+    """真实页数据（LL11512 那份期中卷，后改名为 computer-2026-midterm）。
+
+    这个目录是本地跑出来的中间产物（`pdf-ocr/work/` 已 gitignore），换机器/换卷子就没有 ——
+    所以第 1 组断言在拿不到真实数据时**跳过**，其余纯合成用例照跑。
+    """
+    for label in ("a", "b"):
+        if not (PAGES / f"page-004.{label}.review.json").exists():
+            return None
+    return {label: c.read_json(PAGES / f"page-004.{label}.review.json") for label in ("a", "b")}
+
 
 # ── 1) 真实数据：page 4 的两路声明是 34-41 ───────────────────────────────
 # 注意 baseline 会随 S3 重跑变化（改进提示词后 34/35 已经能抽出来），所以这里不写死"当前少了 2 题"，
 # 而是拿真实声明 + 人为去掉 34/35 来断言，既不脆又贴合真实数据。
-reviews = {
-    "a": c.read_json(PAGES / "page-004.a.review.json"),
-    "b": c.read_json(PAGES / "page-004.b.review.json"),
-}
-real = c.read_json(PAGES / "page-004.merge.json")
-declared = merge3.normalize_range(reviews["a"].get("question_ranges"))
-assert declared == set(range(34, 42)), declared
-assert merge3.coverage_diffs(reviews, real["questions"]) == [], "完整提取时不该报缺口"
+reviews = real_reviews()
+if reviews is None:
+    print(f"[1] 跳过：没有真实页数据（{PAGES.relative_to(c.REPO_ROOT)}）")
+else:
+    real = c.read_json(PAGES / "page-004.merge.json")
+    declared = merge3.normalize_range(reviews["a"].get("question_ranges"))
+    assert declared == set(range(34, 42)), declared
+    assert merge3.coverage_diffs(reviews, real["questions"]) == [], "完整提取时不该报缺口"
 
-incomplete = [q for q in real["questions"] if q["number"] not in (34, 35)]
-diffs = merge3.coverage_diffs(reviews, incomplete)
-assert len(diffs) == 1, diffs
-reason = diffs[0]["reason"]
-assert "题数不匹配" in reason and "缺 2 题（34-35）" in reason, reason
-assert diffs[0]["a"].startswith("OCR 声明本页 8 题：34-41"), diffs[0]["a"]
-assert diffs[0]["b"].startswith("实际提出 6 题：36-41"), diffs[0]["b"]
-print("[1] 真实声明抓到缺号：", reason[:56], "…")
+    incomplete = [q for q in real["questions"] if q["number"] not in (34, 35)]
+    diffs = merge3.coverage_diffs(reviews, incomplete)
+    assert len(diffs) == 1, diffs
+    reason = diffs[0]["reason"]
+    assert "题数不匹配" in reason and "缺 2 题（34-35）" in reason, reason
+    assert diffs[0]["a"].startswith("OCR 声明本页 8 题：34-41"), diffs[0]["a"]
+    assert diffs[0]["b"].startswith("实际提出 6 题：36-41"), diffs[0]["b"]
+    print("[1] 真实声明抓到缺号：", reason[:56], "…")
+    reviews = {label: reviews[label] for label in ("a", "b")}
+if reviews is None:
+    # 拿不到真实数据时，后面几组用等价的合成声明（范围与真实一致）
+    reviews = {"a": {"question_ranges": ["34-41"]}, "b": {"question_ranges": ["34-41"]}}
 
 # ── 2) 声明与实际一致 → 不报 ────────────────────────────────────────────
 full = [{"number": n} for n in range(34, 42)]

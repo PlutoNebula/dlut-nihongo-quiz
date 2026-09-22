@@ -7,6 +7,8 @@ export type Category =
   | 'computer-2024-final'
   | 'computer-c-exam'
   | 'computer-midterms'
+  | 'computer-2026-midterm'
+  | 'Principles-of-Marxism'
 
 export interface SubBankMeta {
   key: string
@@ -41,6 +43,8 @@ export interface Question {
   }
   status: 'ready' | 'needs_review'
   answerProvenance?: 'none' | 'printed' | 'handwritten' | 'generated'
+  /** 解析的来源：卷面印的 / AI 生成的 / 没有（S3 产出，见 docs §8.5） */
+  explanationSource?: 'printed' | 'generated' | 'none'
   reviewNotes?: string[]
   sourceNotes?: string[]
   subType?: 'kana-to-kanji' | 'kanji-to-kana'

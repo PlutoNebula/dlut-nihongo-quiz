@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -52,18 +53,30 @@ SCHEMA_BLOCK = """请输出如下 JSON（键名固定；没有的填空字符串
 - page_condition：clear | blurry | cropped | handwritten | mixed
 - transcription_md：整页内容（markdown），这是后续题目提取的唯一依据
 - corrections：你改正过的地方（before=原样，after=改写后，evidence=依据，confidence=high|medium|low）
-- uncertain：你没有把握的地方（location=位置，note=说明）"""
+- uncertain：你没有把握的地方（location=位置，note=说明）
+
+【题号必须**照抄卷面**（硬要求）】
+- transcription_md 里每一题的题号**一律照抄卷面上印的那个数字/汉字**：不要自己重新编号、
+  不要"顺手改正"、也不要为了看起来连续而挪动题号。
+- 卷面**同一个题号印了两遍**（重号）时：**两遍都照抄成同一个号**，并在 uncertain[] 里写一条
+  （location=该题号，note="卷面此处题号重复"）。
+- 卷面**跳号**（如 7 后面直接是 9）时同样照抄，并在 uncertain[] 里说明。
+- 为什么：后续是**按题号**把参考答案贴回每一道题的。你一旦重编号，卷面上真正印着的那道题
+  就会被挤掉（实测：卷面把「7.」印了两遍，两路都读成 7、8 再跳到 9，卷面真正的第 8 题
+  在两路里都不见了 —— 整卷答案跟着错位）。"""
 
 # 两路各自的侧重（只有这里不同）
 PASS_EMPHASIS = {
     "a": """【本次侧重 A —— 逐字转写】
 1) transcription_md 尽量忠实于像素，保留原有换行、空行与选项排布；先把整页写下来，再谈理解。
 2) 没把握的地方**只标位置、不改字**：按原样写进 transcription_md，并在 uncertain[] 里说明。
-3) corrections[] 只填你非常有把握的明显误识别，宁少勿多。""",
+3) corrections[] 只填你非常有把握的明显误识别，宁少勿多。
+4) **题号照抄**（含重号、跳号），绝不自行重编号 —— 见上面的硬要求。""",
     "b": """【本次侧重 B —— 按题结构化】
 1) transcription_md 以"题目"为单位排布：每题按 题干 → A/B/C/D 选项 → 答案（若页面有）的顺序写清楚。
 2) 逐项标注把握程度：把握不大的题干/选项/答案写进 uncertain[]，note 里给出你判断的更可能读法。
-3) 明显错字可直接在 transcription_md 里给出更可能的读法，并在 corrections[] 记录 before/after/evidence。""",
+3) 明显错字可直接在 transcription_md 里给出更可能的读法，并在 corrections[] 记录 before/after/evidence。
+4) **题号照抄**（含重号、跳号），绝不自行重编号 —— 见上面的硬要求。""",
 }
 
 PASS_HINT = {"a": "逐字转写 / 保版面", "b": "按题结构化 / 带置信度"}
@@ -252,6 +265,11 @@ def main() -> int:
         help="只处理这些页，如 1-3,7（页码从 1 开始；写 0-3 也接受，0 视为起点；默认全部已渲染页）",
     )
     parser.add_argument("--passes", default="a,b", help="只跑其中一路，如 --passes a（默认 a,b）")
+    parser.add_argument(
+        "--sequential",
+        action="store_true",
+        help="两路 OCR 串行跑（默认并行：两路互不依赖，并行不花钱、墙钟时间减半）",
+    )
     parser.add_argument("--timeout", type=int, default=180, help="单次请求超时秒数，默认 180")
     parser.add_argument("--max-retries", type=int, default=3, help="每页每路最大尝试次数，默认 3")
     parser.add_argument(
@@ -343,35 +361,64 @@ def main() -> int:
 
         parts: list[str] = []
         page_failed = False
+        pending: list[tuple[str, Path]] = []
+
         for pass_key in passes:
             stage = f"{c.STAGES[2]}-{pass_key.upper()}"
             target = pages_dir / f"page-{number:03d}.{pass_key}.review.json"
             page_started = time.perf_counter()
-
             if target.exists() and not args.force:
                 parts.append(f"OCR-{pass_key.upper()} ✓（已存在）")
                 c.progress(
                     stage, index, len(pages), "✓", c.human_ms(page_started), f"{target.name} 已存在，跳过"
                 )
                 continue
+            pending.append((pass_key, target))
 
-            # 预算检查放在**每路调用之前**：超了就停下，最多只多花"半页"
-            if c.budget_stop(spent, args.budget_tokens):
-                budget_hit = True
-                c.warn(
-                    f"本次预算已用尽（{c.human_tokens(spent)} ≥ {c.human_tokens(args.budget_tokens)} token），"
-                    f"在第 {number} 页停下；已完成的结果都已落盘，可稍后续跑"
-                )
-                break
+        # 预算检查放在**整页开跑之前**：两路并行时不能一路超了、另一路还在发（最多只多花一页）
+        if pending and c.budget_stop(spent, args.budget_tokens):
+            budget_hit = True
+            c.warn(
+                f"本次预算已用尽（{c.human_tokens(spent)} ≥ {c.human_tokens(args.budget_tokens)} token），"
+                f"在第 {number} 页停下；已完成的结果都已落盘，可稍后续跑"
+            )
+            pending = []
 
-            try:
-                review = ocr_one_pass(
-                    cfg, png, number, pass_key, index, len(pages), args.timeout,
-                    args.max_retries, args.max_tokens,
-                )
+        def run_one(pass_key: str, target: Path) -> dict:
+            """跑一路并落盘（可能在子线程里跑；写盘用的是原子改名，线程安全）。"""
+            review = ocr_one_pass(
+                cfg, png, number, pass_key, index, len(pages), args.timeout,
+                args.max_retries, args.max_tokens,
+            )
+            c.write_json_atomic(target, review)
+            return review
+
+        results: dict[str, dict] = {}
+        failures: dict[str, str] = {}
+        if len(pending) > 1 and not args.sequential:
+            # 两路并行：互不依赖、各自独立重试，token 消耗与串行完全一致
+            with ThreadPoolExecutor(max_workers=len(pending)) as pool:
+                futures = {pool.submit(run_one, key, target): key for key, target in pending}
+                for future in as_completed(futures):
+                    pass_key = futures[future]
+                    try:
+                        results[pass_key] = future.result()
+                    except c.ApiError as exc:
+                        failures[pass_key] = str(exc)
+        else:
+            for pass_key, target in pending:
+                try:
+                    results[pass_key] = run_one(pass_key, target)
+                except c.ApiError as exc:
+                    failures[pass_key] = str(exc)
+
+        # 统一在**主线程**里记账与打印，顺序固定为 passes 的顺序（并行也不会打乱完成行）
+        for pass_key, target in pending:
+            stage = f"{c.STAGES[2]}-{pass_key.upper()}"
+            if pass_key in results:
+                review = results[pass_key]
                 calls_made += 1
                 spent += c.usage_tokens(review["call"].get("usage"))
-                c.write_json_atomic(target, review)
                 size_kb = target.stat().st_size / 1024
                 ranges = ",".join(review["question_ranges"]) or "-"
                 c.progress(
@@ -383,9 +430,10 @@ def main() -> int:
                     f"{size_kb:.1f}KB q={ranges}",
                 )
                 parts.append(f"OCR-{pass_key.upper()} ✓")
-            except c.ApiError as exc:
-                errors.append(f"page {number} pass {pass_key}: {exc}")
-                c.progress(stage, index, len(pages), "✗", c.human_ms(page_started), str(exc)[:80])
+            else:
+                message = failures.get(pass_key, "未知错误")
+                errors.append(f"page {number} pass {pass_key}: {message}")
+                c.progress(stage, index, len(pages), "✗", 0, message[:80])
                 parts.append(f"OCR-{pass_key.upper()} ✗")
                 page_failed = True
 

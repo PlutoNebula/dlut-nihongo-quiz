@@ -54,7 +54,7 @@ PDF ──▶ 每页 PNG ──▶ 两路 step-3.7-flash OCR ──▶ deepseek-
 | 题块分隔 | `### 第{N}题`（阿拉伯数字） | `:219` `:222` |
 | 题组标题 | `## 题组{一…十}：<名称>`（**必须中文数字**） | `:225` `:365` |
 | 题干区 | `#### 题目` | `:240` |
-| 选项 | 行首 `A.` / `A、` / `A `（`^[A-D][\.\s、]`），一行一个 | `:277` `:304` |
+| 选项 | 行首 `A.` / `A、` / `A `（`^[A-E][\.\s、]`，一行一个；**到 E**，多选题实测 5 个选项） | `:277` `:304` |
 | 翻译（可选） | `题目翻译：…` | `:283` |
 | 公共题干（题组导言） | **复制**进该题组每道小题的 `#### 题目` 正文最前面（每个小问独立成题） | §8.4 |
 | 备选：`**文章：**` + 导言正文，写在题组标题之后、小题之前；解析端会把它补到每一道小题的题干前面（可保留换行） | `:170` `:350-351`（§8.4 已评估未采用） |
@@ -192,7 +192,8 @@ pdf-ocr/                      # 仓库根的独立目录，便于单独管理这
 ├── 2_ocr.py           # 每页两路 OCR → page-00N.{a,b}.review.json
 ├── 3_merge.py         # 每页 deepseek-flash 比对+提取 → page-00N.merge.json
 ├── 4_build_md.py      # 跨页拼接 + 汇总 → 单个 <分类名>.md + transcription.md + report.md
-├── 5_check.py         # 离线契约校验（不调 API）
+├── 5_check.py         # 离线契约校验（不调 API）→ 写 data/processed/<分类名>-check.json
+├── 6_publish.py       # 发布上站：生成题库 + 把分类"拼接"进站点源码（§29）
 └── tests/             # 离线回归（不联网、0 token、沙箱化，绝不碰真的 data/raw）
     ├── test_s3_coverage.py   # 缺号护栏 + 题数匹配（8 组断言；用真实 page 4 的声明）
     ├── test_p4_build.py      # 拼接三条分支 / 归一化 / 补选项 / 去重 / 公共题干 / 门禁（16 组断言）
@@ -203,6 +204,7 @@ pdf-ocr/                      # 仓库根的独立目录，便于单独管理这
 - 统一参数：`--category`、`--force`、`--pages 1-12`、`--dpi 200`、`--quiet`、`--from N`（从第 N 步续跑）。
 - **成本护栏参数**（P2/P3，详见 §18.5）：`--max-tokens`（单次响应上限，**OCR 默认 10000000 / merge 默认 393216**，即各端点允许的上限，见 §20.5）、`--budget-tokens`（本次运行累计上限，0=不限）、`--total-budget-tokens`（跨运行累计上限，0=不限）。
 - **S4 专有参数**：`--group-by paper|type`（默认 `paper`＝全卷 1 张题单，取消题型分题组；见 §8.1 规则 5 / §26）。
+- **S6 专有参数**：`--short/--long/--desc/--icon`（卡片展示信息）、`--dry-run`（只打印改动）、`--no-build`、`--no-verify`（见 §29）。
 - 脚本之间**只通过磁盘产物耦合**（工作流方式：可中断、可重跑、可人工介入中间产物）。
 - 依赖只写进本文档（`pip install pymupdf requests`），不做 `requirements.txt`/打包。
 
@@ -242,8 +244,9 @@ pdf-ocr/                      # 仓库根的独立目录，便于单独管理这
 | S1 | `1_render.py` | `.pdf`、`--dpi` | 先渲染到 `pdf-ocr/work/.tmp/<sha8>/`，**确认分类名（§4.1）**后移入 `pdf-ocr/work/<分类名>/pages/page-00N.png`，并写 `pdf-ocr/work/<分类名>/source-manifest.json`（**不写 data/raw**） | ❌ 本地 |
 | S2 | `2_ocr.py` | 页图 | `page-00N.a.review.json`、`page-00N.b.review.json` | ✅ StepFun ×2/页 |
 | S3 | `3_merge.py` | 两路 review JSON | `page-00N.merge.json` | ✅ DeepSeek ×1/页 |
-| S4 | `4_build_md.py` | 全部 merge JSON | `<分类名>.md`（单文件）、`transcription.md`、`report.md` | ❌ 本地 |
-| S5 | `5_check.py` | 生成的 .md | 控制台校验报告 + 退出码 | ❌ 本地 |
+| S4 | `4_build_md.py` | 全部 merge JSON | `<分类名>.md`（单文件）、`transcription.md`、`report.md` | ✅ DeepSeek ×1（**全卷终审**：判重/题号顺延/答案对位；`--no-ai-review` 可跳过，结果缓存在 `paper-review.json`） |
+| S5 | `5_check.py` | 生成的 .md | 控制台校验报告 + 退出码 + `data/processed/<分类名>-check.json` | ❌ 本地 |
+| S6 | `6_publish.py`（内部调 `scripts/parse-computer-paper.ts`） | **通过 S5 的** .md + check.json | `public/<分类名>-question-bank.json` + `data/processed/<分类名>-validation-report.json` + **站点源码 6 处注册** | ❌ 本地 |
 
 **每页独立**：S2/S3 逐页执行，页间不共享上下文，单页失败不污染其它页；S4 才做跨页拼接与全局排序。
 
@@ -334,6 +337,13 @@ pdf-ocr/                      # 仓库根的独立目录，便于单独管理这
     { "question": 6, "field": "options.A", "a": "ちゅうし", "b": "ちょうし",
       "chosen": "ちゅうし", "reason": "A 路该处未标 uncertain，且与题干汉字一致",
       "confidence": "medium" }
+  ],
+  "deduped": [                                  // 页内判重删掉的题（§32.2）
+    { "number": 8, "keptNumber": 7, "stem": "…", "reason": "题干与选项完全相同（判为重复，已删除）" }
+  ],
+  "normalized": [                               // 确定性字段格式化（§33）
+    { "number": 1, "field": "answerKey", "before": "c,a", "after": "AC" },
+    { "number": 1, "field": "questionType", "before": "多选题", "after": "multi" }
   ],
   "questions": [
     {
@@ -491,6 +501,35 @@ S4 的解析顺序是：① 行首 `六、` ② 光秃秃只有一个号码 `二
 - 行首 `#` 会被解析端跳过（`:289`）→ 去掉行首井号；
 - 行首 `A.` 会被解析端**当成选项**、并把它后面的题干整段丢掉（`:277-297`）→ 前面加一个 HTML 注释挡住（渲染时不可见）。
 
+### 8.5 答案解析（`explanation`）与来源标记
+
+**卷面大多只印答案、不印解析**，所以 S3（`3_merge.py`）的提示词规则 7 要求模型：
+
+| 情况 | `explanation` | `explanationSource` |
+|---|---|---|
+| 卷面印了解析 | 原样抄录 | `"printed"` |
+| 卷面没印 | **自己写一句 ≤80 字的解析**（说清为什么选它、错在哪，不许写"根据题意可知"） | `"generated"` |
+| 没读懂 / 没把握 | 留空 | `"none"`（**不许编造**） |
+
+S4 把 `generated` 的解析末尾补一行可见标记：
+
+```markdown
+**正确答案：B 105**
+
+01101001=64+32+8+1=105，故选 B。A 项漏算高位…
+
+> ⚙ 解析由 AI 生成（未经人工核对）
+```
+
+**P6 靠这一行判 `explanationSource`**（站上 `answerProvenance` 是个纯数据字段、UI 不显示，
+所以标记留在解析正文里，读者看得见）；同时把 S3 的 `explanationSource` 写进题库的 `Question.explanationSource`。
+
+> ⚠️ **两个解析端的历史坑**（P6 的薄入口已经处理）：
+> 1. 解析端把 `#### 答案与解析` 之后的**全部内容**（含开头那行 `**正确答案：X …**`）都塞进 `explanation`，
+>    而仓库既有题库（`computer-midterms` / `japanese2`）的 `explanation` **不含答案行** ——
+>    不剥掉会在站上把答案显示两遍。
+> 2. 解析是从原始行拼的，**CRLF 会原样留在每行末尾** → 统一转成 LF。
+
 ---
 
 ## 9. 离线契约校验（`5_check.py`）—— 硬门禁
@@ -501,13 +540,22 @@ S4 的解析顺序是：① 行首 `六、` ② 光秃秃只有一个号码 `二
 |---|---|
 | 题块数 / 题号连续性 | `### 第N题` 数量与编号是否缺号、重号 |
 | 题组标题规范 | 是否 `## 题组{中文数字}：…` |
-| 选项与答案 | 选项 ≥ 2；`**正确答案：X**` 存在且 X 落在选项内 |
+| 选项与答案 | 选项 ≥ 2；`**正确答案：X**` 存在且 X 落在选项内（**X 可以是多个字母**，如 `AC`，最多 5 个；字母到 E） |
 | **会被 parser 丢弃的题** | 按 `:349` 条件预演，任何会被丢弃的题**必须报出** |
 | 截断风险 | 解析区内是否混入 `## ` 开头行 |
 | 跨页拼接结果 | `continued` 题是否都已拼接或已标 `needs_review` |
 | 题组题数与标题声明 | 题组标题写了「共 N 题」的，按**整份 md**数一遍实际题数（一个题组可能横跨两页，所以只能在 S5 数） |
 
 退出码：`0` 全绿；`2` 有警告（待复核）；`3` 有硬错误（缺答案/重复题号/会被丢弃）。
+
+**校验结论落盘**（S6 的发布门禁读它）：`data/processed/<分类名>-check.json`
+（放在 `data/processed/` 而不是 gitignore 的 `pdf-ocr/work/`，**随仓库入库**，新克隆也能直接发布）：
+
+```jsonc
+{ "category": "…", "md": "data/raw/…/….md", "md_sha256": "…", "checked_at": "…",
+  "exit_code": 2, "passed": true, "questions": 41, "groups": 1,
+  "parser_kept": 41, "parser_dropped": 0, "hard_errors": [], "warnings": ["带待复核标记 8 处"] }
+```
 
 ---
 
@@ -1058,20 +1106,19 @@ g21–g28。先把 `parseMarkdown` 搬到共享模块，再拿那份 md 跑一�
    不要把每个题组重新从 1 编号。
 4. 不改任何既有数据：新分类用自己的 `data/raw/<分类名>/` 与新 `public/<key>-question-bank.json`。
 
-### 22.6 P6 待办清单
+### 22.6 P6 待办清单（**2026-09-22 已完成，实测见 §27**）
 
-- [ ] `scripts/lib/parse-jp-exam-md.ts`（抽共享）+ 黄金样本逐字节回归
-- [ ] `scripts/parse-<key>-md.ts` 薄入口 + `package.json` 加 `parse:<key>`
-- [ ] `src/types/question.ts` 加 `Category`
-- [ ] `src/config/categories.ts` 加条目（`bankFile` / `short` / `long` / `desc` / `icon` / `groupViewTitle`）
-- [ ] `src/config/courseTree.ts` 加叶子
-- [ ] `src/config/categories.test.ts` 更新硬编码 key 列表
-- [ ] `scripts/generate-meta.mjs` 的 `banks` 加一行 → 重跑 `npm run generate:meta`
-- [ ] `npm run build` + `vitest` 全绿；浏览器里实点一遍（落地页卡片 → `/home` → 刷题 → 错题本）
-- [ ] **parser 必须保留题干换行**（参考实现 `:296` 会把行内换行压成空格 → 公共题干里的代码块会变成一整行；
-      用户 2026-09-22 决定"保持复制 + parser 保留换行"，见 §8.4）
-- [ ] **parser 必须自己从 `## 题组X：<名字>` 取题单名**（参考实现 `:229`/`:369` 只取到匹配子串 `题组N：`，
-      冒号后面的名字它拿不到，见 §26.2）
+- [x] `scripts/lib/parse-exam-markdown.ts`（抽共享）+ 黄金样本回归
+- [x] `scripts/parse-computer-paper.ts` 薄入口 + `package.json` 加 `parse:computerPaper`
+- [x] `src/types/question.ts` 加 `Category`
+- [x] `src/config/categories.ts` 加条目（`bankFile` / `short` / `long` / `desc` / `icon` / `groupViewTitle`）
+- [x] `src/config/courseTree.ts` 加叶子
+- [x] `src/config/categories.test.ts` 更新硬编码 key 列表
+- [x] `scripts/generate-meta.mjs` 的 `banks` 加一行 → 重跑 `npm run generate:meta`
+- [ ] **浏览器里实点一遍**（落地页卡片 → `/home` → 刷题 → 错题本）—— 待用户在有浏览器的环境验证
+- [x] **parser 保留题干换行**（§8.4 的决定 A）
+- [x] **parser 自己从 `## 题组X：<名字>` 取题单名**（§26.2 的怪癖）
+- [x] **额外发现的两处注册点**：`scripts/audit-banks.mjs` 的 `BANKS`、`package.json` 的 `parse:all`
 
 ---
 
@@ -1384,6 +1431,795 @@ currentGroupTitle = last[0].replace(/^##\s*/, '').trim()   // last[0] = 匹配�
 
 `data/raw/LL11512/LL11512.md`：**41 题 / 1 张题单 / 题号 1–41 连续**，
 公共题干已复制进 30–37 每道小题，待复核 5 处。
+
+---
+
+## 27. P6 实测记录：md 接进网站（复用原解析器）
+
+> 目标原文：「开工 P6，尝试复用原有的 md to json 转换器」。
+
+### 27.1 复用方式：抽共享解析器，而不是再写一套正则
+
+新增 `scripts/lib/parse-exam-markdown.ts`，把 `parse-japanese-2024-markdown.ts` 里的
+`extractArticles()` + `parseMarkdown()` **原样抽出**（正则与判定条件一字不改），另加两个**可选**能力：
+
+| 能力 | 默认 | 为什么 |
+|---|---|---|
+| `groupName` | 总是返回 | 参考实现用 `matchAll` 的 `last[0]` 当标题，只能拿到 `题组一：`；新增 `GROUP_LINE`（行首锚定）把 `：` 后面的真名也抓下来（§26.2） |
+| `keepStemNewlines` | `false` | `true` 时题干保留换行（公共题干里的代码块要能渲染）；`false` 与原实现逐字节一致 |
+
+`parse-japanese-2024-markdown.ts` 随后也改成引用它（本地那 230 行删除），**一份正则，两处复用**。
+
+**黄金样本回归**（重构的安全网）：重跑 `npx tsx scripts/parse-japanese-2024-markdown.ts`，与 HEAD 对比：
+
+```
+HEAD 题数=277  重跑题数=277
+同 id 但内容不同: 0      只在 HEAD / 只在重跑: 0
+顺序是否一致 = False     ← 唯一差异
+```
+
+顺序差异**不是重构引起的**：单独跑 `parse:japanese2024` 时 `existing.filter(去掉 g2*) + 追加` 会把
+g11（2021 卷，由后一步的 `parse:japanese2021` 追加）挪到 g21 前面；按 `parse:all` 的规范顺序重跑就一致。
+**结论：277 题内容逐字节相同，重构安全**（已 `git checkout` 还原）。
+
+### 27.2 新薄入口
+
+`scripts/parse-computer-paper.ts`：读 `data/raw/<key>/<key>.md` → `parseExamMarkdown(..., {keepStemNewlines:true})`
+→ 写 `public/<key>-question-bank.json` + `data/processed/<key>-validation-report.json`。只做三件新卷特有的事：
+
+1. 题干保留换行（决定 A）；
+2. 题单名用 `groupName`（拿不到才用兜底名）；
+3. 把 md 里的 `> ⚠ 待核对：…` 翻成 `status: 'needs_review'` + `reviewNotes`
+   —— 否则 S4 标的待复核信息在解析这一步就丢了。
+
+字段映射：`id = <key>-q<3位题号>`（重号时补 `-2`）、`category = key`、
+`groupId = <key>-<gNN>`、`answerProvenance: 'printed'`、`questionType` 按答案长度/选项数判断。
+
+### 27.3 注册点比预计的多两处
+
+| # | 位置 | 说明 |
+|---|---|---|
+| 1 | `src/types/question.ts` | `Category` 联合加 `'computer-2026-midterm'` |
+| 2 | `src/config/categories.ts` | `short/long/desc/icon/bankFile/groupViewTitle/groupViewHint` |
+| 3 | `src/config/courseTree.ts` | `computer-organization` 组下加叶子 |
+| 4 | `src/config/categories.test.ts` | 硬编码 key 列表 |
+| 5 | `scripts/generate-meta.mjs` | `banks` 列表 → `public/_meta.json` |
+| **6** | **`scripts/audit-banks.mjs`** | **`BANKS` 列表 —— §22 漏了这一个，跑 `npm run audit:banks` 才发现新库根本不在审计范围内** |
+| **7** | **`package.json`** | `parse:computerPaper` + 插进 `parse:all`（放在 `parse:computer` 之后、`generate:meta` 之前） |
+
+`public/sw.js` 按后缀 `-question-bank.json` 匹配，**不需要**加清单 ✓。
+
+### 27.4 分类名与目录
+
+用户选定 **`computer-2026-midterm`**（以 `computer-` 开头 → 自动进落地页的「计算机组成」试卷区、
+自动进 `NO_SHUFFLE_CATEGORIES`、自动启用 markdown 渲染 `technicalQuestion`）。
+`data/raw/LL11512/` 与 `pdf-ocr/work/LL11512/` 同步改名，manifest 的 `category` 字段一并更新，重跑 S4（0 token）。
+
+### 27.5 顺手修掉的一个真 bug
+
+S4 渲染判断题时 `answerText` 沿用了模型填的 `A`/`B`，输出成 **`**正确答案：A A**`**（实测第 22/23/24 题）。
+两处修复：
+
+- `fill_judgement_options()`：选项换成「正确/错误」后**必须重算** `answerText`（旧的 A/B 已无意义）；
+- 新增 `normalize_answer_text()`：单选题的 `answerText` 必须等于所选选项原文
+  （解析端存的是 `answerText || 选项文本`，非空但错的会被原样带进题库；`parse-computer-banks.mjs:79` 也这么断言）。
+
+### 27.6 验收（全绿）
+
+| 检查 | 结果 |
+|---|---|
+| `npx vue-tsc -b` | ✅ exit 0（`Category` 联合/注册类型全对） |
+| `npx vitest run --pool=threads` | ✅ **17 文件 / 133 测试全过** |
+| `npm run test:computer` | ✅ 15/15 |
+| `npm run audit:banks` | ✅ 通过，且**已覆盖新库**：`computer-2026-midterm-question-bank.json 题数: 41 / schema: OK / id 唯一性: OK` |
+| `npx vite build` | ✅ `built in 1.29s`（sw 缓存版本自动 bump） |
+| `npx tsx scripts/parse-computer-paper.ts` | ✅ `41 题 / 1 个题组 / 待复核 7`，题组名 = `计算机组织与结构（软国）2026年` |
+| 题库形状自检 | ✅ 41 题 id 唯一、`answerKey` 都落在选项里、`answerText` 与选项一致、8 题题干含换行（代码块保留） |
+
+### 27.7 只剩一步：浏览器实点
+
+构建与数据链路都验证过了，但"落地页出现卡片 → 点进 `/home` → 刷题 → 错题本"需要**浏览器**。
+请在有浏览器的环境跑 `npm run dev`，确认：
+
+1. 落地页「计算机组成」区多一张 **2026期中（软国）** 卡片，题数 41；
+2. 点进去能看到题单「计算机组织与结构（软国）2026年」，开始练习能出题；
+3. 第 30–37 题的题干里有**代码块**（不是一行行内文本）；
+4. 错题本/收藏能正常记录（`questionId` 前缀匹配靠 `computer-2026-midterm-`）。
+
+---
+
+## 28. S6 发布门禁 + S3 生成答案解析（用户要求）
+
+> 要求原文：「加入一个通过 p5 的结果就能生成网页上题目卡片的 p6，p3 加入解析功能」。
+
+### 28.1 S3：生成答案解析（提示词规则 7）
+
+卷面大多只印答案、不印解析（这份期中卷 41 题里 **0 题**有印刷解析）。
+`3_merge.py` 现在要求模型：卷面有解析就抄（`printed`）、没有就**自己写一句 ≤80 字的解析**（`generated`）、
+没把握就留空（`none`）。新增字段 `explanationSource` 一并存进 `page-00N.merge.json`。
+
+```python
+def explanation_source(raw) -> str:   # printed / generated / none
+    # 模型没写 provenance 时保守判成 printed（旧产物都是这个语义）
+```
+
+进度行与收尾行都会报数：`提取 9 题（冲突 3，生成解析 9）` / `[完成] … | AI 生成解析 39 题`。
+
+### 28.2 S4：把 AI 解析标出来
+
+`generated` 的解析末尾补一行 `> ⚙ 解析由 AI 生成（未经人工核对）` ——
+站上 `answerProvenance` / `explanationSource` 都是纯数据字段、UI 不显示，所以标记必须留在正文里读者才看得见。
+`report.md` 头部也多了"解析来源：卷面原文 x 题 / AI 生成 y 题"。
+
+### 28.3 S5：校验结论落盘（发布门禁的依据）
+
+`5_check.py` 现在写 `data/processed/<分类名>-check.json`：
+
+```jsonc
+{ "md": "data/raw/<分类名>/<分类名>.md", "md_sha256": "2f2135ba…", "checked_at": "…",
+  "exit_code": 2, "passed": true, "questions": 41, "parser_kept": 41, "parser_dropped": 0,
+  "hard_errors": [], "warnings": ["带待复核标记 8 处"] }
+```
+
+放 `data/processed/`（入库）而不是 `pdf-ocr/work/`（gitignore）——新克隆也能直接发布。
+
+> ⚠️ **只在按 `--category` 校验时才写结论**：`--md <路径>` 是临时的单文件检查
+> （回归测试也走那条路），给它写 `<文件名>-check.json` 会污染 `data/processed/`（实测踩过）。
+
+### 28.4 S6：只发布"通过 S5 且之后没再改过"的 md
+
+`parse-computer-paper.ts` 在解析前先过三道闸（`requireCheckVerdict()`）：
+
+| 闸 | 拒绝条件 | 实测报错 |
+|---|---|---|
+| ① 有没有结论 | `data/processed/<key>-check.json` 不存在 | `没有 S5 校验结论…请先跑 python pdf-ocr/5_check.py --category <key>` |
+| ② 过没过 | `passed !== true`（即 S5 报硬错误、退出码 3） | `S5 校验未通过（2 条硬错误），拒绝生成题库：- 会被解析端丢弃的题 2 道` |
+| ③ 是不是同一份 md | `md_sha256` 与当前 md 不符 | `md 在 S5 校验之后又变了（sha256 不一致），拒绝用旧结论发布：校验时: 2f2135ba… / 现在: …` |
+
+另加一道**自洽闸**：`parseExamMarkdown` 这次收下的题数必须等于 verdict 里的 `parser_kept`
+（md 或解析器偷偷变过就报错，而不是安静地发一份不一样的题库）。
+
+**三条路径都实测过**：正常 → exit 0；篡改 md 不加校验 → 拦住；把 verdict 改成 `passed:false` → 拦住。
+
+### 28.5 顺手修掉两个解析端的历史坑（§8.5）
+
+1. **解析正文带着答案行**：解析端把 `#### 答案与解析` 之后的全部内容塞进 `explanation`，开头那行
+   `**正确答案：B 105**` 也进去了。而仓库既有题库（`computer-midterms` / `japanese2`）的 `explanation`
+   **不含**答案行 —— 留着会在站上把答案显示两遍。现在 P6 会剥掉。
+   > 顺带修掉了 `q34/q35` 被误判成 `printed` 的问题：它们没有解析，剥掉答案行后才正确判成 `none`。
+2. **CRLF 泄漏**：解析是从原始行拼的，`\r` 会留在每行末尾 → P6 统一转 LF。
+
+### 28.6 真实重跑数据
+
+```bash
+python pdf-ocr/3_merge.py --category computer-2026-midterm --pages 1-4 --force
+# ⚠ 提取 41 题（34/35 保住了）| 冲突 8 | AI 生成解析 39 题 | 4 次调用 34.1k tok
+```
+
+| 指标 | 值 |
+|---|---|
+| 题数 | 41（题号 1–41 连续） |
+| 解析来源 | **generated 39 / none 2**（第 34/35 题：模型自评没把握，按要求留空） |
+| 曾丢失的第 34/35 题 | ✅ 仍在（提示词规则 6c 生效） |
+| 累计消耗 | 该分类 **253.2k token**（28 次调用） |
+
+抽查第 1 题的解析：`01101001=64+32+8+1=105，故选 B。A 项漏算高位，C、D 项数值均对不上各位权值之和。` ——
+是真正讲清道理的一句话，不是"根据题意可知"。
+
+### 28.7 验收
+
+| 检查 | 结果 |
+|---|---|
+| `python pdf-ocr/5_check.py` | ✅ 硬错误 0 / 会被丢弃 0，退出码 2，写出 verdict |
+| `npx tsx scripts/parse-computer-paper.ts` | ✅ `41 题 / 1 题组 / 待复核 6 / 解析 generated 39 · none 2` |
+| 题库自检 | ✅ 无答案行、无 CR、`explanationSource` 分布正确 |
+| `npx vue-tsc -b` | ✅ exit 0（`Question` 新增 `explanationSource`） |
+| `npx vitest run --pool=threads` | ✅ 17 文件 / 133 测试 |
+| `npm run test:computer` | ✅ 15/15 |
+| `npm run audit:banks` | ✅ 覆盖新库，schema / id 唯一性 / 题干+答案 全 OK |
+
+---
+
+## 29. S6 发布器：一条命令完成"网页生成 + 拼接"（用户要求）
+
+> 要求原文：「写一个程序，使得它可以直接作为工作流的一部分，进行网页的生成和拼接」。
+
+### 29.1 一条命令
+
+```bash
+python pdf-ocr/5_check.py --category computer-2026-midterm        # 门禁（必须先跑）
+python pdf-ocr/6_publish.py --category computer-2026-midterm      # 发布上站
+```
+
+`6_publish.py` 是工作流的第 6 环，6 个步骤：
+
+| 步 | 做什么 | 失败就退出 |
+|---|---|---|
+| 1 | **门禁**：读 `data/processed/<key>-check.json`，校验 `passed` + md sha256 | 码 1（缺结论）/ 码 3（未通过或 md 变过） |
+| 2 | **生成题库**：调 `npx tsx scripts/parse-computer-paper.ts --key <key>` | 码 3 |
+| 3 | **拼接进站点源码**（6 处，幂等） | 码 1/3 |
+| 4 | 重建 `public/_meta.json`（首页题数） | 码 3 |
+| 5 | `npx vue-tsc -b` 类型检查 + `npm run audit:banks` 题库审计 | 码 3 |
+| 6 | `npx vite build` 构建网页 | 码 3 |
+
+输出沿用统一进度格式：`[S6/6 发布上站] step 3/6 (3/6)  ✓ 2ms  站点源码 6 处：改动 1 处 → …`
+
+### 29.2 拼接的 6 处（少一处卡片就不出现 / 或不被审计覆盖）
+
+| 文件 | 拼什么 |
+|---|---|
+| `src/types/question.ts` | `Category` 联合类型（**追加到末尾**） |
+| `src/config/categories.ts` | `CATEGORIES` 条目（短名/长名/描述/图标/bankFile/题单视图） |
+| `src/config/courseTree.ts` | `computer-organization` 组下的叶子（侧栏/课程树入口） |
+| `src/config/categories.test.ts` | 硬编码的 key 列表（排序插入，不然测试红） |
+| `scripts/generate-meta.mjs` | `banks` 列表 → `_meta.json`（首页题数） |
+| `scripts/audit-banks.mjs` | `BANKS` 列表（**追加到末尾**） |
+
+**试卷清单本身不需要登记**：`parse-computer-paper.ts` 从 `data/processed/*-check.json`（S5 的结论）
+自动发现所有已通过校验的试卷 —— 所以 `npm run parse:computerPaper`（无参数）会把所有已发布试卷刷一遍。
+
+展示信息默认从 md 的 `## 题组一：<卷名>` 取，可用 `--short/--long/--desc/--icon` 覆盖。
+
+### 29.3 三个"少惹麻烦"的实现细节
+
+1. **幂等**：每个 patcher 先查 key 是否已存在，在就跳过 → 重复跑输出 `改动 0 处（都已在位）`。
+2. **最小 diff**：联合类型与 `BANKS` **只追加、不重排**（顺序无语义）；
+   `generate-meta.mjs` 的数组是单行就单行插入（1 行 diff），多行才整段重排。
+   > 一开始写的是"整段重排成有序"，实测会造出 8 行无关改动 —— 已改掉。
+3. **保留行尾符**：读源码时把 `\r\n` 归一成 `\n` 处理，写回时按原样还原（仓库里两种行尾并存，
+   统一改写会造出一堆假 diff）。
+
+### 29.4 实测
+
+**从 HEAD 的干净注册状态**（把 6 处注册全撤掉）跑一遍：
+
+```
+[S6/6 发布上站] step 1/6 (1/6)  ✓ 门禁通过（exit 2，警告 1）
+[S6/6 发布上站] step 2/6 (2/6)  ✓ 1018ms  public\computer-2026-midterm-question-bank.json ✓ 52344 字节
+  6 处：改动 6 处
+[S6/6 发布上站] step 4/6 (4/6)  ✓ 563ms   public/_meta.json → computer-2026-midterm: 41 题
+[S6/6 发布上站] step 5/6 (5/6)  ✓ 4214ms  vue-tsc ✓ / 审计 ✓
+[S6/6 发布上站] step 6/6 (6/6)  ✓ 1755ms  ✓ built in 657ms
+[完成] 发布上站 ✓ | 总耗时 8.0s
+```
+
+再跑一次 → `改动 0 处（都已在位）`；`git diff` 确认产物与手写版一致（22 行插入 / 1 行删除）。
+
+**这一步测试抓到一个真 bug**：`patch_meta_keys` 的结束锚点原先写死成 `"].map((key) =>"`，
+而仓库里那个数组在 HEAD 上是**单行**（`.map(` 后面直接换行），锚点根本不存在 → 直接崩。
+改成用数组自己的 `]` 收尾、并按"单行/多行"分别插入。**所以这类 patcher 必须从 HEAD 的原始形态测**，
+不能只在自己改过的形态上测。
+
+### 29.5 验收
+
+| 检查 | 结果 |
+|---|---|
+| 从干净状态跑发布器 | ✅ 6 处全插入，`vue-tsc` / `audit:banks` / `vite build` 全绿，8.0s |
+| 再跑一次（幂等） | ✅ 改动 0 处 |
+| `git diff` 6 个注册文件 | ✅ 22 insertions / 1 deletion（全是必要的） |
+| `npx vitest run` | ✅ 17 文件 / 133 测试 |
+| `_meta.json` | ✅ 9 个分类，新分类 41 题 |
+
+---
+
+## 30. 用命令行控制卡片位置（`6_publish.py`）
+
+### 30.1 位置由什么决定
+
+首页那张硬编码入口卡「计算机组成（软国际）」点进去才是「选择试卷」区（`/#/computer-organization`，
+见 `LandingPage.vue:12-13`）。区里卡片的顺序 **就是我们这份试卷在 `CATEGORIES` 数组里的相对顺序**
+（`filter` 保序）。侧栏/课程树的顺序同理，看 `COURSE_TREE` 里那个分组 children 的顺序。
+
+所以"控制位置" = 控制这两处数组里的插入点。`6_publish.py` 用四个参数控制，**默认追加到最后一张**：
+
+| 参数 | 含义 | 例 |
+|---|---|---|
+| 不给 | 追加到同类末尾 **（默认）** | — |
+| `--position N` | 同类第 N 张（`1` = 最前；超过总数则追加） | `--position 1` |
+| `--before <分类名>` | 放到某份试卷**之前** | `--before computer-midterms` |
+| `--after <分类名>` | 放到某份试卷**之后** | `--after computer-2021-final` |
+| `--last` | 挪回同类最后一张 | `--last` |
+
+「同类」＝都以 `computer-` 开头（或都不以它开头）。所以 `--position 1` 是"计算机试卷里的第 1 张"，
+不是"整个 CATEGORIES 的第 1 条"（第一条是日语）。
+
+### 30.2 例子（都实测过）
+
+```bash
+# ① 放到「选择试卷」区第一张
+python pdf-ocr/6_publish.py --category computer-2026-midterm --position 1
+#    计算机组织与结构（软国）2026年 → 2021期末 → 2024期末（部分试卷） → C卷 → 期中三年合集
+
+# ② 放到第 3 张
+python pdf-ocr/6_publish.py --category computer-2026-midterm --position 3
+
+# ③ 放到「期中三年合集」之前
+python pdf-ocr/6_publish.py --category computer-2026-midterm --before computer-midterms
+#    2021期末 → 2024期末 → C卷 → 计算机组织与结构（软国）2026年 → 期中三年合集
+
+# ④ 放到「2021期末」之后
+python pdf-ocr/6_publish.py --category computer-2026-midterm --after computer-2021-final
+#    2021期末 → 计算机组织与结构（软国）2026年 → 2024期末 → C卷 → 期中三年合集
+
+# ⑤ 挪回最后一张（= 默认行为）
+python pdf-ocr/6_publish.py --category computer-2026-midterm --last
+
+# ⑥ 先看会怎么动，不写盘
+python pdf-ocr/6_publish.py --category computer-2026-midterm --position 1 --dry-run
+#    src/config/categories.ts：将移动到第 1 张（computer-2021-final 之前）
+#    src/config/courseTree.ts：将移动到第 1 张（computer-2021-final 之前）
+
+# ⑦ 不给位置参数 = 幂等（已注册就什么都不动）
+python pdf-ocr/6_publish.py --category computer-2026-midterm
+#    src/config/categories.ts：已存在（位置不变）
+```
+
+每次跑完都会打印结果顺序，方便核对：
+
+```
+    「选择试卷」区顺序：2021期末 → 2024期末（部分试卷） → C卷（日期待核对） → 期中三年合集 → 计算机组织与结构（软国）2026年
+```
+
+### 30.3 两个实现细节
+
+1. **两处一起动**：`CATEGORIES`（卡片顺序）和 `courseTree.ts` 的叶子（侧栏顺序）用**同一个位置规则**，
+   所以不会再出现"卡片排在最后、侧栏排在第一"的不一致（改造前就是这样）。
+   > 实测：`--position 1` / `--before` / `--after` / `--last` 四种情况下，两处顺序完全一致。
+2. **已注册也能挪**：位置参数会让 patcher **先摘掉旧条目再插到新位置**（也就是"移动"），
+   而不是像其它拼接点那样"已存在就跳过"。挪到原位时输出 `已在该位置（第 N 张）`，不算改动。
+
+### 30.4 位置之外的名字
+
+卡片的**标题**用的是 `short`（`LandingPage.vue:105`），侧栏叶子用 `courseTree.ts` 的 `label`，
+副标题用 `desc`，图标用 `icon`，右侧题数来自 `public/_meta.json`。
+这些可以用 `--short/--long/--desc/--icon` 在**首次发布**时定；**已注册的条目不会被覆盖**
+（拼接是幂等的），要改名请直接改 `src/config/categories.ts` / `courseTree.ts`，或先删掉那条再重跑。
+
+> 约束：`short` 必须全局唯一（`src/config/categories.test.ts:23-27` 会失败）；
+> 位置只影响顺序，不影响任何校验。
+
+---
+
+## 31. 入口卡 + 试卷卡（两层结构，命令行管理）
+
+> 要求原文：「能否先新建入口卡，再加入卡片，命令行中给出入口名和试卷名，若存在入口，则添加试卷，若不存在，则新建入口」。
+
+### 31.1 结构：入口不再写死
+
+首页是两层：
+
+| 层 | 内容 | 路由 | 配置 |
+|---|---|---|---|
+| 第一层 | **入口卡**（学科/试卷集合）+ 不归属任何入口的学科 | `/` | `src/config/entries.ts` 的 `ENTRIES` + `CATEGORIES` |
+| 第二层 | 该入口下的**试卷卡** | `/<入口 key>` | `ENTRIES[].papers`（**顺序即卡片顺序**） |
+
+- 入口清单从「`LandingPage.vue` 里写死一张计算机组成卡 + 用 `computer-` 前缀分组」改成了
+  数据驱动：`entries.ts` 的 `ENTRIES`，`entryOfCategory()` 决定一个分类是第一层学科还是某入口下的试卷。
+- 路由改成通用的 `/:entryKey`（放在所有静态路由之后，不认识就回首页）——**新建入口不需要动 router**。
+- `entries.test.ts` 守住三条不变量：入口引用的分类必须存在、一个分类只能属于一个入口、
+  `computer-*` 必须都已归入入口。
+
+### 31.2 命令行：给入口名和试卷名
+
+```bash
+python pdf-ocr/6_publish.py --category <分类 key> \
+  --entry "<入口名>" [--entry-key <key>] [--entry-icon <字>] [--entry-desc <副标题>] \
+  [--paper "<试卷名>"] [位置参数]
+```
+
+| 情形 | 行为 |
+|---|---|
+| **入口已存在**（按 `--entry-key` 或 `--entry` 名精确匹配） | 把试卷加进它的 `papers[]`（默认追加到最后一张） |
+| **入口不存在** | **先新建入口**（key 取 `--entry-key`，或从入口名抽 ASCII），再把试卷挂上 |
+| `--entry` / `--entry-key` 都不给 | 沿用这份试卷**当前所在的入口**（新试卷则报错） |
+| 中文入口名且没给 `--entry-key` | **直接报错退出**（不猜 key），提示加 `--entry-key` |
+| 一份试卷已在别的入口 | 先从旧入口摘掉，再挂到新入口（**一个分类只属于一个入口**） |
+
+### 31.3 例子（都实测过）
+
+```bash
+# ① 入口已存在 → 只加试卷（默认追加到最后一张）
+python pdf-ocr/6_publish.py --category computer-2026-midterm \
+  --entry "计算机组成（软国际）" --paper "2026期中（软国）"
+#   入口：已有 「计算机组成（软国际）」（/computer-organization）
+#   src/config/entries.ts：入口「计算机组成（软国际）」：试卷插入到第 5 张（computer-midterms 之后）
+
+# ② 入口不存在 → 新建入口 + 挂试卷
+python pdf-ocr/6_publish.py --category english-cet4 \
+  --entry "英语四级" --entry-key english-cet4 --entry-icon 英 --paper "2026年6月真题"
+#   入口：新建 「英语四级」（/english-cet4），图标 英
+#   src/config/entries.ts：新建入口「英语四级」（/english-cet4）并把试卷挂到第 1 张
+#   → 首页立刻多一张「英语四级」入口卡，路由 /english-cet4 自动可用
+
+# ③ 中文入口名但漏了 --entry-key → 直接报错（不猜 key）
+python pdf-ocr/6_publish.py --category english-cet4 --entry "英语四级"
+#   [错误] 要新建入口「英语四级」，但推不出合法的 key（只能用 a-z 0-9 -）。
+#          请加 --entry-key，例如 --entry-key cs-organization
+
+# ④ 控制这张试卷卡在入口里的位置（同一入口内）
+python pdf-ocr/6_publish.py --category computer-2026-midterm --entry "计算机组成（软国际）" --position 1
+python pdf-ocr/6_publish.py --category computer-2026-midterm --before computer-midterms
+python pdf-ocr/6_publish.py --category computer-2026-midterm --after computer-2021-final
+python pdf-ocr/6_publish.py --category computer-2026-midterm --last
+
+# ⑤ 先看会怎么动（不写盘）
+python pdf-ocr/6_publish.py --category computer-2026-midterm --entry "计算机组成（软国际）" --position 1 --dry-run
+```
+
+跑完一定会打印结果顺序，便于核对：
+
+```
+    「选择试卷」区顺序：2021期末 → 2024期末（部分试卷） → C卷（日期待核对） → 期中三年合集 → 计算机组织与结构（软国）2026年
+```
+
+### 31.4 实现细节
+
+- `parse_entries()` / `render_entries()` 直接解析/渲染 `entries.ts` 的结构（它是我们生成的文件，格式固定），
+  比正则手术稳。数组里的人类注释会在重写时丢掉 —— 注释请写在文件头的文档串里。
+  > **边界坑**：数组内部文本结尾是 `  },` **不带换行**（那个换行属于后面的 `\n]`）——
+  > 解析正则写成 `\n  },\n` 会数出 **0 个入口**（实测踩过）。
+- `CATEGORIES` 数组里那份条目只管展示信息（`short/long/desc/icon/bankFile`），**顺序不再影响卡片顺序**，
+  所以发布器只做"没有就追加"（1 行 diff、不重排）。
+- `courseTree.ts` 的叶子仍按同一个位置规则插入，保证侧栏顺序和「选择试卷」区一致。
+- 拼接点从 6 处变成 **7 处**（多了 `src/config/entries.ts`）。
+
+### 31.5 验收
+
+| 检查 | 结果 |
+|---|---|
+| `python pdf-ocr/tests/test_p6_publish.py`（新增） | ✅ **7 组断言**：往返解析、入口已存在/不存在、中文名缺 key 报错、四种位置、幂等、跨入口移动 |
+| 发布器幂等复跑 | ✅ `站点源码 7 处：改动 0 处` |
+| `npx vue-tsc -b` | ✅ exit 0 |
+| `npx vitest run` | ✅ **18 文件 / 138 测试**（新增 `entries.test.ts` 5 组不变量） |
+| `npm run audit:banks` / `vite build` | ✅ 通过 |
+
+---
+
+## 32. 截断题保留 + 判重删除 + 全卷 AI 终审（用户要求）
+
+> 要求原文：「在 p3 时保留被截断的题目和对应选项，不要直接删去，同时遇到疑似相同的题，直接删去」
+> ＋「答案顺延，跳过重复题目」＋「S4 部分也介入 deepseek」。
+
+### 32.1 S3：被截断的题**保留**，不再整题丢掉
+
+`normalize_question()` 以前在"题干为空"时**整题返回 None**（等于静默删除）—— 而截断（页底被切断、
+JSON 被 `max_tokens` 切掉）正好就是这种形态。现在：
+
+- **只对"根本不是对象"的条目返回 None**；题干为空也**保留**、标 `needs_review`，让 S4/S5 与人工看到。
+- 提示词规则 3 写死："哪怕只看见半截题干、只剩一两个选项，也照原样抄下来，**不许因为不完整就整题省略**"。
+
+### 32.2 S3：页内判重**直接删**
+
+- 判据（`dedupe_questions()`）：**归一化题干完全相同**，且选项"相同 **或** 有一方没给"。
+  - 题干 <10 字不参与 —— 匹配题的小题题干常是 `(30) の選択肢：`，会撞车（实测踩过，会删真题）。
+  - 同题干但**两边都有选项且不同** → 判为"同题干不同小问"，两道都留。
+- 信息更全的那份胜出；删除记录写进 `merge.json` 的 `deduped[]`，**不**因此标 `needs_review`（用户："直接删去"）。
+- **只删、不改题号** —— "删掉后面题号整体前移"是跨页操作，只有 S4 看得到全卷。
+
+### 32.3 S4：全卷 AI 终审（DeepSeek **一次**调用）
+
+`4_build_md.py` 新增 `ai_review()`：
+
+- **输入**：全卷题目（题号/题组/题干/选项/答案）+ 从各页转写里挑出来的**答案表片段**
+  （`answer_table_snippets()`：抓 `1-5 DDDBC` 这类行，以及含"参考答案/评分标准"的段落）。
+- **输出**：`duplicates[]`（疑似重复的题 + 保留哪条 + 理由）、`answers[]`（**顺延后**的答案对位 + 依据）、
+  `notes[]`。
+- **S4 应用**（`apply_ai_review()`）三步：
+  1. **删重复**（按题号匹配，`keepNumber` 优先保留 → 直接删、不动 `needs_review`）；
+  2. **题号顺延**：**按题组**把题号重新连续编号（从该组第一题的原题号起）——
+     等价于"被删题之后的所有题号减 1"，且**只在真的删过题时才做**（原卷本来就跳号的地方不动）；
+  3. **答案重新对位**：`answers[]` 给的是顺延后的题号 → 逐条覆盖 `answerKey`，`answerText` 跟着选项重算。
+- **缓存**：结果落在 `work/<分类名>/paper-review.json`，默认**复用**（重跑不重复花钱）；
+  `--refresh-review` 重跑，`--no-ai-review` 完全跳过（纯离线、0 token）。
+- 放在**公共题干挂载之后**：那一步要用"卷面原题号"回查转写定位导言，重编号后就不准了。
+
+### 32.4 为什么必须"答案重新对位"
+
+这份 Marxism 卷的答案是**按位置**给的（卷首就印着）：
+
+```
+一、单向选择题（每题1分，共15分）
+1-5 DDDBC   6-10 ABDDB   11-15 ABCAC
+```
+
+而 OCR/模型把第 7、8 题读成了**一模一样**（题干+选项全同，答案 B / D）。删掉第 8 题后，
+若不重编号，第 9 题以后的**答案就整体错位一位**。所以 S4 必须：删 → 顺延题号 → 按新题号重发答案。
+
+### 32.5 验收
+
+| 检查 | 结果 |
+|---|---|
+| `pdf-ocr/tests/test_p4_ai_review.py`（新增） | ✅ **5 组断言**：判重不误删（占位符题干 / 同题干不同选项）、信息更全者胜出、删→顺延→答案对位、没删题时不动题号、答案表片段提取 |
+| 全部 pdf-ocr 套件 | ✅ 8 + 17 + 5 + 7 + 4 = **41 组断言** |
+| 回归测试是否离线 | ✅ 3 处 S4 调用都加了 `--no-ai-review`，跑完**没有**生成 `paper-review.json`（确认没偷偷调 API） |
+
+---
+
+## 33. `answerKey` / `questionType` 的确定性约束（S3，用户要求）
+
+> 要求原文：「p3 的 questiontype 和 answerKey 有错误，进行约束，使其完整的格式化」。
+
+以前这两个字段是**模型给什么就存什么**。实测（`Principles-of-Marxism` 卷）出现的写法：
+`b`、`Ａ`（全角）、`C、A`、`c,a`、`D 和 B`、`正确`、`√`、`×`、`错`、`简答题`、`other`、
+`multiple`、`single choice`、空串 —— 直接进库会让**判分和渲染都出错**（前端只认 `'single' | 'multi' | 'judgement' | 'fill'`，
+答案比对按 `answerKey` 逐字符比）。
+
+### 33.1 收敛规则（`3_merge.py` 的 `normalize_answer_key()` / `infer_question_type()` / `normalize_question_type()`）
+
+`answerKey`：
+
+| 输入形态 | 处理 |
+|---|---|
+| 单个字母，半角/全角、大小写混用（`b`、`Ａ`） | 转半角大写 |
+| 多字母带分隔符（`c,a`、`C、A`、`C/A`、`D 和 B`、`AC`、`A B`） | 拆出字母 → 去重 → **升序**拼成 `AC` |
+| 判断题的中文词（`正确`/`对`/`是`/`√`/`T`） | → `A`（配合 `判断题` 的 `A=正确 B=错误`） |
+| 判断题的否定词（`错误`/`错`/`否`/`×`/`F`） | → `B` |
+| 字母不在该题选项里 | **清空** + `needs_review: true`（不猜） |
+| 多字母但该题选项 <2 或题型是单选 | 保留原键但标 `needs_review: true`（交人工） |
+
+`questionType`（只允许 `QUIZ_TYPES = ("single", "multi", "judgement", "fill")`）：
+
+- 先按答案形态推断：多字母 → `multi`；`A`/`B` 且选项是 `正确/错误` → `judgement`；无选项且无答案 → `fill`；其余 → `single`。
+- 中文/英文别名归一：`单选`/`单项选择`/`single choice` → `single`；`多选`/`multiple` → `multi`；
+  `判断`/`正误` → `judgement`；`填空`/`简答`/`主观题`/`other`/无法识别 → `fill`。
+  > `other` 之所以落到 `fill`：卷面上它总是主观题；落 `fill` 至少前端能正常渲染成"无选项题"，
+  > 而留着 `other` 会让渲染分支落空。
+- 多选题的 `answerText` **自动重算**（按选项文本用 `、` 连接，如 `甲、丙`）——
+  md 契约要求 `**正确答案：X text**` 的 text **至少 1 个字符**，模型给的答案文本常是空的。
+
+### 33.2 改动留痕
+
+每次纠正记一笔进 `merge.json` 的 `normalized[]`：
+
+```jsonc
+{ "number": 1, "field": "answerKey", "before": "c,a", "after": "AC" }
+```
+
+S4 读入后**按 (字段, 原值, 规范值) 聚合**写进 `report.md` 的
+「S3 字段格式化」小节（表格：字段 / 原值 / 规范为 / 次数），不逐条刷屏；
+有值被**清空**时额外加一行 ⚠ 提醒需要人工补答案。S3 / S4 的进度行也带上计数
+（S3：`…，格式化 N`；S4：`… / 字段格式化 N / …`）。
+
+### 33.3 验收
+
+| 检查 | 结果 |
+|---|---|
+| `pdf-ocr/tests/test_s3_normalize.py`（新增） | ✅ **5 组断言**：15 种写法全部收敛到合法值、认不出的答案清空或标 `needs_review`、多选自动拼 `answerText`、纠正记录字段齐全、`QUIZ_TYPES` 与 `src/types/question.ts` 的联合类型一致 |
+| `pdf-ocr/tests/test_p4_build.py` 第 18 组（新增） | ✅ S4 把 `normalized[]` 聚合成 report.md 的表格，并在有值被清空时加 ⚠「需要人工补答案」 |
+| 全部 pdf-ocr 套件 | ✅ 4 + 8 + 5 + **18** + 5 + 7 = **47 组断言**（0 失败） |
+| 是否联网 | ✅ 该测试**纯离线**，0 token |
+
+---
+
+## 34. 参考答案页 / 材料题 / 题型：一张"马原卷"暴露的三个坑（用户要求）
+
+> 用户原话：「为何拼接功能消失，很多多选题的 questionType 不对，且 answerKey 没有显示」
+> ＋「可以删改代码」。
+
+用 `pdf-ocr/work/Principles-of-Marxism/`（《马克思主义基本原理概论》，9 页）复现出来的**三个独立缺陷**。
+这张卷子很典型：**答案单独印在最后一页**、**多选题有 5 个选项**、**材料题跨页**。
+修复前的 S4 输出是：52 条提取 → 44 题 / **37 道缺答案** / 38 待复核 / 公共题干 0。
+
+### 34.1 「拼接功能消失」＝ 材料题贴不上去
+
+第 5 页最后一道题是「五、案例分析题」的**整段材料**（`continued: true`），三个小问在第 6 页，
+两页的**题组名不同**（`五、案例分析题` vs `思考题`）—— 而 `attach_shared_stems()` 是按"题组"找导言的，
+于是材料贴不到小问上，站上三个小问成了"没头没尾"的孤儿题。
+
+新增 `attach_material_passages()`（在 `attach_shared_stems()` 之后跑），判据全满足才动手：
+
+1. 该题**没有选项**、题干压平后 ≥ 120 字、且带材料味关键词（案例/材料/阅读/分析/论述/思考题…）；
+2. 它是**所在页的最后一道题**；
+3. **下一页**至少 2 道题，且这些题自己都还没有材料（题干短、无代码围栏）。
+
+材料**复制**进每个小问的题干（与 §8.4 的公共题干同一个原则：单看任意一题都不缺上下文）；
+材料本身（只有材料、没有答案，不是一道能作答的题）**从题单里撤掉**，它名下的
+"跨页拼接失败"记录也一并撤掉，免得报告里留噪音。
+
+### 34.2 「answerKey 没有显示」＝ 答案页被当成题目抄了
+
+这份卷子的答案是**单独印在最后一页**的「试卷评分标准」：模型把那一页抄成了 23 条
+「题干为空、只有答案」的伪题目 —— 于是**真正的题目 37 道缺答案**，而站上多出一堆空题 + 裸答案。
+
+新增 `is_answer_key_page()` ＋ `harvest_answer_table()` ＋ `apply_answer_table()`：
+
+- **识别**（满足其一）：`paper_identity.title` 命中 `评分标准|参考答案|标准答案|…`；
+  或该页提出的题**题干全空**且 **≥ 3 道**带着 answerKey。
+- **收获**：抽成 `{(大题键, 题号): 答案}`，答案页**不再产出任何题目**（只记进 report.md）。
+- **贴回**：按 `(大题键, 题号)` 匹配；`大题键` 由 `section_bucket()` 归一
+  （`题组一 一、单项选择题` 与 `一、单项选择题` 归到同一个键；认得出题型就用题型当键）。
+  **回退条款**：只有当答案表**只有一个大题**时，才允许"只按题号"匹配 ——
+  很多卷子每个大题都从 1 重新编号（单选 1-15、多选 1-5、论述 1…），
+  无脑按题号回退会把单选的答案贴到主观题上（实测踩过，写进测试）。
+
+实测效果：**贴回 12 道题**（单选 9/10-15 + 多选 5 道），缺答案 37 → 10。
+
+### 34.2b 第二轮：答案页的"逐题抄"不能指望模型（用户："还是没改"）
+
+用户重跑 S3（真实 AI）后反馈 `questionType` / `answerKey` 仍未修好。查下来是**新的两个坑**：
+
+1. **模型把整页答案概括了**：这一次它只提出 5 条，把单选写成一条
+   `#5 … ans='C'（OCR 原写作 "DDDB C"，按五个答案断为 D/D/D/B/C）`，
+   多选写成一条 `#1 ans='CE'` —— 逐题答案（14 条）全丢，答案表没东西可贴。
+2. **S3 的页内判重把答案行吃掉了**：参考答案页每一行的题干都是同一句占位
+   `（本页未印题干，仅有答案）`，模型本来提出的 23 行被"同题干 = 重复"删到只剩 1 行。
+
+三条修复（**前两条让已有数据 0 token 就能修好**）：
+
+- **S4 增加"答案表的确定性来源"**（`mine_answers_from_transcription()`）：
+  直接读两路 OCR 的**转写**，解析
+  ```
+  一、单项选择题（每题1分，共15分）
+  1-5 DDDB C          → 区间写法，展开成 5 条（空格是排版断行）
+  二、多项选择题（每题1分，共5分）
+  1-5 1.CE 2.AC 3.ABC 4.ABC 5.DE   → 逐题写法，按 `题号.答案` 抄
+  ```
+  只挖**客观题**大题（单选/多选/判断）；主观题那几段是评分标准，
+  硬挖会把"1. 对 2分""4分"当成答案。区间字母数与题号跨度对不上就不采信，记进
+  `answer_table_odd[]`；两路答案不一致记进 `answer_table_conflicts[]`，都要人看。
+  哪些页是答案页也不再依赖模型 —— `transcription_answer_pages()` 看转写里有没有
+  `参考答案 / 评分标准`。
+- **占位题干不参与判重**（`_common.is_placeholder_stem()`）：`dup_key()` 遇到
+  "这一页没有题干"的占位直接返回 `None`。注意**不能**改成"答案不同就不判重" ——
+  那会把真题的判重也削弱掉（`test_p4_ai_review` 立刻抓到）。
+- **S3 提示词规则 8**：明确要求答案页**逐题一条**地抄（区间要展开、不许合并总结、
+  stem 留空、主观题把评分标准写进 `answerText`）。重跑第 7 页验证：
+  **5 条 → 23 条**（单选 15 + 多选 5 + 论述/辨析 3），8.5k token / 22.5s。
+
+### 34.2c 答案表是权威：与题目页冲突时按它改正
+
+实测第 9 题的选项被页边界切掉一半（只剩 A/B），模型自己在题目页猜了个 `B`，
+而评分标准写的是 `D`。所以 `apply_answer_table()` **允许覆盖**题目页上已有的答案，
+改动记进 `answer_overrides[]`（report.md 里单独一张"模型写的 / 评分标准"对照表）。
+配套：`review_completeness()` 会因此报"答案 D 不在选项里"并把该题标 `needs_review` ——
+正确，因为那条题目的选项本身就是残缺的。
+
+**答案页原文经视觉核对**（`read_image` 读 `work/<分类名>/pages/page-007.png`）：
+```
+一、单项选择题（每题1分，共15分）  1-5 DDDBC  6-10 ABDDB  11-15 ABCAC
+二、多项选择题（每题1分，共5分）  1-5 1.CE 2.AC 3.ABC 4.ABC 5.DE
+```
+与转写一字不差 —— 也顺便证明**上一轮 S3 给的 `1.C / 5.D` 是错的**，这一轮的 `CE / DE` 才是对的。
+
+### 34.3 「很多多选题的 questionType 不对」＝ 谁说了算
+
+卷面写着「二、多项选择题」、每题 5 个选项，模型却逐题给了 `single`；旧代码还额外有一条
+"声明 multi 但答案不足 2 个字母 → 改回 single"的**自洽性检查**，而这份卷子的多选答案
+恰好没抽到 ⇒ 全军覆没成 `single`。
+
+现在题型的优先级是：
+
+```
+卷面大题标题  >  模型逐题声明  >  内容推断
+```
+
+外加一条**单向**硬证据：答案里有 ≥2 个字母 ⇒ 一定是 `multi`（旧的"反向纠偏"删掉了）。
+规则本体放在 `_common.py`（`SECTION_TYPE_RULES` / `question_type_from_section()`），
+**S3 与 S4 共用**：S3 对新跑的页生效，S4 的 `normalize_question_types()` 对**已有的 merge.json**
+再兜一次 —— 这样用户手里那批旧数据不改一行就能修好（0 token）。实测补正 8 处。
+
+### 34.4 顺带：填空题不再被误报"字段不完整"
+
+`review_completeness()` 以前对**所有**题都报「选项不足 2 个」、且 `答案 X` 要求整体落在
+选项 key 集合里 —— 主观题/填空题本来就不给选项，会被整片标成待复核（实测 13 道）。
+现在：`fill` 题型不检查选项数量；没有选项的题不检查"答案在不在选项里"；
+多选答案**逐字母**检查。待复核 38 → 14。
+
+### 34.5 解析端：`[A-D]` 与"只捕获一个字母"（`scripts/lib/parse-exam-markdown.ts`）
+
+站上拿到的是 `public/<key>-question-bank.json`，它由共享解析器产出。解析器里有两个写死的假设：
+
+| 旧写法 | 后果 | 现在 |
+|---|---|---|
+| 答案正则 `([A-D])\s*(.+?)` | `**正确答案：AC 甲、丙**` → `answerKey='A'`、`answerText='C 甲、丙'`：**第二个正确选项丢了**，且 `answerKey.length > 1` 永远不成立 ⇒ `multi` 是**死代码**，多选题在站上永远是单选 | `([A-E]{1,5})` + `normalizeAnswerKey()`（去重升序） |
+| 选项正则 `[A-D]` | 第 5 个选项（E）被当成题干正文吞掉 | `[A-E]` |
+| `questionType` 联合类型缺 `judgement` | 判断题（A.正确/B.错误）只能落 `single` | 补 `judgement`，`inferQuestionType()` 按"多字母 / 两选项恰为正确错误 / 无选项"判 |
+
+`pdf-ocr/5_check.py`（解析端的 Python 影子实现）同步改，否则 S5 的结论和 S6 的实际行为会不一致。
+
+### 34.7 AI 判题型（用户："答案表不给出多选，但是每个题选项是多个，怎么判断（用ai）"）
+
+**问题**：答案表只按题号给字母（`1-5 DDDBC`、`1.CE 2.AC`），**它不标哪道是多选**；
+而每道题又都挂着好几个选项 —— 光看"选项有几个"分不出单选/多选。
+
+**判据层级**（越上面越硬）：
+
+| 层级 | 判据 | 谁来做 |
+|---|---|---|
+| 1 | **卷面大题标题**（"二、多项选择题" → multi、"单项选择题" → single、"判断题" → judgement） | S3/S4 的确定性规则（0 token） |
+| 2 | **答案的字母个数**：≥2 个字母 ⇒ 一定是 multi | 同上 |
+| 3 | 上面两条都不成立（模型没写大题名、答案也没有） | **AI 逐题判** |
+
+**实现**：`AI_REVIEW_SCHEMA` 里加 `questionTypes[]`（对**每一道有选项的题**给一条：
+`{number, group, questionType, answerKey, reason}`）。`group` 必须原样抄回 ——
+很多卷子每个大题都从 1 重新编号，只写题号对不上号（实测 AI 就在这儿栽过，见 §34.8）。
+
+`apply_ai_types()` 的应用规则：
+
+- 卷面大题标题**认得出题型** → 以**卷面为准**；AI 不同意就记 `ai_type_conflicts[]` 让人看；
+- 标题**认不出** → 采用 AI 的判定，记 `type_from_ai[]`；
+- **交叉验证**：最终判定为 `multi` 但答案只有一个字母 → 答案表很可能漏读，
+  记 `multi_answer_suspect[]` **并标 `needs_review`**（这正是"多选只抄到一个字母"的形态）。
+
+**实测**（马原卷，deepseek-flash，**15.5k token / 46.6s**，结果缓存进 `paper-review.json`）：
+
+| 项 | 结果 |
+|---|---|
+| AI 判型 | **19 题**（每道有选项的题都判了） |
+| 与卷面大题标题冲突 | **0 处** —— 卷面标题判出来的题型和 AI 判的**完全一致** |
+| 由此改掉的题型 | 0 处（这份卷子大题名齐全，符合预期） |
+| 多选却只有一个答案字母 | **2 处** → 见 §34.8 第 1 条 |
+
+### 34.8 这次真实 AI 调用暴露出的两个 bug（都已修）
+
+**① `answers[]` 把卷面答案表给的答案改错了。**
+
+这份卷子每个大题都从 1 重新编号（一、单项 1-15；二、多项 1-5；三、论述 1…）。
+AI 终审的 `answers[]` 是"按位置对位"，于是它把「**一、单项选择题** 第4题=B」
+贴到了「**二、多项选择题** 第4题」上 —— 卷面答案表明明写着 `4.ABC`、`5.DE`，
+被覆盖成了 `B`、`C`（报告里那两条"多选却只有一个字母"就是这么来的）。
+
+修法：**已经有答案的题一律不覆盖**，只记 `ai_answer_conflicts[]`；
+`answers[]` 只用来补"卷面根本没给答案"的题（顺延对位那件事已经由 §34.2 的
+`apply_answer_table()` 在删题**之前**按大题贴好了，题目对象带着答案走，重编号也不会错位）。
+schema 里也补了一句警告，让 AI 别再犯。
+
+**② AI 给没有选项的主观题塞字母答案。**
+
+page 8 是评分标准页的续页（案例分析题的三条评分标准），那三行**没有选项**，
+却被 AI 按题号补了个 `D` —— 站上就成了"正确答案 D"加一段评分标准正文。
+
+修法：**字母答案必须落在该题的选项里**（`options` 为空或字母不在选项里 → 记
+`ai_answer_ignored[]` 并忽略）。顺带这也守住了所有"AI 编答案"的路径。
+
+### 34.9 已知待办（这份卷子还剩的事）
+
+page 8 那三行**评分标准**目前仍被当成 3 道"题目"输出（答案待补）。
+它们其实应该作为**案例分析题三个小问的解析**（page 6 的 `思考题` 1/2/3 ←→ page 8 的
+评分标准 1/2/3，位置一一对应）—— 但两页的题组名不同（`思考题` vs `五、案例分析题`），
+要像 §34.1 那样按"材料块"配对。留给下一步做。
+
+### 34.10 验收
+
+| 检查 | 结果 |
+|---|---|
+| `pdf-ocr/tests/test_p4_answers.py`（新增） | ✅ 4 组：答案页→答案表（伪题目不再输出、真题目拿到答案、**按题号回退不越界**）、多选题按大题标题补正、材料跨题组贴上且材料撤出题单、填空题不再被误报 |
+| `pdf-ocr/tests/test_s3_normalize.py` | ✅ 5 → **8 组**：新增 8 种「大题标题 × 模型声明」组合、`question_type_from_section` 关键词映射、答案页占位题干不参与判重（且真题判重不受影响） |
+| `pdf-ocr/tests/test_p4_ai_review.py` | ✅ 5 → **8 组**：新增 AI 判型（卷面标题优先 / 标题认不出才听 AI / 多选只抄到一个字母要报警）、AI 只能补空缺不能覆盖已有答案、字母答案必须落在选项里 |
+| `scripts/lib/parse-exam-markdown.test.ts`（新增，vitest） | ✅ **9 个用例**：多字母答案完整收下、`CA`→`AC`、选项到 E、旧格式/CRLF、答案文本用选项兜底、`inferQuestionType` 四种判型 |
+| `vitest.config.ts` | `include` 加上 `scripts/**/*.test.ts`（解析器以前**没有任何测试**） |
+| 全部 pdf-ocr 套件 | ✅ 4 + 8 + 8 + 18 + 4 + 8 + 7 = **57 组断言，0 失败** |
+| 全部 vitest | ✅ 19 个文件 **147 个用例** |
+| 共享解析器回归 | ✅ 重跑 `npm run parse:japanese2024`，`public/japanese-2024-question-bank.json` **零差异**（A-D→A-E 没有影响日语卷） |
+| 真实数据（马原卷，纯离线 `--no-ai-review`） | ✅ 44 题 / 37 缺答案 / 38 待复核 → **28 题 / 9 缺答案（全是主观题）/ 14 待复核**，材料 1 段覆盖 3 小问，答案 20 条全部贴上（单选 1-15 + 多选 CE/AC/ABC/ABC/DE），第 9 题按评分标准由 B 改正为 D |
+| 真实 AI 验证（用户授权，8.5k token） | ✅ S3 只重跑第 7 页：答案页从 5 条 → **23 条**逐题答案，题型 `single/multi/fill` 全对 |
+| 真实 AI 判型（用户授权，15.5k token） | ✅ AI 判 19 题，与卷面标题**零冲突**；抓到 2 处"多选只有一个字母"（实际是 §34.8 的 AI 覆盖 bug，已修）；修后用缓存重跑 **0 token**，可疑数归零 |
+| 答案页视觉核对 | ✅ `read_image` 读页图，与转写逐字一致 |
+
+---
+
+## 34b. 「答案不输出」的四个坑（用户要求优先修）
+
+> 用户原话：「最优先还是字母数量，所以优先修复答案不输出在 answerKey 的问题」。
+> 前提：**字母个数是判题型的第一判据**，所以答案必须真的落到题上、并且真的输出到 md。
+
+| # | 坑 | 修法 |
+|---|---|---|
+| 1 | **评分标准行被当成题目**：主观题的答案就是评分标准（`1. 对 2分 劳动是创造价值的唯一源泉…`），它们是答案页上的独立行（没有选项、没有字母答案、只有 `answerText`）。以前既没贴回题目，又被当成若干道"空题"输出 | 新增 `is_grading_row()`（没有选项 + 没有字母答案 + `answerText` 有正文，且题干为空或只是"纯大题标题 + 共N分/要求给…小分"）→ `harvest_criteria()` 收进答案表，**不再当题输出** |
+| 2 | **答案抄到了却没贴回题目**：真正的题目（论述/辨析/案例小问）一个答案都没有 | 新增 `apply_criteria()` 三级匹配：① `(大题键, 题号)` 精确 → ② 题号缺失且该大题仅一道候选 → ③ 剩下的**数量相等**才按顺序贴（案例分析标准 1/2/3 → 材料下的思考题 1/2/3）。**必须在材料题处理之后跑** —— 材料标题本身也是"没选项没答案的题"，会混进候选（实测正是它让"数量相等"不成立） |
+| 3 | **md 把有答案的题渲染成 `（待补）`**：`answerKey` 空就写待补，`answerText` 里的答案被整段丢掉 | `render_question()`：有 `answerKey` → `**正确答案：X text**`；只有文本答案 → `**正确答案：<文本>**`。解析端（`parse-exam-markdown.ts` + `5_check.py`）同步支持**省略字母的答案行**，并把"没有选项但有答案文本"的题**收进来**（主观题这才可能上站）；`（待补）` 仍按"没有答案"处理 |
+| 4 | **`section_bucket()` 太粗**：把所有主观题都归成 `fill` 一个桶，答案贴到了别的大题上（论述题拿到了案例分析第 3 题的标准） | 客观题用题型当键；**主观题用大题名**（论述题 ≠ 辨析题 ≠ 案例分析题） |
+
+顺带修的**题号重复**：这份卷子每个大题都从 1 重新编号（单选 1-15、多选 1-5、辨析 1-2…），
+S5 会报"重复题号"硬错误、解析端 `id` 也会撞车。新增 `renumber_if_duplicated()`：
+检测到重复就**按大题首次出现顺序重排 + 全卷编号 1..N**，原题号→新题号记进 report.md。
+`5_check.py` 的"答案不在选项里"也改成**逐字母**判（否则 `CE` 会被当成不在 `{A..E}` 里 → 5 条假警告）。
+
+**实测（马原卷，纯离线，0 token）**：28 题 / 缺答案 9 / 待复核 14
+→ **25 题 / 缺答案 0 / 待复核 6**；S5 从「硬错误 1（重复题号）+ 3 警告」
+→ **「硬错误 0 + 1 警告」→ `passed: true`**；解析端可收下 **25/25 题**
+（含 6 道主观题及其评分标准）。md 里 25 道题的答案全部输出，`（待补）` 归零。
+
 
 
 

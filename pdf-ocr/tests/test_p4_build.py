@@ -80,6 +80,18 @@ PAGES = {
     ],
 }
 
+# S3 的删除 / 字段格式化留痕（S4 要汇总进 report.md，见 §32.2 / §33.2）
+DEDUPED = {
+    1: [dict(number=99, keptNumber=2, reason="题干与选项完全相同（判为重复，已删除）")],
+}
+NORMALIZED = {
+    2: [
+        dict(number=1, field="answerKey", before="c,a", after="AC"),
+        dict(number=1, field="questionType", before="多选题", after="multi"),
+        dict(number=3, field="answerKey", before="E", after=""),
+    ],
+}
+
 work = FAKE_WORK / CATEGORY
 pages_dir = work / "pages"
 pages_dir.mkdir(parents=True, exist_ok=True)
@@ -119,6 +131,8 @@ for page, questions in PAGES.items():
                 "paper_identity": {"title": "fixture", "date": "", "variant": ""},
                 "conflicts": [],
                 "questions": questions,
+                "deduped": DEDUPED.get(page, []),
+                "normalized": NORMALIZED.get(page, []),
                 "notes": [],
                 "needs_review": False,
                 "call": {},
@@ -139,7 +153,7 @@ for label in ("a", "b"):
 c.WORK_ROOT = FAKE_WORK
 c.RAW_ROOT = FAKE_RAW
 c.TEMP_ROOT = SANDBOX / "tmp"
-sys.argv = ["4_build_md.py", "--category", CATEGORY, "--force", "--quiet", "--group-by", "type"]
+sys.argv = ["4_build_md.py", "--category", CATEGORY, "--force", "--quiet", "--no-ai-review", "--group-by", "type"]
 buffer = io.StringIO()
 with redirect_stdout(buffer):
     code = build.main()
@@ -306,7 +320,7 @@ TRANSCRIPTION = (
     json.dumps({"page": 1, "transcription_md": TRANSCRIPTION}, ensure_ascii=False), encoding="utf-8"
 )
 
-sys.argv = ["4_build_md.py", "--category", CAT2, "--force", "--quiet", "--group-by", "type"]
+sys.argv = ["4_build_md.py", "--category", CAT2, "--force", "--quiet", "--no-ai-review", "--group-by", "type"]
 buffer = io.StringIO()
 with redirect_stdout(buffer):
     code = build.main()
@@ -336,7 +350,7 @@ assert kept2[0]["article"] == "" and "swは何形式か。" in kept2[0]["stem"],
 print("[14-16] 公共题干通过（题组号从转写定出 / 复制进每道小题 / 不误伤题组七）")
 
 # ── 场景 3：默认 `--group-by paper` —— 取消题型分题组，全卷 1 张题单 ──────
-sys.argv = ["4_build_md.py", "--category", CAT2, "--force", "--quiet"]
+sys.argv = ["4_build_md.py", "--category", CAT2, "--force", "--quiet", "--no-ai-review"]
 buffer = io.StringIO()
 with redirect_stdout(buffer):
     code = build.main()
@@ -353,5 +367,15 @@ kept3, _ = check.parse_like_parser(md3)
 assert {q["group"] for q in kept3} == {"一"}, {q["group"] for q in kept3}
 print("[17] 默认分组通过：题型题组被取消 → 全卷 1 张题单「shared」，导言与题量都不变")
 
+# 18) S3 的字段修正被 S4 聚合进 report.md（含"被清空 → 需人工补答案"的提醒）
+assert "S3 页内判重删除" in report_md and "保留第 2 题" in report_md, report_md
+assert "S3 字段格式化" in report_md, report_md
+assert "| answerKey | `c,a` | `AC` | 1 |" in report_md, report_md
+assert "| questionType | `多选题` | `multi` | 1 |" in report_md, report_md
+assert "| answerKey | `E` | `（空）` | 1 |" in report_md, report_md
+assert "需要人工补答案" in report_md, report_md
+assert "字段格式化：3 次" in report_md, report_md
+print("[18] S3 字段格式化汇总进 report.md（表格聚合 + 被清空的 ⚠ 提醒）")
+
 shutil.rmtree(SANDBOX)
-print("\n全部通过：17 组断言 / 沙箱已清理")
+print("\n全部通过：18 组断言 / 沙箱已清理")

@@ -233,6 +233,8 @@ JUDGE_HINT = re.compile(r"判断|正误|对错|○×|○|×")
 JUDGE_OPTIONS = [{"key": "A", "text": "正确"}, {"key": "B", "text": "错误"}]
 # 卷面把答案印在题干末尾时（`…である。 ( B )`），OCR 会把它一起抄进题干
 TRAILING_ANSWER = re.compile(r"\s*[（(]\s*([A-Da-d])\s*[）)]\s*$")
+# AI 生成解析的可见标记（P6 靠这一行判 `answerProvenance: 'generated'`）
+GENERATED_NOTE = "> ⚙ 解析由 AI 生成（未经人工核对）"
 
 
 def strip_trailing_answer_mark(entries: list[dict], report: dict) -> None:
@@ -278,16 +280,414 @@ def fill_judgement_options(entries: list[dict], report: dict) -> None:
             continue
         q["options"] = [dict(o) for o in JUDGE_OPTIONS]
         q["questionType"] = "judgement"
-        if not flatten(q.get("answerText")):
-            q["answerText"] = option_text(q, key)
+        # 选项刚被换成「正确/错误」，旧的 answerText（模型常直接填 A/B）已经没意义了 —— 必须重算，
+        # 否则会渲染成 `**正确答案：A A**`（实测踩过）
+        q["answerText"] = option_text(q, key)
         report["judgement_filled"].append((entry["page"], q.get("number")))
+
+
+def normalize_answer_text(entries: list[dict], report: dict) -> None:
+    """单选题：`answerText` 必须等于所选选项的原文。
+
+    解析端存库时用的是 `answerText || 所选选项文本`（`:359`），所以一个**非空但不对**的
+    answerText 会被原样带进题库；`parse-computer-banks.mjs:79` 也断言 `answerText === option.text`。
+    """
+    for entry in entries:
+        q = entry["q"]
+        key = flatten(q.get("answerKey")).upper()
+        options = q.get("options") or []
+        if len(key) != 1 or len(options) < 2:
+            continue
+        text = option_text(q, key)
+        if text and flatten(q.get("answerText")) != text:
+            report["answer_text_fixed"].append(
+                (entry["page"], q.get("number"), flatten(q.get("answerText"))[:20], text[:20])
+            )
+            q["answerText"] = text
+
+
+# ── 2.5) 参考答案 / 评分标准页 → 答案表 ────────────────────────────────
+# 实测（Principles-of-Marxism）：答案单独印在最后一页「试卷评分标准」上，前面的题目页
+# 一个答案都没有 —— 模型把那一页抄成了 23 条"题干为空、只有答案"的伪题目。
+# 以前这些伪题目被当成真题输出（站上一堆空题干 + 裸答案），而**真正的题目反而 37 道缺答案**。
+ANSWER_KEY_PAGE = re.compile(r"评分标准|参考答案|标准答案|答案及评分|评分细则|评分说明")
+
+
+def is_answer_key_page(page_data: dict) -> bool:
+    """这一页是不是"参考答案 / 评分标准"页？
+
+    三个信号（满足其一即算）：
+      1. `paper_identity.title` 里写着 评分标准 / 参考答案 之类；
+      2. 该页提出的题**题干是空的或只是占位**（"（本页未印题干，仅有答案）"），
+         且至少 3 道题带着 answerKey —— 模型把答案逐条抄了下来、题干留空；
+      3. 由 `transcription_answer_pages()` 从**转写**里判出来（在 main 里合并判断）。
+    """
+    title = str((page_data.get("paper_identity") or {}).get("title") or "")
+    if ANSWER_KEY_PAGE.search(title):
+        return True
+    questions = page_data.get("questions") or []
+    if len(questions) < 3:
+        return False
+    empty_stem = sum(1 for q in questions if is_placeholder_stem(q.get("stem")))
+    with_key = sum(1 for q in questions if str(q.get("answerKey") or "").strip())
+    return empty_stem == len(questions) and with_key >= 3
+
+
+def section_bucket(*parts) -> str:
+    """把 `题组一 一、单项选择题` / `二、多项选择题` 归一到同一个"大题"键。
+
+    * 客观题（单选/多选/判断）：直接用**题型**当键 —— 同一道大题在不同页可能写成
+      「一、单项选择题」或「单项选择题」，按题型归并才配得上；
+    * 主观题（论述/辨析/案例/思考/填空…）：**必须用大题名**。
+      只按 `fill` 分桶会把「三、论述题」「四、辨析题」「五、案例分析题」混成一桶，
+      答案就会贴到别的大题上（实测踩过：论述题拿到了案例分析第 3 题的标准）。
+    """
+    text = " ".join(str(part or "") for part in parts)
+    quiz_type = c.question_type_from_section(text)
+    if quiz_type and quiz_type != "fill":
+        return quiz_type
+    stripped = re.sub(r"题组\s*[一二三四五六七八九十\d]+", " ", text)
+    flat = c.squash_text(stripped)
+    return re.sub(r"^第?[一二三四五六七八九十百\d]+(大题|部分|题)?", "", flat)
+
+
+def harvest_answer_table(page_data: dict) -> dict[tuple[str, int], str]:
+    """从答案页的"伪题目"里抽出 {(大题键, 题号): 答案}。"""
+    table: dict[tuple[str, int], str] = {}
+    for raw in page_data.get("questions") or []:
+        try:
+            number = int(raw.get("number"))
+        except (TypeError, ValueError):
+            continue
+        key = re.sub(r"[^A-E]", "", str(raw.get("answerKey") or "").upper())
+        if not key:
+            continue
+        bucket = section_bucket(raw.get("group"), raw.get("groupTitle"))
+        table.setdefault((bucket, number), key)
+    return table
+
+
+# 模型给"没有题干"的答案行写的占位文字：规则在 `_common.py`（S3 判重也要用同一条）
+def is_placeholder_stem(text) -> bool:
+    """题干是不是"模型自己写的空占位"（答案页的每一行都长这样）。"""
+    return c.is_placeholder_stem(text)
+
+
+# ── 答案表的**确定性**来源：直接读两路 OCR 的转写 ──────────────────────────
+# 实测（Principles-of-Marxism page 7，真实 AI 重跑后）：模型这次只提出 5 条、把整页概括成
+# "1-5 DDDB C / 6-10 ABDDB / 1-5 1.CE 2.AC 3.ABC…"，逐题答案全丢了（可靠性看运气）。
+# 但两路 OCR 的**转写**里答案一直在，而且是这种格式：
+#     一、单项选择题（每题1分，共15分）
+#     1-5 DDDB C
+#     6-10 ABDDB
+#     二、多项选择题（每题1分，共5分）
+#     1-5 1.CE 2.AC 3.ABC 4.ABC 5.DE
+# 所以这里直接解析转写 —— **确定性、0 token，不受模型偷不偷懒影响**。
+ANSWER_SECTION_LINE = re.compile(
+    r"^\s*(?:[一二三四五六七八九十]+\s*[、.．]|第[一二三四五六七八九十]+部分)\s*(\S.*?)\s*$"
+)
+ANSWER_RANGE_LINE = re.compile(r"^\s*(\d+)\s*[-–—~]\s*(\d+)\s*[.．、:：]?\s*([A-Ea-e][A-Ea-e\s.．、,，]*)$")
+ANSWER_ITEM = re.compile(r"(?<![0-9])(\d+)\s*[.．、:：]\s*([A-Ea-e]{1,5})(?![A-Za-z])")
+
+
+def mine_answers_from_transcription(text, table: dict, page: int, report: dict) -> int:
+    """把一段"参考答案页"的转写挖成 {(大题键, 题号): 答案}，返回挖到几条。
+
+    只挖**客观题**大题（单选/多选/判断）里的答案；主观题那几段是评分标准，
+    里面的"1. 对 2分""4分"之类不是答案，硬挖会造出假答案。
+    """
+    found = 0
+    bucket = ""
+    objective = False
+    for raw_line in str(text or "").split("\n"):
+        line = raw_line.strip()
+        if not line:
+            continue
+        section = ANSWER_SECTION_LINE.match(line)
+        if section:
+            bucket = section_bucket(section.group(1))
+            objective = bucket in ("single", "multi", "judgement")
+            continue
+        if not objective:
+            continue
+        items = ANSWER_ITEM.findall(line)
+        if items:
+            for number, key in items:
+                place = (bucket, int(number))
+                normalized = "".join(sorted(set(key.upper())))
+                if place in table and table[place] != normalized:
+                    report["answer_table_conflicts"].append(
+                        (page, bucket, int(number), table[place], normalized)
+                    )
+                    continue
+                if place not in table:
+                    found += 1
+                table[place] = normalized
+            continue
+        match = ANSWER_RANGE_LINE.match(line)
+        if match:
+            start, end = int(match.group(1)), int(match.group(2))
+            letters = re.sub(r"[^A-Ea-e]", "", match.group(3)).upper()
+            span = end - start + 1
+            if len(letters) != span:
+                report["answer_table_odd"].append((page, line[:40], len(letters), span))
+                continue
+            for offset, letter in enumerate(letters):
+                place = (bucket, start + offset)
+                if place not in table:
+                    found += 1
+                table[place] = letter
+    return found
+
+
+def transcription_answer_pages(pages_dir: Path, pages: list[int]) -> list[int]:
+    """哪些页的**转写**里有"参考答案 / 评分标准"（与模型抽没抽出题无关）。"""
+    hits: list[int] = []
+    for page in pages:
+        for label in ("a", "b"):
+            path = pages_dir / f"page-{page:03d}.{label}.review.json"
+            if not path.exists():
+                continue
+            data = c.read_json(path) or {}
+            text = str(data.get("transcription_md") or "")
+            if ANSWER_KEY_PAGE.search(text) or "参考答案" in text:
+                hits.append(page)
+                break
+    return hits
+
+
+# ── 2.7) 评分标准行 → 主观题的答案 ──────────────────────────────────────
+# 这份卷子的主观题答案就是**评分标准**（"1. 对 2分 劳动是创造价值的唯一源泉…"）。
+# 实测：OCR 把它们抄下来了，但它们是**答案页上的独立行**（没有选项、没有字母答案），
+# 从没贴到真正的题目上；而 md 里 `answerKey` 为空的题一律渲染成 `（待补）` ——
+# **答案明明有，却没输出**（用户："优先修复答案不输出在 answerKey 的问题"）。
+SECTION_HEADER_STEM = re.compile(r"^\s*[一二三四五六七八九十]+\s*[、.．]\s*\S")
+GRADING_HINT = re.compile(r"共\s*\d+\s*分|小分|要求给|每题\s*\d+\s*分")
+
+
+def is_grading_row(q: dict) -> bool:
+    """这一行是"答案 / 评分标准"，不是一道题？
+
+    签名：**没有选项** + **有答案（字母或文本）**，且
+      * 题干为空 → 答案行（`#10 ans=B` 这种；实测答案表就印在第 1 页顶部，
+        模型会把它当题一起抽出来）；
+      * 或题干是纯大题标题 + "共N分/要求给…小分" → 评分标准行。
+
+    这两条限制很关键：真实填空题（`4 バイト = ______ ビット。`＋答案文本、没有选项）
+    不能被误判成答案行，那会把真题整道删掉。
+    """
+    if q.get("options"):
+        return False
+    if not (flatten(q.get("answerKey")) or flatten(q.get("answerText"))):
+        return False
+    stem = flatten(q.get("stem"))
+    if not stem:
+        return True
+    return bool(SECTION_HEADER_STEM.match(stem)) and bool(GRADING_HINT.search(stem))
+
+
+def answer_rows_to_table(rows: list[dict]) -> dict[tuple[str, int], str]:
+    """把"没有选项、只有字母答案"的行转成 {(大题键, 题号): 答案}。"""
+    table: dict[tuple[str, int], str] = {}
+    for raw in rows:
+        try:
+            number = int(raw.get("number"))
+        except (TypeError, ValueError):
+            continue
+        key = re.sub(r"[^A-E]", "", str(raw.get("answerKey") or "").upper())
+        if not key:
+            continue
+        table.setdefault(
+            (section_bucket(raw.get("group"), raw.get("groupTitle")), number), key
+        )
+    return table
+
+
+def harvest_criteria(rows: list[dict], report: dict) -> dict[tuple[str, int | None], str]:
+    """把评分标准行收成 {(大题键, 题号或 None): 正文}。
+
+    题号可能是 None（模型没写）→ 用 `(大题键, None)` 记成"该大题的通用标准"。
+    """
+    table: dict[tuple[str, int | None], str] = {}
+    for q in rows:
+        if not is_grading_row(q):
+            continue
+        bucket = section_bucket(q.get("group"), q.get("groupTitle"))
+        try:
+            number: int | None = int(q.get("number"))
+        except (TypeError, ValueError):
+            number = None
+        text = flatten(q.get("answerText"))
+        if not text:
+            continue
+        table.setdefault((bucket, number), text)
+        report["criteria_rows"].append((bucket, number, text[:60]))
+    return table
+
+
+def apply_criteria(entries: list[dict], criteria: dict, report: dict) -> None:
+    """把评分标准贴到真正的主观题上（三级匹配，逐级收紧）。
+
+    1. `(大题键, 题号)` 完全一致（辨析题 1/2）；
+    2. 题号缺失（模型没写）且该大题**只有一道**待答主观题 → 直接贴（论述题）；
+    3. 还剩下的按顺序贴给"后面还没答案的主观题"，**数量必须相等**才敢贴
+       （案例分析的标准 1/2/3 → 材料下面的思考题 1/2/3）。
+    """
+    if not criteria:
+        return
+
+    def bucket_of(entry: dict) -> str:
+        q = entry["q"]
+        return section_bucket(q.get("group"), q.get("groupTitle"))
+
+    def attach(entry: dict, text: str) -> None:
+        entry["q"]["answerText"] = text
+        report["criteria_attached"].append(
+            (entry["page"], entry["q"].get("number"), bucket_of(entry), len(text))
+        )
+
+    # 候选：没有选项、还没有答案文本、题干非空（= 真题，不是材料标题）
+    targets = [
+        e
+        for e in entries
+        if not (e["q"].get("options") or [])
+        and not flatten(e["q"].get("answerText"))
+        and flatten(e["q"].get("stem"))
+    ]
+    if not targets:
+        return
+    taken: set[int] = set()
+    used: set[tuple] = set()
+
+    # ① (大题键, 题号) 精确匹配
+    for entry in targets:
+        bucket = bucket_of(entry)
+        number = entry["q"].get("number")
+        place = (bucket, number)
+        if place in criteria and place not in used:
+            attach(entry, criteria[place])
+            used.add(place)
+            taken.add(id(entry))
+
+    # ② 题号缺失的通用标准：该大题只剩一道候选时才贴
+    for (bucket, number), text in criteria.items():
+        if number is not None or (bucket, number) in used:
+            continue
+        left = [e for e in targets if id(e) not in taken and bucket_of(e) == bucket]
+        if len(left) == 1:
+            attach(left[0], text)
+            used.add((bucket, number))
+            taken.add(id(left[0]))
+
+    # ③ 剩下的按顺序贴：**数量必须相等**才敢贴
+    leftover = [text for place, text in criteria.items() if place not in used]
+    rest = [e for e in targets if id(e) not in taken]
+    if leftover and len(leftover) == len(rest):
+        for entry, text in zip(rest, leftover):
+            attach(entry, text)
+        report["criteria_by_order"] = len(rest)
+
+
+def apply_answer_table(entries: list[dict], table: dict, report: dict) -> None:
+    """把答案表按 (大题, 题号) 贴回真正的题目（§34.2）。
+
+    匹配优先级：
+      1. `(大题键, 题号)` 完全一致；
+      2. **答案表只有一个大题**时，才敢用"只对题号"的回退。
+
+    第 2 条必须卡死：很多卷子每个大题都从 1 重新编号（单选 1-15、多选 1-5、论述 1…），
+    只按题号回退会把「一、单项选择题 第1题=C」贴到主观题第1题上（实测踩过）。
+
+    **答案表是权威**：题目页上模型自己写的那份答案如果和评分标准不一致，以评分标准为准
+    （实测第 9 题的选项被页边界切掉一半，模型就猜了个 B，官方答案是 D），
+    改动记进 `answer_overrides[]` 让人看得见。
+    """
+    if not table:
+        return
+    buckets = {bucket for bucket, _number in table}
+    by_number: dict[int, list[str]] = {}
+    for (_bucket, number), key in table.items():
+        by_number.setdefault(number, []).append(key)
+
+    for entry in entries:
+        q = entry["q"]
+        if is_placeholder_stem(q.get("stem")):  # 题干是空的/占位 = 不是真题（答案页的伪题目）
+            continue
+        try:
+            number = int(q.get("number"))
+        except (TypeError, ValueError):
+            continue
+        bucket = section_bucket(q.get("group"), q.get("groupTitle"))
+        key = table.get((bucket, number), "")
+        if not key and len(buckets) == 1:
+            candidates = by_number.get(number) or []
+            if len(candidates) == 1:
+                key = candidates[0]
+        if not key:
+            continue
+        before = str(q.get("answerKey") or "").strip()
+        if before == key:
+            continue
+        q["answerKey"] = key
+        text = "、".join(option_text(q, ch) for ch in key if option_text(q, ch))
+        if text:
+            q["answerText"] = text
+        if before:
+            report["answer_overrides"].append((entry["page"], number, before, key))
+        else:
+            report["answers_from_table"].append((entry["page"], number, key, bucket))
+
+
+def check_answer_coverage(entries: list[dict], table: dict, report: dict) -> None:
+    """答案表里有、题目里却没有的题号 → **一定有题丢了**，必须报警（§34.13）。
+
+    实测（马原卷第 1 页）：卷面把「7.」印了两遍，两路 OCR 都把它读成 7、8，
+    然后跳到卷面的「9.」—— 卷面上真正的第 8 题（"一种认识是不是真理，要看它（ ）"）
+    被**两路一起丢掉**。答案表却明明白白写着 `6-10 ABDDB`（第 8 题=D）。
+    没有这道检查的话，丢题是**静默**的：题号看起来连续（7→9 被当成原卷跳号）。
+    """
+    if not table:
+        return
+    present: set[tuple[str, int]] = set()
+    for entry in entries:
+        q = entry["q"]
+        if not flatten(q.get("stem")):
+            continue
+        try:
+            present.add((section_bucket(q.get("group"), q.get("groupTitle")), int(q.get("number"))))
+        except (TypeError, ValueError):
+            continue
+    for (bucket, number), key in sorted(table.items(), key=lambda kv: (kv[0][0], kv[0][1])):
+        if (bucket, number) in present:
+            continue
+        report["answer_without_question"].append((bucket, number, key))
+
+
+def normalize_question_types(entries: list[dict], report: dict) -> None:
+    """按"卷面大题标题"补正 questionType（S3 已做过一次，这里对老 merge.json 兜底）。
+
+    实测用户手里那批 merge.json 是 S3 旧版产出的：第二大题「二、多项选择题」逐题都是
+    `single`。改 S3 只对新跑的页生效，S4 再兜一次才能让**已有数据**（0 token）也修好。
+    """
+    for entry in entries:
+        q = entry["q"]
+        section = f"{q.get('group') or ''} {q.get('groupTitle') or ''}"
+        chosen = c.question_type_from_section(section) or str(q.get("questionType") or "")
+        if len(str(q.get("answerKey") or "")) > 1:
+            chosen = "multi"
+        if chosen not in c.QUIZ_TYPES:
+            chosen = "fill"
+        if chosen != str(q.get("questionType") or ""):
+            report["type_from_section"].append(
+                (entry["page"], q.get("number"), str(q.get("questionType") or ""), chosen)
+            )
+            q["questionType"] = chosen
 
 
 # ── 3) 公共题干（题组导言）挂载 ─────────────────────────────────────────
 # 小题自己的文字只是占位符的形态：`(30) の選択肢：` / `選択肢：` / 光秃秃一个 `（30）`
 PLACEHOLDER_STEM = re.compile(r"の選択肢|選択肢[：:]")
 BARE_MARKER = re.compile(r"^[（(]?\s*\d+\s*[）)]?\s*[：:．.]?$")
-
 
 def is_thin_stem(q: dict) -> bool:
     """题干是不是"只是个占位符、必须靠公共题干才成立"。
@@ -472,6 +872,76 @@ def attach_shared_stems(entries: list[dict], pages_dir: Path, report: dict) -> N
         report["shared_stems"].append((numeral, len(group), source, len(flatten(passage))))
 
 
+# ── 3.5) 材料题 / 案例题：把"大段材料"贴到后续小题上 ────────────────────
+# 实测（Principles-of-Marxism page 5→6）：「五、案例分析题」的整段材料在第 5 页最后一道题
+# （`continued`），三个小问在第 6 页。`attach_shared_stems()` 按"题组"找导言，而这两页的
+# 题组名不同（`五、案例分析题` vs `思考题`）→ 贴不上去，站上三个小问成了没头没尾的孤儿题
+# （用户报"拼接功能消失"）。
+MATERIAL_HINT = re.compile(r"案例|材料|阅读|分析|论述|思考题|结合|根据上述|下列")
+MATERIAL_MIN = 120  # 材料至少这么长（压平后），免得把普通长题干误当材料
+
+
+def attach_material_passages(entries: list[dict], report: dict) -> list[dict]:
+    """把材料题的整段材料**复制**到紧随其后的小题上，并把材料本身从题单里撤掉。
+
+    判据（全满足才动手，宁可漏也不乱贴）：
+      1. 该题没有选项，题干压平后 ≥ `MATERIAL_MIN` 字，且带材料味关键词；
+      2. 它是**所在页的最后一道题**；
+      3. 下一页至少 2 道题，且这些题自己都还没有材料（题干短、无代码围栏）。
+
+    材料题本身（`五、案例分析题。（共10分）` ＋ 材料）不是一道能作答的题，材料既然已经
+    复制到每个小问，它就从题单里撤掉 —— 否则站上会多出一道"只有材料、没有答案"的空题。
+    """
+    if not entries:
+        return entries
+    by_page: dict[int, list[dict]] = {}
+    for entry in entries:
+        by_page.setdefault(entry["page"], []).append(entry)
+
+    drop: set[int] = set()
+    for page, group in sorted(by_page.items()):
+        head = group[-1]
+        q = head["q"]
+        stem = str(q.get("stem") or "")
+        flat = flatten(stem)
+        if q.get("options") or len(flat) < MATERIAL_MIN or not MATERIAL_HINT.search(stem):
+            continue
+        followers = by_page.get(page + 1) or []
+        if len(followers) < 2:
+            continue
+        if any(len(flatten(e["q"].get("stem"))) >= MATERIAL_MIN for e in followers):
+            continue  # 小题自己已经带着材料，不重复贴
+        passage = clean_passage(stem)
+        if len(flatten(passage)) < MATERIAL_MIN:
+            continue
+
+        flat_passage = flatten(passage)
+        attached = 0
+        for entry in followers:
+            body = str(entry["q"].get("stem") or "").strip()
+            flat_body = flatten(body)
+            head_40 = flat_passage[:40]
+            if head_40 and head_40 in flat_body:
+                continue  # 已经贴过
+            entry["q"]["stem"] = f"{passage}\n\n{body}".strip() if body else passage
+            report["material_inlined"].append(entry["q"].get("number"))
+            attached += 1
+        if attached:
+            drop.add(id(head))
+            report["material_stems"].append(
+                (head["page"], q.get("number"), attached, len(flat_passage))
+            )
+            report["material_headers_dropped"].append((head["page"], q.get("number")))
+    if drop:
+        entries = [e for e in entries if id(e) not in drop]
+        # 材料题本身撤掉了，它先前那条"跨页拼接失败"的记录也就没意义了（否则报告里留着噪音）
+        dropped = set(report["material_headers_dropped"])
+        report["splice_failed"] = [
+            item for item in report["splice_failed"] if (item[0], item[1]) not in dropped
+        ]
+    return entries
+
+
 # ── 4) 跨页断题拼接（§8.2）───────────────────────────────────────────────
 def merge_pair(target: dict, follower: dict) -> None:
     """把 follower 并进 target（同题号的跨页两半）。"""
@@ -612,6 +1082,479 @@ def sort_and_dedupe(entries: list[dict], report: dict) -> list[dict]:
     return result
 
 
+# ── 6.5) 全卷 AI 终审：判重删除 + 题号顺延 + 答案重新对位 ────────────────
+AI_REVIEW_SYSTEM = (
+    "你是试卷终审助手。你会看到一份试卷**全部**题目（含题号、大题名、题组、题干、选项、答案），"
+    "以及从卷面 OCR 里挑出来的答案表/评分标准片段。"
+    "请做三件事："
+    "① 找出**疑似重复的题**，并在删除后把后面题号整体前移（顺延）、把答案重新对位；"
+    "② 逐题判定**题型**（单选/多选/判断）—— 答案表本身不会写「这题是多选」，"
+    "每道题又都挂着好几个选项，只能靠大题标题和题目内容判；"
+    "③ 对多选题给出**你认为的全部正确选项**，用来交叉验证卷面答案表有没有漏读。"
+    "只输出一个 JSON 对象，不要解释、不要代码围栏。"
+)
+
+AI_REVIEW_SCHEMA = """请输出如下 JSON（键名固定）：
+
+{
+  "duplicates": [
+    {"number": 8, "keepNumber": 7, "reason": "题干与选项完全相同，仅答案不同，判为重复", "confidence": "high"}
+  ],
+  "answerKeySource": "卷首答案表 1-5 DDDBC / 6-10 ABDDB / 11-15 ABCAC（没有就写空）",
+  "answers": [{"number": 1, "answerKey": "D", "reason": "答案表位置 1"}],
+  "questionTypes": [
+    {"number": 1, "group": "二、多项选择题", "questionType": "multi", "answerKey": "CE",
+     "reason": "卷面大题写「多项选择题」；且答案 CE 是两个字母"}
+  ],
+  "notes": []
+}
+
+规则：
+1) **duplicates 只报真正的重复**：题干与选项实质相同（同一道题被 OCR/模型输出两遍）。
+   只是"长得像"或题型相同**不算**；拿不准就不要报（宁缺勿滥）。keepNumber 填保留哪一条。
+2) 删除后**题号整体前移**（顺延）：被删题之后的所有题号减 1，依次类推 —— 这一层 S4 会自己算，
+   你只要报 duplicates。
+3) `answers` 是**顺延之后**每个题号的答案（answerKey 用 A/B/C/D/E）。只在卷面确实有答案表
+   （或题干里印了答案）时才给；没有把握的题**不要放进 answers**（宁可留空让人工看）。
+4) 卷面答案表按"位置"给（如 `1-5 DDDBC` 表示第 1~5 题依次是 D D D B C）；
+   多选题可能写作 `1.CE 2.AC` 这种，answerKey 直接拼成 "CE"。
+   **⚠ 很多卷子每个大题都从 1 重新编号**（一、单项 1-15；二、多项 1-5；三、论述 1…）——
+   `answers[].number` 配的是**上面给你的那道题**，别把「单项选择 第4题=B」贴到
+   「多项选择 第4题」上（S4 实测踩过：卷面答案是 ABC，被改成了 B）。
+   `answers[]` **只用来补卷面没给出答案的题**；已经有答案的题不要放进 answers。
+5) **questionTypes：题型判定（重点）**。对**每一道有选项的题**都给一条；没有选项的主观题不用给。
+   a. 判据优先级：**卷面大题标题**（"多项选择题/不定项" → multi，"单项选择题" → single，
+      "判断题/正误" → judgement）> **答案的字母个数**（≥2 个 → multi）> 题干与选项内容。
+   b. `group` 必须**原样抄回**上面给你的「大题=」字段 —— 很多卷子每个大题都从 1 重新编号，
+      只写题号 S4 对不上号。
+   c. `answerKey` 填**你认为该题的全部正确选项**（多选就把字母全拼上，如 "CE"；
+      单选就一个字母）。它的作用是交叉验证：**如果一道题其实是多选、而卷面答案表只抄到了
+      一个字母，那说明答案表漏读了** —— 这种情况请务必按你的判断把字母给全。
+   d. 题型与答案都拿不准时，`questionType` 填 "single"、`answerKey` 留空，并在 reason 里说明。
+6) 不确定的一律写进 notes，不要编造。"""
+
+
+def answer_table_snippets(pages_dir: Path, pages: list[int], limit: int = 40) -> list[str]:
+    """从各页 OCR 转写里挑"答案表/评分标准"片段，喂给 AI 终审。
+
+    实测卷首就印着 `1-5 DDDBC / 6-10 ABDDB`，参考答案页也有 —— 答案是按**位置**给的，
+    所以删掉重复题后必须按位置重新对位，否则后面全部错位。
+    """
+    pattern = re.compile(r"^\s*\d+\s*[-–—~]\s*\d+\s+[A-Ea-e]|参考答案|评分标准|答案表|标准答案")
+    snippets: list[str] = []
+    for page in pages:
+        for label in ("a", "b"):
+            path = pages_dir / f"page-{page:03d}.{label}.review.json"
+            if not path.exists():
+                continue
+            lines = str(c.read_json(path).get("transcription_md") or "").split("\n")
+            for index, line in enumerate(lines):
+                if pattern.search(line.strip()):
+                    block = "\n".join(lines[index : index + 4]).strip()
+                    if block and block not in snippets:
+                        snippets.append(f"（page {page}）{block}")
+                    if len(snippets) >= limit:
+                        return snippets
+    return snippets
+
+
+def snippet(text, head: int = 80, tail: int = 80) -> str:
+    """给 AI 看的题干摘要：**头 + 尾**。
+
+    只给前 N 字会出事（实测）：材料题的小问都被拼上了同一段材料，前 160 字完全相同，
+    AI 就把第 2、3 问当成第 1 问的重复删掉 —— 真正的区分信息在**末尾**。
+    """
+    flat = flatten(text)
+    if len(flat) <= head + tail + 5:
+        return flat
+    return f"{flat[:head]} …… {flat[-tail:]}"
+
+
+def build_review_payload(model: str | None, entries: list[dict], snippets: list[str], max_tokens: int) -> dict:
+    lines = ["【全卷题目】"]
+    for entry in entries:
+        q = entry["q"]
+        options = " / ".join(f"{o['key']}.{o['text']}" for o in q.get("options") or [])
+        lines.append(
+            f"- 第{q.get('number')}题（大题={q.get('group') or '未写'} / 题组={entry.get('group_title') or '未分组'}"
+            f" / 现有题型={q.get('questionType') or '未定'}）"
+            f"{snippet(q.get('stem'))}"
+            + (f"  [{options[:200]}]" if options else "")
+            + f"  答案={q.get('answerKey') or '（无）'}"
+        )
+    if snippets:
+        lines += ["", "【卷面答案表/评分标准片段】", *snippets]
+    lines += ["", AI_REVIEW_SCHEMA]
+    return {
+        "model": model,
+        "temperature": 0,
+        "max_tokens": max_tokens,
+        "messages": [
+            {"role": "system", "content": AI_REVIEW_SYSTEM},
+            {"role": "user", "content": "\n".join(lines)},
+        ],
+    }
+
+
+def ai_review(
+    entries: list[dict],
+    pages_dir: Path,
+    pages: list[int],
+    work_dir: Path,
+    category: str,
+    cfg: dict,
+    args,
+    report: dict,
+) -> dict | None:
+    """调一次 DeepSeek 做全卷终审（判重/答案对位）。结果缓存，重跑不重复花钱。"""
+    cache_path = work_dir / "paper-review.json"
+    if cache_path.exists() and not args.refresh_review:
+        cached = c.read_json(cache_path)
+        c.always(
+            f"[{STAGE}] AI 终审：复用 {cache_path.name}"
+            f"（判重 {len(cached.get('duplicates') or [])}、答案 {len(cached.get('answers') or [])}；"
+            f"要重跑加 --refresh-review）"
+        )
+        return cached
+    if not cfg.get("api_key"):
+        c.warn("没配 DEEPSEEK_API_KEY，跳过 AI 终审（判重/答案对位都不会做）")
+        return None
+
+    snippets = answer_table_snippets(pages_dir, pages)
+    payload = build_review_payload(cfg.get("model"), entries, snippets, args.ai_max_tokens)
+    c.info(f"    AI 终审：{len(entries)} 题 + {len(snippets)} 段答案表 → {cfg.get('model')}")
+    started = time.perf_counter()
+    response = c.post_json(str(cfg["base_url"]), payload, cfg.get("api_key"), timeout=args.ai_timeout)
+    text, field = c.response_text_ex(response)
+    finish = c.response_finish_reason(response)
+    tokens = c.usage_tokens(response.get("usage"))
+    report["ai_usage"] = tokens
+    try:
+        raw, repair = c.extract_json(text)
+    except c.ApiError as exc:
+        raise c.ApiError(f"AI 终审失败：{exc}{c.reasoning_hint(field, finish, args.ai_max_tokens, 'merge')}") from exc
+    raw["_meta"] = {
+        "model": cfg.get("model"),
+        "elapsed_ms": c.human_ms(started),
+        "usage": response.get("usage") if isinstance(response.get("usage"), dict) else {},
+        "finish_reason": finish,
+        "json_truncated": bool(repair.get("truncated")),
+        "answer_table_snippets": len(snippets),
+    }
+    c.write_json_atomic(cache_path, raw)
+    c.always(
+        f"[{STAGE}] AI 终审：{c.human_ms(started)}ms / {c.human_tokens(tokens)} tok → "
+        f"判重 {len(raw.get('duplicates') or [])}、答案 {len(raw.get('answers') or [])}（{cache_path.name}）"
+    )
+    return raw
+
+
+def apply_ai_review(entries: list[dict], review: dict, report: dict) -> list[dict]:
+    """按 AI 终审结论改题：**删重复 → 题号顺延 → 答案重新对位**。
+
+    - 删重复：按 `duplicates[].number` 匹配（keepNumber 优先保留），**直接删**、不改 needs_review。
+    - 题号顺延：**只在真的删过题时**做，且**按题组**重新连续编号（从该组第一题的原题号开始）——
+      这样"删掉的那题之后所有题号减 1"自然成立，也不会动到没有重复的题组。
+    - 答案对位：`answers[]` 给的是**顺延后**的题号 → 答案，逐条覆盖（answerText 跟着选项重算）。
+    """
+    if not review:
+        return entries
+    duplicates = review.get("duplicates") or []
+    drop_positions: set[int] = set()
+    by_number: dict[int, list[int]] = {}
+    for index, entry in enumerate(entries):
+        number = entry["q"].get("number")
+        if isinstance(number, int):
+            by_number.setdefault(number, []).append(index)
+
+    for dup in duplicates:
+        if not isinstance(dup, dict):
+            continue
+        number = dup.get("number")
+        keep = dup.get("keepNumber")
+        candidates = by_number.get(number) if isinstance(number, int) else None
+        if not candidates:
+            report["ai_review_skipped"].append(f"判重要删的第 {number} 题没找到，已忽略")
+            continue
+        target = next((i for i in candidates if entries[i]["q"].get("number") != keep), candidates[-1])
+        # **删之前用全文题干校验**：AI 只看到摘要（头+尾），材料题的小问可能"看起来一样"。
+        # 只有"保留项里确实有一条与它全文题干相同"才敢删（实测踩过：AI 把材料下的
+        # 第 2、3 个小问当成第 1 问的重复，删掉后小问就丢了）。
+        keepers = by_number.get(keep) if isinstance(keep, int) else None
+        target_stem = norm_stem(entries[target]["q"].get("stem"))
+        if not keepers or not any(
+            norm_stem(entries[i]["q"].get("stem")) == target_stem for i in keepers
+        ):
+            report["ai_review_skipped"].append(
+                f"判重要删的第 {number} 题与保留的第 {keep} 题**全文题干并不相同**"
+                "（多半是公共题干前缀相同造成的误判），已拒绝删除"
+            )
+            continue
+        drop_positions.add(target)
+        q = entries[target]["q"]
+        report["ai_duplicates"].append(
+            (q.get("number"), keep, str(dup.get("reason") or "")[:80])
+        )
+
+    if drop_positions:
+        entries = [entry for index, entry in enumerate(entries) if index not in drop_positions]
+        # 题号顺延：按题组连续重编（从该组第一题的原题号起）
+        groups: dict[str, list[dict]] = {}
+        for entry in entries:
+            groups.setdefault(entry["numeral"], []).append(entry)
+        for group_entries in groups.values():
+            numbers = [e["q"].get("number") for e in group_entries if isinstance(e["q"].get("number"), int)]
+            if not numbers:
+                continue
+            start = min(numbers)
+            for offset, entry in enumerate(group_entries):
+                entry["q"]["number"] = start + offset
+
+    answers = review.get("answers") or []
+    index_by_number = {
+        entry["q"].get("number"): entry for entry in entries if isinstance(entry["q"].get("number"), int)
+    }
+    for item in answers:
+        if not isinstance(item, dict):
+            continue
+        number = item.get("number")
+        key = flatten(item.get("answerKey")).upper()
+        entry = index_by_number.get(number) if isinstance(number, int) else None
+        if not entry or not key:
+            continue
+        text = option_text(entry["q"], key)
+        before = flatten(entry["q"].get("answerKey"))
+        if before == key:
+            continue
+        if before:
+            # **已经有答案就不覆盖**。实测：这份卷子每个大题都从 1 重新编号，AI 把
+            # 「一、单项选择题 第4题=B」贴到了「二、多项选择题 第4题」上，把卷面答案表里的
+            # ABC 改成了 B —— 卷面答案表（S4 已按大题贴好）比 AI 的按位置猜更可靠。
+            report["ai_answer_conflicts"].append((entry["page"], number, before, key))
+            continue
+        # 字母答案只对**有这些选项的题**成立。实测：主观题（没有选项、只有评分标准）
+        # 也被 AI 按题号塞了个 `D`，站上就成了假答案。
+        option_keys = {str(o.get("key") or "").upper() for o in entry["q"].get("options") or []}
+        if not option_keys or not all(ch in option_keys for ch in key):
+            report["ai_answer_ignored"].append((entry["page"], number, key, len(option_keys)))
+            continue
+        report["ai_answers"].append((number, before or "（无）", key, text[:20], str(item.get("reason") or "")[:40]))
+        entry["q"]["answerKey"] = key
+        entry["q"]["answerText"] = text or entry["q"].get("answerText") or ""
+    apply_ai_types(entries, review, report)
+    return entries
+
+
+def apply_ai_types(entries: list[dict], review: dict, report: dict) -> None:
+    """按 AI 的判型结果补正题型，并交叉验证多选答案有没有漏读（用户："用 ai 判断"）。
+
+    为什么必须靠 AI：**答案表本身不写"这题是多选"**，而每道题都挂着好几个选项 ——
+    只有大题标题（"二、多项选择题"）或"答案有几个字母"能区分；两者都缺时就只能读题判。
+
+    判据优先级（卷面 > 答案 > AI）：
+      1. 卷面大题标题认得出来 → **以卷面为准**；AI 不同意就记进 `ai_type_conflicts[]` 给人看；
+      2. 标题认不出（模型没写大题名）→ 采用 AI 的判定，记进 `type_from_ai[]`；
+      3. **交叉验证**：判定为 `multi` 但答案只有一个字母 → 答案表很可能漏读了，
+         记进 `multi_answer_suspect[]` 并标 `needs_review`（这正是"多选只抄到一个字母"的形态）。
+    答案本身仍以卷面答案表为权威：卷面没有、AI 才给的才采用（`answers_from_ai[]`）；
+    两者不一致只记 `ai_answer_conflicts[]`，不偷偷改。
+    """
+    items = review.get("questionTypes") or []
+    if not items:
+        return
+    index: dict[tuple[str, int], dict] = {}
+    for entry in entries:
+        q = entry["q"]
+        try:
+            number = int(q.get("number"))
+        except (TypeError, ValueError):
+            continue
+        index[(section_bucket(q.get("group"), q.get("groupTitle")), number)] = entry
+
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        try:
+            number = int(item.get("number"))
+        except (TypeError, ValueError):
+            continue
+        bucket = section_bucket(item.get("group"), item.get("groupTitle"))
+        entry = index.get((bucket, number))
+        if entry is None:  # 大题名对不上时，只有"全卷只有这一道该题号"才敢用题号兜底
+            candidates = [e for (_b, n), e in index.items() if n == number]
+            entry = candidates[0] if len(candidates) == 1 else None
+        if entry is None:
+            continue
+        q = entry["q"]
+        declared = str(item.get("questionType") or "").strip().lower()
+        if declared not in c.QUIZ_TYPES:
+            continue
+        current = str(q.get("questionType") or "")
+        reason = str(item.get("reason") or "")[:60]
+        if declared != current:
+            from_section = c.question_type_from_section(
+                f"{q.get('group') or ''} {q.get('groupTitle') or ''}"
+            )
+            if from_section:
+                report["ai_type_conflicts"].append(
+                    (entry["page"], number, current, declared, from_section, reason)
+                )
+            else:
+                report["type_from_ai"].append((entry["page"], number, current or "未定", declared, reason))
+                q["questionType"] = declared
+                current = declared
+        report["ai_types"].append(
+            (entry["page"], number, str(q.get("group") or "")[:20], current, str(item.get("answerKey") or ""))
+        )
+        key = flatten(q.get("answerKey")).upper()
+        ai_key = re.sub(r"[^A-E]", "", str(item.get("answerKey") or "").upper())
+        if current == "multi" and len(key) == 1:
+            # 多选却只有一个答案字母 —— 答案表大概率漏读了（实测 `1.C` vs 真值 `1.CE`）
+            report["multi_answer_suspect"].append((entry["page"], number, key, ai_key or "（AI 没给）"))
+            q["needs_review"] = True
+        elif key and ai_key and key != ai_key:
+            report["ai_answer_conflicts"].append((entry["page"], number, key, ai_key))
+        elif not key and ai_key:
+            q["answerKey"] = ai_key
+            text = "、".join(option_text(q, ch) for ch in ai_key if option_text(q, ch))
+            if text:
+                q["answerText"] = text
+            report["answers_from_ai"].append((entry["page"], number, ai_key))
+
+
+# ── 6.6) 补解析：给**没有解析**的题补一句 AI 解析 ─────────────────────────
+# 用户要求「尽量所有题目都生成解析」。S3 每页只给"卷面没印解析"的题写一句（还常因
+# 模型偷懒/被 max_tokens 截断而留空），所以这里在 S4 全卷兜一次：**只补空的**，
+# 卷面印的解析（explanationSource=printed）绝不动。
+AI_EXPLAIN_SYSTEM = (
+    "你是解题老师。请给每道题写一句**简短**解析（中文 ≤80 字）：直接说为什么选它、"
+    "其他选项错在哪；有公式/推导就给关键一步。不要写「根据题意可知」这类废话。"
+    "只输出一个 JSON 对象，不要解释、不要代码围栏。"
+)
+
+AI_EXPLAIN_SCHEMA = """请输出如下 JSON（键名固定）：
+
+{"explanations": [{"number": 3, "group": "一、单项选择题", "explanation": "……"}]}
+
+规则：
+1) 上面每道题都要给一条；`group` 原样抄回（很多卷子每个大题都从 1 重新编号，只写题号对不上）。
+2) 答案以卷面为准（已给你），解析要能**支持这个答案**；如果你认为答案本身有问题，
+   解析里用一句话说明理由即可，不要改答案。
+3) 主观题（没有选项）按参考答案/评分标准写一句"得分点"提示。
+4) 实在写不出（题干残缺到读不懂）就把 explanation 留空字符串。"""
+
+
+def build_explain_payload(model: str | None, entries: list[dict], max_tokens: int) -> dict:
+    lines = ["【需要写解析的题目】"]
+    for entry in entries:
+        q = entry["q"]
+        options = " / ".join(f"{o['key']}.{o['text']}" for o in q.get("options") or [])
+        answer = (
+            f"{q.get('answerKey')} {flatten(q.get('answerText'))[:60]}"
+            if flatten(q.get("answerKey"))
+            else (flatten(q.get("answerText"))[:120] or "（卷面未给）")
+        )
+        lines.append(
+            f"- 第{q.get('number')}题（大题={q.get('group') or '未写'}）{snippet(q.get('stem'))}"
+            + (f"  [{options[:200]}]" if options else "")
+            + f"  正确答案={answer}"
+        )
+    lines += ["", AI_EXPLAIN_SCHEMA]
+    return {
+        "model": model,
+        "temperature": 0,
+        "max_tokens": max_tokens,
+        "messages": [
+            {"role": "system", "content": AI_EXPLAIN_SYSTEM},
+            {"role": "user", "content": "\n".join(lines)},
+        ],
+    }
+
+
+def ai_fill_explanations(
+    entries: list[dict], work_dir: Path, cfg: dict, args, report: dict
+) -> None:
+    """给没有解析的题补解析（一次调用；结果缓存，重跑不重复花钱）。"""
+    targets = [
+        e for e in entries if not flatten(e["q"].get("explanation")) and flatten(e["q"].get("stem"))
+    ]
+    if not targets:
+        c.info("    补解析：所有题都已有解析，跳过")
+        return
+    cache_path = work_dir / "explanations.json"
+    raw: dict | None = None
+    if cache_path.exists() and not args.refresh_review:
+        raw = c.read_json(cache_path)
+        c.always(f"[{STAGE}] 补解析：复用 {cache_path.name}（要重跑加 --refresh-review）")
+    elif cfg.get("api_key"):
+        payload = build_explain_payload(cfg.get("model"), targets, args.ai_max_tokens)
+        c.info(f"    补解析：{len(targets)} 题 → {cfg.get('model')}")
+        started = time.perf_counter()
+        response = c.post_json(
+            str(cfg["base_url"]), payload, cfg.get("api_key"), timeout=args.ai_timeout
+        )
+        text, field = c.response_text_ex(response)
+        tokens = c.usage_tokens(response.get("usage"))
+        report["ai_usage"] = (report.get("ai_usage") or 0) + tokens
+        try:
+            raw, _repair = c.extract_json(text)
+        except c.ApiError as exc:
+            c.warn(f"补解析失败（跳过）：{exc}{c.reasoning_hint(field, c.response_finish_reason(response), args.ai_max_tokens, 'merge')}")
+            return
+        c.write_json_atomic(cache_path, raw)
+        c.always(
+            f"[{STAGE}] 补解析：{c.human_ms(started)}ms / {c.human_tokens(tokens)} tok → "
+            f"{len(raw.get('explanations') or [])} 条（{cache_path.name}）"
+        )
+    else:
+        c.warn("没配 DEEPSEEK_API_KEY，跳过补解析")
+        return
+    if not raw:
+        return
+
+    index: dict[tuple[str, int], dict] = {}
+    for entry in entries:
+        q = entry["q"]
+        try:
+            number = int(q.get("number"))
+        except (TypeError, ValueError):
+            continue
+        index[(section_bucket(q.get("group"), q.get("groupTitle")), number)] = entry
+    for item in raw.get("explanations") or []:
+        if not isinstance(item, dict):
+            continue
+        try:
+            number = int(item.get("number"))
+        except (TypeError, ValueError):
+            continue
+        bucket = section_bucket(item.get("group"), item.get("groupTitle"))
+        entry = index.get((bucket, number))
+        if entry is None:
+            candidates = [e for (_b, n), e in index.items() if n == number]
+            entry = candidates[0] if len(candidates) == 1 else None
+        text = flatten(item.get("explanation"))
+        if entry is None or not text or flatten(entry["q"].get("explanation")):
+            continue
+        entry["q"]["explanation"] = text
+        entry["q"]["explanationSource"] = "generated"
+        report["explanations_from_ai"].append(
+            (entry["page"], number, str(entry["q"].get("group") or "")[:16], len(text))
+        )
+
+    # 主观题（没有选项）的"答案"就是**评分标准** —— 它本身就是最贴切的解析，
+    # 不必再让 AI 编一段（用户要求"尽量所有题目都生成解析"）。
+    for entry in entries:
+        q = entry["q"]
+        if flatten(q.get("explanation")) or q.get("options"):
+            continue
+        criteria_text = flatten(q.get("answerText"))
+        if not criteria_text:
+            continue
+        q["explanation"] = f"评分标准：{criteria_text}"
+        q["explanationSource"] = "printed"
+        report["explanations_from_criteria"].append((entry["page"], q.get("number")))
+
+
 # ── 6) 完整性复查 + 渲染 ────────────────────────────────────────────────
 GROUP_COUNT_RE = re.compile(r"共\s*(\d+)\s*[题問问]")
 
@@ -670,18 +1613,66 @@ def check_group_counts(entries: list[dict], report: dict) -> None:
             report["long_group_titles"].append((numeral, len(title), title[:60]))
 
 
+def renumber_if_duplicated(entries: list[dict], report: dict) -> list[dict]:
+    """题号重复时**按大题顺序重排 + 全卷重新连续编号**（1..N），返回新列表。
+
+    很多卷子每个大题都从 1 重新编号（一、单项 1-15；二、多项 1-5；三、辨析 1-2…）。
+    md 契约要求 `### 第N题` 唯一 —— 直接输出会让 S5 报"重复题号"硬错误，
+    解析端的 `id` 也会撞车（`-2` 后缀）。
+
+    排序不能只按原题号（那样单选 1/多选 1/辨析 1 会交错），要**按大题首次出现的顺序**
+    再按原题号 —— 得到的就是卷面上的阅读顺序。原题号与去向记进 report，方便人工回查。
+    """
+    numbers = [e["q"].get("number") for e in entries]
+    duplicates = {n for n in numbers if numbers.count(n) > 1}
+    if not duplicates:
+        return entries
+
+    def bucket_of(entry: dict) -> str:
+        q = entry["q"]
+        return section_bucket(q.get("group"), q.get("groupTitle"))
+
+    order: dict[str, int] = {}
+    for entry in entries:
+        order.setdefault(bucket_of(entry), len(order))
+    ordered = sorted(
+        entries, key=lambda e: (order[bucket_of(e)], int(e["q"].get("number") or 0))
+    )
+    for index, entry in enumerate(ordered, start=1):
+        before = entry["q"].get("number")
+        if before != index:
+            report["renumbered"].append(
+                (before, index, str(entry["q"].get("group") or "")[:18])
+            )
+        entry["q"]["number"] = index
+    report["renumber_note"] = (
+        f"原卷每个大题都从 1 重新编号（重复题号 {sorted(n for n in duplicates if n is not None)}），"
+        f"已按大题顺序重排并编号 1..{len(ordered)}"
+    )
+    return ordered
+
+
 def review_completeness(entries: list[dict], report: dict) -> None:
+    """字段完整性检查 —— **按题型区分**，别把填空题当成坏题。
+
+    实测（Principles-of-Marxism）：主观题/填空题本来就不给选项，旧逻辑对它们同时报
+    "选项不足 2 个"和"答案不在选项里"，一口气把 13 道正常的题标成待复核。
+    """
     for entry in entries:
         q = entry["q"]
-        problems = []
+        problems: list[str] = []
+        quiz_type = str(q.get("questionType") or "")
+        options = q.get("options") or []
+        keys = {str(o.get("key") or "").upper() for o in options}
         if not flatten(q.get("stem")):
             problems.append("题干为空")
-        if len(q.get("options") or []) < 2:
-            problems.append(f"选项不足 2 个（{len(q.get('options') or [])}）")
+        if len(options) < 2 and quiz_type != "fill":
+            problems.append(f"选项不足 2 个（{len(options)}）")
         key = flatten(q.get("answerKey")).upper()
-        if not key:
+        if not key and not flatten(q.get("answerText")):
+            # 主观题/填空题的答案是**文本**（评分标准），只在两个字段都空时才算缺答案
             problems.append("缺答案")
-        elif key not in {str(o.get("key") or "").upper() for o in q.get("options") or []}:
+        elif key and options and not all(ch in keys for ch in key):
             problems.append(f"答案 {key} 不在选项里")
         entry["problems"] = problems
         if problems:
@@ -709,17 +1700,30 @@ def render_question(entry: dict) -> str:
         marks.append(str(q["_splice_note"]))
     for problem in entry.get("problems") or []:
         marks.append(problem)
+    # 模型自己标的 needs_review / 低置信度也要落到 md 里 —— 否则解析端（P6）根本不知道哪些题要复核，
+    # 这批信息就断在 P4 了（md 是流水线与网站之间唯一的接口）。
+    if q.get("needs_review") and not marks:
+        marks.append(f"模型标记待复核（置信度 {q.get('confidence') or '未知'}）")
     for mark in dict.fromkeys(marks):
         lines.append(f"> ⚠ 待核对：{mark}")
     lines += ["", "#### 答案与解析", ""]
     if key:
         # 解析端的正则要求答案后面**至少还有一个字符**（`.+?`），所以不能只写 `**正确答案：B**`
         lines.append(f"**正确答案：{key} {answer_text or key}**")
+    elif answer_text:
+        # **没有选项字母、但有答案文本**（主观题/填空题的参考答案、评分标准）——
+        # 以前这里一律写 `（待补）`，把已经 OCR 到的答案**整段丢掉**（用户："答案不输出"）。
+        # 解析端已同步支持"纯文本答案行"（`**正确答案：<正文>**`）。
+        lines.append(f"**正确答案：{answer_text}**")
     else:
         lines.append("**正确答案：（待补）**")
     explanation = sanitize(q.get("explanation"))
     if explanation:
         lines += ["", explanation]
+    # AI 生成的解析要标出来：站上 `answerProvenance` 是个纯数据字段（UI 不显示），
+    # 所以这里在解析末尾留一行可见的引用 —— 解析端会把它一起存进 explanation，读者看得到。
+    if explanation and str(q.get("explanationSource") or "").strip().lower() == "generated":
+        lines += ["", GENERATED_NOTE]
     lines.append("")
     return "\n".join(lines)
 
@@ -773,22 +1777,140 @@ def render_report(
     category: str, entries: list[dict], report: dict, all_conflicts: list[dict], failures: list[str]
 ) -> str:
     review = [e for e in entries if e["q"].get("needs_review")]
+    generated = sum(
+        1 for e in entries if str(e["q"].get("explanationSource") or "").lower() == "generated"
+    )
+    printed = sum(
+        1 for e in entries if str(e["q"].get("explanationSource") or "").lower() == "printed"
+    )
     lines = [
         f"# {category} — 待人工复核清单",
         "",
         f"- 题数：**{len(entries)}**（其中待复核 **{len(review)}**）",
+        f"- 解析来源：卷面原文 {printed} 题 / **AI 生成 {generated} 题** / 其余无解析",
         f"- 题组：{len(report['groups'])} → " + "、".join(f"题组{n}" for n, _ in report["groups"]),
         f"- 跨页拼接：{len(report['splices'])} 处成功 / {len(report['splice_failed'])} 处失败",
         f"- OCR 冲突：{len(all_conflicts)} 条；判断题自动补选项：{len(report['judgement_filled'])} 题；"
-        f"题干末尾答案标记已清理：{len(report['answer_mark_stripped'])} 题",
-        f"- 去重：{len(report['duplicates'])} 题；缺页/缺产物：{len(failures)}",
+        f"题干末尾答案标记已清理：{len(report['answer_mark_stripped'])} 题；"
+        f"答案文本已按选项校正：{len(report['answer_text_fixed'])} 题；"
+        f"字段格式化：{len(report['s3_normalized'])} 次",
+        f"- 去重：{len(report['duplicates'])} 题；S3 页内判重删除：{len(report['s3_deduped'])} 题；"
+        f"缺页/缺产物：{len(failures)}",
         f"- 公共题干：{len(report['shared_stems'])} 个题组已复制到 "
         f"{len(report['shared_stem_inlined'])} 道小题的题干上方"
         + (f"；{len(report['shared_stem_missing'])} 个题组取不到导言（需人工补）" if report["shared_stem_missing"] else ""),
+        f"- 材料题：{len(report['material_stems'])} 段材料已复制到 "
+        f"{len(report['material_inlined'])} 道小题的题干上方",
+        f"- 答案来源：参考答案页 {len(report['answer_key_pages'])} 张（转写挖到 "
+        f"{sum(mined for _p, _rows, _k, mined in report['answer_key_pages'])} 条 / 模型给了 "
+        f"{sum(keys for _p, _rows, keys, _m in report['answer_key_pages'])} 条）→ 贴回 "
+        f"{len(report['answers_from_table'])} 道题（另改正 {len(report['answer_overrides'])} 道与评分标准不符的）；"
+        f"不再输出 "
+        f"{sum(rows for _p, rows, _k, _m in report['answer_key_pages'])} 条空题干伪题目；"
+        f"题型补正 {len(report['type_from_section'])} 处 / 答案表有、题目里缺 {len(report['answer_without_question'])} 题",
+        f"- AI 判型：{len(report['ai_types'])} 题（改 {len(report['type_from_ai'])} 处 / "
+        f"与卷面大题标题冲突 {len(report['ai_type_conflicts'])} 处 / "
+        f"多选却只有一个答案字母 {len(report['multi_answer_suspect'])} 处 / "
+        f"卷面与 AI 答案不一致 {len(report['ai_answer_conflicts'])} 处）",
         "",
     ]
     if failures:
         lines += ["## 缺产物（先补跑 S2/S3）", ""] + [f"- {f}" for f in failures] + [""]
+    if report["answer_key_pages"] or report["answers_from_table"]:
+        answer_rows = sum(rows for _page, rows, _keys, _mined in report["answer_key_pages"])
+        lines += [
+            "## 参考答案 / 评分标准页（只贡献答案，不产出题目）",
+            "",
+            "这类页面上**没有题目，只有答案**（题干是空的）。以前它会被当成一堆"
+            "「题干为空、只有答案」的题目输出 —— 站上多出一批空题 + 裸答案，"
+            "而真正的题目反而大面积缺答案。现在这一页被识别成**答案表**：",
+            "",
+            "| 答案页 | 页上条目 | 转写挖到 | 模型给了 |",
+            "|---|---|---|---|",
+        ]
+        lines += [
+            f"| page {page} | {rows} 条 | {mined} 条 | {keys} 条 |"
+            for page, rows, keys, mined in report["answer_key_pages"]
+        ]
+        lines += [
+            "",
+            f"共从答案表贴回 **{len(report['answers_from_table'])}** 道题，"
+            f"答案页的 **{answer_rows}** 条空题干伪题目不再输出。",
+            "",
+        ]
+        if report["answers_from_table"]:
+            lines += ["| 页码 | 题号 | 答案 | 大题 |", "|---|---|---|---|"]
+            lines += [
+                f"| page {page} | {number} | {key} | {bucket} |"
+                for page, number, key, bucket in report["answers_from_table"]
+            ]
+            lines.append("")
+        if report["dropped_answer_rows"]:
+            preview = "、".join(
+                f"page {page} 第{n}题={k}" for page, n, k in report["dropped_answer_rows"][:20]
+            )
+            more = (
+                f" 等 {len(report['dropped_answer_rows'])} 条"
+                if len(report["dropped_answer_rows"]) > 20
+                else ""
+            )
+            lines += [f"- 已丢弃（题干为空，不是真题）：{preview}{more}", ""]
+        if report["answer_overrides"]:
+            lines += [
+                "",
+                "**题目页上模型自己写的答案与评分标准不一致 → 已按评分标准改正**"
+                "（多半是题目页被页边界切开、选项不全）：",
+                "",
+                "| 页码 | 题号 | 模型写的 | 评分标准 |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| page {page} | {number} | {before} | {after} |"
+                for page, number, before, after in report["answer_overrides"]
+            ]
+            lines.append("")
+        if report["answer_table_odd"]:
+            lines += ["- ⚠ 下面这些答案行**字母个数和题号区间对不上**，没敢采信（需人工核对）：", ""]
+            lines += [
+                f"  - page {page}：`{text}`（{count} 个字母 / 区间 {span} 题）"
+                for page, text, count, span in report["answer_table_odd"]
+            ]
+            lines.append("")
+        if report["answer_table_conflicts"]:
+            lines += ["- ⚠ 两路转写的答案不一致（保留先读到的那条，需人工核对）：", ""]
+            lines += [
+                f"  - page {page} 大题 `{bucket}` 第 {number} 题：`{first}` vs `{second}`"
+                for page, bucket, number, first, second in report["answer_table_conflicts"]
+            ]
+            lines.append("")
+    if report["type_from_section"]:
+        lines += [
+            "## 题型按「卷面大题标题」补正（S3 旧数据兜底）",
+            "",
+            "| 页码 | 题号 | 原题型 | 补正为 |",
+            "|---|---|---|---|",
+        ]
+        lines += [
+            f"| page {page} | {number} | {before or '（未给）'} | {after} |"
+            for page, number, before, after in report["type_from_section"]
+        ]
+        lines.append("")
+    if report["material_stems"]:
+        lines += [
+            "## 材料题：整段材料已复制到后续小题的题干上方",
+            "",
+            "| 材料所在页 | 题号 | 覆盖小题 | 材料字数 |",
+            "|---|---|---|---|",
+        ]
+        lines += [
+            f"| page {page} | {number} | {count} 道 | {length} |"
+            for page, number, count, length in report["material_stems"]
+        ]
+        lines += [
+            "",
+            "- 材料本身（只有材料、没有答案）已从题单里撤掉；材料内容完整保留在每道小题的题干里。",
+            "",
+        ]
     if report["shared_stems"]:
         lines += [
             "## 公共题干（题组导言）已复制到每道小题的题干上方",
@@ -867,6 +1989,171 @@ def render_report(
         lines += ["## 模型误标 continued 的题（字段完整，按完整题处理）", ""]
         lines += [f"- page {p} 第 {n} 题：选项 ≥2 且有答案" for p, n in report["splice_false_alarms"]]
         lines.append("")
+    if report["s3_deduped"]:
+        lines += ["## S3 页内判重删除（题干+选项完全相同 → 直接删）", ""]
+        lines += [
+            f"- page {item['page']} 第 {item.get('number')} 题（保留第 {item.get('keptNumber')} 题）："
+            f"{item.get('reason')}"
+            for item in report["s3_deduped"]
+        ]
+        lines.append("")
+    if report["s3_normalized"]:
+        agg: dict[tuple, int] = {}
+        for item in report["s3_normalized"]:
+            key = (
+                str(item.get("field") or "?"),
+                str(item.get("before") or "（空）"),
+                str(item.get("after") or "（空）"),
+            )
+            agg[key] = agg.get(key, 0) + 1
+        lines += ["## S3 字段格式化（answerKey / questionType 被规范化的地方）", ""]
+        lines += [
+            f"共 {len(report['s3_normalized'])} 次。原值已保留在 merge.json 的 `normalized[]` 里，"
+            "md 与题库用的是右列的规范值。",
+            "",
+            "| 字段 | 原值 | 规范为 | 次数 |",
+            "|---|---|---|---|",
+        ]
+        for (field, before, after), count in sorted(agg.items(), key=lambda kv: (-kv[1], kv[0])):
+            lines.append(f"| {field} | `{before}` | `{after}` | {count} |")
+        bad = [k for k in agg if k[2] == "（空）"]
+        if bad:
+            lines += [
+                "",
+                f"⚠ 有 {sum(agg[k] for k in bad)} 次被清空（原值不是合法答案），"
+                "这些题已标 `needs_review`，需要人工补答案。",
+            ]
+        lines.append("")
+    if report["criteria_rows"]:
+        lines += [
+            "## 主观题的评分标准（从答案页贴回题目上）",
+            "",
+            "主观题（论述/辨析/案例）的答案就是**评分标准**（\"1. 对 2分 …\"）。"
+            "它们以前是答案页上的**独立行**（没有选项、没有字母答案），既没贴回题目，"
+            "又被 md 渲染成 `（待补）` —— **答案抄到了却没输出**。现在：",
+            "",
+            f"- 收下评分标准行 **{len(report['criteria_rows'])}** 条 → "
+            f"贴回题目 **{len(report['criteria_attached'])}** 道"
+            + (f"（其中 {report['criteria_by_order']} 道是按顺序配对："
+               f"大题名对不上、但两边数量相等）" if report["criteria_by_order"] else ""),
+            "",
+            "| 题号 | 大题 | 标准字数 |",
+            "|---|---|---|",
+        ]
+        lines += [
+            f"| 第 {number} 题 | {bucket} | {length} |"
+            for _page, number, bucket, length in report["criteria_attached"]
+        ]
+        lines.append("")
+    if report["answer_without_question"]:
+        lines += [
+            "## ⚠ 答案表里有、题目里没有的题号（**OCR 很可能漏了一道题**）",
+            "",
+            "这种丢题是**静默**的：题号看起来连续（实测卷面把「7.」印了两遍，两路 OCR 都把它读成",
+            "7、8，然后跳到卷面的「9.」—— 卷面真正的第 8 题就没了）。请对着页图人工补回：",
+            "",
+            "| 大题 | 题号 | 答案表给的答案 |",
+            "|---|---|---|",
+        ]
+        lines += [
+            f"| {bucket} | 第 {number} 题 | {key} |"
+            for bucket, number, key in report["answer_without_question"]
+        ]
+        lines.append("")
+    if report["ai_types"] or report["multi_answer_suspect"]:
+        lines += [
+            "## AI 题型判定（答案表不写「这题是多选」，只能读题判）",
+            "",
+            "答案表按题号给字母，**它不会标哪道是多选**；每道题又都挂着好几个选项，"
+            "所以「单选还是多选」交给 AI 逐题判（判据：卷面大题标题 > 答案字母个数 > 题目内容）。",
+            "",
+        ]
+        if report["type_from_ai"]:
+            lines += ["**已按 AI 判定改掉的题型**（大题标题认不出题型时才改）：", ""]
+            lines += ["| 页码 | 题号 | 原题型 | 改为 | 依据 |", "|---|---|---|---|---|"]
+            lines += [
+                f"| page {page} | {number} | {before} | {after} | {reason} |"
+                for page, number, before, after, reason in report["type_from_ai"]
+            ]
+            lines.append("")
+        if report["ai_type_conflicts"]:
+            lines += [
+                "**⚠ AI 与卷面大题标题不一致 → 保留卷面标题**（标题是卷面印的硬证据，请人工确认）：",
+                "",
+                "| 页码 | 题号 | 卷面推出 | AI 判定 | 依据 |",
+                "|---|---|---|---|---|",
+            ]
+            lines += [
+                f"| page {page} | {number} | {current} | {declared} | {reason} |"
+                for page, number, current, declared, _from_section, reason in report["ai_type_conflicts"]
+            ]
+            lines.append("")
+        if report["multi_answer_suspect"]:
+            lines += [
+                "**⚠ 判定为多选、但答案只有一个字母 → 答案表很可能漏读**（已标 needs_review）：",
+                "",
+                "| 页码 | 题号 | 卷面答案 | AI 认为的答案 |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| page {page} | {number} | {key} | {ai_key} |"
+                for page, number, key, ai_key in report["multi_answer_suspect"]
+            ]
+            lines.append("")
+        if report["ai_answer_conflicts"]:
+            lines += [
+                "**⚠ 卷面答案与 AI 判断不一致 → 保留卷面答案**（卷面是权威，这里只提示）。"
+                "注意 AI 容易把「一、单项选择题 第4题」的答案贴到「二、多项选择题 第4题」上"
+                "（很多卷子每个大题都从 1 重新编号）：",
+                "",
+                "| 页码 | 题号 | 卷面 | AI |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| page {page} | {number} | {key} | {ai_key} |"
+                for page, number, key, ai_key in report["ai_answer_conflicts"]
+            ]
+            lines.append("")
+        if report["ai_answer_ignored"]:
+            lines += [
+                "- 已忽略的 AI 答案（那些题没有对应选项 —— 主观题只有评分标准，不该有字母答案）："
+                + "、".join(
+                    f"page {p} 第{n}题={k}（选项 {c} 个）" for p, n, k, c in report["ai_answer_ignored"]
+                ),
+                "",
+            ]
+        if report["answers_from_ai"]:
+            lines += [
+                "- 卷面没给答案、由 AI 补上的题："
+                + "、".join(f"page {p} 第{n}题={k}" for p, n, k in report["answers_from_ai"]),
+                "",
+            ]
+        lines += ["<details><summary>AI 逐题判定明细</summary>", "", "| 页码 | 题号 | 大题 | AI 判定 | AI 答案 |", "|---|---|---|---|---|"]
+        lines += [
+            f"| page {page} | {number} | {group} | {quiz_type} | {key or '—'} |"
+            for page, number, group, quiz_type, key in report["ai_types"]
+        ]
+        lines += ["", "</details>", ""]
+    if report["ai_duplicates"] or report["ai_answers"] or report["ai_review_skipped"]:
+        lines += [
+            "## 全卷 AI 终审（判重 → 题号顺延 → 答案重新对位）",
+            "",
+            f"单次调用 {report['ai_usage']} token。删除重复题后，其后所有题号整体前移，答案按卷面答案表重新对位。",
+            "",
+        ]
+        if report["ai_duplicates"]:
+            lines += ["| 删除题号 | 保留 | 理由 |", "|---|---|---|"]
+            lines += [f"| {n} | {keep} | {why} |" for n, keep, why in report["ai_duplicates"]]
+            lines.append("")
+        if report["ai_answers"]:
+            lines += ["| 题号 | 原答案 | 新答案 | 选项文本 | 依据 |", "|---|---|---|---|---|"]
+            lines += [
+                f"| {n} | {before} | **{after}** | {text} | {why} |"
+                for n, before, after, text, why in report["ai_answers"]
+            ]
+            lines.append("")
+        for skipped in report["ai_review_skipped"]:
+            lines += [f"- 已忽略：{skipped}", ""]
     if report["duplicates"]:
         lines += ["## 去重记录", ""]
         lines += [f"- 第 {n} 题：page {keep} 胜出（丢弃 page {drop} 的重复）" for n, keep, drop, _ in report["duplicates"]]
@@ -910,6 +2197,18 @@ def main() -> int:
         "type=按原卷题型分题组",
     )
     parser.add_argument("--force", action="store_true", help="已存在的最终 .md 也覆盖")
+    parser.add_argument(
+        "--no-ai-review",
+        action="store_true",
+        help="跳过全卷 AI 终审（判重/题号顺延/答案对位）—— 跳过就完全离线、0 token",
+    )
+    parser.add_argument(
+        "--refresh-review",
+        action="store_true",
+        help="重跑 AI 终审（默认复用 work/<分类名>/paper-review.json，不重复花钱）",
+    )
+    parser.add_argument("--ai-max-tokens", type=int, default=16384, help="AI 终审单次响应上限，默认 16384")
+    parser.add_argument("--ai-timeout", type=int, default=180, help="AI 终审单次超时秒数，默认 180")
     parser.add_argument("--quiet", action="store_true", help="只打印每页完成行与最终摘要")
     args = parser.parse_args()
 
@@ -937,11 +2236,40 @@ def main() -> int:
     entries: list[dict] = []
     failures: list[str] = []
     all_conflicts: list[dict] = []
+    answer_table: dict[tuple[str, int], str] = {}
+    criteria: dict[tuple[str, int | None], str] = {}
     report: dict = {
         "groups": [],
         "group_title_conflicts": [],
         "judgement_filled": [],
+        "answer_text_fixed": [],
         "answer_mark_stripped": [],
+        "answer_key_pages": [],
+        "dropped_answer_rows": [],
+        "answers_from_table": [],
+        "answer_without_question": [],
+        "answer_rows_any_page": [],
+        "criteria_rows": [],
+        "criteria_attached": [],
+        "criteria_by_order": 0,
+        "renumbered": [],
+        "renumber_note": "",
+        "answer_overrides": [],
+        "answer_table_conflicts": [],
+        "answer_table_odd": [],
+        "ai_types": [],
+        "type_from_ai": [],
+        "ai_type_conflicts": [],
+        "ai_answer_conflicts": [],
+        "ai_answer_ignored": [],
+        "answers_from_ai": [],
+        "explanations_from_ai": [],
+        "explanations_from_criteria": [],
+        "multi_answer_suspect": [],
+        "type_from_section": [],
+        "material_stems": [],
+        "material_inlined": [],
+        "material_headers_dropped": [],
         "splices": [],
         "splice_failed": [],
         "splice_false_alarms": [],
@@ -954,9 +2282,24 @@ def main() -> int:
         "shared_stem_missing": [],
         "shared_stem_stripped": [],
         "shared_stem_inlined": [],
+        "s3_deduped": [],
+        "s3_flagged": [],
+        "s3_normalized": [],
+        "ai_duplicates": [],
+        "ai_answers": [],
+        "ai_review_skipped": [],
+        "ai_usage": 0,
         "unresolved_groups": [],
         "notes": [],
     }
+
+    # 答案页的判定与答案挖掘：**先看转写**（不依赖模型抽没抽出题）
+    transcription_answer_pages_set = set(transcription_answer_pages(pages_dir, pages))
+    if transcription_answer_pages_set:
+        c.info(
+            f"    答案页（按转写判定）：page "
+            + "、".join(str(n) for n in sorted(transcription_answer_pages_set))
+        )
 
     # ① 读入
     for index, number in enumerate(pages, start=1):
@@ -969,16 +2312,82 @@ def main() -> int:
             continue
         page_data = c.read_json(merge_path)
         page_questions = page_data.get("questions") or []
+        page_conflicts = page_data.get("conflicts") or []
+        # 答案行 / 评分标准行：**没有选项、只有答案**的行不是题目。
+        # 带字母答案的 → 直接进答案表（答案表可能印在**任意一页**，实测就印在第 1 页顶部）；
+        # 只有文本的 → 进评分标准表（贴给主观题）。
+        grading_rows = [q for q in page_questions if is_grading_row(q)]
+        if grading_rows:
+            letter_rows = [q for q in grading_rows if flatten(q.get("answerKey"))]
+            text_rows = [q for q in grading_rows if not flatten(q.get("answerKey"))]
+            for place, key in answer_rows_to_table(letter_rows).items():
+                answer_table.setdefault(place, key)
+            if text_rows:
+                criteria.update(harvest_criteria(text_rows, report))
+            if len(grading_rows) != len(text_rows):
+                report["answer_rows_any_page"].append((number, len(letter_rows)))
+            page_questions = [q for q in page_questions if not is_grading_row(q)]
         # 卷名信息（用于"全卷 1 张题单"的题单名）——取第一份有内容的
         if not (document.get("paper_identity") or {}).get("title"):
             identity = page_data.get("paper_identity") or {}
             if any(flatten(value) for value in identity.values()):
                 document["paper_identity"] = identity
+        # 「参考答案 / 评分标准」页：它贡献**答案**，不贡献题目（题干本来就是空的）
+        # 答案有两个来源，都收：① 两路 OCR **转写**里的答案原文（`1-5 DDDB C` / `1-5 1.CE …`）
+        # —— 确定性、0 token，模型偷懒也不怕；② 模型逐题抄下来的伪题目。
+        mined = 0
+        if number in transcription_answer_pages_set:
+            for label in ("a", "b"):
+                review_path = pages_dir / f"page-{number:03d}.{label}.review.json"
+                if not review_path.exists():
+                    continue
+                transcription = str(
+                    (c.read_json(review_path) or {}).get("transcription_md") or ""
+                )
+                mined += mine_answers_from_transcription(
+                    transcription, answer_table, number, report
+                )
+        if is_answer_key_page(page_data) or number in transcription_answer_pages_set:
+            harvested = harvest_answer_table(page_data)
+            for place, key in harvested.items():
+                answer_table.setdefault(place, key)
+            report["answer_key_pages"].append(
+                (number, len(page_questions), len(harvested), mined)
+            )
+            report["dropped_answer_rows"].extend(
+                (number, q.get("number"), str(q.get("answerKey") or ""))
+                for q in page_questions
+                if str(q.get("answerKey") or "").strip()
+            )
+            for conflict in page_conflicts:
+                all_conflicts.append({**conflict, "page": number})
+            c.progress(
+                STAGE,
+                index,
+                len(pages),
+                "✓",
+                c.human_ms(page_started),
+                f"答案页：转写挖到 {mined} 条 / 模型给了 {len(harvested)} 条（不产出题目）",
+            )
+            c.page_done(index, len(pages), ["答案页 ✓"], total_questions=len(entries))
+            continue
         for order, q in enumerate(page_questions):
             q.setdefault("source", {}).setdefault("page", number)
-            entries.append({"page": number, "index": order, "q": q})
-        for conflict in page_data.get("conflicts") or []:
+            # 把"点题号"的冲突挂到对应题上，md 里才能在那一题下面写出待核对原因
+            mine = [
+                cf
+                for cf in page_conflicts
+                if isinstance(cf, dict) and cf.get("question") == q.get("number")
+            ]
+            entries.append({"page": number, "index": order, "q": q, "conflicts": mine})
+        for conflict in page_conflicts:
             all_conflicts.append({**conflict, "page": number})
+        for item in page_data.get("deduped") or []:
+            report["s3_deduped"].append({**item, "page": number})
+        for item in page_data.get("flagged") or []:
+            report["s3_flagged"].append({**item, "page": number})
+        for item in page_data.get("normalized") or []:
+            report["s3_normalized"].append({**item, "page": number})
         status = "⚠" if any(q.get("needs_review") for q in page_questions) else "✓"
         c.progress(
             STAGE, index, len(pages), status, c.human_ms(page_started), f"读出 {len(page_questions)} 题"
@@ -989,6 +2398,10 @@ def main() -> int:
         c.fail("所有页都没有题目（merge.json 里 questions 为空）；请检查 S3 结果", 1)
 
     # ② 加工
+    # 答案表 / 大题标题 → 先落到题目上，后面几步（去重、完整性检查）才看得到正确答案
+    apply_answer_table(entries, answer_table, report)
+    check_answer_coverage(entries, answer_table, report)
+    normalize_question_types(entries, report)
     group_order = normalize_groups(entries, pages_dir, report)
     if len(group_order) > MAX_GROUPS:
         c.warn(
@@ -997,9 +2410,25 @@ def main() -> int:
         )
     fill_judgement_options(entries, report)
     strip_trailing_answer_mark(entries, report)
+    normalize_answer_text(entries, report)
     entries = splice_continued(entries, pages_dir, report)
     entries = sort_and_dedupe(entries, report)
     attach_shared_stems(entries, pages_dir, report)
+    entries = attach_material_passages(entries, report)
+    # 贴评分标准放在材料题处理**之后**：材料标题本身也是"没有选项、没有答案的题"，
+    # 它还没被撤掉时会混进候选，把"数量相等"的判断搞乱（实测）。
+    apply_criteria(entries, criteria, report)
+    # 全卷 AI 终审放在公共题干挂载**之后**：它用"卷面原题号"回查转写定位导言，重编号后就不准了
+    if args.no_ai_review:
+        c.info("    AI 终审：已按 --no-ai-review 跳过（纯离线）")
+    else:
+        c.check_max_tokens("merge", args.ai_max_tokens)
+        review = ai_review(
+            entries, pages_dir, pages, work_dir, category, c.merge_config(), args, report
+        )
+        entries = apply_ai_review(entries, review, report)
+        ai_fill_explanations(entries, work_dir, c.merge_config(), args, report)
+    entries = renumber_if_duplicated(entries, report)
     review_completeness(entries, report)
     check_group_counts(entries, report)
     for numeral, length, _preview in report["long_group_titles"]:
@@ -1034,14 +2463,23 @@ def main() -> int:
     c.write_json_atomic(manifest_path, manifest)
 
     review_count = sum(1 for e in entries if e["q"].get("needs_review"))
+    generated_count = sum(
+        1 for e in entries if str(e["q"].get("explanationSource") or "").lower() == "generated"
+    )
     c.always(
         f"[{STAGE}] 跨页拼接 {len(report['splices'])} 题 / 去重 {len(report['duplicates'])} 题 → 单文件"
     )
     c.always(f"[{STAGE}] {out_path.relative_to(c.REPO_ROOT)} ✓ {len(entries)} 题")
     c.always(
-        f"[{STAGE}] 题组 {len(group_order)} / 缺答案 {len(report['incomplete'])} / "
+        f"[{STAGE}] 题组 {len(group_order)} / 字段不完整 {len(report['incomplete'])} / "
         f"题数不符 {len(report['count_mismatch'])} / 公共题干 {len(report['shared_stems'])} / "
-        f"待复核 {review_count} / 缺产物 {len(failures)}"
+        f"材料题 {len(report['material_stems'])} / 答案表贴回 {len(report['answers_from_table'])} / "
+        f"题型补正 {len(report['type_from_section'])} / 字段格式化 {len(report['s3_normalized'])} / "
+        f"AI 生成解析 {generated_count} / AI 判重 {len(report['ai_duplicates'])} / "
+        f"AI 改答案 {len(report['ai_answers'])} / AI 判型 {len(report['ai_types'])}"
+        f"（改 {len(report['type_from_ai'])}、与卷面冲突 {len(report['ai_type_conflicts'])}）"
+        f" / 多选答案可疑 {len(report['multi_answer_suspect'])}"
+        f" / 待复核 {review_count} / 缺产物 {len(failures)}"
     )
     c.always(
         f"[完成] 共 {len(entries)} 题 | 待复核 {review_count} | 失败 {len(failures)} | "
