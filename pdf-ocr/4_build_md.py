@@ -2349,10 +2349,12 @@ def main() -> int:
     parser.add_argument(
         "--ai-max-tokens",
         type=int,
-        default=131072,
-        help="AI 终审单次响应上限，默认 131072（**推理模型**会把思维链也算进这里："
-        "实测 40 页卷 403 题 + 答案页，16384/65536 都不够它把 ~300 条答案写完，"
-        "会只回几条甚至空正文；DeepSeek 合法上限 393216）",
+        default=393216,
+        help="AI 终审单次响应上限，默认 393216（= **DeepSeek 端点允许的最大值**）。"
+        "**推理模型**会把思维链也算进这里：实测 40 页卷 403 题 + 答案页，16384/65536 都不够它"
+        "把 ~300 条答案写完（会只回几条甚至空正文），131072 才跑通。"
+        "再往上（如 13000000）会被端点直接 HTTP 400 打回，所以这里顶到上限即可 —— "
+        "max_tokens 只是截止线，没生成的 token 不计费，顶满不额外花钱",
     )
     parser.add_argument("--ai-timeout", type=int, default=180, help="AI 终审单次超时秒数，默认 180")
     parser.add_argument("--quiet", action="store_true", help="只打印每页完成行与最终摘要")
