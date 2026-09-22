@@ -2499,7 +2499,12 @@ def main() -> int:
                 mined += mine_answers_from_transcription(
                     transcription, answer_table, number, report
                 )
-        if is_answer_key_page(page_data) or number in transcription_answer_pages_set:
+        # 注意：**只有"该页的题全是答案行（没有题干）"才整页不产题**。
+        # 不能因为"转写里像答案页"就跳过这一页 —— 很多卷子把答案表印在**第 1 页顶部**，
+        # 那一页同时还有真题；按转写判定会连真题一起丢掉（实测：试卷1 的 page 1 整页没了）。
+        # 转写层面的识别只用于"把哪几页喂给 AI 对答案"。
+        # 带字母答案的答案行由 is_grading_row() 逐行拦下、进答案表，不受此影响。
+        if is_answer_key_page(page_data):
             harvested = harvest_answer_table(page_data)
             for place, key in harvested.items():
                 answer_table.setdefault(place, key)

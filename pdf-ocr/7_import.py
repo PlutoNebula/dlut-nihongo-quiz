@@ -202,12 +202,18 @@ def main() -> int:
     parser.add_argument("--from-step", type=int, default=1, choices=range(1, 7), help="从第几步开始（断点续跑）")
     parser.add_argument("--only-step", type=int, choices=range(1, 7), help="只跑这一步")
     parser.add_argument("--force", action="store_true", help="让 S1/S4 覆盖已存在的产物")
-    parser.add_argument("--keep-going", action="store_true", help="某份失败后继续跑下一份")
+    parser.add_argument(
+        "--stop-on-error",
+        action="store_true",
+        help="某份失败就停下（**默认继续**跑下一份 —— 一份失败不该让另外六份白等）",
+    )
+    parser.add_argument("--keep-going", action="store_true", help="（兼容旧写法，默认就是继续）")
     parser.add_argument("--no-build", action="store_true", help="S6 跳过 vue-tsc/vite build")
     parser.add_argument("--no-verify", action="store_true", help="S6 跳过全部校验")
     parser.add_argument("--dry-run", action="store_true", help="只打印计划，不执行")
     parser.add_argument("--quiet", action="store_true", help="只打印每份试卷的完成行")
     args = parser.parse_args()
+    args.keep_going = not args.stop_on_error
 
     c.setup_stdio()
     c.set_quiet(args.quiet)
