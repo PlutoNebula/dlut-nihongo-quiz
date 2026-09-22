@@ -309,7 +309,19 @@ def main() -> int:
     # ── 按解析端算法预演 ──
     kept, drops = parse_like_parser(content)
     if drops:
-        hard.append(f"会被解析端丢弃的题 {len(drops)} 道")
+        total = len(kept) + len(drops)
+        ratio = len(drops) / total if total else 1.0
+        message = f"会被解析端丢弃的题 {len(drops)} 道（占 {ratio * 100:.1f}%）"
+        # 用户规则：**丢弃 < 总数的 1/5 就放行**（降为警告）——
+        # 那些题不会上站，但没理由连带把能收下的几百道一起拦住；
+        # 超过 1/5 说明这份 md 有结构性问题，仍然拒发。
+        if ratio < 1 / 5:
+            soft.append(
+                message + " —— 按「丢弃 < 1/5 可上传」放行；这些题不会上站，"
+                "逐条原因见 report.md 的「字段不完整」表"
+            )
+        else:
+            hard.append(message + " —— 超过总数的 1/5，拒绝发布（先修 md 再发）")
     # 多选题的答案是**多个字母**，要逐字母判（`CE` 不会等于任何一个选项 key）
     answer_not_in_options = [
         q
