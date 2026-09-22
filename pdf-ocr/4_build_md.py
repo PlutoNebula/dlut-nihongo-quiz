@@ -1151,14 +1151,27 @@ def answer_table_snippets(pages_dir: Path, pages: list[int], limit: int = 40) ->
     只有 `--no-ai-review`（纯离线）时才回落到确定性的 `mine_answers_from_transcription()`。
     """
     texts: list[str] = []
+    seen: set[str] = set()
+    budget = 24000  # 字符预算：推理模型读长文会把思维链撑爆（实测 16384 输出被吃光）
     for page in pages:
         for label in ("a", "b"):
             path = pages_dir / f"page-{page:03d}.{label}.review.json"
             if not path.exists():
                 continue
             text = str((c.read_json(path) or {}).get("transcription_md") or "").strip()
-            if text:
-                texts.append(f"（page {page} / {label} 路）\n{text}")
+            if not text:
+                continue
+            # a/b 两路的答案页原文常常几乎一样 → 按内容去重，省一半输入
+            fingerprint = re.sub(r"\s+", "", text)
+            if fingerprint in seen:
+                continue
+            seen.add(fingerprint)
+            if len(text) > budget:
+                text = text[:budget] + "\n…（本页过长已截断）"
+            budget -= len(text)
+            texts.append(f"（page {page} / {label} 路）\n{text}")
+            if budget <= 0:
+                return texts
     return texts
 
 
@@ -2285,7 +2298,13 @@ def main() -> int:
         action="store_true",
         help="重跑 AI 终审（默认复用 work/<分类名>/paper-review.json，不重复花钱）",
     )
-    parser.add_argument("--ai-max-tokens", type=int, default=16384, help="AI 终审单次响应上限，默认 16384")
+    parser.add_argument(
+        "--ai-max-tokens",
+        type=int,
+        default=65536,
+        help="AI 终审单次响应上限，默认 65536（**推理模型**会把思维链也算进这里，"
+        "16384 实测会被思维链吃光、正文为空；DeepSeek 合法上限 393216）",
+    )
     parser.add_argument("--ai-timeout", type=int, default=180, help="AI 终审单次超时秒数，默认 180")
     parser.add_argument("--quiet", action="store_true", help="只打印每页完成行与最终摘要")
     args = parser.parse_args()
@@ -2329,6 +2348,7 @@ def main() -> int:
         "answer_rows_any_page": [],
         "ai_shape_fixed": [],
         "ai_shape_broken": [],
+        "ai_review_failed": [],
         "criteria_rows": [],
         "criteria_attached": [],
         "criteria_by_order": 0,
@@ -2503,11 +2523,19 @@ def main() -> int:
         c.info("    AI 终审：已按 --no-ai-review 跳过（纯离线）")
     else:
         c.check_max_tokens("merge", args.ai_max_tokens)
-        review = ai_review(
-            entries, pages_dir, pages, work_dir, category, c.merge_config(), args, report
-        )
-        entries = apply_ai_review(entries, review, report)
-        ai_fill_explanations(entries, work_dir, c.merge_config(), args, report)
+        try:
+            review = ai_review(
+                entries, pages_dir, pages, work_dir, category, c.merge_config(), args, report
+            )
+            entries = apply_ai_review(entries, review, report)
+            ai_fill_explanations(entries, work_dir, c.merge_config(), args, report)
+        except c.ApiError as exc:
+            # **AI 终审失败不能拖垮整条流水线**：确定性那一层（答案行 / 答案页 / 交叉核对）
+            # 已经把能贴的答案贴上了，剩下的是"少一些 AI 纠正、多一些待复核"。
+            # 之前这里是直接抛异常 → S4 退出码 1 → S7 批量导入整份停下来（实测踩过：
+            # 40 页卷的 AI 终审被 max_tokens 截断，8 份里就它一个失败）。
+            c.warn(f"AI 终审失败，已降级继续（本卷少一层 AI 纠正，待复核会更多）：{exc}")
+            report["ai_review_failed"].append(str(exc)[:300])
     entries = renumber_if_duplicated(entries, report)
     review_completeness(entries, report)
     check_group_counts(entries, report)
