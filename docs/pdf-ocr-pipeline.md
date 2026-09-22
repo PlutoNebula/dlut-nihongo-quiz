@@ -1991,6 +1991,44 @@ S4 读入后**按 (字段, 原值, 规范值) 聚合**写进 `report.md` 的
 
 ---
 
+## 35. 文件夹批量导入 `7_import.py`（用户要求：一个文件夹 = 一个入口）
+
+> 要求原文：「再加入一个文件夹内批量导入功能，默认文件夹名就是入口名，也可以通过命令行
+> 批量导入一个入口（将几个过程全自动来那个接在一起）」。
+
+把 S1→S6 串成一条命令：**一个文件夹 = 一个入口，文件夹里的每个 PDF = 一张试卷卡**。
+
+```powershell
+# 入口名默认取文件夹名
+python pdf-ocr/7_import.py --folder "C:\Users\me\Desktop\马原试卷" --entry-icon 马
+
+# 用一个文件夹批量导入到指定入口（多份 PDF 都挂到同一入口下）
+python pdf-ocr/7_import.py --folder .\inbox --entry "英语四级" --entry-key english-cet4 --entry-icon 英
+
+python pdf-ocr/7_import.py --folder .\inbox --dry-run          # 只列计划
+python pdf-ocr/7_import.py --folder .\inbox --from-step 3      # 断点续跑
+python pdf-ocr/7_import.py --folder .\inbox --only-step 5      # 只跑某一步
+```
+
+| 项 | 规则 |
+|---|---|
+| **入口名** | 默认 = **文件夹名**；`--entry` 覆盖 |
+| 入口 key（路由） | `--entry-key`，或由入口名推（只留 `a-z 0-9 -`）。**纯中文推不出来时自动兜底成 `entry-<6 位名字哈希>`** 并给警告 —— 同一个文件夹名永远得到同一个 key，续跑/重跑幂等；想换好记的路由再显式给 `--entry-key` |
+| **试卷卡标题** | 默认 = **PDF 文件名**（去扩展名）；`--paper-prefix` 可加前缀 |
+| **分类名**（数据目录 / 题库文件名 key） | `<entry-key>-<序号>`；只有一份 PDF 时就是 `<entry-key>`；`--category-prefix` 可换前缀 |
+| 卡片顺序 | 按 PDF 文件名的排序（稳定），`--position <序号>` 传给 S6 |
+| 失败处理 | 默认**停下**并打印续跑命令；`--keep-going` 跳过失败项继续 |
+| 透传 | `--dpi`（S1）、`--force`（S1/S4 覆盖已有产物）、`--no-build` / `--no-verify`（S6）、`--quiet` |
+
+实现要点：**不把各阶段改造成可 import 的模块**，而是用 `subprocess` 顺序调用既有的六个脚本
+（`sys.executable pdf-ocr/<脚本> …`，`cwd=仓库根`）——它们本来就有稳定的 CLI 与退出码，
+**stdio 直接继承**（不捕获，避免破坏 §6 的进度行）。退出码透传：0 全成功 / 1 参数环境 / 3 有试卷失败。
+
+验收：`pdf-ocr/tests/test_p7_import.py`（**5 组断言**：slug 规则、多份带序号与排序、单份不带序号、
+dry-run 的入口名与兜底 key、非法 `--category-prefix` 与空文件夹各返回 1）。
+
+---
+
 ## 34. 参考答案页 / 材料题 / 题型：一张"马原卷"暴露的三个坑（用户要求）
 
 > 用户原话：「为何拼接功能消失，很多多选题的 questionType 不对，且 answerKey 没有显示」
