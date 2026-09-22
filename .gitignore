@@ -87,7 +87,12 @@ docs/screenshots/*-fixed.png
 scripts/_*.cjs
 scripts/_*.mjs
 scripts/_*.py
-scripts/__pycache__/
+# Python 字节码缓存（不限层级）
+__pycache__/
+
+# pdf-ocr 工作流：中间产物（页图 / 每页 JSON / manifest / 报告）都留在工具目录里，
+# 只有最终结果 data/raw/<分类名>/<分类名>.md 才入库
+/pdf-ocr/work/
 
 # Root-level temp / analysis artifacts
 /_*.json
