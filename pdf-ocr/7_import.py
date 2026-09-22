@@ -137,6 +137,19 @@ def import_one(row: dict, opts: argparse.Namespace, first: bool) -> int:
     elif opts.from_step > 1:
         steps = [s for s in steps if s >= opts.from_step]
 
+    # **续跑预检**：这份卷的最终 md 已经在 → 说明 S1–S4 跑过了，跳过它们只补 S5/S6
+    # （S5 结论可能在、也可能被清掉；S6 挂卡是幂等的）。
+    # 否则 S1 会因"最终产物目录已存在且非空"报错，把整批拖停（实测踩过）。
+    md_path = c.RAW_ROOT / category / f"{category}.md"
+    if md_path.exists() and not opts.force and not opts.only_step:
+        c.always(
+            f"[{STAGE}] {pdf.name}：已存在 {md_path.name} → 跳过 S1–S4，只补 S5/S6"
+            f"（要整条重做加 --force）"
+        )
+        steps = [s for s in steps if s >= 5]
+        if not steps:
+            return 0
+
     for step in steps:
         started = time.perf_counter()
         if step == 1:
