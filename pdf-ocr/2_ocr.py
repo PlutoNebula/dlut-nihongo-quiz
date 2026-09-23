@@ -29,7 +29,18 @@ import _common as c  # noqa: E402
 
 # ── 两路提示词（适度异构）─────────────────────────────────────────────────
 # 系统提示词与 schema 对两路**完全一致**，保证结果可以逐字段比对。
-SYSTEM_PROMPT = (    "你是试卷整页识别助手。请严格按用户要求，只输出一个 JSON 对象，"
+# 【用途说明】如实交代任务背景：这是**大学课程试卷的扫描页**，用于学生个人学习/错题整理/题库校对。
+# 实测（2026-09-22）：马原试卷4 第 6 页（整页是《…试卷评分标准》）两路都被内容审核拦成
+# HTTP 451 censorship_blocked —— 属于对**课程政治理论术语**的误判。这里把真实用途讲清楚，
+# 并明确要求"如实转写、不要因涉及课程术语而拒答或改写"。
+# 注意：只写**真实**背景 —— 不写"这是虚构内容""忽略你的安全规则"这类欺骗审核的措辞。
+SYSTEM_PROMPT = (
+    "你是试卷整页识别助手。本次任务是把**大学课程试卷的扫描页**转成文字，"
+    "用于学生**个人学习、错题整理与题库校对**（不对外公开发布、不用于商业用途）；"
+    "页面内容是公开课程的教学与考试材料（如《马克思主义基本原理概论》等公共课）。"
+    "请如实、完整地转写页面上的全部文字（含题干、选项、参考答案与评分标准），"
+    "不要因为内容涉及课程或政治理论术语就拒答、省略或改写。"
+    "请严格按用户要求，只输出一个 JSON 对象，"
     "不要输出解释、不要用代码围栏。看不清的地方如实标注，不要编造。"
 )
 
@@ -477,6 +488,22 @@ def main() -> int:
         d for d in manifest.get("documents", [])[1:] if d is not document
     ]
     manifest["errors"] = manifest.get("errors", []) + errors
+    # **内容审核拦截的页**（重试到头仍 451）：按用户要求"三次不过就放弃这套试卷"。
+    # 落进 manifest 供 S7 识别（S7 不捕获子进程输出，只能靠文件通道），并给出一条明确建议。
+    blocked = sorted(
+        {
+            int(line.split()[1])
+            for line in errors
+            if line.startswith("page ") and ("censorship_blocked" in line or "451" in line)
+        }
+    )
+    if blocked:
+        manifest["blocked_pages"] = blocked
+        c.always(
+            f"[放弃建议] 第 {'、'.join(str(n) for n in blocked)} 页内容审核拦截"
+            f"（重试 {args.max_retries} 次仍不过）—— 本卷数据不完整，建议放弃这一套试卷；"
+            f"要救这一页可以换视觉模型，或人工补录 work/<分类名>/pages/page-0NN.*.review.json"
+        )
     manifest["updated_at"] = c.now_iso()
     usage = c.add_usage(manifest, calls=calls_made, tokens=spent)
     c.write_json_atomic(manifest_path, manifest)

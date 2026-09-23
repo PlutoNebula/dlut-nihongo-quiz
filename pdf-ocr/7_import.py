@@ -127,6 +127,22 @@ def run_step(step: int, args: list[str], quiet: bool) -> int:
     return proc.returncode
 
 
+def blocked_pages(category: str) -> list[int]:
+    """从工作目录的 manifest 里读"因内容审核被拦、重试到头仍不过"的页号。
+
+    S7 不捕获子进程输出（stdio 继承，为了不破坏进度行），所以子步骤把结论写进
+    `work/<分类名>/source-manifest.json` 的 `blocked_pages`，这里读出来。
+    """
+    path = c.WORK_ROOT / category / "source-manifest.json"
+    if not path.exists():
+        return []
+    try:
+        data = c.read_json(path) or {}
+    except Exception:
+        return []
+    return [int(n) for n in (data.get("blocked_pages") or [])]
+
+
 def import_one(row: dict, opts: argparse.Namespace, first: bool) -> int:
     """把一份 PDF 从 S1 跑到 S6。返回最后一个非零退出码（0 = 成功）。"""
     category = row["category"]
@@ -180,6 +196,15 @@ def import_one(row: dict, opts: argparse.Namespace, first: bool) -> int:
         # 以前把"非 0"一律当失败 → S5 只要带待复核警告（exit 2）就被判失败、
         # **根本不会去跑 S6**，于是题库和卡片永远不出现（实测坑了两份卷）。
         if code not in (0, 2):
+            # **内容审核拦截（重试到头仍不过）→ 放弃这一套试卷**（用户要求）。
+            # 与"可修的失败"区分开：给出 ⊘ 放弃 的明确结论，并记进 row 供汇总统计。
+            blocked = blocked_pages(category)
+            if blocked:
+                row["abandoned"] = True
+                c.always(
+                    f"[{STAGE}] ⊘ 放弃本卷：第 {'、'.join(str(n) for n in blocked)} 页内容审核拦截"
+                    f"（重试 {3} 次仍不过）→ 跳过后续步骤，数据不完整、不发布"
+                )
             c.always(
                 f"[{STAGE}] ✗ {row['pdf'].name} 在 {desc}（{name}）失败，退出码 {code}"
                 f"（{c.human_ms(started)}ms）"
