@@ -9,6 +9,7 @@
   * 位置参数：`--position N` / `--before` / `--after` / `--last`
   * 幂等：同样的输入不产生改动
   * 一份试卷只能属于一个入口（会从别的入口摘掉）
+  * 课程树自动分组：同名分组要复用（不能一份卷建一个同名分组）
 """
 
 import importlib.util
@@ -137,4 +138,60 @@ assert "computer-2026-midterm" not in papers_of(moved, "computer-organization"),
 assert papers_of(moved, "english-cet4") == ["computer-2026-midterm"]
 print("[7] 跨入口移动：旧入口已摘掉")
 
-print("\n全部通过：7 组断言")
+# ⑧ 课程树分组：自动分组要**并进同名分组**，不能一份卷新建一个同名分组
+TREE = """\
+import type { TreeNode } from '../types/question'
+
+export const COURSE_TREE: TreeNode[] = [
+  {
+    type: 'group',
+    key: 'computer-organization',
+    label: '计算机组成（软国际）',
+    children: [
+      {
+        type: 'leaf',
+        key: 'computer-2021-final',
+        label: '2021期末',
+        category: 'computer-2021-final',
+      },
+    ],
+  },
+  {
+    type: 'group',
+    key: 'marxism-group',
+    label: '马克思主义原理',
+    icon: '马',
+    children: [
+      {
+        type: 'leaf',
+        key: 'marxism-1',
+        label: '马原试卷1',
+        category: 'marxism-1',
+      },
+    ],
+  },
+]
+"""
+tree2, detail_t = pub.patch_course_tree(
+    TREE, "marxism-7", meta_for("marxism-7", "马克思主义原理"), {"mode": "last"}
+)
+assert tree2.count("type: 'group'") == 2, tree2          # 没有新建第 3 个分组
+assert "marxism-7-group" not in tree2, tree2
+_seg = tree2[tree2.index("key: 'marxism-group'") :]
+_seg = _seg[: _seg.index("\n    ],")]
+assert "marxism-7" in _seg, tree2                        # 新叶子挂在同一个组里
+assert "marxism-1" in _seg, tree2
+# 组名确实是新的才新建分组
+tree3, _ = pub.patch_course_tree(
+    tree2, "jp-2026", meta_for("jp-2026", "日语二级"), {"mode": "last"}
+)
+assert tree3.count("type: 'group'") == 3, tree3
+assert "label: '日语二级'" in tree3, tree3
+# 幂等：同一位再挂一次 → 不改动
+same_tree, detail_same_tree = pub.patch_course_tree(
+    tree3, "marxism-7", meta_for("marxism-7", "马克思主义原理"), {"mode": "last"}
+)
+assert same_tree == tree3 and "已存在" in detail_same_tree, detail_same_tree
+print("[8] 课程树：同名分组复用（不重复建组）：", detail_t)
+
+print("\n全部通过：8 组断言")

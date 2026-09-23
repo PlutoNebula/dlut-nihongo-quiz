@@ -226,27 +226,34 @@ def patch_course_tree(text: str, key: str, meta: dict, order: dict) -> tuple[str
         )
 
     if not group_key:
-        # 自动新建分组：组名/图标取入口信息
-        group_key = f"{key}-group"
-        if f"key: '{group_key}'," in text:
-            return text, "分组与叶子已存在（位置不变）"
+        # 自动分组：**先找同名分组并进去**。早期版本每份卷都新建一个 `<分类>-group`，
+        # 结果侧栏里并排出现 5 个一模一样的「马克思主义原理」，每组只挂 1 份卷。
         group_label = str(meta.get("entryName") or meta["short"]).replace("\\", "\\\\").replace("'", "\\'")
-        icon = str(meta.get("entryIcon") or "书").replace("\\", "\\\\").replace("'", "\\'")
-        block = (
-            "  {\n"
-            "    type: 'group',\n"
-            f"    key: '{group_key}',\n"
-            f"    label: '{group_label}',\n"
-            f"    icon: '{icon}',\n"
-            "    children: [\n"
-            f"{leaf}"
-            "    ],\n"
-            "  },\n"
+        same = re.search(
+            rf"(?m)^    key: '([^']+)',\n    label: '{re.escape(group_label)}',$", text
         )
-        # 找到 **COURSE_TREE 数组字面量**的结尾（不能 rindex("]") —— 文件后面还有别的 `]`）
-        anchor = text.index("export const COURSE_TREE")
-        end = text.index("\n]", anchor) + 1
-        return text[:end] + block + text[end:], f"已新建分组「{group_label}」（{group_key}）并挂上叶子"
+        if same:
+            group_key = same.group(1)
+        else:
+            group_key = f"{key}-group"
+            if f"key: '{group_key}'," in text:
+                return text, "分组与叶子已存在（位置不变）"
+            icon = str(meta.get("entryIcon") or "书").replace("\\", "\\\\").replace("'", "\\'")
+            block = (
+                "  {\n"
+                "    type: 'group',\n"
+                f"    key: '{group_key}',\n"
+                f"    label: '{group_label}',\n"
+                f"    icon: '{icon}',\n"
+                "    children: [\n"
+                f"{leaf}"
+                "    ],\n"
+                "  },\n"
+            )
+            # 找到 **COURSE_TREE 数组字面量**的结尾（不能 rindex("]") —— 文件后面还有别的 `]`）
+            anchor = text.index("export const COURSE_TREE")
+            end = text.index("\n]", anchor) + 1
+            return text[:end] + block + text[end:], f"已新建分组「{group_label}」（{group_key}）并挂上叶子"
 
     group = text.index(f"key: '{group_key}',")
     children_start = text.index("children: [", group) + len("children: [")
