@@ -348,6 +348,14 @@ def post_json(url: str, payload: dict, api_key: str | None, *, timeout: int = 12
             raise ApiError(f"响应不是合法 JSON：{exc}", retryable=True) from exc
     if response.status_code == 429 or response.status_code >= 500:
         raise ApiError(f"HTTP {response.status_code}", retryable=True)
+    # **内容审核拦截**（HTTP 451 / censorship_blocked）：按用户要求**重试两次**
+    # （--max-retries 默认 3 次尝试 = 2 次重试，间隔按指数退避）。实测同一页重试常常能过
+    # （审核带随机性）；一直不过就如实记错 —— 那一页交给人工补，绝不让整卷静默丢答案。
+    if response.status_code == 451 or "censorship_blocked" in (response.text or ""):
+        raise ApiError(
+            f"HTTP {response.status_code}（内容审核拦截，将重试）：{(response.text or '')[:160]}",
+            retryable=True,
+        )
     raise ApiError(f"HTTP {response.status_code}：{response.text[:200]}", retryable=False)
 
 
