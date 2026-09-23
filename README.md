@@ -89,6 +89,7 @@ npm run dev          # http://localhost:5173/
 | [项目结构](docs/project-structure.md)             | 完整目录树、数据流、各模块职责                             |
 | [计算机组成题库](docs/computer-question-banks.md) | 学科介绍、答案来源、勘误与维护                             |
 | [题库维护](docs/question-bank.md)                 | 加题改题流程、Markdown 格式、多选/判断题写法、新增学科步骤 |
+| [PDF 试卷导入工具](docs/pdf-ocr-import-guide.md)  | 把 PDF 试卷批量变成题库卡：用法、参数、退出码、门禁、下架  |
 | [部署](docs/deployment.md)                        | GitHub Pages + Actions、自定义域名、本地预览生产构建       |
 | [贡献指南](CONTRIBUTING.md)                       | Fork/PR 流程、代码风格、Commit 规范                        |
 
