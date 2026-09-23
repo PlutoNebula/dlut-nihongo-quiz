@@ -1641,16 +1641,44 @@ def ai_fill_explanations(
         payload = build_explain_payload(cfg.get("model"), targets, args.ai_max_tokens)
         c.info(f"    补解析：{len(targets)} 题 → {cfg.get('model')}")
         started = time.perf_counter()
-        response = c.post_json(
-            str(cfg["base_url"]), payload, cfg.get("api_key"), timeout=args.ai_timeout
-        )
-        text, field = c.response_text_ex(response)
-        tokens = c.usage_tokens(response.get("usage"))
-        report["ai_usage"] = (report.get("ai_usage") or 0) + tokens
-        try:
-            raw, _repair = c.extract_json(text)
-        except c.ApiError as exc:
-            c.warn(f"补解析失败（跳过）：{exc}{c.reasoning_hint(field, c.response_finish_reason(response), args.ai_max_tokens, 'merge')}")
+        # **返回值格式不对就重跑**（用户要求）：解析失败、或没拿到 explanations 键，
+        # 都算"格式不对"→ 最多重试 2 次（共 3 次尝试）。以前一次不成/形状不对就静默接受，
+        # 实测出现过"18 题只回 1 条"的情况。
+        raw = None
+        for attempt in range(1, 4):
+            response = c.post_json(
+                str(cfg["base_url"]), payload, cfg.get("api_key"), timeout=args.ai_timeout
+            )
+            text, field = c.response_text_ex(response)
+            tokens = c.usage_tokens(response.get("usage"))
+            report["ai_usage"] = (report.get("ai_usage") or 0) + tokens
+            try:
+                candidate, _repair = c.extract_json(text)
+            except c.ApiError as exc:
+                if attempt < 3:
+                    c.warn(f"补解析第 {attempt} 次返回不是合法 JSON，重跑：{str(exc)[:80]}")
+                    continue
+                c.warn(
+                    f"补解析失败（跳过）：{exc}"
+                    f"{c.reasoning_hint(field, c.response_finish_reason(response), args.ai_max_tokens, 'merge')}"
+                )
+                return
+            if not isinstance(candidate.get("explanations"), list) and not isinstance(
+                candidate, dict
+            ):
+                pass
+            if not (candidate.get("explanations") or candidate.get("解释")):
+                if attempt < 3:
+                    c.warn(
+                        f"补解析第 {attempt} 次返回值里没有 `explanations`（形状不对），重跑"
+                    )
+                    continue
+                report["ai_shape_broken"].append(f"补解析：缺 explanations 键（{str(candidate)[:120]}）")
+                c.warn("补解析连续 3 次都没按格式返回，已放弃（记进 report.md）")
+                return
+            raw = candidate
+            break
+        if raw is None:
             return
         c.write_json_atomic(cache_path, raw)
         c.always(
