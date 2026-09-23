@@ -215,5 +215,215 @@ assert "题型补正 1 处" in report_md, report_md
 assert "选项不足 2 个（0）" not in report_md, report_md
 print("[4] 填空/主观题不再被误报为字段不完整；题型补正写进 report.md")
 
+# ── 5) 判断/辨析题（√/×）与主观题评分标准（marxism-5/7 被 S5 拒发的两个真凶）─────
+# 5a) 大题归一键：答案页那行常常 group==groupTitle（「四、论述题」「四、论述题」），
+#     压平后会变成「论述题论述题」，与题目侧的「论述题」永远对不上 → 标准一条都贴不回去。
+assert build.section_bucket("四、论述题", "四、论述题") == "论述题", build.section_bucket(
+    "四、论述题", "四、论述题"
+)
+assert build.section_bucket("四", "论述题") == "论述题"
+assert (
+    build.section_bucket("三、案例分析题", "案例分析题（共10分，要求给三次小分）")
+    == "案例分析题"
+), build.section_bucket("三、案例分析题", "案例分析题（共10分，要求给三次小分）")
+assert build.section_bucket("一、单项选择题", "单项选择题") == "single"
+
+# 5b) √/× 认得出；答案块（挤在同一行的答案表原文）不许当导言/材料
+assert build.judgement_letter("×") == "B" and build.judgement_letter("√") == "A"
+assert build.judgement_letter("正确") == "A" and build.judgement_letter("错") == "B"
+assert build.judgement_letter("对 2分\n这是由真理的本性和实践的特点决定的") == ""
+ANSWER_BLOCK = (
+    "1-5 CBDBD 6-10 CDDDA 11-15 CCDDD 二、多项选择题(每题1分,共5分) 1-5 BDE CD CDE ACE AC"
+)
+assert build.looks_like_answer_dump(ANSWER_BLOCK), ANSWER_BLOCK
+assert not build.looks_like_answer_dump(MATERIAL), MATERIAL
+
+# 5c) "只有 √/× 的答案行"要进答案表（A=正确、B=错误），不能跑进评分标准里
+table5 = build.answer_rows_to_table(
+    [
+        dict(number=5, group="三、辨析题", groupTitle="辨析题", answerKey="", answerText="√"),
+        dict(number=6, group="三、辨析题", groupTitle="辨析题", answerKey="", answerText="×"),
+    ]
+)
+assert table5 == {("辨析题", 5): "A", ("辨析题", 6): "B"}, table5
+
+# 5d) 答案写在 answerText 里的判断题 → 补「A. 正确 / B. 错误」+ 字母答案
+judge_entries = [
+    {
+        "page": 3,
+        "q": dict(number=3, group="题组二", groupTitle="辨析题", stem="因为……（ ）",
+                  options=[], answerKey="", answerText="错误"),
+    }
+]
+rep5 = {"judgement_filled": []}
+build.fill_judgement_options(judge_entries, rep5)
+jq = judge_entries[0]["q"]
+assert [o["text"] for o in jq["options"]] == ["正确", "错误"], jq["options"]
+assert jq["answerKey"] == "B" and jq["answerText"] == "错误" and jq["questionType"] == "judgement", jq
+assert rep5["judgement_filled"] == [(3, 3)], rep5
+
+# 5e) 评分标准贴回：同桶数量相等按顺序（论述 1 道）+ 材料桶 → 思考讨论桶（案例 2 道）
+crit_entries = [
+    {"page": 4, "q": dict(number=4, group="四", groupTitle="论述题", stem="试述……的原理", options=[],
+                          answerKey="", answerText="")},
+    {"page": 6, "q": dict(number=1, group="思考讨论", groupTitle="思考讨论", stem="引力波说明了什么？",
+                          options=[], answerKey="", answerText="")},
+    {"page": 6, "q": dict(number=2, group="思考讨论", groupTitle="思考讨论", stem="是不是终极真理？",
+                          options=[], answerKey="", answerText="")},
+]
+criteria5 = {
+    ("论述题", 1): "社会存在决定社会意识 5分",
+    ("案例分析题", 1): "实践是检验真理的唯一标准。（2分）",
+    ("案例分析题", 2): "不是，真理具有绝对性和相对性。（2分）",
+}
+rep6 = {"criteria_attached": [], "criteria_by_order": 0, "criteria_unmatched": []}
+build.apply_criteria(crit_entries, criteria5, rep6)
+assert crit_entries[0]["q"]["answerText"] == "社会存在决定社会意识 5分", crit_entries[0]["q"]
+assert crit_entries[1]["q"]["answerText"].startswith("实践是检验真理"), crit_entries[1]["q"]
+assert crit_entries[2]["q"]["answerText"].startswith("不是，真理"), crit_entries[2]["q"]
+assert rep6["criteria_unmatched"] == [], rep6
+assert rep6["criteria_by_order"] == 3, rep6
+
+# 5f) 零信息条目（空题干 + 无答案 + 无选项）要丢掉，别让它把材料贴到"不存在的题"上
+junk = [
+    {"page": 4, "q": dict(number=1, group="", groupTitle="", stem="", options=[], answerKey="",
+                          answerText="")},
+    {"page": 4, "q": dict(number=2, group="", groupTitle="", stem="被截断的真题干", options=[],
+                          answerKey="", answerText="")},
+]
+rep7 = {"dropped_empty_rows": []}
+kept = build.drop_empty_rows(junk, rep7)
+assert len(kept) == 1 and kept[0]["q"]["stem"] == "被截断的真题干", kept
+assert rep7["dropped_empty_rows"] == [(4, 1)], rep7
+print("[5] √/× 判断题与主观题评分标准都能贴回题目（含答案块不许当导言/材料）")
+
+# ── 6) 答案页"不印题号"的两种形态：裸字母块 + 整段小问标准 ─────────────────
+# 6a) 裸字母块（`CCBBB CDBDD CDACB CCDAC` ＋ 多选 5 组）也要判成答案块：
+#     它挤在一行里、没有题号，旧判据（要 ≥3 行"像答案行"）一个都匹配不到，于是被当成
+#     题组公共题干复制到 20 道小题头上（实测 marxism-7 第 23–34 题的题干里全是答案）。
+BARE_BLOCK = (
+    "一、单项选择题（每题2分，共40分） CCBBB CDBDD CDACB CCDAC "
+    "二、多项选择题（每题2分，共10分） ADE ACDE ABCDE ABCDE ABCDE"
+)
+assert build.looks_like_answer_dump(BARE_BLOCK), BARE_BLOCK
+assert build.looks_like_answer_dump("三、辨析题（每题2分，共10分） ×××√×")
+assert not build.looks_like_answer_dump(MATERIAL), MATERIAL
+
+# 6b) 大题名要在 group / groupTitle 里挑"像大题名"的那一个：
+#     `group='案例分析题'` + `groupTitle='引力波：…拼图'`（OCR 把文章标题填进了 groupTitle），
+#     取最长的会串桶 → 案例分析的标准贴不到案例分析题上。
+assert (
+    build.section_bucket("案例分析题", "引力波：广义相对论的最后一块“拼图”") == "案例分析题"
+), build.section_bucket("案例分析题", "引力波：广义相对论的最后一块“拼图”")
+
+# 6c) 答案表题号体系对不上时：**同一个大题里数量相等就按顺序配**
+#     （marxism-7：答案页把辨析题答案顺延编号成 26–30，卷面却是 1–5）
+table7 = {
+    ("辨析题", 26): "B",
+    ("辨析题", 27): "B",
+    ("辨析题", 28): "B",
+    ("辨析题", 29): "A",
+    ("辨析题", 30): "B",
+}
+entries7 = [
+    {
+        "page": 3,
+        "q": dict(number=i, group="题组三", groupTitle="辨析题", stem=f"辨析第{i}题（ ）",
+                  options=[], answerKey="", answerText=""),
+    }
+    for i in range(1, 6)
+]
+rep8 = {"answers_from_table": [], "answers_by_order": [], "answer_overrides": []}
+build.apply_answer_table(entries7, table7, rep8)
+assert [e["q"]["answerKey"] for e in entries7] == ["B", "B", "B", "A", "B"], entries7
+assert len(rep8["answers_by_order"]) == 5, rep8
+# 数量不等就一律不贴（宁缺勿错）：3 条答案配 2 道题 → 一道都不动。
+# 题号也要故意错开（1–3 vs 7–8），否则会被①的精确匹配贴上，测不到"按顺序配"这一层。
+table_odd = {("辨析题", 1): "A", ("辨析题", 2): "A", ("辨析题", 3): "A"}
+entries_odd = [
+    {
+        "page": 3,
+        "q": dict(number=n, group="题组三", groupTitle="辨析题", stem=f"辨析第{n}题（ ）",
+                  options=[], answerKey="", answerText=""),
+    }
+    for n in (7, 8)
+]
+build.apply_answer_table(
+    entries_odd,
+    table_odd,
+    {"answers_from_table": [], "answers_by_order": [], "answer_overrides": []},
+)
+assert [e["q"]["answerKey"] for e in entries_odd] == ["", ""], entries_odd
+
+# 6d) 一段标准里塞了两个小问（`1. … 2. …`）→ 拆开贴给两道小题
+follow_entries = [
+    {"page": 6, "q": dict(number=1, group="思考讨论", groupTitle="思考讨论",
+                          stem="引力波的最终证实说明了什么？", options=[], answerKey="", answerText="")},
+    {"page": 6, "q": dict(number=2, group="思考讨论", groupTitle="思考讨论",
+                          stem="是不是终极真理？为什么？", options=[], answerKey="", answerText="")},
+]
+criteria7 = {
+    ("案例分析题", 32): (
+        "1. 共计10分。\n\n引力波的最终证实说明了实践是检验真理的唯一标准。（2分）\n\n"
+        "2. 共计10分。\n\n不是。（2分）因为真理具有绝对性和相对性。"
+    )
+}
+rep9 = {"criteria_attached": [], "criteria_by_order": 0, "criteria_unmatched": []}
+build.apply_criteria(follow_entries, criteria7, rep9)
+assert follow_entries[0]["q"]["answerText"].startswith("1. 共计10分"), follow_entries[0]["q"]
+assert follow_entries[1]["q"]["answerText"].startswith("2. 共计10分"), follow_entries[1]["q"]
+assert rep9["criteria_unmatched"] == [], rep9
+print("[6] 裸字母答案块不当导言；答案表按顺序配对；一段两个小问的标准会拆开贴")
+
+# ── 7) 大题说明（说明句）不是题：丢掉、并把同大题的题号前移、再按术语重合补标准 ──
+material_entry = {
+    "page": 1,
+    "q": dict(number=4, group="五、案例分析题", groupTitle="五、案例分析题", stem=MATERIAL,
+              options=[], answerKey="", answerText=""),
+}
+instr = {
+    "page": 6,
+    "q": dict(number=1, group="五、辨析题", groupTitle="辨析题",
+              stem="五、辨析题。运用马克思主义的基本原理，判断下列各题的对错，并说明理由。（每题5分，共10分）",
+              options=[], answerKey="", answerText=""),
+}
+real = {
+    "page": 6,
+    "q": dict(number=2, group="五、辨析题", groupTitle="辨析题",
+              stem="社会实践是检验认识真理性的唯一标准", options=[], answerKey="", answerText=""),
+}
+rep10 = {"dropped_instruction_rows": [], "instruction_renumbered": []}
+kept7 = build.drop_instruction_rows([material_entry, instr, real], rep10)
+# 案例材料（长、没有说明句措辞）绝不能当说明丢掉
+assert len(kept7) == 2 and kept7[0] is material_entry, kept7
+assert rep10["dropped_instruction_rows"] == [(6, 1)], rep10
+# 说明句占了第 1 题 → 真题目从 2 前移回 1，否则答案会按题号贴到下一条上
+assert real["q"]["number"] == 1, real
+assert rep10["instruction_renumbered"] == [(6, 2, 1)], rep10
+
+# 7b) 题号已经对上了 → 直接精确匹配，拿到的是**第一条**（"对 2分 …"），不是第二条
+crit7 = {
+    ("辨析题", 1): "对 2分 这是由真理的本性和实践的特点决定的。真理的本性：主观和客观相符合",
+    ("辨析题", 2): "错 2分 资本主义基本矛盾是资本主义经济危机爆发的根本原因。",
+}
+rep11 = {"criteria_attached": [], "criteria_by_order": 0, "criteria_by_content": [],
+         "criteria_unmatched": []}
+build.apply_criteria([real], crit7, rep11)
+assert real["q"]["answerText"].startswith("对 2分"), real["q"]
+assert rep11["criteria_unmatched"] == [("辨析题", 2, crit7[("辨析题", 2)][:60])], rep11
+
+# 7c) 题号真对不上、只剩一道候选却有两条标准 → 按术语重合挑**严格领先**的那一条
+lone = {
+    "page": 6,
+    "q": dict(number=9, group="五、辨析题", groupTitle="辨析题",
+              stem="社会实践是检验认识真理性的唯一标准", options=[], answerKey="", answerText=""),
+}
+rep12 = {"criteria_attached": [], "criteria_by_order": 0, "criteria_by_content": [],
+         "criteria_unmatched": []}
+build.apply_criteria([lone], crit7, rep12)
+assert lone["q"]["answerText"].startswith("对 2分"), lone["q"]
+assert [row[:2] for row in rep12["criteria_by_content"]] == [("辨析题", 1)], rep12
+print("[7] 大题说明丢掉并回退题号；标准按题号/术语重合贴对那一条")
+
 shutil.rmtree(SANDBOX)
-print("\n全部通过：4 组断言 / 沙箱已清理")
+print("\n全部通过：7 组断言 / 沙箱已清理")

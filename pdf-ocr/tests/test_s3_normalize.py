@@ -175,4 +175,23 @@ kept_diff, removed_diff = merge3.dedupe_questions(
 assert len(kept_diff) == 2 and removed_diff == [], (kept_diff, removed_diff)
 print("[8] 答案行占位题干不参与判重；真题判重只在**题号相同**时生效")
 
-print("\n全部通过：8 组断言")
+# ── 9) 判断题的 √/×：**没有"正确/错误"选项时也不能清空**，改成写进答案文本 ──
+# 实测（marxism-7）：卷面辨析题是「……（ ）」、答案页给一串 `×××√×`，没有 A/B 选项；
+# 旧版把 `×`/`√` 当非法值清空 → 第 14–18 题变成"没选项没答案" → S5 按"会被解析端丢弃"
+# 计数，9/34 = 26.5% > 1/5 直接拒发。
+q, record = norm("×", "判断题", [])
+assert q["answerKey"] == "" and q["answerText"] == "错误", q
+# 记录里必须是"转成答案文本"，不能是"（已清空）" —— 清空就是这次要修的病
+assert any("转成答案文本" in str(r["after"]) for r in record), record
+assert not any("已清空" in str(r["after"]) for r in record), record
+q, record = norm("√", "判断题", [])
+assert q["answerText"] == "正确", q
+# 有「正确/错误」选项时，仍然映射成字母（选项是权威；answerText 由 S4 按选项补）
+q, _ = norm("×", "判断题", JUDGE)
+assert q["answerKey"] == "B" and q["answerText"] == "", q
+# 真正认不出的（不是判断题答案）还是清空 + 待复核，不能因为这条放宽就留假答案
+q, _ = norm("？？", "判断题", [])
+assert q["answerKey"] == "" and q["answerText"] == "" and q["needs_review"] is True, q
+print("[9] √/×/正确/错误 没选项时转成答案文本（不再清空）；真的认不出才清空")
+
+print("\n全部通过：9 组断言")

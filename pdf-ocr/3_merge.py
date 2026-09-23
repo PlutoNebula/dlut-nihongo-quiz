@@ -356,12 +356,18 @@ def _squash(text: str) -> str:
     return re.sub(r"[\s_\-/]+", "", str(text or "").strip().lower())
 
 
-def normalize_answer_key(raw, options: list[dict], record: list[dict], number) -> tuple[str, bool]:
-    """把 answerKey 收拾成"排序去重的大写字母"，返回 (规范化答案, 是否需要复核)。
+def normalize_answer_key(
+    raw, options: list[dict], record: list[dict], number
+) -> tuple[str, str, bool]:
+    """把 answerKey 收拾成"排序去重的大写字母"，返回 (规范化答案, 答案文本, 是否需要复核)。
 
     - 全角 → 半角；去掉 `,，、;；/|&+` 与空格；多选排序去重（`CA` → `AC`）。
     - 字母只在**选项实际有的 key**里取（没选项时才退回 A-D），防止把 `E` 当成有效答案。
-    - 中文/符号形式（`正确`/`错`/`√`/`×`/`T`/`F`）→ 先映射到选项文本，再取该选项的 key。
+    - 中文/符号形式（`正确`/`错`/`√`/`×`/`T`/`F`）→ 先映射到选项文本，再取该选项的 key；
+      **选项里没有"正确/错误"时改成写进答案文本**（第二项返回值），不能清空 ——
+      卷面上的辨析题经常就是「……（ ）」＋答案页一串 `×××√×`，根本没有 A/B 选项可映射，
+      以前直接清空，整道题就变成"没选项没答案"，S5 按"会被解析端丢弃"计数
+      （实测 marxism-7：5 条 `×`/`√` 被清空 → 第 14–18 题全判缺答案、26.5% > 1/5 直接拒发）。
     - 实在认不出 → **清空**并标需要复核（宁可空着让人工填，也不要留一个假答案）。
     """
     original = str(raw or "").strip()
@@ -375,9 +381,9 @@ def normalize_answer_key(raw, options: list[dict], record: list[dict], number) -
             record.append(
                 {"number": number, "field": "answerKey", "before": original[:20], "after": letters}
             )
-        return letters, any(ch not in MD_ANSWER_LETTERS for ch in letters)
+        return letters, "", any(ch not in MD_ANSWER_LETTERS for ch in letters)
 
-    # 没有可用字母：试试判断题的中文/符号写法（只有选项里真有"正确/错误"才映射）
+    # 没有可用字母：试试判断题的中文/符号写法
     text = original.upper()
     target = ""
     if original in _TRUE_WORDS or text in _TRUE_WORDS:
@@ -395,13 +401,23 @@ def normalize_answer_key(raw, options: list[dict], record: list[dict], number) -
                         "after": option["key"],
                     }
                 )
-                return str(option["key"]).upper(), False
+                return str(option["key"]).upper(), "", False
+        # 没有"正确/错误"选项 → 答案以**文本**形式保留（S4 会按需补 A.正确/B.错误 选项）
+        record.append(
+            {
+                "number": number,
+                "field": "answerKey",
+                "before": original[:20],
+                "after": f"（转成答案文本）{target}",
+            }
+        )
+        return "", target, False
     if original:
         record.append(
             {"number": number, "field": "answerKey", "before": original[:20], "after": "（已清空）"}
         )
-        return "", True
-    return "", False
+        return "", "", True
+    return "", "", False
 
 
 def infer_question_type(options: list[dict], answer_key: str) -> str:
@@ -488,8 +504,10 @@ def normalize_question(raw: dict, page: int, record: list[dict] | None = None) -
         number = int(number_raw)
     except (TypeError, ValueError):
         number = None
-    answer_key, key_needs_review = normalize_answer_key(raw.get("answerKey"), options, record, number)
-    answer_text = str(raw.get("answerText") or "").strip()
+    answer_key, judgement_text, key_needs_review = normalize_answer_key(
+        raw.get("answerKey"), options, record, number
+    )
+    answer_text = str(raw.get("answerText") or "").strip() or judgement_text
     if len(answer_key) > 1 and not answer_text:
         # 多选：把各选项文本拼起来 —— md 的答案行要求"答案后面至少有一个字符"
         answer_text = "、".join(o["text"] for o in options if o["key"] in answer_key) or answer_key

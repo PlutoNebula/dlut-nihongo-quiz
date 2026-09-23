@@ -233,5 +233,52 @@ assert report_t["answers_from_ai"] == [(1, 4, "AB")], report_t["answers_from_ai"
 assert len(report_t["ai_types"]) == 4, report_t["ai_types"]
 print("[6] AI 判型：卷面大题标题优先 / 标题认不出才听 AI / 多选只抄到一个字母要报警")
 
-print("\n全部通过：8 组断言")
+# ── 7) 主观题（没有选项）不能被 AI 塞字母答案 ──────────────────────────────
+# 实测 marxism-5：案例分析题没有选项、答案是评分标准，AI 却按"答案项数"塞了 `CD`/`CDE`，
+# md 里就成了 `**正确答案：CD 想问题做事情要一切从实际出发…**`（半截假答案）。
+subjective = {
+    "page": 5,
+    "index": 9,
+    "numeral": "一",
+    "group_title": "三、案例分析题",
+    "q": {
+        "number": 9,
+        "group": "三、案例分析题",
+        "groupTitle": "案例分析题",
+        "stem": "阅读材料并回答问题（答案就是评分标准）",
+        "options": [],
+        "answerKey": "",
+        "answerText": "弄虚作假，违背农作物的生长规律。3分",
+        "explanation": "",
+        "questionType": "fill",
+    },
+}
+report_u = {
+    key: []
+    for key in (
+        "ai_types",
+        "type_from_ai",
+        "ai_type_conflicts",
+        "ai_answer_conflicts",
+        "answers_from_ai",
+        "multi_answer_suspect",
+        "ai_answer_ignored",
+    )
+}
+build.apply_ai_types(
+    [subjective],
+    {
+        "questionTypes": [
+            {"index": 9, "number": 9, "group": "三、案例分析题", "questionType": "fill",
+             "answerKey": "CD", "reason": "答案两项，与多项选择第2题一致"},
+        ]
+    },
+    report_u,
+)
+assert subjective["q"]["answerKey"] == "", subjective["q"]
+assert report_u["answers_from_ai"] == [], report_u
+assert report_u["ai_answer_ignored"] == [(5, 9, "CD", 0)], report_u
+print("[7] AI 判型：主观题（0 选项）不被塞字母答案，记进 ai_answer_ignored")
+
+print("\n全部通过：9 组断言")
 

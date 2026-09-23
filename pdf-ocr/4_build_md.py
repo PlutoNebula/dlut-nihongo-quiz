@@ -229,7 +229,7 @@ def normalize_groups(entries: list[dict], pages_dir: Path, report: dict) -> list
 
 
 # ── 2) 判断题补选项 ─────────────────────────────────────────────────────
-JUDGE_HINT = re.compile(r"判断|正误|对错|○×|○|×")
+JUDGE_HINT = re.compile(r"判断|正误|对错|辨析|○×|○|×|√")
 JUDGE_OPTIONS = [{"key": "A", "text": "正确"}, {"key": "B", "text": "错误"}]
 # 卷面把答案印在题干末尾时（`…である。 ( B )`），OCR 会把它一起抄进题干
 TRAILING_ANSWER = re.compile(r"\s*[（(]\s*([A-Da-d])\s*[）)]\s*$")
@@ -256,9 +256,9 @@ def strip_trailing_answer_mark(entries: list[dict], report: dict) -> None:
 
 
 def fill_judgement_options(entries: list[dict], report: dict) -> None:
-    """无选项 + 答案是 A/B → 按卷面声明补「A. 正确 / B. 错误」。
+    """无选项 + 答案是 A/B（或答案文本就是 √/×/正确/错误）→ 补「A. 正确 / B. 错误」。
 
-    只在**能看出是判断题**时才补：题组标题里出现「判断」等字样，或题目自带 judgement 类型。
+    只在**能看出是判断题**时才补：题组标题里出现「判断/辨析」等字样，或题目自带 judgement 类型。
     补不出来的一律原样保留（后面完整性复查会把它标成"会被 parser 丢弃"）。
     """
     for entry in entries:
@@ -266,6 +266,9 @@ def fill_judgement_options(entries: list[dict], report: dict) -> None:
         if q.get("options"):
             continue
         key = flatten(q.get("answerKey")).upper()
+        if not key:
+            # 答案写在 answerText 里的判断题（S3 把 `√`/`×` 转成了文本，见 normalize_answer_key）
+            key = judgement_letter(flatten(q.get("answerText")))
         if key not in ("A", "B"):
             continue
         hint = " ".join(
@@ -280,6 +283,9 @@ def fill_judgement_options(entries: list[dict], report: dict) -> None:
             continue
         q["options"] = [dict(o) for o in JUDGE_OPTIONS]
         q["questionType"] = "judgement"
+        # 答案原先只写在 answerText 里（√/× → 正确/错误）→ 补上字母答案。
+        # 解析端要求"判断题的答案必须指到一个存在的选项"，只有文本没有字母会被判字段不完整。
+        q["answerKey"] = key
         # 选项刚被换成「正确/错误」，旧的 answerText（模型常直接填 A/B）已经没意义了 —— 必须重算，
         # 否则会渲染成 `**正确答案：A A**`（实测踩过）
         q["answerText"] = option_text(q, key)
@@ -333,6 +339,24 @@ def is_answer_key_page(page_data: dict) -> bool:
     return empty_stem == len(questions) and with_key >= 3
 
 
+def _bucket_name(text) -> str:
+    """把**一个大题标题**压成"大题名"：去题组前缀、序号、分值说明，只留名字。
+
+    必须是**逐段**压再合并：答案页那一行的 `group` 和 `groupTitle` 常常一模一样
+    （都是「四、论述题」），拼起来压平就成了「论述题论述题」，与题目侧（`group='四'`、
+    `groupTitle='论述题'`）压出来的「论述题」永远对不上 —— 实测 marxism-5/7 的评分标准
+    「收下 13 条 → 贴回 0 道」，主观题全被判缺答案、卡在 S5 的 1/5 门限上拒发。
+    """
+    flat = c.squash_text(re.sub(r"题组\s*[一二三四五六七八九十\d]+", " ", str(text or "")))
+    flat = re.sub(r"^第?[一二三四五六七八九十百\d]+(大题|部分|题)?", "", flat)
+    flat = re.sub(r"^(本大题|该大题|本题|每题)", "", flat)
+    # 分值/评分说明挂在标题后面的情况：「案例分析题共10分要求给三次小分」（squash 后括号已去掉）
+    flat = re.sub(r"共\d+分.*$", "", flat)
+    flat = re.sub(r"每题\d+分.*$", "", flat)
+    flat = re.sub(r"要求给.*$", "", flat)
+    return flat.strip()
+
+
 def section_bucket(*parts) -> str:
     """把 `题组一 一、单项选择题` / `二、多项选择题` 归一到同一个"大题"键。
 
@@ -346,9 +370,18 @@ def section_bucket(*parts) -> str:
     quiz_type = c.question_type_from_section(text)
     if quiz_type and quiz_type != "fill":
         return quiz_type
-    stripped = re.sub(r"题组\s*[一二三四五六七八九十\d]+", " ", text)
-    flat = c.squash_text(stripped)
-    return re.sub(r"^第?[一二三四五六七八九十百\d]+(大题|部分|题)?", "", flat)
+    names = [name for name in (_bucket_name(part) for part in parts) if name]
+    if not names:
+        return ""
+    # 先挑"看起来就是大题名"的那一份：`group='案例分析题'` / `groupTitle='引力波：广义相对论的最后一块“拼图”'`
+    # 这种组合很常见（OCR 把文章标题填进了 groupTitle），取最长的那个就会串桶 → 答案/标准全贴不上。
+    typed = [name for name in names if BUCKET_KEYWORD.search(name)]
+    pool = typed or names
+    # 同义重复（「案例分析题」/「案例分析题共10分…」）→ 取最短的那份，只要它是别人的子串
+    shortest = min(pool, key=len)
+    if all(shortest in name for name in pool):
+        return shortest
+    return max(pool, key=len)
 
 
 def harvest_answer_table(page_data: dict) -> dict[tuple[str, int], str]:
@@ -458,6 +491,64 @@ def looks_like_answer_key(text) -> bool:
     return hits >= 3
 
 
+# 判断题答案的各种写法：卷面「请在括号内打√或×」、答案页 `×××√×`、模型写「正确/错误」。
+# **必须认出来**：没有 A-E 可映射时，以前会把 `√`/`×` 当非法答案清空（见 S3 同名常量）。
+JUDGE_TRUE = {"√", "✓", "对", "正确", "对的", "正确的", "是", "t", "true"}
+JUDGE_FALSE = {"×", "✗", "x", "错", "错误", "错的", "错误的", "否", "f", "false"}
+
+
+def judgement_letter(text) -> str:
+    """判断题答案 → `A`（正确）/ `B`（错误）；不是**单独一个**判断题答案就返回空串。
+
+    只在"整段就是这个符号/词"时才算 —— `对 2分\\n……` 这种评分标准不能被当成判断题答案。
+    """
+    flat = "".join(str(text or "").split()).lower()
+    if not flat:
+        return ""
+    if flat in JUDGE_TRUE:
+        return "A"
+    if flat in JUDGE_FALSE:
+        return "B"
+    return ""
+
+
+# 「整段都是答案表原文」——按**答案 token 密度**判，不看行数：
+# 实测 marxism-5 把 72 字的答案块（`1-5 CBDBD 6-10 CDDDA … 1-5 BDE CD CDE ACE AC`）当成
+# 题组公共题干，复制到了 15 道小题的题干上方；它挤在**同一行**里，而
+# `looks_like_answer_key()` 要求 ≥3 行，判不出来 → 答案原文出现在题目里（用户报"答案拼接到题目"）。
+ANSWER_TOKEN = re.compile(
+    r"(?<![0-9])\d+\s*[-–—~～]\s*\d+\s*[A-Ea-e√×\s]{2,}"
+    r"|(?<![0-9])\d+\s*[、.．:：]\s*[A-Ea-e]{1,5}(?![A-Za-z])"
+)
+# 不带题号的裸字母组（`CCBBB CDBDD CDACB CCDAC`）—— 文字里正常不会连续出现这种孤立 A–E 组
+ANSWER_LETTER_GROUP = re.compile(r"(?<![A-Za-z0-9])[A-E]{1,5}(?![A-Za-z0-9])")
+
+
+def looks_like_answer_dump(text) -> bool:
+    """整段是不是"答案表原文"（答案行/答案块）→ 不能当题干、导言或材料。
+
+    三个判据（满足其一即算），必须都留着 —— 实测三种都出现过：
+      1. 带题号的答案行（`1-5 CBDBD`、`12.C`）；
+      2. **不带题号的裸字母组**（`CCBBB CDBDD CDACB CCDAC` ＋ `ADE ACDE …`）：
+         评分标准页常常不印题号，模型把 20 个单选答案直接排成 4 组字母；
+      3. 判断题符号串（`×××√×`）。
+    """
+    flat = " ".join(str(text or "").split())
+    if not flat:
+        return False
+    hits = ANSWER_TOKEN.findall(flat)
+    if len(hits) >= 2:
+        return True
+    groups = ANSWER_LETTER_GROUP.findall(flat)
+    letters = sum(len(g) for g in groups)
+    cjk = len(re.findall(r"[\u4e00-\u9fff]", flat))
+    if len(groups) >= 4 and letters >= 12 and letters / (letters + cjk + 1e-9) >= 0.35:
+        return True
+    if len(re.findall(r"[√×✓✗]", flat)) >= 3:
+        return True
+    return bool(hits) and len(re.findall(r"[A-E]", flat)) >= 8 and len(re.findall(r"[A-E]", flat)) / len(flat) > 0.35
+
+
 def transcription_answer_pages(pages_dir: Path, pages: list[int]) -> list[int]:
     """哪些页的**转写**像"参考答案 / 评分标准"页（与模型抽没抽出题无关）。"""
     hits: list[int] = []
@@ -481,6 +572,16 @@ def transcription_answer_pages(pages_dir: Path, pages: list[int]) -> list[int]:
 # **答案明明有，却没输出**（用户："优先修复答案不输出在 answerKey 的问题"）。
 SECTION_HEADER_STEM = re.compile(r"^\s*[一二三四五六七八九十]+\s*[、.．]\s*\S")
 GRADING_HINT = re.compile(r"共\s*\d+\s*分|小分|要求给|每题\s*\d+\s*分")
+# 「材料型」大题名：它的评分标准常常要跨大题贴给「思考讨论」之类的小题（见 apply_criteria ③）
+MATERIAL_BUCKET = re.compile(r"案例|材料|分析")
+# 「说明句」措辞：`五、辨析题。……判断下列各题的对错，并说明理由。（每题5分，共10分）`
+INSTRUCTION_HINT = re.compile(
+    r"判断下列|下列各题|并说明理由|回答下列|每小题|请(?:简要)?(?:回答|说明|论述)|指出下列"
+)
+# 一眼就是"大题名"的关键词（用来在 group / groupTitle 里挑对那一个）
+BUCKET_KEYWORD = re.compile(
+    r"选择|判断|正误|对错|辨析|填空|简答|问答|论述|案例|材料|分析|思考|讨论|计算|名词解释|解答"
+)
 
 
 def is_grading_row(q: dict) -> bool:
@@ -505,7 +606,11 @@ def is_grading_row(q: dict) -> bool:
 
 
 def answer_rows_to_table(rows: list[dict]) -> dict[tuple[str, int], str]:
-    """把"没有选项、只有字母答案"的行转成 {(大题键, 题号): 答案}。"""
+    """把"没有选项、只有答案"的行转成 {(大题键, 题号): 答案}。
+
+    答案可能是字母（`ADE`），也可能是判断题符号（`×`/`√`，模型把它写进了 answerText）
+    → 后者按 `A=正确 / B=错误` 归一，和卷面判断题的选项顺序一致。
+    """
     table: dict[tuple[str, int], str] = {}
     for raw in rows:
         try:
@@ -513,6 +618,8 @@ def answer_rows_to_table(rows: list[dict]) -> dict[tuple[str, int], str]:
         except (TypeError, ValueError):
             continue
         key = re.sub(r"[^A-E]", "", str(raw.get("answerKey") or "").upper())
+        if not key:
+            key = judgement_letter(raw.get("answerText"))
         if not key:
             continue
         table.setdefault(
@@ -541,6 +648,12 @@ def harvest_criteria(rows: list[dict], report: dict) -> dict[tuple[str, int | No
         table.setdefault((bucket, number), text)
         report["criteria_rows"].append((bucket, number, text[:60]))
     return table
+
+
+def _bigrams(text) -> set[str]:
+    """字符二元组集合（只留中文/字母/数字）—— 用来判断"题目和评分标准讲的是不是同一件事"。"""
+    flat = re.sub(r"[^\u4e00-\u9fffA-Za-z0-9]", "", str(text or ""))
+    return {flat[i : i + 2] for i in range(len(flat) - 1)}
 
 
 def apply_criteria(entries: list[dict], criteria: dict, report: dict) -> None:
@@ -597,21 +710,145 @@ def apply_criteria(entries: list[dict], criteria: dict, report: dict) -> None:
             used.add((bucket, number))
             taken.add(id(left[0]))
 
-    # ③ 剩下的按顺序贴：**数量必须相等**才敢贴
-    leftover = [text for place, text in criteria.items() if place not in used]
-    rest = [e for e in targets if id(e) not in taken]
-    if leftover and len(leftover) == len(rest):
-        for entry, text in zip(rest, leftover):
+    # ③ **同一个大题里数量相等 → 按顺序贴**（不再要求题号一致）。
+    # 实测 marxism-5/7 的评分标准页：`四、论述题` 只给 1 条、`五、案例分析题` 给 1/2/3 条，
+    # 与题目侧的题号（4、5…）根本对不上，旧的"全局数量相等"又跨大题乱配 —— 于是
+    # 「收下 13 条 → 贴回 0 道」，主观题全判缺答案。
+    def leftover_of(bucket: str) -> list[dict]:
+        return [e for e in targets if id(e) not in taken and bucket_of(e) == bucket]
+
+    # 遍历顺序必须**确定**（按 criteria 的插入顺序 = 页序），不能用 set：
+    # Python 的字符串哈希每次进程都不一样，用 set 会让同一份输入跑出不同结果。
+    buckets_in_order: list[str] = []
+    for place in criteria:
+        if place[0] not in buckets_in_order:
+            buckets_in_order.append(place[0])
+
+    def attach_pairs(rows: list[tuple], rest: list[dict]) -> None:
+        for entry, (place, text) in zip(rest, rows):
             attach(entry, text)
-        report["criteria_by_order"] = len(rest)
+            used.add(place)
+            taken.add(id(entry))
+        report["criteria_by_order"] += len(rest)
+
+    def split_subanswers(text: str) -> list[str]:
+        """一段标准里塞了两个小问（`1. 共计10分。… 2. 共计10分。…`）→ 按小问切开。
+
+        注意：`harvest_criteria` 存进来的是**压平过**的文本（换行没了），所以不能用
+        `^\\d+\\.` 这种行首锚点（一个都匹配不到，实测 marxism-7 就是这样没拆开、
+        整段被贴给了案例分析题的材料块）。这里按"数字 + 点/顿号 + 空白"切，
+        并要求点号后有空白 —— 免得把 `3.5 倍` 这种小数切开。
+        """
+        flat = re.sub(r"\s+", " ", str(text or "")).strip()
+        parts = [
+            p.strip()
+            for p in re.split(r"(?=\d{1,2}\s*[.．、]\s+\S)", flat)
+            if p.strip()
+        ]
+        return parts if len(parts) >= 2 else []
+
+    def expand(rows: list[tuple], rest: list[dict]) -> list[tuple]:
+        """答案页把小问答案写成一段时，按 `1. 2.` 拆开正好对上就拆。
+
+        实测 marxism-7：案例分析的两个小问答案挤在同一行（`1. 共计10分…2. 共计10分…`），
+        而小问在另一页、另一个大题名下 —— 不拆就只能整段贴给一道题，另一道永远缺答案。
+        """
+        if len(rows) == 1 and len(rest) >= 2:
+            parts = split_subanswers(rows[0][1])
+            if len(parts) == len(rest):
+                return [(rows[0][0], part) for part in parts]
+        return rows
+
+    # ③ 材料型大题的标准先往「思考/讨论/简答」的小题上贴（跨大题）。
+    #    必须排在"同桶按顺序"之前：否则案例分析的标准会贴给案例分析题自己的**材料块**
+    #    （那一块不是能作答的题），而真正的小问「思考讨论」永远拿不到答案。
+    FOLLOW_HINT = re.compile(r"思考|讨论|问答|简答|解答|阅读")
+    for bucket in buckets_in_order:
+        if not MATERIAL_BUCKET.search(bucket):
+            continue
+        rows = [
+            (place, text)
+            for place, text in criteria.items()
+            if place[0] == bucket and place not in used
+        ]
+        if not rows:
+            continue
+        follow_buckets: list[str] = []
+        for entry in targets:
+            if id(entry) in taken:
+                continue
+            name = bucket_of(entry)
+            if name not in follow_buckets:
+                follow_buckets.append(name)
+        for follow in follow_buckets:
+            if not FOLLOW_HINT.search(follow):
+                continue
+            rest = leftover_of(follow)
+            if not rest:
+                continue
+            rows2 = expand(rows, rest)
+            if len(rest) == len(rows2):
+                attach_pairs(rows2, rest)
+                break
+
+    # ④ **同一个大题里数量相等 → 按顺序贴**（不再要求题号一致）。
+    # 实测 marxism-5/7 的评分标准页：`四、论述题` 只给 1 条、`五、案例分析题` 给 1/2/3 条，
+    # 与题目侧的题号（4、5…）根本对不上，旧的"全局数量相等"又跨大题乱配 —— 于是
+    # 「收下 13 条 → 贴回 0 道」，主观题全判缺答案。
+    for bucket in buckets_in_order:
+        rows = [
+            (place, text)
+            for place, text in criteria.items()
+            if place[0] == bucket and place not in used
+        ]
+        rest = leftover_of(bucket)
+        if not rows or not rest:
+            continue
+        rows2 = expand(rows, rest)
+        if len(rows2) == len(rest):
+            attach_pairs(rows2, rest)
+
+    # ⑤ 该大题只剩一道候选、标准却有两条以上 → 按**术语重合**挑最相关的一条。
+    #    实测 marxism-5：辨析题的题干只抄回一道（另一道被 OCR 丢了），标准却有两段
+    #    （"对 2分 这是由真理的本性和实践的特点决定的…" / "错 2分 资本主义基本矛盾…"），
+    #    数量对不上就一条都不贴 —— 于是真题被判"缺答案"丢掉。这里只挑**严格领先**的那一条
+    #    （重合 2 个词以上、且比第二名胜出），并列或证据不足一律不贴（宁可漏，不能贴错答案）。
+    def shared_terms(a, b) -> int:
+        return len(_bigrams(a) & _bigrams(b))
+
+    for bucket in buckets_in_order:
+        rest = leftover_of(bucket)
+        if len(rest) != 1:
+            continue
+        rows = [
+            (place, text)
+            for place, text in criteria.items()
+            if place[0] == bucket and place not in used
+        ]
+        if len(rows) < 2:
+            continue
+        scored = sorted(
+            ((shared_terms(rest[0]["q"].get("stem"), text), place, text) for place, text in rows),
+            key=lambda item: -item[0],
+        )
+        if scored[0][0] >= 2 and scored[0][0] > scored[1][0]:
+            _score, place, text = scored[0]
+            attach(rest[0], text)
+            used.add(place)
+            taken.add(id(rest[0]))
+            report["criteria_by_content"].append((place[0], place[1], _score))
+    for place, text in criteria.items():
+        if place not in used:
+            report["criteria_unmatched"].append((place[0], place[1], text[:60]))
 
 
 def apply_answer_table(entries: list[dict], table: dict, report: dict) -> None:
     """把答案表按 (大题, 题号) 贴回真正的题目（§34.2）。
 
     匹配优先级：
-      1. `(大题键, 题号)` 完全一致；
-      2. **答案表只有一个大题**时，才敢用"只对题号"的回退。
+      1. `(大题键, 题号)` 完全一致（大题名缺失时退回题型，见下）；
+      2. **答案表只有一个大题**时，才敢用"只对题号"的回退；
+      3. **同一个大题里"答案条数 == 还没答案的题数"→ 按出现顺序配对**（见函数末尾）。
 
     第 2 条必须卡死：很多卷子每个大题都从 1 重新编号（单选 1-15、多选 1-5、论述 1…），
     只按题号回退会把「一、单项选择题 第1题=C」贴到主观题第1题上（实测踩过）。
@@ -626,6 +863,17 @@ def apply_answer_table(entries: list[dict], table: dict, report: dict) -> None:
     by_number: dict[int, list[str]] = {}
     for (_bucket, number), key in table.items():
         by_number.setdefault(number, []).append(key)
+    used: set[tuple[str, int]] = set()
+
+    def bucket_of(q: dict) -> str:
+        bucket = section_bucket(q.get("group"), q.get("groupTitle"))
+        if not bucket:
+            # 大题名两路都没抄到（实测 marxism-5 page 2：整页 `group` 为空）→ 退回**题型**。
+            # 答案表里客观题本来就是按题型分桶的（single/multi/judgement），所以能对上；
+            # 不这么退，那 6 道单选（第 10–15 题）的答案就贴不上，白白算进"会被丢弃"。
+            quiz_type = str(q.get("questionType") or "")
+            bucket = quiz_type if quiz_type in ("single", "multi", "judgement") else ""
+        return bucket
 
     for entry in entries:
         q = entry["q"]
@@ -635,9 +883,11 @@ def apply_answer_table(entries: list[dict], table: dict, report: dict) -> None:
             number = int(q.get("number"))
         except (TypeError, ValueError):
             continue
-        bucket = section_bucket(q.get("group"), q.get("groupTitle"))
+        bucket = bucket_of(q)
         key = table.get((bucket, number), "")
-        if not key and len(buckets) == 1:
+        if key:
+            used.add((bucket, number))
+        elif len(buckets) == 1:
             candidates = by_number.get(number) or []
             if len(candidates) == 1:
                 key = candidates[0]
@@ -654,6 +904,42 @@ def apply_answer_table(entries: list[dict], table: dict, report: dict) -> None:
             report["answer_overrides"].append((entry["page"], number, before, key))
         else:
             report["answers_from_table"].append((entry["page"], number, key, bucket))
+
+    # ③ 同一个大题里"答案条数 == 还没答案的题数"→ 按顺序配对。
+    #    为什么必须要这一层：答案页常常**根本不印题号**（实测 marxism-7 第 8 页评分标准：
+    #    20 个单选答案排成 4 组字母、多选 5 个、辨析 `×××√×`），模型只能顺延编号
+    #    （单选 1-20、多选 21-25、辨析 26-30），而卷面每个大题都从 1 重新编号 ——
+    #    (大题, 题号) 一个都对不上，答案抄到了却贴不回去，S5 就按"缺答案"判丢弃。
+    #    顺序在两边都是"卷面顺序"，所以按序配对是安全的；数量不等就一律不贴（宁缺勿错）。
+    bucket_order: list[str] = []
+    for bucket, _number in table:
+        if bucket not in bucket_order:
+            bucket_order.append(bucket)
+    for bucket in bucket_order:
+        places = sorted(
+            (number, key)
+            for (b, number), key in table.items()
+            if b == bucket and (b, number) not in used
+        )
+        if not places:
+            continue
+        rest = [
+            e
+            for e in entries
+            if not is_placeholder_stem(e["q"].get("stem"))
+            and not flatten(e["q"].get("answerKey"))
+            and bucket_of(e["q"]) == bucket
+        ]
+        if len(places) != len(rest):
+            continue
+        for entry, (number, key) in zip(rest, places):
+            q = entry["q"]
+            q["answerKey"] = key
+            text = "、".join(option_text(q, ch) for ch in key if option_text(q, ch))
+            if text:
+                q["answerText"] = text
+            used.add((bucket, number))
+            report["answers_by_order"].append((entry["page"], number, key, bucket))
 
 
 def check_answer_coverage(entries: list[dict], table: dict, report: dict) -> None:
@@ -818,6 +1104,83 @@ def passage_from_stem(stem: str) -> tuple[str, str]:
     return "", text.strip()
 
 
+def drop_empty_rows(entries: list[dict], report: dict) -> list[dict]:
+    """丢掉"零信息"条目：题干空/占位 + 没有答案 + 没有选项。
+
+    实测（marxism-5 page 4）：模型给了 3 条空洞条目，S3 按"截断也要保留"的约定留了下来；
+    S4 又把案例材料复制到它们头上，于是站上多出 3 道"只有材料、没有题目、没有答案"的假题，
+    还把 S5 的"会被解析端丢弃"计数推高到 1/5 门限之上。
+    截断的真题题干**非空**（只是被切断），所以这里不会误删。
+    """
+    keep: list[dict] = []
+    for entry in entries:
+        q = entry["q"]
+        if (
+            is_placeholder_stem(q.get("stem"))
+            and not (q.get("options") or [])
+            and not flatten(q.get("answerKey"))
+            and not flatten(q.get("answerText"))
+        ):
+            report["dropped_empty_rows"].append((entry["page"], q.get("number")))
+            continue
+        keep.append(entry)
+    return keep
+
+
+def drop_instruction_rows(entries: list[dict], report: dict) -> list[dict]:
+    """丢掉"大题说明"条目：`五、辨析题。运用马克思主义的基本原理，判断下列各题的对错，
+    并说明理由。（每题5分，共10分）` 这种**说明句**不是一道能作答的题。
+
+    留着有两个坏处（实测 marxism-5）：
+      1. 它会作为一道"题"上站（题干是说明、答案是某条评分标准）；
+      2. 它还会把评分标准**按顺序配错位** —— 真正那道辨析题拿到了另一题的答案。
+    要求同时满足"以大题序号开头"+"写了分值/评分说明"+**说明句措辞**+不长，才敢丢 ——
+    案例材料（`五、案例分析题。（共10分）＋大段材料`）也是这个开头，但它又长又没有说明句措辞，
+    绝不能当说明丢掉（丢了材料就贴不到小问上了）。
+    """
+    keep: list[dict] = []
+    dropped: dict[str, list[int]] = {}
+    for entry in entries:
+        q = entry["q"]
+        stem = str(q.get("stem") or "")
+        flat = flatten(stem)
+        if (
+            not (q.get("options") or [])
+            and len(flat) <= 120
+            and INSTRUCTION_HINT.search(flat)
+            and (SECTION_HEADER_STEM.match(stem) or GRADING_HINT.search(flat))
+        ):
+            report["dropped_instruction_rows"].append((entry["page"], q.get("number")))
+            try:
+                number = int(q.get("number"))
+            except (TypeError, ValueError):
+                number = None
+            if number is not None:
+                dropped.setdefault(section_bucket(q.get("group"), q.get("groupTitle")), []).append(
+                    number
+                )
+            continue
+        keep.append(entry)
+
+    # 说明句常常**占了题号**（模型把它编成第 1 题），于是同大题里真正的第 1 题变成 2、
+    # 答案/评分标准就按题号贴到了下一条上（实测 marxism-5：辨析题拿到了"错 2分 资本主义…"）。
+    # 这里把同大题里排在说明句后面的题号整体前移，恢复卷面真实编号。
+    for entry in keep:
+        bucket = section_bucket(entry["q"].get("group"), entry["q"].get("groupTitle"))
+        gone = dropped.get(bucket) or []
+        if not gone:
+            continue
+        try:
+            number = int(entry["q"].get("number"))
+        except (TypeError, ValueError):
+            continue
+        shift = sum(1 for n in gone if n < number)
+        if shift:
+            entry["q"]["number"] = number - shift
+            report["instruction_renumbered"].append((entry["page"], number, number - shift))
+    return keep
+
+
 def attach_shared_stems(entries: list[dict], pages_dir: Path, report: dict) -> None:
     """把"题组公共题干"**复制**到该题组每一道小题的题干上方，让每个小问独立成题（§8.4）。
 
@@ -865,8 +1228,9 @@ def attach_shared_stems(entries: list[dict], pages_dir: Path, report: dict) -> N
         if not passage:
             report["shared_stem_missing"].append((numeral, len(group), thin))
             continue
-        # **答案区不能当导言**：整段"长得像答案"就拒绝（否则答案会被复制进每个小题）
-        if looks_like_answer_key(passage):
+        # **答案区不能当导言**：整段"长得像答案"就拒绝（否则答案会被复制进每个小题）。
+        # 两个判据都要：按行（≥3 行答案行）和按 token 密度（答案块挤在同一行里，实测踩过）。
+        if looks_like_answer_key(passage) or looks_like_answer_dump(passage):
             report["answer_region_rejected"].append(
                 (numeral, "公共题干", len(flatten(passage)))
             )
@@ -939,7 +1303,7 @@ def attach_material_passages(entries: list[dict], report: dict) -> list[dict]:
         if len(flatten(passage)) < MATERIAL_MIN:
             continue
         # **答案区不能当材料**：同样的道理，答案不该出现在任何题干里
-        if looks_like_answer_key(passage):
+        if looks_like_answer_key(passage) or looks_like_answer_dump(passage):
             report["answer_region_rejected"].append(
                 (head["page"], "材料", len(flatten(passage)))
             )
@@ -1566,6 +1930,13 @@ def apply_ai_types(
         elif key and ai_key and key != ai_key:
             report["ai_answer_conflicts"].append((entry["page"], number, key, ai_key))
         elif not key and ai_key:
+            # 同样要卡"字母答案只对有这些选项的题成立"：实测 marxism-5 的**案例分析题**
+            # （没有选项、答案是评分标准）被 AI 按"答案项数"塞了 `CD`/`CDE`，
+            # md 里就成了 `**正确答案：CD 想问题做事情要一切从实际出发…**` —— 半截假答案。
+            option_keys = {str(o.get("key") or "").upper() for o in q.get("options") or []}
+            if not option_keys or not all(ch in option_keys for ch in ai_key):
+                report["ai_answer_ignored"].append((entry["page"], number, ai_key, len(option_keys)))
+                continue
             q["answerKey"] = ai_key
             text = "、".join(option_text(q, ch) for ch in ai_key if option_text(q, ch))
             if text:
@@ -2052,6 +2423,19 @@ def render_report(
                 for page, number, key, bucket in report["answers_from_table"]
             ]
             lines.append("")
+        if report["answers_by_order"]:
+            lines += [
+                f"- 其中 **{len(report['answers_by_order'])}** 道是"
+                "**按顺序配对**的（答案页没印题号，题号体系对不上、但同大题两边条数相等）：",
+                "",
+                "| 页码 | 答案页题号 | 答案 | 大题 |",
+                "|---|---|---|---|",
+            ]
+            lines += [
+                f"| page {page} | {number} | {key} | {bucket} |"
+                for page, number, key, bucket in report["answers_by_order"]
+            ]
+            lines.append("")
         if report["dropped_answer_rows"]:
             preview = "、".join(
                 f"page {page} 第{n}题={k}" for page, n, k in report["dropped_answer_rows"][:20]
@@ -2252,6 +2636,41 @@ def render_report(
             for _page, number, bucket, length in report["criteria_attached"]
         ]
         lines.append("")
+        if report["criteria_unmatched"]:
+            lines += [
+                f"- ⚠ 还有 **{len(report['criteria_unmatched'])}** 条标准贴不出去"
+                "（对不上任何主观题，**会漏答案**，见下表）：",
+                "",
+                "| 大题 | 题号 | 标准开头 |",
+                "|---|---|---|",
+            ]
+            lines += [
+                f"| {bucket} | {number if number is not None else '（未给）'} | {text} |"
+                for bucket, number, text in report["criteria_unmatched"]
+            ]
+            lines.append("")
+    if report["dropped_empty_rows"]:
+        lines += [
+            "## 空条目（题干空 + 无答案 + 无选项 → 直接丢掉，不是题）",
+            "",
+            f"- 丢掉 **{len(report['dropped_empty_rows'])}** 条："
+            + "、".join(f"page {page} #{number}" for page, number in report["dropped_empty_rows"]),
+            "",
+        ]
+    if report["dropped_instruction_rows"]:
+        lines += [
+            "## 大题说明（不是题，已丢掉）",
+            "",
+            "`五、辨析题。……判断下列各题的对错，并说明理由。（每题5分，共10分）` 这类**说明句**"
+            "以前会变成一道「题」（题干是说明、答案是某条评分标准），还会把评分标准按顺序配错位。"
+            "现在按「以大题序号开头 + 带分值说明 + 没有选项」丢掉：",
+            "",
+            f"- 丢掉 **{len(report['dropped_instruction_rows'])}** 条："
+            + "、".join(
+                f"page {page} #{number}" for page, number in report["dropped_instruction_rows"]
+            ),
+            "",
+        ]
     if report["answer_without_question"]:
         lines += [
             "## ⚠ 答案表里有、题目里没有的题号（**OCR 很可能漏了一道题**）",
@@ -2463,6 +2882,7 @@ def main() -> int:
         "answer_key_pages": [],
         "dropped_answer_rows": [],
         "answers_from_table": [],
+        "answers_by_order": [],
         "answer_without_question": [],
         "answer_rows_any_page": [],
         "ai_shape_fixed": [],
@@ -2474,6 +2894,11 @@ def main() -> int:
         "criteria_rows": [],
         "criteria_attached": [],
         "criteria_by_order": 0,
+        "criteria_by_content": [],
+        "criteria_unmatched": [],
+        "dropped_empty_rows": [],
+        "dropped_instruction_rows": [],
+        "instruction_renumbered": [],
         "renumbered": [],
         "renumber_note": "",
         "answer_overrides": [],
@@ -2540,8 +2965,16 @@ def main() -> int:
         # 只有文本的 → 进评分标准表（贴给主观题）。
         grading_rows = [q for q in page_questions if is_grading_row(q)]
         if grading_rows:
-            letter_rows = [q for q in grading_rows if flatten(q.get("answerKey"))]
-            text_rows = [q for q in grading_rows if not flatten(q.get("answerKey"))]
+            # 答案行分两类：**字母答案**（含判断题的 √/×，模型常写进 answerText）→ 答案表；
+            # **纯文本**（评分标准）→ 评分标准表。判据要一致，否则 √/× 会跑进评分标准里，
+            # 回头被当成"主观题评分标准"贴到别的题上。
+            def _letter_row(raw: dict) -> bool:
+                return bool(
+                    flatten(raw.get("answerKey")) or judgement_letter(raw.get("answerText"))
+                )
+
+            letter_rows = [q for q in grading_rows if _letter_row(q)]
+            text_rows = [q for q in grading_rows if not _letter_row(q)]
             for place, key in answer_rows_to_table(letter_rows).items():
                 answer_table.setdefault(place, key)
             if text_rows:
@@ -2643,6 +3076,10 @@ def main() -> int:
     normalize_answer_text(entries, report)
     entries = splice_continued(entries, pages_dir, report)
     entries = sort_and_dedupe(entries, report)
+    # 零信息条目（空题干+无答案+无选项）在挂导言/材料**之前**丢掉：
+    # 留着它们只会让材料被复制到一道"不存在的题"上（实测 marxism-5 多出 3 道假题）。
+    entries = drop_instruction_rows(entries, report)
+    entries = drop_empty_rows(entries, report)
     attach_shared_stems(entries, pages_dir, report)
     entries = attach_material_passages(entries, report)
     # 贴评分标准放在材料题处理**之后**：材料标题本身也是"没有选项、没有答案的题"，
