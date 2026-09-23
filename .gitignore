@@ -90,6 +90,8 @@ scripts/_*.cjs
 scripts/_*.mjs
 scripts/_*.py
 pdf-ocr/_*.py
+# 但 pdf-ocr/_common.py 是**正式模块**（所有脚本共用），别被上面那条顺手忽略掉
+!pdf-ocr/_common.py
 # pytest 缓存
 .pytest_cache/
 # Python 字节码缓存（不限层级）
