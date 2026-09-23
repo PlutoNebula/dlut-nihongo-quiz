@@ -2,7 +2,7 @@
   "category": "marxism-3",
   "md": "data/raw/marxism-3/marxism-3.md",
   "md_sha256": "306323139806676f591ff2d699f64e060383d757ab0df44a3d9292adf586bab2",
-  "checked_at": "2026-09-23T13:05:46+08:00",
+  "checked_at": "2026-09-23T15:32:50+08:00",
   "exit_code": 2,
   "passed": true,
   "questions": 27,

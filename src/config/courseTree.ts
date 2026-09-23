@@ -140,12 +140,6 @@ export const COURSE_TREE: TreeNode[] = [
     children: [
       {
         type: 'leaf',
-        key: 'principles-of-marxism-1',
-        label: '机考真题',
-        category: 'principles-of-marxism-1',
-      },
-      {
-        type: 'leaf',
         key: 'marxism-1',
         label: '马原试卷1',
         category: 'marxism-1',
@@ -164,9 +158,27 @@ export const COURSE_TREE: TreeNode[] = [
       },
       {
         type: 'leaf',
+        key: 'principles-of-marxism-1',
+        label: '机考真题',
+        category: 'principles-of-marxism-1',
+      },
+      {
+        type: 'leaf',
+        key: 'marxism-5',
+        label: '马原试卷5',
+        category: 'marxism-5',
+      },
+      {
+        type: 'leaf',
         key: 'marxism-6',
         label: '马原试卷6',
         category: 'marxism-6',
+      },
+      {
+        type: 'leaf',
+        key: 'marxism-7',
+        label: '马原试卷7',
+        category: 'marxism-7',
       },
     ],
   },

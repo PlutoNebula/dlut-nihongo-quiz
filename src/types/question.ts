@@ -13,6 +13,8 @@ export type Category =
   | 'marxism-2'
   | 'marxism-3'
   | 'marxism-6'
+  | 'marxism-5'
+  | 'marxism-7'
 
 export interface SubBankMeta {
   key: string

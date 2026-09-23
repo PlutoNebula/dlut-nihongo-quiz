@@ -27,6 +27,8 @@ const BANKS = [
   'marxism-2-question-bank.json',
   'marxism-3-question-bank.json',
   'marxism-6-question-bank.json',
+  'marxism-5-question-bank.json',
+  'marxism-7-question-bank.json',
 ]
 
 const REQUIRED_FIELDS = ['id', 'groupId', 'stem', 'options', 'answerKey', 'explanation']

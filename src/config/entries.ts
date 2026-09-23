@@ -50,7 +50,9 @@ export const ENTRIES: EntryMeta[] = [
       'marxism-2',
       'marxism-3',
       'principles-of-marxism-1',
+      'marxism-5',
       'marxism-6',
+      'marxism-7',
     ],
   },
 ]
