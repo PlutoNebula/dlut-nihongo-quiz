@@ -48,7 +48,9 @@ export const ENTRIES: EntryMeta[] = [
     papers: [
       'marxism-1',
       'marxism-2',
+      'marxism-3',
       'principles-of-marxism-1',
+      'marxism-6',
     ],
   },
 ]

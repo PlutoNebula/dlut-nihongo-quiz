@@ -1,0 +1,18 @@
+{
+  "category": "marxism-5",
+  "md": "data/raw/marxism-5/marxism-5.md",
+  "md_sha256": "f2fdfd1cac20131af45a30103ef4b455b7d464df8a4f071b0e2a27d85ff60b00",
+  "checked_at": "2026-09-23T13:10:36+08:00",
+  "exit_code": 3,
+  "passed": false,
+  "questions": 29,
+  "groups": 1,
+  "parser_kept": 20,
+  "parser_dropped": 9,
+  "hard_errors": [
+    "会被解析端丢弃的题 9 道（占 31.0%） —— 超过总数的 1/5，拒绝发布（先修 md 再发）"
+  ],
+  "warnings": [
+    "带待复核标记 20 处"
+  ]
+}

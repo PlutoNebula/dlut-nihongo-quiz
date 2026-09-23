@@ -134,7 +134,7 @@ export const COURSE_TREE: TreeNode[] = [
   },
   {
     type: 'group',
-    key: 'principles-of-marxism-1-group',
+    key: 'marxism-group',
     label: '马克思主义原理',
     icon: '马',
     children: [
@@ -144,33 +144,29 @@ export const COURSE_TREE: TreeNode[] = [
         label: '机考真题',
         category: 'principles-of-marxism-1',
       },
-    ],
-  },
-  {
-    type: 'group',
-    key: 'marxism-1-group',
-    label: '马克思主义原理',
-    icon: '马',
-    children: [
       {
         type: 'leaf',
         key: 'marxism-1',
         label: '马原试卷1',
         category: 'marxism-1',
       },
-    ],
-  },
-  {
-    type: 'group',
-    key: 'marxism-2-group',
-    label: '马克思主义原理',
-    icon: '马',
-    children: [
       {
         type: 'leaf',
         key: 'marxism-2',
         label: '马原试卷2',
         category: 'marxism-2',
+      },
+      {
+        type: 'leaf',
+        key: 'marxism-3',
+        label: '马原试卷3',
+        category: 'marxism-3',
+      },
+      {
+        type: 'leaf',
+        key: 'marxism-6',
+        label: '马原试卷6',
+        category: 'marxism-6',
       },
     ],
   },
