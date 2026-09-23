@@ -262,6 +262,20 @@ def patch_course_tree(text: str, key: str, meta: dict, order: dict) -> tuple[str
     exists = any(m.group(1) == key for m in leaf_re.finditer(text, children_start, children_end))
     explicit = (order or {}).get("mode", "last") != "last" or bool((order or {}).get("explicit"))
     if exists and not explicit:
+        # 叶子已在（位置不动），但**标题可能变了** —— 实测文件名带下载后缀 `马原试卷1(1)`，
+        # 后来名字改干净了，侧栏却还挂着旧标题（和「选择试卷」卡片的名字对不上）。
+        # 这里只刷新 label 那一行（类别/位置一概不动，避免把手工写过的叶子改坏）。
+        current = re.search(
+            rf"(?m)^      \{{\n        type: 'leaf',\n        key: '{re.escape(key)}',\n"
+            rf"        label: '([^']*)',$",
+            text[children_start:children_end],
+        )
+        if current and current.group(1) != label:
+            start = children_start + current.start(1)
+            return (
+                text[:start] + label + text[start + len(current.group(1)) :],
+                f"标题刷新为「{meta['short']}」（位置不变）",
+            )
         return text, "已存在（位置不变）"
     before = text
     if exists:

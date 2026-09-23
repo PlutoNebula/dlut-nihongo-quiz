@@ -18,15 +18,18 @@
     # 断点续跑：从第 3 步开始（前面几步的产物已存在会被各自跳过）
     python pdf-ocr/7_import.py --folder .\\inbox --from-step 3
 
+    # 只补跑某几份（文件名含这个子串；分类名与卡片顺序仍按全量计划，不会错位）
+    python pdf-ocr/7_import.py --folder .\\inbox --only 试卷5,试卷7
+
 规则：
   * 入口名默认 = **文件夹名**；`--entry` 可覆盖。
   * `--entry-key` 不填时由入口名推（只用 a-z 0-9 -；中文名推不出来时必须显式给）。
   * 每个 PDF 一张试卷：卡片标题默认 = **PDF 文件名**（去扩展名）；`--paper-prefix` 可加前缀。
   * 分类名（= `data/raw/<分类名>/` + `public/<分类名>-question-bank.json` 的 key）默认
     `<entry-key>-<序号>`，可用 `--category-prefix` 换前缀。
-  * 某一份 PDF 失败时**停下来**并打印续跑命令；加 `--keep-going` 则继续跑下一份。
+  * 某一份 PDF 失败或"被内容审核拦截而放弃"时**默认继续**跑下一份（`--stop-on-error` 才停下）。
 
-退出码：0 全部成功；1 参数/环境错误；3 有试卷失败；4 token 预算耗尽（透传子步骤）。
+退出码：0 全部成功（含"仅放弃"）；1 参数/环境错误；3 有试卷失败；4 token 预算耗尽（透传子步骤）。
 """
 
 from __future__ import annotations
@@ -70,6 +73,9 @@ def clean_paper_title(stem: str) -> str:
     text = str(stem or "").strip()
     text = re.sub(r"_0_\d{6,}$", "", text)
     text = re.sub(r"[_\-\s]+\d{10,}$", "", text)
+    # 平台下载后缀 `(1)`/`（1）`：同一个文件下过两次就会带上，卡片名别把这个也印出来
+    # （实测侧栏出现「马原试卷1(1)」，和「选择试卷」区的「马原试卷1」对不上）。
+    text = re.sub(r"[(（]\s*\d{1,2}\s*[)）]$", "", text)
     return text.strip() or str(stem or "").strip()
 
 
@@ -228,6 +234,10 @@ def main() -> int:
     parser.add_argument("--entry-icon", help="入口图标（1 个字，如「马」）")
     parser.add_argument("--entry-desc", help="入口描述")
     parser.add_argument("--paper-prefix", default="", help="卡片标题前缀（默认空，标题就是 PDF 文件名）")
+    parser.add_argument(
+        "--only",
+        help="只跑文件名里含这个子串的卷（可逗号分隔多个）；分类名与卡片顺序仍按全量计划，不变",
+    )
     parser.add_argument("--category-prefix", help="分类名前缀（默认=入口 key）")
     parser.add_argument("--dpi", type=int, default=200, help="S1 渲染分辨率（默认 200）")
     parser.add_argument("--from-step", type=int, default=1, choices=range(1, 7), help="从第几步开始（断点续跑）")
@@ -275,6 +285,22 @@ def main() -> int:
     if not pdfs:
         c.fail(f"文件夹里没有 PDF：{folder}", 1)
     rows = plan(folder, pdfs, args.entry_key, prefix, args.paper_prefix)
+    total_rows = len(rows)
+    if args.only:
+        wanted = [w.strip().lower() for w in str(args.only).split(",") if w.strip()]
+        kept = [r for r in rows if any(w in r["pdf"].name.lower() for w in wanted)]
+        missing = [w for w in wanted if not any(w in r["pdf"].name.lower() for r in rows)]
+        if missing:
+            c.fail(f"--only 在 {folder} 里找不到：{'、'.join(missing)}", 1)
+        rows = kept
+        if not rows:
+            c.fail("--only 没匹配到任何 PDF", 1)
+        # **序号保持不变**：`row['index']` 还要喂给 S6 的 `--position`（卡片顺序），
+        # 重排会让补跑的那份卷跑到别的卷前面去。
+        c.always(
+            f"[{STAGE}] --only：{len(rows)}/{total_rows} 份 "
+            + "、".join(r["pdf"].name for r in rows)
+        )
 
     c.always(f"[{STAGE}] 文件夹：{folder}")
     c.always(
@@ -292,9 +318,12 @@ def main() -> int:
     failed: list[tuple[str, int]] = []
     abandoned: list[str] = []
     done: list[str] = []
-    for row in rows:
+    for position, row in enumerate(rows, 1):
+        where = f"{position}/{len(rows)}"
+        if len(rows) != total_rows:
+            where += f"（全列第 {row['index']} 份）"
         c.always(
-            f"[{STAGE}] === 试卷 {row['index']}/{len(rows)}：{row['pdf'].name}"
+            f"[{STAGE}] === 试卷 {where}：{row['pdf'].name}"
             f"（分类 {row['category']}）==="
         )
         code = import_one(row, args, first=row["index"] == 1)

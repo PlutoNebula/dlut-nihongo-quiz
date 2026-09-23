@@ -192,6 +192,27 @@ same_tree, detail_same_tree = pub.patch_course_tree(
     tree3, "marxism-7", meta_for("marxism-7", "马克思主义原理"), {"mode": "last"}
 )
 assert same_tree == tree3 and "已存在" in detail_same_tree, detail_same_tree
+
+# 名字变了（文件名带过 `(1)` 下载后缀）→ 只刷新 label，位置/类别不动
+stale = tree2.replace("label: '马原试卷1',", "label: '马原试卷1(1)',")
+assert "马原试卷1(1)" in stale, stale
+renamed, detail_renamed = pub.patch_course_tree(
+    stale,
+    "marxism-1",
+    meta_for("marxism-1", "马克思主义原理", short="马原试卷1", long="马原试卷1"),
+    {"mode": "last"},
+)
+assert "label: '马原试卷1'," in renamed, renamed
+assert "马原试卷1(1)" not in renamed, renamed
+assert "标题刷新" in detail_renamed, detail_renamed
+# 标题一致时依然是"无改动"
+same_again, detail_again = pub.patch_course_tree(
+    renamed,
+    "marxism-1",
+    meta_for("marxism-1", "马克思主义原理", short="马原试卷1", long="马原试卷1"),
+    {"mode": "last"},
+)
+assert same_again == renamed and "位置不变" in detail_again, detail_again
 print("[8] 课程树：同名分组复用（不重复建组）：", detail_t)
 
 print("\n全部通过：8 组断言")

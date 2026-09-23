@@ -46,7 +46,8 @@ try:
     # 纯中文文件名 slug 后只剩数字 → **不能拿它当目录名**，退回 `<前缀>-<序号>`
     cn_rows = import7.plan(folder, [Path("马原试卷1(1)_0_1790064200614.pdf")], "x", "principles", "")
     assert cn_rows[0]["category"] == "principles", cn_rows
-    assert cn_rows[0]["paper"] == "马原试卷1(1)", cn_rows  # 卡片名去掉平台噪声
+    # 卡片名要去掉 `_0_<长数字>` **和下载后缀 `(1)`**（否则侧栏挂着「马原试卷1(1)」）
+    assert cn_rows[0]["paper"] == "马原试卷1", cn_rows
     print("[2] 计划：能推出名字就用文件名（每卷一个目录）、纯中文退回前缀+序号；卡片名去掉 `_0_<长数字>`")
 
     # ── 3) dry-run：**入口名默认 = 文件夹名**；中文名给稳定兜底 key ───────
@@ -134,7 +135,34 @@ try:
     assert "已停下" in out and "试卷 2/3" not in out, out
     assert "失败：a(码 1)" in out, out
     print("[6] 失败/放弃后自动继续（默认）、三桶汇总、仅放弃 → 退出码 0；--stop-on-error 才中断")
+
+    # ── 7) --only：只补跑指定卷，**分类名/卡片序号仍是全量计划里的那一个** ────
+    fail_at = {}
+    ran: list[str] = []
+
+    def only_run_step(step, argv, quiet):
+        ran.append(f"{argv[argv.index('--category') + 1]}#{step}")
+        return fail_at.get(argv[argv.index("--category") + 1], {}).get(step, 0)
+
+    import7.run_step = only_run_step
+    sys.argv = ["7_import.py", "--folder", str(multi), "--quiet", "--only", "b.pdf"]
+    buf4 = io.StringIO()
+    with redirect_stdout(buf4):
+        code = import7.main()
+    out = buf4.getvalue()
+    assert code == 0, (code, out)
+    assert {r.split("#")[0] for r in ran} == {"b"}, ran            # 只跑了 b
+    assert "分类 b" in out, out
+    assert "全列第 2 份" in out, out                                # 序号没被重排
+    # 找不到的 --only 要报错（退出码 1），不能静默跑 0 份
+    sys.argv = ["7_import.py", "--folder", str(multi), "--only", "不存在.pdf", "--dry-run"]
+    try:
+        import7.main()
+        raise AssertionError("应该报错退出")
+    except SystemExit as exc:
+        assert exc.code == 1, exc.code
+    print("[7] --only 只跑指定卷且序号不变；匹配不到 → 退出码 1")
 finally:
     shutil.rmtree(sandbox, ignore_errors=True)
 
-print("\n全部通过：6 组断言 / 沙箱已清理")
+print("\n全部通过：7 组断言 / 沙箱已清理")
