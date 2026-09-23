@@ -60,6 +60,8 @@ CLAUDE.md
 # Brainstorming/planning docs (internal, not user-facing)
 docs/superpowers/
 .superpowers/
+# PR 草稿与提交说明（只留本地，不进库）
+docs/pr/
 
 # Dev screenshots and notes (grammar/quiz iteration artifacts)
 /grammar-*.md
