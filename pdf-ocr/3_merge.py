@@ -38,8 +38,10 @@ SYSTEM_PROMPT = (
     "请比对它们并提取题目。只输出一个 JSON 对象，不要输出解释、不要用代码围栏。"
 )
 
-SCHEMA_BLOCK = """请输出如下 JSON（键名固定）：
+# 应答里至少要出现其中一个键，否则算"返回值格式不对"（见 merge_one_page 里的校验）
+MERGE_SCHEMA_KEYS = ("questions", "paper_identity", "page_condition", "conflicts")
 
+SCHEMA_BLOCK = """请输出如下 JSON（键名固定）：
 {
   "paper_identity": {"title": "", "date": "", "variant": ""},
   "page_condition": "clear",
@@ -733,6 +735,14 @@ def merge_one_page(
                 ) from exc
             if finish_reason == "length":
                 repair = {**repair, "truncated": True}
+            # **返回值格式不对就重跑**（用户要求）：应答里连一个 schema 键都没有
+            # → 这页等于白跑，抛可重试错误交给本函数的重试循环（默认 2 次重试）。
+            if not any(key in raw for key in MERGE_SCHEMA_KEYS):
+                raise c.ApiError(
+                    "返回值格式不对：里面没有任何 schema 字段"
+                    f"（{', '.join(MERGE_SCHEMA_KEYS)}），将重试；实际键={list(raw)[:6]}",
+                    retryable=True,
+                )
             if repair.get("truncated"):
                 notes.append(f"模型回复疑似被截断（finish_reason={finish_reason or '?'}），已尽力补全")
             if len(reviews) == 2:

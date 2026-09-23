@@ -29,9 +29,17 @@ import _common as c  # noqa: E402
 
 # ── 两路提示词（适度异构）─────────────────────────────────────────────────
 # 系统提示词与 schema 对两路**完全一致**，保证结果可以逐字段比对。
-SYSTEM_PROMPT = (
-    "你是试卷整页识别助手。请严格按用户要求，只输出一个 JSON 对象，"
+SYSTEM_PROMPT = (    "你是试卷整页识别助手。请严格按用户要求，只输出一个 JSON 对象，"
     "不要输出解释、不要用代码围栏。看不清的地方如实标注，不要编造。"
+)
+
+# 应答里至少要出现其中一个键，否则算"返回值格式不对"（见 run_pass 里的校验）
+OCR_SCHEMA_KEYS = (
+    "transcription_md",
+    "paper_identity",
+    "page_condition",
+    "question_ranges",
+    "printed_page_labels",
 )
 
 SCHEMA_BLOCK = """请输出如下 JSON（键名固定；没有的填空字符串或空数组）：
@@ -220,6 +228,15 @@ def ocr_one_pass(
                 ) from exc
             if finish_reason == "length":
                 repair = {**repair, "truncated": True}
+            # **返回值格式不对就重跑**（用户要求）：应答里连一个 schema 里的键都没有
+            # （典型：模型回了一句解释、或回了别的形状），这页等于白跑 → 抛出可重试错误，
+            # 由本函数的重试循环再试（--max-retries 默认 3 = 1 次首试 + 2 次重试）。
+            if not any(key in parsed for key in OCR_SCHEMA_KEYS):
+                raise c.ApiError(
+                    "返回值格式不对：里面没有任何 schema 字段"
+                    f"（{', '.join(OCR_SCHEMA_KEYS)}），将重试；实际键={list(parsed)[:6]}",
+                    retryable=True,
+                )
             review = normalize_review(
                 parsed,
                 number,
