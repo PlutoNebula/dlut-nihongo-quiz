@@ -87,6 +87,9 @@ docs/screenshots/*-fixed.png
 scripts/_*.cjs
 scripts/_*.mjs
 scripts/_*.py
+pdf-ocr/_*.py
+# pytest 缓存
+.pytest_cache/
 # Python 字节码缓存（不限层级）
 __pycache__/
 

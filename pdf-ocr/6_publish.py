@@ -4,6 +4,11 @@
   python pdf-ocr/6_publish.py --category computer-2026-midterm
   python pdf-ocr/6_publish.py --category X --short "2026期中（软国）" --long "计算机组成 · 2026期中" --dry-run
 
+**下架**（把一套卷 / 一个入口从站点撤掉，改动量与发布对称）：
+  python pdf-ocr/6_publish.py --unpublish --category marxism-4            # 只下架这一套卷
+  python pdf-ocr/6_publish.py --unpublish --entry-key marxism             # 整个入口（含它下面的卷）
+  python pdf-ocr/6_publish.py --unpublish --category marxism-4 --purge    # 连 data/raw 与 work 一起删
+
 它做两件事（都是幂等的，重复跑不会插重复条目）：
 
   1. **生成题目卡片的数据**：调 `scripts/parse-computer-paper.ts`（复用与日语 2024 同一套解析器）
@@ -554,11 +559,257 @@ def default_meta(category: str) -> dict:
 
 
 # ── 入口 ────────────────────────────────────────────────────────────────
+# ── 下架（--unpublish）：把一套卷 / 一个入口从站点侧撤掉 ──────────────────
+# 以前这是一次性脚本（`_unpublish_marx.py`：手工改 7 个文件 + 删 3 个文件），
+# 改哪儿、删哪儿这套知识只该有一份 —— 现在收进发布器，脚本已删。
+def remove_entries(text: str, category: str | None, entry_key: str | None) -> tuple[str, str]:
+    """`src/config/entries.ts`：摘掉一套卷；某个入口被摘空就整个删掉。
+
+    `entry_key` 给了就整个入口下架（它下面的试卷一起摘）。
+    """
+    head, entries, tail = parse_entries(text)
+    before = sum(len(entry["papers"]) for entry in entries)
+    kept: list[dict] = []
+    dropped = 0
+    for entry in entries:
+        if entry_key and entry["key"] == entry_key:
+            dropped += 1
+            continue
+        if category and category in entry["papers"]:
+            entry["papers"] = [p for p in entry["papers"] if p != category]
+        if entry["papers"]:
+            kept.append(entry)
+        else:
+            dropped += 1
+    after = sum(len(entry["papers"]) for entry in kept)
+    detail = f"摘掉 {before - after} 套卷"
+    if dropped:
+        detail += f"、删掉 {dropped} 个空入口"
+    return head + render_entries(kept) + tail, detail
+
+
+def remove_course_tree_leaf(text: str, key: str) -> tuple[str, str]:
+    """`src/config/courseTree.ts`：删掉这份卷的叶子；分组空了连分组一起删。"""
+    leaf_re = re.compile(
+        rf"(?m)^      \{{\n        type: 'leaf',\n        key: '{re.escape(key)}',\n(?:.*\n)*?      \}},\n"
+    )
+    match = leaf_re.search(text)
+    if not match:
+        return text, "课程树里没有这份卷（可能本来就没上过站）"
+    removed = text[: match.start()] + text[match.end() :]
+    # 空分组：type/label/icon 之后直接是空的 children。用负向先行断言卡住"别跨到下一个分组"
+    group_re = re.compile(
+        r"(?m)^  \{\n    type: 'group',\n(?:(?!^  \{\n).*\n)*?    children: \[\n    \],\n  \},\n"
+    )
+    empty = group_re.search(removed)
+    if empty:
+        return removed[: empty.start()] + removed[empty.end() :], "删掉叶子（分组已空 → 连分组一起删）"
+    return removed, "删掉叶子"
+
+
+def remove_category_union(text: str, key: str) -> tuple[str, str]:
+    """`src/types/question.ts` 的 Category 联合类型。"""
+    new, count = re.subn(rf"\n  \| '{re.escape(key)}'", "", text, count=1)
+    return (new, "删掉联合类型里的 key") if count else (text, "联合类型里没有这个 key")
+
+
+def remove_categories_block(text: str, key: str) -> tuple[str, str]:
+    """`src/config/categories.ts` 的分类块。"""
+    new, count = re.subn(
+        rf"(?m)^  \{{\n    key: '{re.escape(key)}',\n(?:.*\n)*?  \}},\n", "", text, count=1
+    )
+    return (new, "删掉分类块") if count else (text, "分类数组里没有这个 key")
+
+
+def remove_test_key(text: str, key: str) -> tuple[str, str]:
+    """`src/config/categories.test.ts` 里硬编码的 key 列表（不改会红）。"""
+    new, count = re.subn(rf"(?m)^      '{re.escape(key)}',\n", "", text, count=1)
+    return (new, "删掉期望列表里的 key") if count else (text, "期望列表里没有这个 key")
+
+
+def remove_meta_key(text: str, key: str) -> tuple[str, str]:
+    """`scripts/generate-meta.mjs` 的 banks 列表（多行/单行、末项/中间项都要吃得下）。"""
+    for pattern in (
+        rf"(?m)^    '{re.escape(key)}',\n",  # 多行写法：整行删掉
+        rf"'{re.escape(key)}',\s*",  # 单行、不是最后一项
+        rf",\s*'{re.escape(key)}'",  # 单行、是最后一项 → 连前面的逗号一起摘
+    ):
+        new, count = re.subn(pattern, "", text, count=1)
+        if count:
+            return new, "从题库清单里摘掉"
+    return text, "题库清单里没有这个 key"
+
+
+def remove_audit_bank(text: str, key: str) -> tuple[str, str]:
+    """`scripts/audit-banks.mjs` 的 BANKS 列表。"""
+    new, count = re.subn(
+        rf"(?m)^  '{re.escape(key)}-question-bank\.json',\n", "", text, count=1
+    )
+    return (new, "从审计清单里摘掉") if count else (text, "审计清单里没有这个题库")
+
+
+UNPUBLISH_PATCHERS = [
+    ("src/types/question.ts", remove_category_union),
+    ("src/config/categories.ts", remove_categories_block),
+    ("src/config/courseTree.ts", remove_course_tree_leaf),
+    ("src/config/categories.test.ts", remove_test_key),
+    ("scripts/generate-meta.mjs", remove_meta_key),
+    ("scripts/audit-banks.mjs", remove_audit_bank),
+]
+
+
+def unpublish(args) -> int:
+    """下架：摘注册点 → 删产物 → 重建 _meta → 类型检查 / 审计 / 构建。
+
+    `--purge` 连 `data/raw/<分类>/` 与 `pdf-ocr/work/<分类>/`（花过 token 的原始材料）一起删。
+    """
+    category = c.safe_name(args.category) if args.category else ""
+    entry_key = (args.entry_key or "").strip()
+    if not category and not entry_key:
+        c.fail("--unpublish 要配 --category（下架一套卷）或 --entry-key（下架整个入口）", 1)
+
+    started_all = time.perf_counter()
+    c.always(
+        f"[{STAGE}] 下架："
+        + "、".join(x for x in (f"分类 {category}" if category else "", f"入口 {entry_key}" if entry_key else "") if x)
+        + ("（--purge：连原始材料一起删）" if args.purge else "")
+    )
+    changed: list[str] = []
+
+    # 入口下架时先记下它下面有哪些卷 —— 那些卷的题库/清单也要清
+    entries_path = c.REPO_ROOT / ENTRIES_RELATIVE
+    original, crlf = read_source(entries_path)
+    _head, entries_before, _tail = parse_entries(original)
+    papers: list[str] = [category] if category else []
+    if entry_key:
+        for entry in entries_before:
+            if entry["key"] == entry_key:
+                papers.extend(entry["papers"])
+    papers = sorted({p for p in papers if p})
+
+    # ① entries.ts
+    t0 = time.perf_counter()
+    updated, detail = remove_entries(original, category or None, entry_key or None)
+    if updated == original:
+        c.info(f"    {ENTRIES_RELATIVE}：{detail}")
+    else:
+        changed.append(ENTRIES_RELATIVE)
+        if args.dry_run:
+            c.info(f"    {ENTRIES_RELATIVE}：将{detail}")
+        else:
+            write_source(entries_path, updated, crlf)
+            c.info(f"    {ENTRIES_RELATIVE}：已{detail}")
+    step(1, "✓", c.human_ms(t0), f"入口注册 {'，'.join(papers) if papers else '（无）'}")
+
+    # ② 其余注册点：**按文件**处理（一个文件一次把 N 套卷都摘掉，日志才不刷屏）
+    t0 = time.perf_counter()
+    keys = papers or []
+    if entry_key and not keys:
+        c.fail(f"入口 {entry_key} 在 entries.ts 里不存在（或底下没有试卷）", 1)
+    for relative, remover in UNPUBLISH_PATCHERS:
+        path = c.REPO_ROOT / relative
+        if not path.exists():
+            c.fail(f"找不到要改的文件 {relative}", 1)
+        text, crlf = read_source(path)
+        original = text
+        hits = 0
+        for key in keys:
+            text, detail = remover(text, key)
+            if text != original:
+                hits += 1
+                original = text
+        if not hits:
+            c.info(f"    {relative}：{detail}")
+            continue
+        changed.append(relative)
+        if args.dry_run:
+            c.info(f"    {relative}：将摘掉 {hits} 套卷的注册（{detail}）")
+        else:
+            write_source(path, text, crlf)
+            c.info(f"    {relative}：已摘掉 {hits} 套卷的注册（{detail}）")
+    step(2, "✓", c.human_ms(t0), f"{len(keys)} 套卷 × {len(UNPUBLISH_PATCHERS)} 处注册点")
+
+    # ③ 删产物文件（题库、清单；--purge 连原始材料）
+    t0 = time.perf_counter()
+    removed_files: list[str] = []
+    targets = [
+        *[f"public/{key}-question-bank.json" for key in keys],
+        *[f"data/processed/{key}-check.json" for key in keys],
+        *[f"data/processed/{key}-validation-report.json" for key in keys],
+    ]
+    if args.purge:
+        targets += [f"data/raw/{key}" for key in keys] + [f"pdf-ocr/work/{key}" for key in keys]
+    for relative in targets:
+        path = c.REPO_ROOT / relative
+        if not path.exists():
+            continue
+        removed_files.append(relative)
+        if args.dry_run:
+            continue
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+    step(
+        3,
+        "✓",
+        c.human_ms(t0),
+        ("将删除 " if args.dry_run else "已删除 ")
+        + (f"{len(removed_files)} 项：{', '.join(removed_files[:4])}" + ("…" if len(removed_files) > 4 else "")
+           if removed_files else "0 项（本来就没有）"),
+    )
+
+    # ④ 重建 _meta.json（题库文件已删 → 这里必须不再列出这些 key）
+    t0 = time.perf_counter()
+    if args.dry_run:
+        step(4, "·", 0, "dry-run：跳过 generate:meta")
+    else:
+        code, output = run(["npm", "run", "generate:meta", "--silent"], "S6")
+        if code != 0:
+            c.fail(f"generate:meta 失败（退出码 {code}）：\n{output[-500:]}", 3)
+        meta_json = c.read_json(c.REPO_ROOT / "public" / "_meta.json") or {}
+        left = [key for key in keys if key in meta_json]
+        if left:
+            c.fail(f"_meta.json 里还留着 {'、'.join(left)}（检查 scripts/generate-meta.mjs）", 3)
+        step(4, "✓", c.human_ms(t0), f"public/_meta.json → 已去掉 {len(keys)} 个 key")
+
+    # ⑤ 类型检查 + 题库审计；⑥ 构建
+    t0 = time.perf_counter()
+    if args.dry_run or args.no_verify:
+        step(5, "·", 0, "跳过类型检查 + 审计")
+    else:
+        code, output = run(["npx", "vue-tsc", "-b"], "S6")
+        if code != 0:
+            c.fail(f"vue-tsc 类型检查失败（退出码 {code}）：\n{output[-800:]}", 3)
+        code, output = run(["npm", "run", "audit:banks", "--silent"], "S6")
+        if code != 0:
+            c.fail(f"题库审计未通过（退出码 {code}）：\n{output[-800:]}", 3)
+        step(5, "✓", c.human_ms(t0), "vue-tsc ✓ / 审计 ✓")
+    t0 = time.perf_counter()
+    if args.dry_run or args.no_build:
+        step(6, "·", 0, "跳过 vite build")
+    else:
+        code, output = run(["npx", "vite", "build"], "S6")
+        if code != 0:
+            c.fail(f"vite build 失败（退出码 {code}）：\n{output[-800:]}", 3)
+        built = [line for line in output.splitlines() if "built in" in line]
+        step(6, "✓", c.human_ms(t0), built[-1].strip() if built else "vite build ✓")
+
+    c.always("")
+    c.always(f"[{STAGE}] 下架 {'、'.join(keys) if keys else '（无）'}；站点源码改动 {len(changed)} 处")
+    if not args.purge and not args.dry_run:
+        c.info("原始材料保留在 data/raw/<分类>/ 与 pdf-ocr/work/<分类>/（要一起删加 --purge）")
+    c.always(
+        f"[完成] 下架 {'（dry-run，未写盘）' if args.dry_run else '✓'} | 总耗时 {c.human_ms(started_all) / 1000:.1f}s"
+    )
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="S6：生成题库 + 把分类拼接进站点源码（docs/pdf-ocr-pipeline.md §29）"
     )
-    parser.add_argument("--category", required=True, help="分类名（= data/processed/<分类名>-check.json 的 key）")
+    parser.add_argument("--category", help="分类名（= data/processed/<分类名>-check.json 的 key）")
     parser.add_argument("--short", help="分类短名（默认取卷名）")
     parser.add_argument("--long", help="分类长名（默认取卷名）")
     parser.add_argument("--desc", help="一句话描述（默认按题数/解析数自动生成）")
@@ -583,10 +834,19 @@ def main() -> int:
     parser.add_argument("--no-build", action="store_true", help="跳过最后的 vite build")
     parser.add_argument("--no-verify", action="store_true", help="跳过 vue-tsc + 题库审计")
     parser.add_argument("--quiet", action="store_true", help="只打印每步完成行与最终摘要")
+    # 下架：把已上站的卷/入口从站点撤掉（与发布对称的 6 步）
+    parser.add_argument("--unpublish", action="store_true", help="下架模式：配 --category 或 --entry-key")
+    parser.add_argument("--purge", action="store_true", help="下架时连 data/raw 与 pdf-ocr/work 一起删")
     args = parser.parse_args()
 
     c.setup_stdio()
     c.set_quiet(args.quiet)
+
+    if args.unpublish:
+        return unpublish(args)
+
+    if not args.category:
+        c.fail("发布要 --category <分类名>（下架用 --unpublish）", 1)
 
     category = c.safe_name(args.category)
     started_all = time.perf_counter()

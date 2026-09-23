@@ -215,4 +215,54 @@ same_again, detail_again = pub.patch_course_tree(
 assert same_again == renamed and "位置不变" in detail_again, detail_again
 print("[8] 课程树：同名分组复用（不重复建组）：", detail_t)
 
-print("\n全部通过：8 组断言")
+# ⑨ 下架：摘卷 / 摘入口 / 删叶子（分组空了连分组一起删）+ 其余注册点
+# 9a) 摘一套卷，入口留着
+removed1, _ = pub.remove_entries(SAMPLE, "computer-c-exam", None)
+assert papers_of(removed1, "computer-organization") == [
+    "computer-2021-final",
+    "computer-2024-final",
+], papers_of(removed1, "computer-organization")
+# 9b) 摘到一张不剩 → 整个入口块删掉（不能留个空入口卡在首页）
+removed2, _ = pub.remove_entries(removed1, "computer-2021-final", None)
+removed3, _ = pub.remove_entries(removed2, "computer-2024-final", None)
+assert pub.parse_entries(removed3)[1] == [], pub.parse_entries(removed3)[1]
+assert "computer-organization" not in removed3, removed3
+# 9c) 按入口 key 整个下架
+removed4, detail_r4 = pub.remove_entries(SAMPLE, None, "computer-organization")
+assert pub.parse_entries(removed4)[1] == [], pub.parse_entries(removed4)[1]
+assert detail_r4 == "摘掉 3 套卷、删掉 1 个空入口", detail_r4
+# 9d) 课程树：叶子删掉；分组空了连分组一起删；还有别的叶子时只删叶子
+t_one, detail_t1 = pub.remove_course_tree_leaf(TREE, "marxism-1")
+assert "marxism-1" not in t_one and "marxism-group" not in t_one, t_one
+assert "computer-organization" in t_one, t_one
+assert "连分组一起删" in detail_t1, detail_t1
+t_keep, detail_t2 = pub.remove_course_tree_leaf(tree2, "marxism-7")
+assert "marxism-group" in t_keep and "'marxism-7'" not in t_keep, t_keep
+assert "连分组一起删" not in detail_t2, detail_t2
+# 9e) 其余 4 处注册点
+CAT = """\
+export const CATEGORIES: CategoryMeta[] = [
+  {
+    key: 'marxism-1',
+    short: '马原试卷1',
+  },
+  {
+    key: 'marxism-4',
+    short: '马原试卷4',
+  },
+]
+"""
+cat_after, _ = pub.remove_categories_block(CAT, "marxism-4")
+assert "marxism-4" not in cat_after and "marxism-1" in cat_after, cat_after
+assert pub.remove_category_union("  | 'marxism-1'\n  | 'marxism-4'\n", "marxism-4")[0] == "  | 'marxism-1'\n"
+assert pub.remove_test_key("      'marxism-1',\n      'marxism-4',\n", "marxism-4")[0] == "      'marxism-1',\n"
+meta_after, _ = pub.remove_meta_key("  ...['marxism-1', 'marxism-4'].map(\n", "marxism-4")
+assert "marxism-4" not in meta_after and "marxism-1" in meta_after, meta_after
+audit_after, _ = pub.remove_audit_bank(
+    "const BANKS = [\n  'marxism-1-question-bank.json',\n  'marxism-4-question-bank.json',\n]\n",
+    "marxism-4",
+)
+assert audit_after.count("question-bank") == 1, audit_after
+print("[9] 下架：摘卷/摘入口/删叶子（空分组连带删）+ 其它 4 处注册点都摘得掉")
+
+print("\n全部通过：9 组断言")
