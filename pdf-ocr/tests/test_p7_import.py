@@ -83,7 +83,58 @@ try:
     except SystemExit as exc:
         assert exc.code == 1, exc.code
     print("[5] 空文件夹 → 退出码 1（提示没有 PDF）")
+
+    # ── 6) 失败 / 被审核拦截放弃 → **自动继续下一份**，且三桶分开统计 ──────
+    # 打桩 run_step / blocked_pages：不真跑 S1–S6，只验证"继续"与汇总口径。
+    multi = sandbox / "batch"
+    multi.mkdir()
+    for name in ("a.pdf", "b.pdf", "c.pdf"):
+        (multi / name).write_text("x", encoding="utf-8")
+
+    fail_at: dict[str, dict[int, int]] = {}
+    import7.run_step = lambda step, argv, quiet: fail_at.get(
+        argv[argv.index("--category") + 1], {}
+    ).get(step, 0)
+    import7.blocked_pages = lambda category: [6] if category == "b" else []
+
+    def run_batch() -> tuple[int, str]:
+        sys.argv = ["7_import.py", "--folder", str(multi), "--quiet"]
+        buf2 = io.StringIO()
+        with redirect_stdout(buf2):
+            rc = import7.main()
+        return rc, buf2.getvalue()
+
+    # 6a) a 全绿 + b 被拦截放弃 + c 真失败 → 三份都跑完；退出码 3（只有真失败算错）
+    fail_at = {"b": {2: 3}, "c": {2: 1}}
+    code, out = run_batch()
+    assert code == 3, (code, out)
+    assert "试卷 3/3" in out, out                      # 没有停在第 2 份 → 确实继续了
+    assert "↷ 自动继续下一份" in out, out
+    assert "⊘ 放弃本卷：第 6 页内容审核拦截" in out, out
+    assert "放弃（内容审核拦截）：b" in out, out
+    assert "失败：c(码 1)" in out, out
+    assert "成功 1/3" in out, out
+
+    # 6b) 只有"放弃"、没有真失败 → 退出码 0（放弃是既定决策，不该让自动化报错）
+    fail_at = {"b": {2: 3}}
+    code, out = run_batch()
+    assert code == 0, (code, out)
+    assert "成功 2/3" in out, out
+    assert "放弃（内容审核拦截）：b" in out and "失败" not in out.split("[完成]")[-1], out
+
+    # 6c) --stop-on-error 时中断（老行为仍可用），且提示续跑命令。
+    # 注意用**未被打桩 blocked_pages 的 a**（b 一拦就成"放弃"，测不出"失败即停"）。
+    fail_at = {"a": {2: 1}}
+    sys.argv = ["7_import.py", "--folder", str(multi), "--quiet", "--stop-on-error"]
+    buf3 = io.StringIO()
+    with redirect_stdout(buf3):
+        code = import7.main()
+    out = buf3.getvalue()
+    assert code == 3, (code, out)
+    assert "已停下" in out and "试卷 2/3" not in out, out
+    assert "失败：a(码 1)" in out, out
+    print("[6] 失败/放弃后自动继续（默认）、三桶汇总、仅放弃 → 退出码 0；--stop-on-error 才中断")
 finally:
     shutil.rmtree(sandbox, ignore_errors=True)
 
-print("\n全部通过：5 组断言 / 沙箱已清理")
+print("\n全部通过：6 组断言 / 沙箱已清理")

@@ -198,7 +198,9 @@ def import_one(row: dict, opts: argparse.Namespace, first: bool) -> int:
         if code not in (0, 2):
             # **内容审核拦截（重试到头仍不过）→ 放弃这一套试卷**（用户要求）。
             # 与"可修的失败"区分开：给出 ⊘ 放弃 的明确结论，并记进 row 供汇总统计。
-            blocked = blocked_pages(category)
+            # 只在**第 2 步（OCR）**判定：拦截记录是那一步写进 manifest 的；后面几步失败
+            # 时 manifest 里仍留着旧记录，若不加 step 判断就会把"构建/上传失败"误报成放弃。
+            blocked = blocked_pages(category) if step == 2 else []
             if blocked:
                 row["abandoned"] = True
                 c.always(
@@ -288,6 +290,8 @@ def main() -> int:
 
     started = time.perf_counter()
     failed: list[tuple[str, int]] = []
+    abandoned: list[str] = []
+    done: list[str] = []
     for row in rows:
         c.always(
             f"[{STAGE}] === 试卷 {row['index']}/{len(rows)}：{row['pdf'].name}"
@@ -295,7 +299,10 @@ def main() -> int:
         )
         code = import_one(row, args, first=row["index"] == 1)
         if code != 0:
-            failed.append((row["category"], code))
+            if row.get("abandoned"):
+                abandoned.append(row["category"])
+            else:
+                failed.append((row["category"], code))
             if not args.keep_going:
                 c.always(
                     f"[{STAGE}] 已停下（加 --keep-going 可跳过失败项继续）。"
@@ -303,15 +310,31 @@ def main() -> int:
                     f"--category-prefix {prefix} --from-step <失败那一步>"
                 )
                 break
+            # **失败/放弃后自动继续下一份**（用户要求；这是默认行为，--stop-on-error 可关掉）。
+            # 顺带把"只重跑这一份"的命令打出来：各步都有续跑预检（有产物就跳过），
+            # 所以重跑不用挑 --from-step，从头跑一遍只会补上缺的那一步。
+            c.always(
+                f"[{STAGE}] ↷ 自动继续下一份；单独重跑这一份："
+                f"python pdf-ocr/7_import.py --folder \"{folder}\" --entry \"{args.entry}\" "
+                f"--entry-key {args.entry_key}   # 各步有产物即跳过，从头跑即可"
+            )
         else:
+            done.append(row["category"])
             c.always(f"[{STAGE}] ✓ {row['pdf'].name} 全流程完成")
 
-    ok = len(rows) - len(failed)
+    # **成功数只数真跑完的**：直接 `总数 - 失败 - 放弃` 会把 --stop-on-error 中断后
+    # 根本没跑的那几份也报成"成功"（实测 6c 里 3 份只跑了 1 份却显示 2/3）。
+    ok = len(done)
     c.always(
         f"[完成] 批量导入：成功 {ok}/{len(rows)}"
+        + (f"｜放弃（内容审核拦截）：{', '.join(abandoned)}" if abandoned else "")
         + (f"｜失败：{', '.join(f'{k}(码 {v})' for k, v in failed)}" if failed else "")
+        + (f"｜未跑（已中断）：{len(rows) - ok - len(failed) - len(abandoned)} 份"
+           if len(rows) > ok + len(failed) + len(abandoned) else "")
         + f"｜总耗时 {c.human_ms(started) / 1000:.1f}s"
     )
+    # **只有"真失败"才算错**：被审核拦截而主动放弃的卷是既定决策，不该让自动化流程报错
+    # （否则 CI/脚本会把"这一套不要了"当成异常）。有真失败时仍返回 3。
     return 3 if failed else 0
 
 
