@@ -55,6 +55,16 @@ export const CATEGORIES: CategoryMeta[] = [
     ],
   },
   {
+    key: 'japanese3',
+    short: '单词（第37–43课）',
+    long: '综合日语3',
+    desc: '第37–43课单词 · 汉字与假名互选',
+    icon: '日',
+    bankFile: 'japanese3-question-bank.json',
+    groupOrder: ['w37', 'w38', 'w39', 'w40', 'w41', 'w42', 'w43'],
+    groupViewTitle: '课次',
+  },
+  {
     key: 'history',
     short: '近代史',
     long: '中国近现代史',

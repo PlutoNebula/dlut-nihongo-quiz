@@ -1,5 +1,6 @@
 export type Category =
   | 'japanese2'
+  | 'japanese3'
   | 'history'
   | 'party'
   | 'military'

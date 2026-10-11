@@ -86,7 +86,7 @@ npm run dev          # http://localhost:5173/
 | `npm run audit:banks`     | 题库 schema + 内部去重检查                                    |
 | `npm run format`          | Prettier 自动格式化                                           |
 
-> 题库源保留在 `data/raw/`。修改源文件后运行对应 parser，再运行 `npm run generate:meta`、`npm run audit:banks` 和 `npm test`；不要直接修改生成的 `public/*-question-bank.json`。
+> 脚本生成的题库源保留在 `data/raw/`。修改源文件后运行对应 parser，再运行 `npm run generate:meta`、`npm run audit:banks` 和 `npm test`；不要直接修改生成的 `public/*-question-bank.json`。综合日语3单词题库直接维护 `public/japanese3-question-bank.json`，修改后运行元数据生成、审计和测试。
 
 ## 深入文档
 
@@ -136,7 +136,7 @@ A Vue 3 + Vite + TypeScript + Dexie single-page quiz app built for final-exam re
 
 **Run locally:** `git clone`, `npm install`, `npm run dev` (Node 18+, CI uses 24).
 
-**Question bank:** Markdown and structured JSON are the sources of truth under `data/raw/`; the `npm run parse:*` scripts generate the JSON consumed at runtime. Never edit `public/*.json` by hand.
+**Question bank:** For generated banks, Markdown and structured JSON under `data/raw/` are the sources of truth; `npm run parse:*` scripts generate the runtime JSON. Do not edit those generated files by hand. The Japanese 3 vocabulary bank is maintained directly in `public/japanese3-question-bank.json`; its Markdown is a source archive.
 
 **License:** Apache-2.0 for code. Question content is copyrighted by the original publishers and used here for educational review only.
 

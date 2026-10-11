@@ -190,6 +190,12 @@ export const COURSE_TREE: TreeNode[] = [
     children: [
       {
         type: 'leaf',
+        key: 'jp3-word',
+        label: '单词（第37–43课）',
+        category: 'japanese3',
+      },
+      {
+        type: 'leaf',
         key: 'jp-3-2022',
         label: '期末 2022',
         category: 'jp-3-2022',

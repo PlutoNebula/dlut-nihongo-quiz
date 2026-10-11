@@ -812,6 +812,7 @@ const groupViewHint = computed(() => {
               随机
             </button>
             <button
+              v-if="activeCategory !== 'japanese3'"
               class="btn btn-outline btn-sm"
               @click="startGroupQuiz(g.groupId, 'sequential', { questionType: 'fill' })"
             >

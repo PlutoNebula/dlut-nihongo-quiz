@@ -16,6 +16,7 @@ describe('CATEGORIES config', () => {
       'computer-midterms',
       'history',
       'japanese2',
+      'japanese3',
       'jp-3',
       'jp-3-2022',
       'jp-3-2024',

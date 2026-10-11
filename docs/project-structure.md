@@ -102,7 +102,7 @@ data/raw/*.md  ──[ npm run parse:* ]──▶  public/*-question-bank.json
                                        Vue 组件渲染
 ```
 
-- `data/raw/` 是**唯一可信源**，永远不要手改 `public/*.json`
+- 脚本生成的题库以 `data/raw/` 为可信源，不直接修改其 `public/*.json`；综合日语3单词题库直接维护 `public/japanese3-question-bank.json`
 - 每个 parser 都会输出验证报告到 `data/processed/`，发现格式错误时会非零退出
 - 前端首次加载时把 JSON 灌进 IndexedDB，后续读本地，离线可用
 - 来自 PDF 的题库由 `pdf-ocr/` 生成（S1→S6 + S7 批量），用法见

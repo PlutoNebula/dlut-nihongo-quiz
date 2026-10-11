@@ -77,8 +77,11 @@ async function refresh() {
               !id.startsWith('party') &&
               !id.startsWith('mil-') &&
               !id.startsWith('mil') &&
-              !id.startsWith('computer-')
+              !id.startsWith('computer-') &&
+              !/^w(?:3[7-9]|4[0-3])-/.test(id)
             )
+          case 'japanese3':
+            return /^w(?:3[7-9]|4[0-3])-/.test(id)
           default:
             return id.startsWith(`${cat.key}-`)
         }

@@ -22,6 +22,16 @@ describe('ENTRIES config', () => {
     }
   })
 
+  it('首页入口与独立学科不会出现同名卡片', () => {
+    const titles = [
+      ...ENTRIES.map((entry) => entry.name),
+      ...CATEGORIES.filter((category) => !entryOfCategory(category.key)).map(
+        (category) => category.long,
+      ),
+    ]
+    expect(new Set(titles).size).toBe(titles.length)
+  })
+
   it('一个分类只能属于一个入口，且入口内不重复', () => {
     const seen = new Map<string, string>()
     for (const entry of ENTRIES) {
